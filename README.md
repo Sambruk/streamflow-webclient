@@ -59,19 +59,19 @@ Redeploy the new `.war` file at [test-sfwc.jayway.com:4848](https://test-sfwc.ja
 
 Remote desktop to:
 
-```
+```bash
 test-sfwc.jayway.com
 ```
 
 Edit `WEB-INF/web.xml`. Comment out:
 
-```
+```bash
 <param-value>http://localhost/streamflow</param-value>`
 ```
 
 and uncomment:
 
-```
+```bash
 <param-value>http://test-sf.jayway.com/streamflow</param-value>`
 ```
 

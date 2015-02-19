@@ -40,18 +40,21 @@ git checkout develop
 
 ## Deployment
 
-We're using maven to build the complete project.
-Start by updating the design submodule and then make sure all changes have been commited, pushed and that you have the latest version of the repository (pull).
+We're using maven to build the complete project. Download [here](http://maven.apache.org/download.cgi) or install via Homebrew (Mac):
 
-Then in the root directory folder type:
+```bash
+brew install maven
+```
+
+Make sure you have all the latest changes.
+
+In the root directory type:
 
 ```bash
 mvn clean install
 ```
 
-The build process should start and this will create a `.war` file in the `target/` directory.
-The `pom.xml` describes what happens when we build using Maven.
-In the `pom.xml` we reference the `build.sh` (UNIX) or `build.bat` (Windows) script that defines which runs the necessary webclient build steps.
+The build process should start and will create a `.war` file in the `target/` directory.
 
 ### Glassfish
 

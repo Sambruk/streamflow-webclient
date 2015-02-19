@@ -10,7 +10,7 @@ bower install
 gulp
 ```
 
-The application is served on [localhost:8080](localhost:8080) (go ahead, click it!).
+The application is served on [localhost:9999](http://localhost:9999) (go ahead, click it!).
 
 ## Build System
 
@@ -34,9 +34,9 @@ This project uses a submodule, it needs to be initiated with:
 
 ```bash
 git submodule update --init
+cd app/design
+git checkout develop
 ```
-
-This will populate `app/design/`.
 
 ## Deployment
 
@@ -55,7 +55,7 @@ In the `pom.xml` we reference the `build.sh` (UNIX) or `build.bat` (Windows) scr
 
 ### Glassfish
 
-Redeploy the new `.war` file at [test-sfwc.jayway.com:4848](test-sfwc.jayway.com:4848) under `Applications`. Account details could be found [here](https://confluence.jayway.com/display/streamsource/Windows+server+tips+and+tricks).
+Redeploy the new `.war` file at [test-sfwc.jayway.com:4848](https://test-sfwc.jayway.com:4848) under `Applications`. Account details could be found [here](https://confluence.jayway.com/display/streamsource/Windows+server+tips+and+tricks).
 
 Remote desktop to:
 

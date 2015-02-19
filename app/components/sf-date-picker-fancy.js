@@ -17,7 +17,7 @@
 
 'use strict';
 
-angular.module('sf').directive('sfDatePickerFancy', function (fancyDateService) {
+angular.module('sf').directive('sfDatePickerFancy', function () {
   return {
     restrict:'A',
     require: 'ngModel',
@@ -25,7 +25,7 @@ angular.module('sf').directive('sfDatePickerFancy', function (fancyDateService) 
       var $element = $(element);
 
       function setDateWithoutTriggeringChange(el, date) {
-        el.val(fancyDateService.format(date)).blur();
+        el.val(date).blur();
       }
 
       $element.pickadate({

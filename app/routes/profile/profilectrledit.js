@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2009-2014 Jayway Products AB
+ * Copyright 2009-2015 Jayway Products AB
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,15 @@
 'use strict';
 
 angular.module('sf').controller('ProfileEditCtrl', function ($scope, profileService, $rootScope) {
-  $rootScope.$broadcast('breadcrumb-updated', []);
+  profileService.getCurrent().promise.then(function (result) {
+    $scope.profile = result;
 
-  $scope.profile = profileService.getCurrent();
+    $rootScope.$broadcast('breadcrumb-updated', [
+      {projectId: 'Profile'},
+      {caseId: result[0].name}
+    ]);
+  });
+
   $scope.$on('profile-name-updated', function () {
     $scope.profile.invalidate();
     $scope.profile.resolve();

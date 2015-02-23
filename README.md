@@ -69,6 +69,8 @@ Glassfish is the web server hosting Streamflow, located
 [here](https://test-sfwc.jayway.com:4848). Account details can be found
 [here](https://confluence.jayway.com/display/streamsource/Windows+server+tips+and+tricks).
 
+Do the following to finish deployment:
+
 * Click **Applications** in the sidebar.
 
 * Select the checkbox next to the existing deployed application and then click
@@ -95,4 +97,32 @@ Glassfish is the web server hosting Streamflow, located
   ```
 
 * Go back to Glassfish and **Reload** the deployed application.
+
+## Coding Conventions
+
+Good looking code is important. Keep `jshint` happy, and try to follow these
+simple rules:
+
+* End files with a newline
+([but why?!](http://stackoverflow.com/questions/729692/why-should-files-end-with-a-newline)).
+
+* Use whitespaces to increase legibility:
+
+  ```javascript
+  // Do
+  addFunc(function (val) {
+    return val + val;
+  });
+
+  // Don't
+  addFunc(function(val){
+    return val+val;
+  });
+  ```
+
+* Don't leave behind `console.log` or `debugger` statements.
+
+* Don't commit half-finished implementations.
+
+* Don't repeat yourself ([DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)).
 

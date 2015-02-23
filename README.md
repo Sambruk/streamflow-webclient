@@ -1,5 +1,10 @@
 # Streamflow Webclient
 
+**Important:** As of 2015-02-19 the webclient was broken off into its own repository,
+  meaning previous history will be erased. If you need someone to `git-blame` for something
+  in particular, previous history will be available in [the core repository](https://github.com/jayway/streamflow-core/),
+  starting at [this commit](https://github.com/jayway/streamflow-core/commit/930d7201cfd47424acacf434857928719c9ebf3://github.com/jayway/streamflow-core/commit/930d7201cfd47424acacf434857928719c9ebf35).
+
 ## Getting Started
 
 ```bash

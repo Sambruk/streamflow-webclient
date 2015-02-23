@@ -17,8 +17,7 @@
 
 'use strict';
 
-angular.module('sf')
-.factory('webformRulesService', function(){
+angular.module('sf').factory('webformRulesService', function(){
 // TODO: Test all possible form configurations.
 // If something does not work, look in the viewcontroller and the view template
 // to verify that everything there looks appropriate
@@ -140,7 +139,6 @@ angular.module('sf')
 
   //Hide field (remove ng-show class if present)
   var _hideField = function(fieldId){
-    var fld = $('#'+fieldId);
    //console.log(fld);
     //fld.css('display', 'hidden');
    //  debugger;
@@ -158,3 +156,4 @@ angular.module('sf')
   	applyRules: _applyRules
   };
 });
+

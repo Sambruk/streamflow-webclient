@@ -40,7 +40,7 @@ angular.module('sf')
             field.value = field.value.split('T')[0];
           }
         },
-        getValue: function(value, attr){
+        getValue: function(value){
           return value + 'T00:00:00.000Z';
         }
       },
@@ -76,7 +76,7 @@ angular.module('sf')
             field.value = values;
           }
         },
-        getValue: function(value, attr){
+        getValue: function(value){
           var espacedValues = _.map(value, function(value){
             return value.indexOf(',') !== -1 ? '[' + value + ']' : value;
           });

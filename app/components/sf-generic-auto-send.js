@@ -14,37 +14,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 'use strict';
-angular.module('sf')
-.directive('sfGenericAutoSend', ['$parse', '$routeParams', 'caseService', 'formMapperService', function($parse, $routeParams, caseService, formMapper) {
-    return {
-      require: 'ngModel',
-      link: function(scope, element, attr, ngModel) {
 
-        var hasRunAtLeastOnce = false;
-        scope.$watch(attr.ngModel, function (newValue, oldValue) {
+angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', 'caseService', 'formMapperService', function($parse, $routeParams, caseService, formMapper) {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attr) {
 
-          if (hasRunAtLeastOnce) {
+      var hasRunAtLeastOnce = false;
+      scope.$watch(attr.ngModel, function (newValue) {
 
-            // Validation
-            if (element.hasClass('ng-invalid')) {
-              _.each(element.attr('class').split(' '), function (klass) {
-                var errorClass = '.error-' + klass;
-                $(errorClass, element.parent()).show();
-              });
+        if (hasRunAtLeastOnce) {
 
-              return;
-            }
+          // Validation
+          if (element.hasClass('ng-invalid')) {
+            _.each(element.attr('class').split(' '), function (klass) {
+              var errorClass = '.error-' + klass;
+              $(errorClass, element.parent()).show();
+            });
 
-            // Valid input, clear error warnings
-            $('[class^=error]', element.parent()).hide();
-
-            var value = formMapper.getValue(newValue, attr);
-            caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
+            return;
           }
 
-          hasRunAtLeastOnce = true;
-        });
-      }
-    };
-  }]);
+          // Valid input, clear error warnings
+          $('[class^=error]', element.parent()).hide();
+
+          var value = formMapper.getValue(newValue, attr);
+          caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
+        }
+
+        hasRunAtLeastOnce = true;
+      });
+    }
+  };
+}]);
+

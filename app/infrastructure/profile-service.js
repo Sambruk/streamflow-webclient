@@ -15,55 +15,50 @@
  * limitations under the License.
  */
 'use strict';
-angular.module('sf')
-.factory('profileService', function (backendService, navigationService, SfCase, $http, debounce, formMapperService) {
- 
- 	 return {
-      getCurrent: function() {
-        return backendService.get({
-          specs: [{resources: 'account'},
-              {resources: 'profile'},
-              {queries: 'index'}],
-          onSuccess:function (resource, result) {
-          	result.push(resource.response);
-            /*console.log("Result from profile services - result: ");
-            console.log(result);
-            console.log("Result from profile services - response: ");
-            console.log(resource.response);*/
-          }
-        });
-      },
-      updateCurrent: function(value) {
-        return backendService.postNested(
-        	[{resources: 'account'},
-             {resources: 'profile'},
-             {commands: 'update'}
-          ], 
-          value);
-      },
-      changeMessageDeliveryType: function(value) {
-        return backendService.postNested(
-        	[{resources: 'account'},
-             {resources: 'profile'},
-             {commands: 'changemessagedeliverytype'}
-          ], 
-          value);
-      },
-      changeMailFooter: function(value) {
-        return backendService.postNested(
-        	[{resources: 'account'},
-             {resources: 'profile'},
-             {commands: 'changemailfooter'}
-          ], 
-          value);
-      },
-      changeMarkReadTimeout: function(value) {
-        return backendService.postNested(
-        	[{resources: 'account'},
-             {resources: 'profile'},
-             {commands: 'changemarkreadtimeout'}
-          ],
-          value);
-      }
-  };
- });
+angular.module('sf').factory('profileService', function (backendService) {
+  return {
+    getCurrent: function() {
+      return backendService.get({
+        specs: [{resources: 'account'},
+            {resources: 'profile'},
+            {queries: 'index'}],
+        onSuccess:function (resource, result) {
+          result.push(resource.response);
+        }
+      });
+    },
+    updateCurrent: function(value) {
+      return backendService.postNested(
+        [{resources: 'account'},
+            {resources: 'profile'},
+            {commands: 'update'}
+        ],
+        value);
+    },
+    changeMessageDeliveryType: function(value) {
+      return backendService.postNested(
+        [{resources: 'account'},
+            {resources: 'profile'},
+            {commands: 'changemessagedeliverytype'}
+        ],
+        value);
+    },
+    changeMailFooter: function(value) {
+      return backendService.postNested(
+        [{resources: 'account'},
+            {resources: 'profile'},
+            {commands: 'changemailfooter'}
+        ],
+        value);
+    },
+    changeMarkReadTimeout: function(value) {
+      return backendService.postNested(
+        [{resources: 'account'},
+            {resources: 'profile'},
+            {commands: 'changemarkreadtimeout'}
+        ],
+        value);
+    }
+};
+});
+

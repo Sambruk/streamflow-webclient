@@ -202,7 +202,7 @@ angular.module('sf')
 
       scope.show = false;
       scope.caze.invalidate();
-      scope.caze.resolve().then(function(response){
+      scope.caze.resolve().then(function(){
         $rootScope.$broadcast('case-changed');
         $rootScope.$broadcast('case-owner-changed');
 
@@ -304,7 +304,7 @@ angular.module('sf')
     });
   };
 
-  var _reopen = function(scope){
+  var _reopen = function(){
     caseService.reopenCase($routeParams.caseId).then(function(){
       // To do this or do invalidate/resolve on everything in case
       window.location.reload();
@@ -453,3 +453,4 @@ angular.module('sf')
     checkPossibleForms: _checkPossibleForms
   };
 });
+

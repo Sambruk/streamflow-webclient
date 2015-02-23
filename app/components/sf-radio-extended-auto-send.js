@@ -14,39 +14,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 'use strict';
-angular.module('sf')
-.directive('sfRadioExtendedAutoSend', ['$parse', '$routeParams', 'caseService', function($parse, $params, caseService) {
-    return {
-      require: 'ngModel',
-      scope: true,
-      link: function(scope, element, attr, ngModel) {
 
-        var hasRunAtLeastOnce = false;
-        scope.$watch(attr.ngModel, function (newValue, oldValue, srcScope) {
+angular.module('sf').directive('sfRadioExtendedAutoSend', ['$parse', '$routeParams', 'caseService', function($parse, $params, caseService) {
+  return {
+    require: 'ngModel',
+    scope: true,
+    link: function(scope, element, attr) {
 
-          if (hasRunAtLeastOnce) {
-            console.log('new: ', newValue, ', old: ', oldValue);
+      var hasRunAtLeastOnce = false;
+      scope.$watch(attr.ngModel, function (newValue, oldValue) {
 
-            if (newValue === attr.value) {
+        if (hasRunAtLeastOnce) {
+          console.log('new: ', newValue, ', old: ', oldValue);
 
-              var isOther = $parse(attr.sfRadioExtendedAutoSend)();
-              var value;
+          if (newValue === attr.value) {
 
-              if (isOther) {
-                value = $('div input[type=text]', $(element).parent().parent()).val();
-                $(element).val(value);
-              }
-              else {
-                value = newValue;
-              }
+            var isOther = $parse(attr.sfRadioExtendedAutoSend)();
+            var value;
 
-              caseService.updateField($params.caseId, scope.$parent.form[0].draftId, attr.name, value);
+            if (isOther) {
+              value = $('div input[type=text]', $(element).parent().parent()).val();
+              $(element).val(value);
             }
-          }
+            else {
+              value = newValue;
+            }
 
-          hasRunAtLeastOnce = true;
-        });
-      }
-    };
-  }]);
+            caseService.updateField($params.caseId, scope.$parent.form[0].draftId, attr.name, value);
+          }
+        }
+
+        hasRunAtLeastOnce = true;
+      });
+    }
+  };
+}]);
+

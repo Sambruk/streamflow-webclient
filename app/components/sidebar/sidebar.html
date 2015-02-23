@@ -213,23 +213,8 @@
         <!-- /Prioritet -->
 
         <!-- Due date -->
-        <div class="row">
-          <div class="text">
-            <label for="issue-due-date">Förfaller</label>
-            <div class="set-due-date">
-              <input
-                sf-date-picker-fancy
-                type="text"
-                placeholder="Förfallodatum"
-                ng-model="dueOnShort"
-                data-ng-change="changeDueOn(dueOnShort)"
-                id="issue-due-date"
-                name="issue-due-date"
-                data-ng-disabled="!canChangeDueOn"
-              >
-            </div>
-          </div>
-        </div>
+        <sidebar-due-date can-change="canChangeDueOn" due-on="dueOnShort">
+        </sidebar-due-date>
         <!-- /Due date -->
       </form>
     </div>

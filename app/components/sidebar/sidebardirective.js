@@ -51,48 +51,81 @@ angular.module('sf')
       scope.exportContacts = false;
       scope.exportCaseLog = false;
 
-      scope.caze.promise.then(function(){
-        checkPermissionService.checkPermissions(scope, scope.caze.queries, ['exportpdf'], ['canExportCase']);
+      scope.caze.promise.then(function () {
+        checkPermissionService.checkPermissions(
+          scope,
+          scope.caze.queries,
+          ['exportpdf'],
+          ['canExportCase']
+        );
       });
-      scope.general.promise.then(function(){
-        checkPermissionService.checkPermissions(scope, scope.general.commands, ['casetype', 'changedueon', 'changedescription', 'changepriority'], ['canChangeCaseType', 'canChangeDueOn', 'canChangeDescription', 'canChangePriority']);
-        if (!scope.canChangeCaseType) {
-          $('.case-type-selected').addClass('cursor-default');
-        }
+
+      scope.general.promise.then(function () {
+        checkPermissionService.checkPermissions(
+          scope,
+          scope.general.commands,
+          ['casetype', 'changedueon', 'changedescription', 'changepriority'],
+          ['canChangeCaseType', 'canChangeDueOn', 'canChangeDescription', 'canChangePriority']
+        );
 
         if (scope.sidebardata && scope.canChangeDescription) {
           scope.sidebardata.canChangeDescription = true;
         }
       });
-      scope.notes.promise.then(function(){
 
-        checkPermissionService.checkPermissions(scope, scope.notes.commands, ['addnote'], ['canAddNote']);
+      scope.notes.promise.then(function () {
+        checkPermissionService.checkPermissions(
+          scope,
+          scope.notes.commands,
+          ['addnote'],
+          ['canAddNote']
+        );
 
-        if(scope.sidebardata && scope.canAddNote){
+        if (scope.sidebardata && scope.canAddNote) {
           scope.sidebardata.canAddNote = true;
         }
       });
-      scope.contacts.promise.then(function(){
-        checkPermissionService.checkPermissions(scope, scope.contacts.commands, ['add'], ['canAddContact']);
-      });
-      scope.conversations.promise.then(function(){
-        checkPermissionService.checkPermissions(scope, scope.conversations.commands, ['create'], ['canCreateConversation']);
-      });
-      scope.attachments.promise.then(function(){
-        checkPermissionService.checkPermissions(scope, scope.attachments.queries, ['createattachment'], ['canCreateAttachment']);
-      });
-      scope.possibleForms.promise.then(function(){
-        sidebarService.checkPossibleForms(scope, scope.possibleForms);
+
+      scope.contacts.promise.then(function () {
+        checkPermissionService.checkPermissions(
+          scope,
+          scope.contacts.commands,
+          ['add'],
+          ['canAddContact']
+        );
       });
 
-      if($routeParams.formId && $routeParams.caseId){
+      scope.conversations.promise.then(function () {
+        checkPermissionService.checkPermissions(
+          scope,
+          scope.conversations.commands,
+          ['create'],
+          ['canCreateConversation']
+        );
+      });
+
+      scope.attachments.promise.then(function () {
+        checkPermissionService.checkPermissions(
+          scope,
+          scope.attachments.queries,
+          ['createattachment'],
+          ['canCreateAttachment']
+        );
+      });
+
+      scope.possibleForms.promise.then(function () {
+        sidebarService.checkPossibleForms(
+          scope,
+          scope.possibleForms
+        );
+      });
+
+      if ($routeParams.formId && $routeParams.caseId) {
         scope.submittedForms = caseService.getSubmittedForms($routeParams.caseId, $routeParams.formId);
       }
-      //End declare scope objects
 
-      //Watch
-      scope.$watch('caze[0]', function(newVal){
-        if(!newVal){
+      scope.$watch('caze[0]', function (newVal) {
+        if (!newVal) {
           return;
         }
         $rootScope.$broadcast('breadcrumb-updated',
@@ -100,40 +133,40 @@ angular.module('sf')
           {projectType: scope.caze[0].listType},
           {caseId: scope.caze[0].caseId}]);
 
-        if(scope.sidebardata){
+        if (scope.sidebardata) {
           scope.sidebardata.caze = scope.caze;
         }
       });
 
-      scope.$watch('notes', function(newVal){
+      scope.$watch('notes', function (newVal) {
         if(!newVal){
           return;
         }
-        if(scope.sidebardata){
+        if (scope.sidebardata) {
           scope.sidebardata.notes = scope.notes;
         }
       });
 
-      scope.$watch('conversations', function(newVal){
-        if(!newVal){
+      scope.$watch('conversations', function (newVal) {
+        if (!newVal) {
           return;
         }
-        if(scope.sidebardata){
+        if (scope.sidebardata) {
           scope.sidebardata.conversations = scope.conversations;
         }
       });
 
-      scope.$watch('caze', function(newVal){
-        if(!newVal){
+      scope.$watch('caze', function (newVal) {
+        if (!newVal) {
           return;
         }
         scope.caze = newVal;
       });
 
       /* HTTP NOTIFICATIONS */
-      scope.errorHandler = function(){
+      scope.errorHandler = function () {
         var bcMessage = caseService.getMessage();
-        if(bcMessage !== 200)  {
+        if (bcMessage !== 200) {
           growl.warning('errorMessage');
         }
       };
@@ -158,11 +191,7 @@ angular.module('sf')
       // Due on
       scope.general.promise.then(function (result) {
         scope.dueOnShortStartValue = result[0].dueOnShort;
-
       });
-      scope.changeDueOn = function (date) {
-        sidebarService.changeDueOn(scope, date);
-      }; // End due on
 
       // Priority
       scope.priority = '-1';

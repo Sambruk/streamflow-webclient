@@ -1,11 +1,28 @@
 # Streamflow Webclient
 
-**Important:** As of 2015-02-19 the webclient was broken off into its own repository,
-  meaning previous history will be erased. If you need someone to `git-blame` for something
-  in particular, previous history will be available in [the core repository](https://github.com/jayway/streamflow-core/),
-  starting at [this commit](https://github.com/jayway/streamflow-core/commit/930d7201cfd47424acacf434857928719c9ebf3://github.com/jayway/streamflow-core/commit/930d7201cfd47424acacf434857928719c9ebf35).
+**Important:** As of 2015-02-19 the webclient was broken off into its own
+repository, meaning previous history will be erased. If you need someone to
+`git-blame` for something in particular, previous history will be available in
+[the core repository](https://github.com/jayway/streamflow-core/), starting at
+[this commit](https://github.com/jayway/streamflow-core/commit/930d7201cfd47424acacf434857928719c9ebf3://github.com/jayway/streamflow-core/commit/930d7201cfd47424acacf434857928719c9ebf35).
 
 ## Getting Started
+
+### GUI Submodule
+
+This project has its CSS stored in a submodule. Do the following:
+
+```bash
+git submodule update --init
+cd app/design
+git checkout develop
+```
+
+### Install Dependencies & Build
+
+External dependencies are installed via `npm` and `bower`. Lastly
+[gulp](https://github.com/gulpjs/gulp/blob/master/docs/README.md)
+will handle the build process (minification, uglification, etc.).
 
 ```bash
 cd ~/path/to/streamflow-webclient
@@ -15,37 +32,22 @@ bower install
 gulp
 ```
 
-The application is served on [localhost:9999](http://localhost:9999) (go ahead, click it!).
+The built application ends up in the `build/` directory and is served on
+[localhost:9999](http://localhost:9999) (go ahead, click it!).
 
-## Build System
+### Running Tests
 
-Streamflow is using the build tool [gulp](https://github.com/gulpjs/gulp/blob/master/docs/README.md).
-
-There are different tasks for different purposes but the `gulp` command runs all
-the neccessary ones.
-
-Tasks that are not being run by default are:
+Tests can be run with the following commands:
 
 ```bash
 gulp unit-test
 gulp e2e-test
 ```
 
-Gulp will by default build to the `build/` folder.
-
-## Submodules
-
-This project uses a submodule, it needs to be initiated with:
-
-```bash
-git submodule update --init
-cd app/design
-git checkout develop
-```
-
 ## Deployment
 
-We're using maven to build the complete project. Download [here](http://maven.apache.org/download.cgi) or install via Homebrew (Mac):
+Maven is used to build the complete project. It can be downloaded from
+[here](http://maven.apache.org/download.cgi) or installed via Homebrew (Mac):
 
 ```bash
 brew install maven
@@ -63,25 +65,34 @@ The build process should start and will create a `.war` file in the `target/` di
 
 ### Glassfish
 
-Redeploy the new `.war` file at [test-sfwc.jayway.com:4848](https://test-sfwc.jayway.com:4848) under `Applications`. Account details could be found [here](https://confluence.jayway.com/display/streamsource/Windows+server+tips+and+tricks).
+Glassfish is the web server hosting Streamflow, located
+[here](https://test-sfwc.jayway.com:4848). Account details can be found
+[here](https://confluence.jayway.com/display/streamsource/Windows+server+tips+and+tricks).
 
-Remote desktop to:
+* Click **Applications** in the sidebar.
 
-```bash
-test-sfwc.jayway.com
-```
+* Select the checkbox next to the existing deployed application and then click
+  **Undeploy**.
 
-Edit `WEB-INF/web.xml`. Comment out:
+* Click **Deploy** and select the new application `.war` file.
 
-```bash
-<param-value>http://localhost/streamflow</param-value>`
-```
+* Remote desktop to:
 
-and uncomment:
+  ```bash
+  test-sfwc.jayway.com
+  ```
 
-```bash
-<param-value>http://test-sf.jayway.com/streamflow</param-value>`
-```
+* Edit `WEB-INF/web.xml`. Comment out:
 
-Go back to Glassfish and **Reload deployed application**.
+  ```bash
+  <param-value>http://localhost/streamflow</param-value>`
+  ```
+
+* and then uncomment:
+
+  ```bash
+  <param-value>http://test-sf.jayway.com/streamflow</param-value>`
+  ```
+
+* Go back to Glassfish and **Reload** the deployed application.
 

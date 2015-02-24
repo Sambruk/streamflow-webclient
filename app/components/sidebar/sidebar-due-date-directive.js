@@ -2,13 +2,17 @@
 
 angular.module('sf').directive('sidebarDueDate', function (sidebarService) {
   return {
-    restrict: 'E',
+    restrict: 'A',
+    scope: {
+      canChange: '='
+    },
     templateUrl: 'components/sidebar/sidebar-due-date.html',
-    link: function (scope, element, attrs) {
-      scope.dueOnShort = attrs.dueOn;
-      scope.canChangeDueOn = attrs.canChange;
+    link: function (scope) {
+      scope.general = scope.$parent.general;
 
-      console.log(attrs);
+      scope.general.promise.then(function (result) {
+        scope.dueOn = result[0].dueOnShort;
+      });
 
       scope.changeDueOn = function (date) {
         sidebarService.changeDueOn(scope, date);

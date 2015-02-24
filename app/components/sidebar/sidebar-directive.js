@@ -188,20 +188,6 @@ angular.module('sf')
         scope.commandView = '';
       }; //End Resolve
 
-      // Due on
-      scope.general.promise.then(function (result) {
-        scope.dueOnShortStartValue = result[0].dueOnShort;
-      });
-
-      // Priority
-      scope.priority = '-1';
-      scope.priorityColor = {};
-      scope.activePriorityColor = {};
-      sidebarService.priority(scope);
-      scope.changePriorityLevel = function(priorityId){
-        sidebarService.changePriorityLevel(scope, priorityId);
-      }; //End Priority
-
       // Case type
       sidebarService.caseType(scope);
       scope.changeCaseType = function(caseType){
@@ -212,7 +198,7 @@ angular.module('sf')
       scope.allCaseLabels = [];
       scope.activeLabels = [];
       scope.previousActiveLabels = [];
-      var updateCaseLabels = function() {
+      var updateCaseLabels = function () {
         sidebarService.updateCaseLabels(scope);
       };
       updateCaseLabels();
@@ -272,13 +258,13 @@ angular.module('sf')
       };// End Close
 
       // FormOnClose
-      scope.closeWithForm = function(){
+      scope.closeWithForm = function () {
         scope.commandView = 'formonclose';
         scope.show = true;
       }; // End FormOnClose
 
       // Reopen
-      scope.reopen = function(){
+      scope.reopen = function () {
         sidebarService.reopen(scope);
       };
       // End Reopen
@@ -300,14 +286,14 @@ angular.module('sf')
       scope.downloadAttachment = function (attachment) {
         sidebarService.downloadAttachment(scope, attachment);
       };
-      scope.deleteAttachment = function(attachmentId){
+      scope.deleteAttachment = function (attachmentId) {
         sidebarService.deleteAttachment(scope, attachmentId);
       }; // End Attachments
 
-      scope.exportCaseInfo = function(){
+      scope.exportCaseInfo = function () {
         scope.caseExportInfo = caseService.getCaseExportInfo($routeParams.caseId);
       };
-      scope.onFileSelect = function($files){
+      scope.onFileSelect = function ($files) {
         var url = httpService.apiUrl + 'workspacev2/cases/' + $routeParams.caseId + '/attachments/createattachment';
         fileService.uploadFiles($files, url);
         updateObject(scope.attachments);
@@ -315,13 +301,13 @@ angular.module('sf')
 
 
       // Show / Close pop up
-      scope.showExportCaseInfoPopUp = function(){
+      scope.showExportCaseInfoPopUp = function () {
         scope.showExportInfo = true;
       };
-      scope.showCaseInfoPopUp = function(){
+      scope.showCaseInfoPopUp = function () {
         scope.showCaseInfo = true;
       };
-      scope.closePopUp = function(){
+      scope.closePopUp = function () {
         scope.showCaseInfo = false;
         scope.showExportInfo = false;
         scope.commandView = '';

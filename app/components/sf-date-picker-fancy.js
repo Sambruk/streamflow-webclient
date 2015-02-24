@@ -36,7 +36,7 @@ angular.module('sf').directive('sfDatePickerFancy', function () {
         close: false,
         clear: false,
         onStart: function () {
-          scope.$watch('dueOnShortStartValue', function (value) {
+          scope.$watch('dueOn', function (value) {
             setDateWithoutTriggeringChange($element, value);
           });
         }

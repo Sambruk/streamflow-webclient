@@ -188,12 +188,6 @@ angular.module('sf')
         scope.commandView = '';
       }; //End Resolve
 
-      // Case type
-      sidebarService.caseType(scope);
-      scope.changeCaseType = function(caseType){
-        sidebarService.changeCaseType(scope, caseType);
-      }; // End case type
-
 
       // Commands (toolbar)
       var updateToolbar = function () {

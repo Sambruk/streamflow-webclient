@@ -16,8 +16,7 @@
  */
 'use strict';
 
-angular.module('sf')
-.factory('sidebarService', function($routeParams, caseService, $q, $rootScope, $location, navigationService, tokenService, checkPermissionService){
+angular.module('sf').factory('sidebarService', function ($routeParams, caseService, $q, $rootScope, $location, navigationService, tokenService, checkPermissionService) {
 
   var sortByText = function (x, y) {
     var xS = x.text && x.text.toUpperCase() || '',
@@ -36,7 +35,7 @@ angular.module('sf')
     itemToUpdate.resolve();
   };
 
-  var _changePriorityLevel = function(scope, priorityId) {
+  var _changePriorityLevel = function (scope, priorityId) {
     if (priorityId === '-1') {
       priorityId = '';
     }
@@ -54,31 +53,27 @@ angular.module('sf')
     });
   };
 
-  var _changeCaseType = function(scope, casetype) {
-    caseService.changeCaseType($routeParams.caseId, casetype).then(function() {
-      if(!scope.possibleForms){
+  var _changeCaseType = function (scope, casetype) {
+    caseService.changeCaseType($routeParams.caseId, casetype).then(function () {
+      if (!scope.possibleForms) {
         scope.possibleForms = caseService.getSelectedPossibleForms($routeParams.caseId);
-      }else{
+      } else {
         _updateObject(scope.possibleForms);
       }
 
-      if(!scope.possiblePriorities){
+      if (!scope.possiblePriorities) {
         scope.possiblePriorities = caseService.getPossiblePriorities($routeParams.caseId);
-      }else{
+      } else {
         _updateObject(scope.possiblePriorities);
       }
 
-      scope.general.invalidate();
-      scope.general.resolve().then(function(){
-        _priority(scope);
-      });
-
-      scope.possibleForms.promise.then(function(){
+      scope.possibleForms.promise.then(function () {
         _checkPossibleForms(scope);
-        if(scope.possibleForms.length === 0){
+
+        if (scope.possibleForms.length === 0) {
           // Check if the current route contains formdraft to redirect to "case main page"
           var checkRoute = new RegExp('formdrafts').test($location.path());
-          if(checkRoute === true){
+          if (checkRoute === true) {
             var href = navigationService.caseHrefSimple($routeParams.caseId);
             window.location.replace(href);
           }

@@ -154,22 +154,7 @@
     <div class="m-c">
       <form>
         <!-- Ärendetyp -->
-        <div class="row full">
-          <div class="select">
-            <label for="type-select">Ärendetyp</label>
-            <select
-              chosen
-              no-results-text="'Inga ärendetyper funna'"
-              data-placeholder="Ärendetyp"
-              data-ng-options="caseType.id as caseType.text group by caseType.title for caseType in possibleCaseTypes"
-              data-ng-model="caseType"
-              data-ng-change="changeCaseType(caseType)"
-              data-ng-disabled="!canChangeCaseType"
-              name="name-select"
-              id="type-select"
-            >
-            </select>
-          </div>
+        <div sidebar-case-type class="row full" data-can-change="canChangeCaseType">
         </div>
         <!-- /Ärendetyp -->
 

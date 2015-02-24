@@ -194,17 +194,6 @@ angular.module('sf')
         sidebarService.changeCaseType(scope, caseType);
       }; // End case type
 
-      // Case labels
-      scope.allCaseLabels = [];
-      scope.activeLabels = [];
-      scope.previousActiveLabels = [];
-      var updateCaseLabels = function () {
-        sidebarService.updateCaseLabels(scope);
-      };
-      updateCaseLabels();
-      scope.changeCaseLabels = function (labels) {
-        sidebarService.changeCaseLabels(scope, labels);
-      }; // End case labels
 
       // Commands (toolbar)
       var updateToolbar = function () {

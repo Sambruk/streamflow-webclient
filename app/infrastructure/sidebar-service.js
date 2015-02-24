@@ -94,7 +94,7 @@ angular.module('sf')
     });
   };
 
-  var _checkPossibleForms = function(scope){
+  var _checkPossibleForms = function (scope){
     if(!scope.possibleForms){
       return;
     }
@@ -110,7 +110,7 @@ angular.module('sf')
     }
   };
 
-  var _updateCaseLabels = function(scope) {
+  var _updateCaseLabels = function (scope) {
     if (!scope.caseLabel) {
       scope.caseLabel = caseService.getCaseLabel($routeParams.caseId);
 

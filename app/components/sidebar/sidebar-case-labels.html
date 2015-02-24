@@ -1,0 +1,17 @@
+<div class="select">
+  <label for="label-select">Etiketter</label>
+  <select
+    chosen
+    multiple
+    no-results-text="'Inga etiketter funna'"
+    data-placeholder="Etikett"
+    data-ng-options="label as label.text for label in allCaseLabels"
+    data-ng-model="activeLabels"
+    data-ng-change="changeCaseLabels(activeLabels)"
+    data-ng-disabled="!canChange"
+    name="label-select"
+    id="label-select"
+  >
+  </select>
+</div>
+

@@ -34,13 +34,13 @@
     <link href="app/css/streamflow.css" rel="stylesheet">
     <link href="http://fonts.googleapis.com/css?family=Roboto:400,400italic,700" rel="stylesheet">
   </head>
-  <body ng-app="sf" sf-layout-style>
+  <body data-ng-app="sf" sf-layout-style>
     <div class="body">
-      <banner ng-show="isLoggedIn"></banner>
-      <login ng-show="!isLoggedIn"></login>
+      <banner data-ng-show="isLoggedIn"></banner>
+      <login data-ng-show="!isLoggedIn"></login>
       <div class="main">
-        <contextmenu params="contextmenuParams" ng-show="isLoggedIn"></contextmenu>
-        <div class="main-body cf" ng-view="">
+        <contextmenu params="contextmenuParams" data-ng-show="isLoggedIn"></contextmenu>
+        <div class="main-body cf" data-ng-view="">
         </div>
       </div>
     </div>
@@ -48,3 +48,4 @@
     <script src="app/streamflow.js"></script>
 </body>
 </html>
+

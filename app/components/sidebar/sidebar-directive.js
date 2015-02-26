@@ -222,14 +222,16 @@ angular.module('sf')
       }; // End Mark Read / Unread
 
       // Show Export Pdf
-      scope.showExportPopUp = function () {
-        scope.showExport =! scope.showExport;
+      scope.toggleExportPopup = function (visible) {
+        console.log('Show:', visible);
+        scope.showExport = visible;
         scope.commandView = true;
       }; // End Show Export Pdf
 
       scope.onExportButtonClicked = function () {
         caseService.getCasePdf($routeParams.caseId, scope.exportSubmittedForms, scope.exportAttachments, scope.exportConversations, scope.exportContacts, scope.exportCaseLog);
-        scope.showExportPopUp();
+        scope.toggleExportPopup(false);
+        console.log('Hide');
       };// End Send to
 
       // Close
@@ -282,18 +284,9 @@ angular.module('sf')
         updateObject(scope.attachments);
       };
 
-
       // Show / Close pop up
       scope.showExportCaseInfoPopUp = function () {
         scope.showExportInfo = true;
-      };
-      scope.showCaseInfoPopUp = function () {
-        scope.showCaseInfo = true;
-      };
-      scope.closePopUp = function () {
-        scope.showCaseInfo = false;
-        scope.showExportInfo = false;
-        scope.commandView = '';
       };
 
       // Filter for caselog
@@ -373,3 +366,4 @@ angular.module('sf')
     }
   };
 });
+

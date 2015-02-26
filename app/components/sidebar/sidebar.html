@@ -39,7 +39,7 @@
           <button data-ng-show="canMarkUnread" data-ng-click="markReadUnread(false)">Markera oläst</button>
           <button data-ng-show="canRestrict" data-ng-click="restrict()">Begränsa</button>
           <button data-ng-show="canUnrestrict" data-ng-click="unrestrict()">Begränsa inte</button>
-          <button data-ng-show="canExportCase" data-ng-click="showExportPopUp()">Exportera</button>
+          <button data-ng-show="canExportCase" data-ng-click="toggleExportPopup(false)">Exportera</button>
         </div>
       </div>
     </div>
@@ -154,22 +154,22 @@
     <div class="m-c">
       <form>
         <!-- Ärendetyp -->
-        <div sidebar-case-type class="row full" data-can-change="canChangeCaseType">
+        <div sidebar-case-type class="row full" can-change="canChangeCaseType">
         </div>
         <!-- /Ärendetyp -->
 
         <!-- Ärendelabel -->
-        <div sidebar-case-labels class="row" data-can-change="canAddLabel">
+        <div sidebar-case-labels class="row" can-change="canAddLabel">
         </div>
         <!-- /Ärendelabel -->
 
         <!-- Prioritet -->
-        <div sidebar-priority class="row" data-can-change="canChangePriority" data-ng-show="possiblePriorities.length !== 0">
+        <div sidebar-priority class="row" can-change="canChangePriority" data-ng-show="possiblePriorities.length !== 0">
         </div>
         <!-- /Prioritet -->
 
         <!-- Due date -->
-        <div sidebar-due-date class="row" data-can-change="canChangeDueOn">
+        <div sidebar-due-date class="row" can-change="canChangeDueOn">
         </div>
         <!-- /Due date -->
       </form>
@@ -178,60 +178,9 @@
   <!-- /Module: Status -->
 
   <!-- Module: Ärende -->
-  <div class="m m-convos">
-    <div class="m-h">
-      <a href="#/cases/{{ caze[0].id }}/edit" ng-show="!caze[0].text"><h2>Ärende</h2></a>
-      <a href="#/cases/{{ caze[0].id }}" ng-show="caze[0].text"><h2>Ärende</h2></a>
-      <a href="" class="action-btn" ng-click="showCaseInfoPopUp()"><i class="icon-info"></i></a>
-    </div>
-    <div class="m-c">
-      <ul>
-        <li>
-          <a href="#/cases/{{ caze[0].id }}" class="block-link case-sidebar-info">
-            <h3>{{caze[0].text}}</h3>
-            <p data-ng-hide="notes.length === 0" data-ng-bind-html="notes[0].note | limitTo: 250"></p>
-          </a>
-          <div class="convo-status">
-            <a href="#/cases/{{ caze[0].id }}/noteshistory" class="icon-history-file icon-case-history" title="Ärendebeskrivning, historik">
-              <span class="struct">Ärendebeskrivning, historik</span>
-            </a>
-          </div>
-        </li>
-      </ul>
-    </div>
+  <div sidebar-case class="m m-convos">
   </div>
   <!-- /Module: Ärende -->
-
-  <!-- Module: Allmänt -->
-  <modal dialog-title="Ärendeinformation" show="showCaseInfo">
-    <table class="log-table">
-      <caption>Allmänt</caption>
-      <tr>
-        <th>Ansvarig</th>
-        <td>{{ caze[0].owner }}</td>
-      </tr>
-      <tr>
-        <th>Skapad av</th>
-        <td>{{ caze[0].createdBy }}</td>
-      </tr>
-      <tr>
-        <th>Handläggare</th>
-        <td>{{ caze[0].assignedTo }}</td>
-      </tr>
-    </table>
-    <table class="log-table">
-      <caption>Åtkomst</caption>
-      <tr>
-        <th>Läsa</th>
-        <td>{{ permissions[0].readAccess }}</td>
-      </tr>
-      <tr>
-        <th>Skriva</th>
-        <td>{{ permissions[0].writeAccess }}</td>
-      </tr>
-    </table>
-  </modal>
-  <!-- /Module: Allmänt -->
 
   <!-- Module: Formulär -->
   <div sidebar-forms class="m m-convos" can-create="canCreateFormDraft" data-ng-show="possibleForms.length > 0">

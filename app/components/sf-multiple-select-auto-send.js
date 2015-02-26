@@ -14,27 +14,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 'use strict';
-angular.module('sf')
-.directive('sfMultipleSelectAutoSend', ['$parse', '$routeParams', 'caseService', function($parse, $params, caseService) {
-    return {
-      require: 'ngModel',
-      link: function(scope, element, attr, ngModel) {
 
-        var hasRunAtLeastOnce = false;
-        scope.$watch(attr.ngModel, function (newValue, oldValue) {
-          if (hasRunAtLeastOnce) {
+angular.module('sf').directive('sfMultipleSelectAutoSend', ['$parse', '$routeParams', 'caseService', function($parse, $params, caseService) {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attr) {
 
-            var espacedValues = _.map(newValue, function(value){
-              return value.indexOf(',') !== -1 ? '[' + value + ']' : value;
-            });
+      var hasRunAtLeastOnce = false;
+      scope.$watch(attr.ngModel, function (newValue) {
+        if (hasRunAtLeastOnce) {
 
-            var valueToSend = espacedValues.join(', ');
-            caseService.updateField($params.caseId, scope.$parent.form[0].draftId, attr.name, valueToSend);
-          }
+          var espacedValues = _.map(newValue, function(value){
+            return value.indexOf(',') !== -1 ? '[' + value + ']' : value;
+          });
 
-          hasRunAtLeastOnce = true;
-        });
-      }
-    };
-  }]);
+          var valueToSend = espacedValues.join(', ');
+          caseService.updateField($params.caseId, scope.$parent.form[0].draftId, attr.name, valueToSend);
+        }
+
+        hasRunAtLeastOnce = true;
+      });
+    }
+  };
+}]);
+

@@ -14,31 +14,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 'use strict';
 
-angular.module('sf')
-.directive('sfCheckboxAutoSend', ['$parse', '$routeParams', 'caseService', function($parse, $params, caseService) {
-    return {
-      require: 'ngModel',
-      link: function(scope, element, attr, ngModel) {
+angular.module('sf').directive('sfCheckboxAutoSend', ['$parse', '$routeParams', 'caseService', function($parse, $params, caseService) {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attr) {
 
-        var hasRunAtLeastOnce = false;
-        scope.$watch(attr.ngModel, function (newValue, oldValue) {
-          if (hasRunAtLeastOnce) {
-            var checked = _.chain($parse(attr.sfCheckboxAutoSend)())
-            .filter(function(input){
-              return input.checked;
-            }).map(function(input){
-              return input.name;
-            }).value();
+      var hasRunAtLeastOnce = false;
+      scope.$watch(attr.ngModel, function (newValue) {
+        if (hasRunAtLeastOnce) {
+          var checked = _.chain($parse(attr.sfCheckboxAutoSend)())
+          .filter(function(input){
+            return input.checked;
+          }).map(function(input){
+            return input.name;
+          }).value();
 
-            var valueToSend = checked.join(', ');
+          var valueToSend = checked.join(', ');
 
-            caseService.updateField($params.caseId, scope.$parent.form[0].draftId, attr.name, valueToSend);
-          }
+          caseService.updateField($params.caseId, scope.$parent.form[0].draftId, attr.name, valueToSend);
+        }
 
-          hasRunAtLeastOnce = true;
-        });
-      }
-    };
-  }]);
+        hasRunAtLeastOnce = true;
+      });
+    }
+  };
+}]);
+

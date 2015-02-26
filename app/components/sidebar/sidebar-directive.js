@@ -51,48 +51,81 @@ angular.module('sf')
       scope.exportContacts = false;
       scope.exportCaseLog = false;
 
-      scope.caze.promise.then(function(){
-        checkPermissionService.checkPermissions(scope, scope.caze.queries, ['exportpdf'], ['canExportCase']);
+      scope.caze.promise.then(function () {
+        checkPermissionService.checkPermissions(
+          scope,
+          scope.caze.queries,
+          ['exportpdf'],
+          ['canExportCase']
+        );
       });
-      scope.general.promise.then(function(){
-        checkPermissionService.checkPermissions(scope, scope.general.commands, ['casetype', 'changedueon', 'changedescription', 'changepriority'], ['canChangeCaseType', 'canChangeDueOn', 'canChangeDescription', 'canChangePriority']);
-        if (!scope.canChangeCaseType) {
-          $('.case-type-selected').addClass('cursor-default');
-        }
+
+      scope.general.promise.then(function () {
+        checkPermissionService.checkPermissions(
+          scope,
+          scope.general.commands,
+          ['casetype', 'changedueon', 'changedescription', 'changepriority'],
+          ['canChangeCaseType', 'canChangeDueOn', 'canChangeDescription', 'canChangePriority']
+        );
 
         if (scope.sidebardata && scope.canChangeDescription) {
           scope.sidebardata.canChangeDescription = true;
         }
       });
-      scope.notes.promise.then(function(){
 
-        checkPermissionService.checkPermissions(scope, scope.notes.commands, ['addnote'], ['canAddNote']);
+      scope.notes.promise.then(function () {
+        checkPermissionService.checkPermissions(
+          scope,
+          scope.notes.commands,
+          ['addnote'],
+          ['canAddNote']
+        );
 
-        if(scope.sidebardata && scope.canAddNote){
+        if (scope.sidebardata && scope.canAddNote) {
           scope.sidebardata.canAddNote = true;
         }
       });
-      scope.contacts.promise.then(function(){
-        checkPermissionService.checkPermissions(scope, scope.contacts.commands, ['add'], ['canAddContact']);
-      });
-      scope.conversations.promise.then(function(){
-        checkPermissionService.checkPermissions(scope, scope.conversations.commands, ['create'], ['canCreateConversation']);
-      });
-      scope.attachments.promise.then(function(){
-        checkPermissionService.checkPermissions(scope, scope.attachments.queries, ['createattachment'], ['canCreateAttachment']);
-      });
-      scope.possibleForms.promise.then(function(){
-        sidebarService.checkPossibleForms(scope, scope.possibleForms);
+
+      scope.contacts.promise.then(function () {
+        checkPermissionService.checkPermissions(
+          scope,
+          scope.contacts.commands,
+          ['add'],
+          ['canAddContact']
+        );
       });
 
-      if($routeParams.formId && $routeParams.caseId){
+      scope.conversations.promise.then(function () {
+        checkPermissionService.checkPermissions(
+          scope,
+          scope.conversations.commands,
+          ['create'],
+          ['canCreateConversation']
+        );
+      });
+
+      scope.attachments.promise.then(function () {
+        checkPermissionService.checkPermissions(
+          scope,
+          scope.attachments.queries,
+          ['createattachment'],
+          ['canCreateAttachment']
+        );
+      });
+
+      scope.possibleForms.promise.then(function () {
+        sidebarService.checkPossibleForms(
+          scope,
+          scope.possibleForms
+        );
+      });
+
+      if ($routeParams.formId && $routeParams.caseId) {
         scope.submittedForms = caseService.getSubmittedForms($routeParams.caseId, $routeParams.formId);
       }
-      //End declare scope objects
 
-      //Watch
-      scope.$watch('caze[0]', function(newVal){
-        if(!newVal){
+      scope.$watch('caze[0]', function (newVal) {
+        if (!newVal) {
           return;
         }
         $rootScope.$broadcast('breadcrumb-updated',
@@ -100,40 +133,40 @@ angular.module('sf')
           {projectType: scope.caze[0].listType},
           {caseId: scope.caze[0].caseId}]);
 
-        if(scope.sidebardata){
+        if (scope.sidebardata) {
           scope.sidebardata.caze = scope.caze;
         }
       });
 
-      scope.$watch('notes', function(newVal){
+      scope.$watch('notes', function (newVal) {
         if(!newVal){
           return;
         }
-        if(scope.sidebardata){
+        if (scope.sidebardata) {
           scope.sidebardata.notes = scope.notes;
         }
       });
 
-      scope.$watch('conversations', function(newVal){
-        if(!newVal){
+      scope.$watch('conversations', function (newVal) {
+        if (!newVal) {
           return;
         }
-        if(scope.sidebardata){
+        if (scope.sidebardata) {
           scope.sidebardata.conversations = scope.conversations;
         }
       });
 
-      scope.$watch('caze', function(newVal){
-        if(!newVal){
+      scope.$watch('caze', function (newVal) {
+        if (!newVal) {
           return;
         }
         scope.caze = newVal;
       });
 
       /* HTTP NOTIFICATIONS */
-      scope.errorHandler = function(){
+      scope.errorHandler = function () {
         var bcMessage = caseService.getMessage();
-        if(bcMessage !== 200)  {
+        if (bcMessage !== 200) {
           growl.warning('errorMessage');
         }
       };
@@ -155,41 +188,6 @@ angular.module('sf')
         scope.commandView = '';
       }; //End Resolve
 
-      // Due on
-      scope.general.promise.then(function (result) {
-        scope.dueOnShortStartValue = result[0].dueOnShort;
-
-      });
-      scope.changeDueOn = function (date) {
-        sidebarService.changeDueOn(scope, date);
-      }; // End due on
-
-      // Priority
-      scope.priority = '-1';
-      scope.priorityColor = {};
-      scope.activePriorityColor = {};
-      sidebarService.priority(scope);
-      scope.changePriorityLevel = function(priorityId){
-        sidebarService.changePriorityLevel(scope, priorityId);
-      }; //End Priority
-
-      // Case type
-      sidebarService.caseType(scope);
-      scope.changeCaseType = function(caseType){
-        sidebarService.changeCaseType(scope, caseType);
-      }; // End case type
-
-      // Case labels
-      scope.allCaseLabels = [];
-      scope.activeLabels = [];
-      scope.previousActiveLabels = [];
-      var updateCaseLabels = function() {
-        sidebarService.updateCaseLabels(scope);
-      };
-      updateCaseLabels();
-      scope.changeCaseLabels = function (labels) {
-        sidebarService.changeCaseLabels(scope, labels);
-      }; // End case labels
 
       // Commands (toolbar)
       var updateToolbar = function () {
@@ -224,14 +222,16 @@ angular.module('sf')
       }; // End Mark Read / Unread
 
       // Show Export Pdf
-      scope.showExportPopUp = function () {
-        scope.showExport =! scope.showExport;
+      scope.toggleExportPopup = function (visible) {
+        console.log('Show:', visible);
+        scope.showExport = visible;
         scope.commandView = true;
       }; // End Show Export Pdf
 
       scope.onExportButtonClicked = function () {
         caseService.getCasePdf($routeParams.caseId, scope.exportSubmittedForms, scope.exportAttachments, scope.exportConversations, scope.exportContacts, scope.exportCaseLog);
-        scope.showExportPopUp();
+        scope.toggleExportPopup(false);
+        console.log('Hide');
       };// End Send to
 
       // Close
@@ -243,13 +243,13 @@ angular.module('sf')
       };// End Close
 
       // FormOnClose
-      scope.closeWithForm = function(){
+      scope.closeWithForm = function () {
         scope.commandView = 'formonclose';
         scope.show = true;
       }; // End FormOnClose
 
       // Reopen
-      scope.reopen = function(){
+      scope.reopen = function () {
         sidebarService.reopen(scope);
       };
       // End Reopen
@@ -271,31 +271,22 @@ angular.module('sf')
       scope.downloadAttachment = function (attachment) {
         sidebarService.downloadAttachment(scope, attachment);
       };
-      scope.deleteAttachment = function(attachmentId){
+      scope.deleteAttachment = function (attachmentId) {
         sidebarService.deleteAttachment(scope, attachmentId);
       }; // End Attachments
 
-      scope.exportCaseInfo = function(){
+      scope.exportCaseInfo = function () {
         scope.caseExportInfo = caseService.getCaseExportInfo($routeParams.caseId);
       };
-      scope.onFileSelect = function($files){
+      scope.onFileSelect = function ($files) {
         var url = httpService.apiUrl + 'workspacev2/cases/' + $routeParams.caseId + '/attachments/createattachment';
         fileService.uploadFiles($files, url);
         updateObject(scope.attachments);
       };
 
-
       // Show / Close pop up
-      scope.showExportCaseInfoPopUp = function(){
+      scope.showExportCaseInfoPopUp = function () {
         scope.showExportInfo = true;
-      };
-      scope.showCaseInfoPopUp = function(){
-        scope.showCaseInfo = true;
-      };
-      scope.closePopUp = function(){
-        scope.showCaseInfo = false;
-        scope.showExportInfo = false;
-        scope.commandView = '';
       };
 
       // Filter for caselog
@@ -375,3 +366,4 @@ angular.module('sf')
     }
   };
 });
+

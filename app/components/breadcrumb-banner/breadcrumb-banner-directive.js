@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2009-2014 Jayway Products AB
+ * Copyright 2009-2015 Jayway Products AB
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 'use strict';
 
 angular.module('sf')
@@ -26,22 +27,21 @@ angular.module('sf')
     },
     link: function (scope) {
       scope.breadcrumbList = null;
-      scope.$watch('breadcrumbList', function(newVal){
-        if(!newVal){
+      scope.$watch('breadcrumbList', function (newVal) {
+        if (!newVal) {
           return;
         }
         scope.breadcrumbList = newVal;
       });
 
-      $rootScope.$on('breadcrumb-updated', function(event, breadcrumbList) {
-        var newbcItems = getBreadcrumbItems(breadcrumbList);
+      $rootScope.$on('breadcrumb-updated', function (event, breadcrumbList) {
         scope.breadcrumbList = getBreadcrumbItems(breadcrumbList);
       });
 
-      var getBreadcrumbItems = function(breadcrumbList){
+      var getBreadcrumbItems = function (breadcrumbList) {
         var bcList = [];
-        _.each(breadcrumbList, function(breadcrumbItem){
-          _.each(breadcrumbItem, function(val, key){
+        _.each(breadcrumbList, function (breadcrumbItem) {
+          _.each(breadcrumbItem, function (val) {
             bcList.push(val);
           });
         });
@@ -50,3 +50,4 @@ angular.module('sf')
     }
   };
 });
+

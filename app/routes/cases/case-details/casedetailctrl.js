@@ -16,21 +16,21 @@
  */
 'use strict';
 angular.module('sf')
-.controller('CaseDetailCtrl', function($scope, $rootScope, $routeParams, caseService, navigationService){
+.controller('CaseDetailCtrl', function ($scope) {
 
   $scope.sidebardata = {};
 
-  $scope.$watch('sidebardata.caze', function(newVal){
-    if(!newVal){
+  $scope.$watch('sidebardata.caze', function (newVal) {
+    if (!newVal) {
       return;
     }
-    if($scope.sidebardata){
+    if ($scope.sidebardata) {
       $scope.caze = $scope.sidebardata.caze;
     }
   });
 
-  $scope.$watch('sidebardata.notes', function(newVal){
-    if(!newVal){
+  $scope.$watch('sidebardata.notes', function (newVal) {
+    if (!newVal) {
       return;
     }
     $scope.notes = $scope.sidebardata.notes;

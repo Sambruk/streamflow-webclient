@@ -1,0 +1,19 @@
+<div class="m-h">
+  <h2>Konversationer</h2>
+  <a data-ng-hide="!canCreate" href="#/cases/{{ caze[0].id }}/conversation/create" class="action-btn">Ny konversation <i class="icon-plus"></i></a>
+</div>
+<div class="m-c">
+  <ul>
+    <li data-ng-repeat="conversation in conversations track by $index" class="convo-li">
+      <a href="#/cases/{{ caze[0].id }}/conversation/{{ conversation.id }}" class="block-link convCaseSidebar">
+        <h3>{{ conversation.text }}</h3>
+        <span class="date">{{ conversation.creationDate | dateTime }}</span>
+        <div class="convo-status">
+          <div class="icon-user" title="{{ conversation.participants }} användare i konversationen">{{ conversation.participants }} <span class="struct">användare i konversationen</span></div>
+          <div class="icon-chat" title="{{ conversation.messages }} meddelanden i konversationen">{{ conversation.messages }} <span class="struct">meddelanden i konversationen</span></div>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>
+

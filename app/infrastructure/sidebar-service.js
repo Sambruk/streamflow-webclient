@@ -16,8 +16,7 @@
  */
 'use strict';
 
-angular.module('sf')
-.factory('sidebarService', function($routeParams, caseService, $q, $rootScope, $location, navigationService, tokenService, checkPermissionService){
+angular.module('sf').factory('sidebarService', function ($routeParams, caseService, $q, $rootScope, $location, navigationService, tokenService, checkPermissionService) {
 
   var sortByText = function (x, y) {
     var xS = x.text && x.text.toUpperCase() || '',
@@ -36,7 +35,7 @@ angular.module('sf')
     itemToUpdate.resolve();
   };
 
-  var _changePriorityLevel = function(scope, priorityId) {
+  var _changePriorityLevel = function (scope, priorityId) {
     if (priorityId === '-1') {
       priorityId = '';
     }
@@ -54,31 +53,27 @@ angular.module('sf')
     });
   };
 
-  var _changeCaseType = function(scope, casetype) {
-    caseService.changeCaseType($routeParams.caseId, casetype).then(function() {
-      if(!scope.possibleForms){
+  var _changeCaseType = function (scope, casetype) {
+    caseService.changeCaseType($routeParams.caseId, casetype).then(function () {
+      if (!scope.possibleForms) {
         scope.possibleForms = caseService.getSelectedPossibleForms($routeParams.caseId);
-      }else{
+      } else {
         _updateObject(scope.possibleForms);
       }
 
-      if(!scope.possiblePriorities){
+      if (!scope.possiblePriorities) {
         scope.possiblePriorities = caseService.getPossiblePriorities($routeParams.caseId);
-      }else{
+      } else {
         _updateObject(scope.possiblePriorities);
       }
 
-      scope.general.invalidate();
-      scope.general.resolve().then(function(){
-        _priority(scope);
-      });
-
-      scope.possibleForms.promise.then(function(){
+      scope.possibleForms.promise.then(function () {
         _checkPossibleForms(scope);
-        if(scope.possibleForms.length === 0){
+
+        if (scope.possibleForms.length === 0) {
           // Check if the current route contains formdraft to redirect to "case main page"
           var checkRoute = new RegExp('formdrafts').test($location.path());
-          if(checkRoute === true){
+          if (checkRoute === true) {
             var href = navigationService.caseHrefSimple($routeParams.caseId);
             window.location.replace(href);
           }
@@ -94,7 +89,7 @@ angular.module('sf')
     });
   };
 
-  var _checkPossibleForms = function(scope){
+  var _checkPossibleForms = function (scope){
     if(!scope.possibleForms){
       return;
     }
@@ -110,7 +105,7 @@ angular.module('sf')
     }
   };
 
-  var _updateCaseLabels = function(scope) {
+  var _updateCaseLabels = function (scope) {
     if (!scope.caseLabel) {
       scope.caseLabel = caseService.getCaseLabel($routeParams.caseId);
 
@@ -202,7 +197,7 @@ angular.module('sf')
 
       scope.show = false;
       scope.caze.invalidate();
-      scope.caze.resolve().then(function(response){
+      scope.caze.resolve().then(function(){
         $rootScope.$broadcast('case-changed');
         $rootScope.$broadcast('case-owner-changed');
 
@@ -304,7 +299,7 @@ angular.module('sf')
     });
   };
 
-  var _reopen = function(scope){
+  var _reopen = function(){
     caseService.reopenCase($routeParams.caseId).then(function(){
       // To do this or do invalidate/resolve on everything in case
       window.location.reload();
@@ -361,11 +356,11 @@ angular.module('sf')
   var _changeDueOn = function (scope, date) {
     // Must be in the future and time must be set (but is not used).
     var isoString = (new Date(date + 'T23:59:59.000Z')).toISOString();
-    if(scope.canChangeDueOn){
+    if (scope.canChange) {
       caseService.changeDueOn($routeParams.caseId, isoString).then(function () {
         scope.general.invalidate();
         scope.general.resolve().then(function (result) {
-          scope.dueOnShortStartValue = result[0].dueOnShort;
+          scope.dueOn = result[0].dueOnShort;
         });
       });
     }
@@ -453,3 +448,4 @@ angular.module('sf')
     checkPossibleForms: _checkPossibleForms
   };
 });
+

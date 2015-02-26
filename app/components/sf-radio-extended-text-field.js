@@ -14,15 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 'use strict';
-angular.module('sf')
-.directive('sfRadioExtendedTextField', ['$parse', '$routeParams', '$timeout', 'caseService', function($parse, $params, $timeout, caseService) {
+
+angular.module('sf').directive('sfRadioExtendedTextField', ['$parse', '$routeParams', '$timeout', 'caseService', function($parse, $params, $timeout, caseService) {
   return {
     require: 'ngModel',
-    link: function(scope, element, attr, ngModel) {
+    link: function(scope, element, attr) {
 
       var hasRunAtLeastOnce = false;
-      scope.$watch(attr.ngModel, function (newValue, oldValue) {
+      scope.$watch(attr.ngModel, function (newValue) {
 
         if (hasRunAtLeastOnce) {
           var extendedOptions = $parse(attr.sfRadioExtendedTextField)();

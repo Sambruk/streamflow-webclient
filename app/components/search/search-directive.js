@@ -33,9 +33,6 @@ angular.module('sf').directive('search', function ($location, $timeout, navigati
             // Only hide if none of the elements defined above have focus.
             angular.forEach($elements, function (el) {
               var $el = angular.element(el);
-              if ($el.is(':focus')) {
-                console.log(okToHide);
-              }
             });
 
             // Focus has left the search terms dialog entirely.

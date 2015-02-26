@@ -39,7 +39,7 @@
           <button data-ng-show="canMarkUnread" data-ng-click="markReadUnread(false)">Markera oläst</button>
           <button data-ng-show="canRestrict" data-ng-click="restrict()">Begränsa</button>
           <button data-ng-show="canUnrestrict" data-ng-click="unrestrict()">Begränsa inte</button>
-          <button data-ng-show="canExportCase" data-ng-click="showExportPopUp()">Exportera</button>
+          <button data-ng-show="canExportCase" data-ng-click="toggleExportPopup(false)">Exportera</button>
         </div>
       </div>
     </div>
@@ -154,81 +154,22 @@
     <div class="m-c">
       <form>
         <!-- Ärendetyp -->
-        <div class="row full">
-          <div class="select">
-            <label for="type-select">Ärendetyp</label>
-            <select
-              chosen
-              no-results-text="'Inga ärendetyper funna'"
-              data-placeholder="Ärendetyp"
-              data-ng-options="caseType.id as caseType.text group by caseType.title for caseType in possibleCaseTypes"
-              data-ng-model="caseType"
-              data-ng-change="changeCaseType(caseType)"
-              data-ng-disabled="!canChangeCaseType"
-              name="name-select"
-              id="type-select"
-            >
-            </select>
-          </div>
+        <div sidebar-case-type class="row full" can-change="canChangeCaseType">
         </div>
         <!-- /Ärendetyp -->
 
         <!-- Ärendelabel -->
-        <div class="row">
-          <div class="select">
-            <label for="label-select">Etiketter</label>
-            <select
-              chosen
-              multiple
-              no-results-text="'Inga etiketter funna'"
-              data-placeholder="Etikett"
-              data-ng-options="label as label.text for label in allCaseLabels"
-              data-ng-model="activeLabels"
-              data-ng-change="changeCaseLabels(activeLabels)"
-              data-ng-disabled="!canAddLabel"
-              name="label-select"
-              id="label-select"
-            >
-            </select>
-          </div>
+        <div sidebar-case-labels class="row" can-change="canAddLabel">
         </div>
         <!-- /Ärendelabel -->
 
         <!-- Prioritet -->
-        <div data-ng-show="possiblePriorities.length !== 0" class="row sidebar-priority">
-          <div class="select">
-            <label for="priority-select">Prioritet</label>
-            <span class="priority-color" ng-style="activePriorityColor"></span>
-            <select
-              data-ng-disabled="!canChangePriority"
-              data-ng-options="priority.id as priority.text for priority in possiblePriorities"
-              data-ng-model="priority"
-              data-ng-change="changePriorityLevel(priority, activePriorityColor, priorityColor, caseId);"
-              name="priority-select"
-              id="priority-select"
-            >
-            </select>
-          </div>
+        <div sidebar-priority class="row" can-change="canChangePriority" data-ng-show="possiblePriorities.length !== 0">
         </div>
         <!-- /Prioritet -->
 
         <!-- Due date -->
-        <div class="row">
-          <div class="text">
-            <label for="issue-due-date">Förfaller</label>
-            <div class="set-due-date">
-              <input
-                sf-date-picker-fancy
-                type="text"
-                placeholder="Förfallodatum"
-                ng-model="dueOnShort"
-                data-ng-change="changeDueOn(dueOnShort)"
-                id="issue-due-date"
-                name="issue-due-date"
-                data-ng-disabled="!canChangeDueOn"
-              >
-            </div>
-          </div>
+        <div sidebar-due-date class="row" can-change="canChangeDueOn">
         </div>
         <!-- /Due date -->
       </form>
@@ -237,104 +178,17 @@
   <!-- /Module: Status -->
 
   <!-- Module: Ärende -->
-  <div class="m m-convos">
-    <div class="m-h">
-      <a href="#/cases/{{ caze[0].id }}/edit" ng-show="!caze[0].text"><h2>Ärende</h2></a>
-      <a href="#/cases/{{ caze[0].id }}" ng-show="caze[0].text"><h2>Ärende</h2></a>
-      <a href="" class="action-btn" ng-click="showCaseInfoPopUp()"><i class="icon-info"></i></a>
-    </div>
-    <div class="m-c">
-      <ul>
-        <li>
-          <a href="#/cases/{{ caze[0].id }}" class="block-link case-sidebar-info">
-            <h3>{{caze[0].text}}</h3>
-            <p data-ng-hide="notes.length === 0" data-ng-bind-html="notes[0].note | limitTo: 250"></p>
-          </a>
-          <div class="convo-status">
-            <a href="#/cases/{{ caze[0].id }}/noteshistory" class="icon-history-file icon-case-history" title="Ärendebeskrivning, historik">
-              <span class="struct">Ärendebeskrivning, historik</span>
-            </a>
-          </div>
-        </li>
-      </ul>
-    </div>
+  <div sidebar-case class="m m-convos">
   </div>
   <!-- /Module: Ärende -->
 
-  <!-- Module: Allmänt -->
-  <modal dialog-title="Ärendeinformation" show="showCaseInfo">
-    <table class="log-table">
-      <caption>Allmänt</caption>
-      <tr>
-        <th>Ansvarig</th>
-        <td>{{ caze[0].owner }}</td>
-      </tr>
-      <tr>
-        <th>Skapad av</th>
-        <td>{{ caze[0].createdBy }}</td>
-      </tr>
-      <tr>
-        <th>Handläggare</th>
-        <td>{{ caze[0].assignedTo }}</td>
-      </tr>
-    </table>
-    <table class="log-table">
-      <caption>Åtkomst</caption>
-      <tr>
-        <th>Läsa</th>
-        <td>{{ permissions[0].readAccess }}</td>
-      </tr>
-      <tr>
-        <th>Skriva</th>
-        <td>{{ permissions[0].writeAccess }}</td>
-      </tr>
-    </table>
-  </modal>
-  <!-- /Module: Allmänt -->
-
   <!-- Module: Formulär -->
-  <div class="m m-convos" data-ng-show="possibleForms.length > 0">
-    <div class="m-h">
-      <h2>Formulär</h2>
-    </div>
-    <div class="m-c">
-      <ul>
-        <li data-ng-repeat="form in possibleForms">
-          <a ng-show="!canCreateFormDraft" href="#/cases/{{ caze[0].id  }}/formhistory/{{ form.id }}" class="block-link convCaseSidebar">
-            <h3>{{form.text}}</h3>
-          </a>
-          <a ng-show="canCreateFormDraft" href="#/cases/{{ caze[0].id  }}/formdrafts/{{ form.id }}" class="block-link convCaseSidebar">
-            <h3>{{form.text}}</h3>
-            <span data-ng-repeat="submittedForm in submittedForms = (submittedFormList | filter: form.id: submittedForm.id)"></span>
-          </a>
-          <div class="convo-status"> <a href="#/cases/{{ caze[0].id  }}/formhistory/{{ form.id }}"><span class="icon-history-doc" title="Formulär, historik">{{submittedForms.length}} <span class="struct">Formulär, historik</span></span></a>
-          </div>
-        </li>
-      </ul>
-    </div>
+  <div sidebar-forms class="m m-convos" can-create="canCreateFormDraft" data-ng-show="possibleForms.length > 0">
   </div>
   <!-- /Module: Formulär -->
 
   <!-- Module: Konversationer -->
-  <div class="m m-convos">
-    <div class="m-h">
-      <h2>Konversationer</h2>
-      <a data-ng-hide="!canCreateConversation" href="#/cases/{{ caze[0].id }}/conversation/create" class="action-btn">Ny konversation <i class="icon-plus"></i></a>
-    </div>
-    <div class="m-c">
-      <ul>
-        <li data-ng-repeat="conversation in conversations track by $index" class="convo-li">
-          <a href="#/cases/{{ caze[0].id }}/conversation/{{ conversation.id }}" class="block-link convCaseSidebar">
-            <h3>{{ conversation.text }}</h3>
-            <span class="date">{{ conversation.creationDate | dateTime }}</span>
-            <div class="convo-status">
-              <div class="icon-user" title="{{ conversation.participants }} användare i konversationen">{{ conversation.participants }} <span class="struct">användare i konversationen</span></div>
-              <div class="icon-chat" title="{{ conversation.messages }} meddelanden i konversationen">{{ conversation.messages }} <span class="struct">meddelanden i konversationen</span></div>
-            </div>
-          </a>
-        </li>
-      </ul>
-    </div>
+  <div sidebar-conversations class="m m-convos" can-create="canCreateConversation">
   </div>
   <!-- /Module: Konversationer -->
 

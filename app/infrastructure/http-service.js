@@ -17,123 +17,115 @@
 
 'use strict';
 
-var sf = angular.module('sf');
+angular.module('sf').factory('httpService', function ($q, $cacheFactory, buildMode, $location, $http, $window, errorHandlerService, tokenService) {
+  var token = tokenService.getToken();
 
-angular.module('sf')
-.factory('httpService', function ($q, $cacheFactory, buildMode, $location, $http, $window, errorHandlerService, tokenService) {
-    var token = tokenService.getToken();
+  if (token) {
+    $http.defaults.headers.common.Authorization = 'Basic ' + token;
+  }
 
-    if (token) {
-      $http.defaults.headers.common.Authorization = 'Basic ' + token;
+  function prepareBaseUrl() {
+    var url = $location.absUrl();
+    var li = url.lastIndexOf($location.path());
+    var index = url.substring(0, li);
+    var baseUrl = index.substring(0, index.lastIndexOf('/'));
+    return baseUrl;
+  }
+
+  function prepareApiUrl() {
+    var protocol = $location.$$protocol;
+    var host = $location.$$host;
+    var port = $location.$$port;
+    var urlPrefix = protocol;//+ '://dummyuser:dummypass@';
+    var prodUrl = urlPrefix + '://' + host +':'+ port + '/webclient/api/';
+
+    switch (buildMode) {
+      case 'prod':
+        return prodUrl;
+      case 'dev':
+        return 'https://test-sf.jayway.com/streamflow/';
+        //return 'http://localhost:8082/streamflow/';
+      default:
+        return 'https://dummyuser:dummypass@test-sf.jayway.com/streamflow/';
+        /*return baseUrl.replace(/(https?:\/\/)/, function (protocol) {
+          return protocol + 'dummyuser:dummypass@';
+        }) + '/api/';*/
     }
+  }
 
-    function prepareBaseUrl() {
-      var url = $location.absUrl();
-      var li = url.lastIndexOf($location.path());
-      var index = url.substring(0, li);
-      var baseUrl = index.substring(0, index.lastIndexOf('/'));
-      return baseUrl;
-    }
+  var baseUrl = prepareBaseUrl();
+  var apiUrl = prepareApiUrl(baseUrl);
+  var cache = $cacheFactory('sfHttpCache');
 
-    function prepareApiUrl(baseUrl) {
-      var protocol = $location.$$protocol;
-      var host = $location.$$host;
-      var port = $location.$$port;
-      var urlPrefix = protocol;//+ '://dummyuser:dummypass@';
-      var prodUrl = urlPrefix + '://' + host +':'+ port + '/webclient/api/';
+  return {
+    baseUrl: baseUrl,
+    apiUrl: apiUrl,
 
-      switch (buildMode) {
-        case 'prod':
-          return prodUrl;
-        case 'dev':
-          return 'https://test-sf.jayway.com/streamflow/';
-          //return 'http://localhost:8082/streamflow/';
-        default:
-          return 'https://dummyuser:dummypass@test-sf.jayway.com/streamflow/';
-          /*return baseUrl.replace(/(https?:\/\/)/, function (protocol) {
-            return protocol + 'dummyuser:dummypass@';
-          }) + '/api/';*/
-      }
-    }
+    info: function() {
+      return cache.info();
+    },
 
-    var invalidate = function(hrefs) {
-        hrefs.forEach(function(href) {
-          cache.remove(href);
-        });
-      };
-    var baseUrl = prepareBaseUrl();
-    var apiUrl = prepareApiUrl(baseUrl);
-    var cache = $cacheFactory('sfHttpCache');
+    absApiUrl: function(href) {
+      return this.apiUrl + href;
+    },
 
-    return {
-      baseUrl: baseUrl,
-      apiUrl: apiUrl,
+    isCached: function(href) {
+      return !!cache.get(href);
+    },
 
-      info: function() {
-        return cache.info();
-      },
+    invalidate: function(hrefs) {
+      hrefs.forEach(function(href) {
+        // console.log('invalidate: ' + href);
+        //console.log(href);
+        cache.remove(href);
+      });
+    },
 
-      absApiUrl: function(href) {
-        return this.apiUrl + href;
-      },
-
-      isCached: function(href) {
-        return !!cache.get(href);
-      },
-
-      invalidate: function(hrefs) {
-        hrefs.forEach(function(href) {
-          // console.log('invalidate: ' + href);
-          //console.log(href);
-          cache.remove(href);
-        });
-      },
-
-      //GET: skipCache decides whether to skip the cache or not.
-      // if skipCache the cached item href will be removed from cache and
-      // replaced with updated one.
-      getRequest: function (href, skipCache) {
-        //if(skipCache === true){
-        //  cache.remove(href);
-        //}
-        var result = cache.get(href);
-        var resultUndefined = angular.isUndefined(result);
-        if (!result || resultUndefined === true) {
-          var url = this.prepareUrl(href);
-          var promise = $http({
-            method:'GET',
-            url: url
-          });
-          cache.put(href, promise);
-          //console.log(cache);
-          return promise;
-        }
-
-        return result;
-      },
-
-      prepareUrl: function(href) {
-        if (href[0] === '/') {
-          return (/\/streamflow/).test(href) ?  this.absApiUrl(href.substring(11)) : href;
-        }
-        else {
-          return this.absApiUrl(href);
-        }
-      },
-
-      postRequest: function (href, data) {
-        var params = $.param(data);
+    //GET: skipCache decides whether to skip the cache or not.
+    // if skipCache the cached item href will be removed from cache and
+    // replaced with updated one.
+    getRequest: function (href) {
+      //if(skipCache === true){
+      //  cache.remove(href);
+      //}
+      var result = cache.get(href);
+      var resultUndefined = angular.isUndefined(result);
+      if (!result || resultUndefined === true) {
         var url = this.prepareUrl(href);
-        return $http({
-          method: 'POST',
-          url: url,
-          timeout: this.timeout,
-          data: params,
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        var promise = $http({
+          method:'GET',
+          url: url
         });
+        cache.put(href, promise);
+        //console.log(cache);
+        return promise;
       }
 
+      return result;
+    },
 
-    };
+    prepareUrl: function(href) {
+      if (href[0] === '/') {
+        return (/\/streamflow/).test(href) ?  this.absApiUrl(href.substring(11)) : href;
+      }
+      else {
+        return this.absApiUrl(href);
+      }
+    },
 
-  });
+    postRequest: function (href, data) {
+      var params = $.param(data);
+      var url = this.prepareUrl(href);
+      return $http({
+        method: 'POST',
+        url: url,
+        timeout: this.timeout,
+        data: params,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      });
+    }
+
+  };
+
+});
+

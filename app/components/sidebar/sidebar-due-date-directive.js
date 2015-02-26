@@ -1,0 +1,23 @@
+'use strict';
+
+angular.module('sf').directive('sidebarDueDate', function (sidebarService) {
+  return {
+    restrict: 'A',
+    scope: {
+      canChange: '='
+    },
+    templateUrl: 'components/sidebar/sidebar-due-date.html',
+    link: function (scope) {
+      scope.general = scope.$parent.general;
+
+      scope.general.promise.then(function (result) {
+        scope.dueOn = result[0].dueOnShort;
+      });
+
+      scope.changeDueOn = function (date) {
+        sidebarService.changeDueOn(scope, date);
+      };
+    }
+  };
+});
+

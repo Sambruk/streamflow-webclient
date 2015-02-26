@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sf')
-  .controller('LogoutCtrl', function($rootScope, $route){
-    $rootScope.$broadcast('logout', true);
-  });
+angular.module('sf').controller('LogoutCtrl', function ($rootScope) {
+  $rootScope.$broadcast('logout', true);
+});
+

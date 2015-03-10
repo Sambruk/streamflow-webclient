@@ -27,6 +27,16 @@
     <select data-ng-options="form.index as form.submissionDate for form in submittedForms" id="selectedSubmittedForm" data-ng-model="selectedSubmittedForm"></select>
   </span>
   <br />
+  <div class="form-history" ng-if="submittedForm[0].signatures.length > 0">
+    <div class="form-history-sections cf row">
+      <div class="section-history-item">Signatur</div>
+    </div>
+    <div class="form-history-field">
+      <div data-ng-repeat="signature in submittedForm[0].signatures">
+        <div class="form-field"><em>{{signature.name}}</em>: {{signature.signerName}} ({{signature.signerId}})</div>
+      </div>
+    </div>
+  </div>
   <div class="form-history" data-ng-repeat="page in submittedForm[0].pages">
     <div class="form-history-sections cf row">
       <div class="section-history-item">{{page.name}}</div>

@@ -27,6 +27,7 @@
     <select data-ng-options="form.index as form.submissionDate for form in submittedForms" id="selectedSubmittedForm" data-ng-model="selectedSubmittedForm"></select>
   </span>
   <br />
+  <!-- Signature -->
   <div class="form-history" ng-if="submittedForm[0].signatures.length > 0">
     <div class="form-history-sections cf row">
       <div class="section-history-item">Signatur</div>
@@ -37,6 +38,26 @@
       </div>
     </div>
   </div>
+  <!-- Second signer -->
+  <div class="form-history" ng-if="submittedForm[0].secondSignee">
+    <div class="form-history-sections cf row">
+      <div class="section-history-item">Information om nästa signatur</div>
+    </div>
+    <div class="form-history-field" ng-if="!submittedForm[0].secondSignee.singlesignature">
+      <div class="form-field"><em>Namn</em>: {{submittedForm[0].secondSignee.name}}</div>
+      <div class="form-field"><em>Telefon</em>: {{submittedForm[0].secondSignee.phonenumber}}</div>
+      <div class="form-field"><em>Personnummer</em>: {{submittedForm[0].secondSignee.socialsecuritynumber}}</div>
+      <div class="form-field"><em>E-post</em>: {{submittedForm[0].secondSignee.email}}</div>
+      <div class="form-field"><em>Länk till följdformulär</em>: <a href="{{submittedForm[0].secondSignee.secondDraftUrl}}" target="_blank">{{submittedForm[0].secondSignee.secondDraftUrl}}</a></div>
+     </div>
+    <div class="form-history-field" ng-if="!submittedForm[0].secondSignee.singlesignature">
+      <div class="form-field" ng-if="submittedForm[0].secondSignee.secondsigneetaskref"><button ng-click="sendSignatureReminder(submittedForm[0].secondSignee.secondsigneetaskref)">Skicka påminnelse</button> Senaste påminnelse skickad: {{submittedForm[0].secondSignee.lastReminderSent | googleDate}}</div>
+    </div>
+    <div class="form-history-field" ng-if="submittedForm[0].secondSignee.singlesignature">
+      <div class="form-field">Alternativet att endast ha en signatur är valt.</div>
+    </div>
+  </div>
+  <!-- Pages -->
   <div class="form-history" data-ng-repeat="page in submittedForm[0].pages">
     <div class="form-history-sections cf row">
       <div class="section-history-item">{{page.name}}</div>

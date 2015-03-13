@@ -1273,6 +1273,19 @@ angular.module('sf')
           function(error){
             caseBase.broadcastMessage(error);
           });
+      },
+      sendSignatureReminder: function(caseId, taskRef) {
+        return backendService.postNested(
+          caseBase(caseId).concat([
+            {resources: 'submittedforms'},
+            {commands: 'resenddoublesignemail'}
+          ]),
+          {secondsigntaskref: taskRef}).then(function(result){
+            caseBase.broadcastMessage(result.status);
+          },
+          function(error){
+            caseBase.broadcastMessage(error);
+          });
       }
     };
   });

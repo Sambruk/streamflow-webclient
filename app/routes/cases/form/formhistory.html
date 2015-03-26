@@ -65,10 +65,20 @@
 
     <div class="form-history-field">
       <div data-ng-repeat="field in page.fields">
-        <div ng-if="field.fieldType === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue'" class="form-field"><em>{{ field.field }}</em>: {{ field.value | attachmentJson }}
+        <div ng-if="field.fieldType === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue'" class="form-field">
+          <em>{{ field.field }}</em>: {{ field.value | attachmentJson }}
           <button ng-click="downloadFormAttachment(field)">Ladda ner</button>
         </div>
-        <div ng-hide="field.fieldType === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue'" class="form-field"><em>{{ field.field }}</em>: {{ field.value  | dateTime}}</div>
+        <div ng-if="field.fieldType === 'se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue'" class="form-field">
+          <div data-ng-if="field.value">
+            <em>{{ field.field }}</em>: <i class="map-point"></i>Plats är angiven på kartan
+          </div>
+          <div data-ng-if="!field.value">
+            <em>{{ field.field }}</em>: <i class="map-point"></i>Ingen plats angiven på kartan
+          </div>
+        </div>
+        <div ng-hide="field.fieldType === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue' || field.fieldType === 'se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue'"
+             class="form-field"><em>{{ field.field }}</em>: {{ field.value  | dateTime}}</div>
       </div>
     </div>
     <div ng-show="$last === true">

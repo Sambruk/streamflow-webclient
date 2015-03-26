@@ -116,11 +116,11 @@ gulp.task('lint', function () {
 
 gulp.task('build-scripts', ['lint', 'unit-test'], function () {
   return gulp.src(paths.scripts)
-    .pipe(sourcemaps.init())
-      .pipe(concat('streamflow.js'))
-      .pipe(ngAnnotate())
-      .pipe(uglify())
-    .pipe(sourcemaps.write())
+    //.pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(ngAnnotate())
+    .pipe(concat('streamflow.js'))
+    //.pipe(uglify())
+    //.pipe(sourcemaps.write())
     .pipe(gulp.dest('build/app'))
     .pipe(connect.reload());
 });

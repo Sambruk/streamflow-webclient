@@ -27,7 +27,8 @@
     "angular-growl-v2": "~0.7.3",
     "angular-filter": "https://github.com/a8m/angular-filter.git",
     "angular-chosen-localytics": "~1.0.7",
-    "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip"
+    "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip",
+    "angular-google-maps": "~2.0.17"
   },
   "overrides": {
     "chosen": {

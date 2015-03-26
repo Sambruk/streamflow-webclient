@@ -33,6 +33,7 @@ module.exports = function(config){
       'bower_components/underscore/underscore-min.js',
       'bower_components/angular-filter/dist/angular-filter.js',
       'bower_components/angular-chosen-localytics/chosen.js',
+      'bower_components/angular-google-maps/dist/angular-google-maps.js',
       'app/config/config.js',
       'app/*.js',
       'app/components/**/*js',

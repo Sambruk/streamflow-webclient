@@ -25,8 +25,17 @@ angular.module('sf', [
     'angularFileUpload',
     'sf.config',
     'angular.filter',
-    'localytics.directives'
+    'localytics.directives',
+    'uiGmapgoogle-maps'
   ])
+  .config(function(uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+      key: 'AIzaSyCqH4sFJMZXvVTaBm4JYk2v089WlarlBtw',
+      v: '3.17',
+      libraries: 'places,drawing',
+      language: 'sv'
+    });
+  })
   .run(function ($rootScope, $http, httpService, $location, $routeParams, tokenService) {
 
     $rootScope.hasToken = tokenService.hasToken;

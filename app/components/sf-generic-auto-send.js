@@ -24,7 +24,6 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
 
       var hasRunAtLeastOnce = false;
       scope.$watch(attr.ngModel, function (newValue) {
-
         if (hasRunAtLeastOnce) {
 
           // Validation

@@ -18,7 +18,7 @@
 -->
 <div ng-class="{'content-primary': !closeWithForm}" role="main">
   <div class="form-content">
-  <!--<iframe ng-src="http://test-sf.jayway.com/surface/?ap=" + {{caseId}}></iframe>-->
+    <!--<iframe ng-src="http://test-sf.jayway.com/surface/?ap=" + {{caseId}}></iframe>-->
 
     <div ng-init="selectForm(currentFormId)"></div>
     <div class="m m-c">
@@ -26,9 +26,10 @@
     </div>
     <div ng-hide="showSpinner.form">
       <ol class="form-sections cf row">
-        <li class="section-item" data-ng-class="{sel: currentFormPage.title==page.title}" data-ng-repeat="page in form[0].enhancedPages" id="{{page.page}}">
-          <a href="" id="page-{{$index}}"data-ng-click="issueForm.$valid && selectFormPage(page)">
-          {{page.title}}
+        <li class="section-item" data-ng-class="{sel: currentFormPage.title==page.title}"
+            data-ng-repeat="page in form[0].enhancedPages" id="{{page.page}}">
+          <a href="" id="page-{{$index}}" data-ng-click="issueForm.$valid && selectFormPage(page)">
+            {{page.title}}
           </a>
         </li>
       </ol>
@@ -42,7 +43,10 @@
               <div class="text col full col-1">
                 <data-ng-form name="{{ field.field.field }}">
                   <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
-                  <input maxlength="{{ field.field.fieldValue.width }}" data-ng-required="field.field.mandatory" data-ng-pattern="field.field.fieldValue.regularExpression" type="text" data-ng-model="field.value" name="{{ field.field.field }}" id="field-{{ field.field.field }}" sf-generic-auto-send>
+                  <input maxlength="{{ field.field.fieldValue.width }}" data-ng-required="field.field.mandatory"
+                         data-ng-pattern="field.field.fieldValue.regularExpression" type="text"
+                         data-ng-model="field.value" name="{{ field.field.field }}" id="field-{{ field.field.field }}"
+                         sf-generic-auto-send>
                   <data-ng-include class="m-c" src="'routes/cases/form/form-validation-errors.html'"></data-ng-include>
                 </data-ng-form>
               </div>
@@ -52,7 +56,10 @@
               <div class="text col full col-1">
                 <data-ng-form name="{{ field.field.field }}">
                   <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
-                  <input maxlength="{{ field.field.fieldValue.width }}" data-required="field.field.mandatory" type="text" date-input-type="date" sf-date-picker data-ng-model="field.value" name="{{ field.field.field }}" id="field-{{ field.field.field }}" sf-generic-auto-send data-field-type="{{ field.field.fieldValue._type }}">
+                  <input maxlength="{{ field.field.fieldValue.width }}" data-required="field.field.mandatory"
+                         type="text" date-input-type="date" sf-date-picker data-ng-model="field.value"
+                         name="{{ field.field.field }}" id="field-{{ field.field.field }}" sf-generic-auto-send
+                         data-field-type="{{ field.field.fieldValue._type }}">
                   <data-ng-include class="m-c" src="'routes/cases/form/form-validation-errors.html'"></data-ng-include>
                 </data-ng-form>
               </div>
@@ -62,7 +69,9 @@
               <div class="text col full col-1">
                 <data-ng-form name="{{ field.field.field }}">
                   <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
-                  <input ng-required="field.field.mandatory" data-ng-pattern="field.field.fieldValue.regularExpression" type="text" data-ng-model="field.value" name="{{ field.field.field }}" id="field-{{ field.field.field }}" sf-generic-auto-send>
+                  <input ng-required="field.field.mandatory" data-ng-pattern="field.field.fieldValue.regularExpression"
+                         type="text" data-ng-model="field.value" name="{{ field.field.field }}"
+                         id="field-{{ field.field.field }}" sf-generic-auto-send>
                   <data-ng-include class="m-c" src="'routes/cases/form/form-validation-errors.html'"></data-ng-include>
                 </data-ng-form>
               </div>
@@ -72,13 +81,16 @@
               <div class="text col full col-1" id="{{field.field.field}}">
                 <data-ng-form name="{{ field.field.field }}">
                   <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
-                  <textarea data-ng-model="field.value" name="{{ field.field.field }}" id="field-{{ field.field.field }}" cols="{{ field.field.fieldValue.cols }}" rows="{{ field.field.fieldValue.rows }}" data-ng-required="field.field.mandatory" sf-generic-auto-send></textarea>
+                  <textarea data-ng-model="field.value" name="{{ field.field.field }}"
+                            id="field-{{ field.field.field }}" cols="{{ field.field.fieldValue.cols }}"
+                            rows="{{ field.field.fieldValue.rows }}" data-ng-required="field.field.mandatory"
+                            sf-generic-auto-send></textarea>
                   <data-ng-include class="m-c" src="'routes/cases/form/form-validation-errors.html'"></data-ng-include>
                 </data-ng-form>
               </div>
             </div>
 
-            <div data-ng-switch-when="se.streamsource.streamflow.api.administration.form.ComboBoxFieldValue" >
+            <div data-ng-switch-when="se.streamsource.streamflow.api.administration.form.ComboBoxFieldValue">
               <div class="select col medium col-2 form-comboBox" id="{{field.field.field}}">
                 <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
                 <!--<select data-ng-model="field.value"
@@ -86,7 +98,9 @@
                 <select data-ng-model="field.value"
                         class="sidebar-chosen-drop-down ng-pristine ng-valid ng-touched"
                         name="{{ field.field.field }}" id="field-{{ field.field.field }}"
-                        data-ng-options="option.value as option.name for option in field.field.fieldValue.options" ng-change="reapplyRules()" sf-generic-auto-send data-field-type="{{ field.field.fieldValue._type }}">
+                        data-ng-options="option.value as option.name for option in field.field.fieldValue.options"
+                        ng-change="reapplyRules()" sf-generic-auto-send
+                        data-field-type="{{ field.field.fieldValue._type }}">
                 </select>
               </div>
             </div>
@@ -95,7 +109,8 @@
               <div class="select col medium col-2" id="{{field.field.field}}">
                 <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
                 <select multiple data-ng-multiple="true" data-ng-model="field.value"
-                        data-ng-options="option.value as option.name for option in field.field.fieldValue.options" sf-generic-auto-send name="{{ field.field.field }}"
+                        data-ng-options="option.value as option.name for option in field.field.fieldValue.options"
+                        sf-generic-auto-send name="{{ field.field.field }}"
                         data-field-type="{{ field.field.fieldValue._type }}">
                 </select>
                 <data-ng-include class="m-c" src="'routes/cases/form/form-validation-errors.html'"></data-ng-include>
@@ -105,10 +120,11 @@
             <div data-ng-switch-when="se.streamsource.streamflow.api.administration.form.OptionButtonsFieldValue">
               <div class="radio col medium col-2" id="{{field.field.field}}">
                 <data-ng-include class="m-c form-label" src="'routes/cases/form/form-label.html'"></data-ng-include>
-                <br />
+                <br/>
                   <span data-ng-repeat="option in field.field.fieldValue.values">
-                    <input data-ng-model="field.value" type="radio" name="{{ field.field.field }}" value="{{ option }}" ng-change="reapplyRules()" sf-generic-auto-send>{{ option }}</input>
-                    <br />
+                    <input data-ng-model="field.value" type="radio" name="{{ field.field.field }}" value="{{ option }}"
+                           ng-change="reapplyRules()" sf-generic-auto-send>{{ option }}</input>
+                    <br/>
                   </span>
               </div>
             </div>
@@ -116,14 +132,18 @@
             <div data-ng-switch-when="se.streamsource.streamflow.api.administration.form.OpenSelectionFieldValue">
               <div class="radio col medium col-2" id="{{field.field.field}}">
                 <data-ng-include class="m-c form-label" src="'routes/cases/form/form-label.html'"></data-ng-include>
-                <br />
+                <br/>
                   <span data-ng-repeat="option in field.field.fieldValue.extendedValues">
-                    <input sf-radio-extended-auto-send="{{ option.value != option.display }}" data-ng-model="field.value" type="radio" name="{{ field.field.field }}"
+                    <input sf-radio-extended-auto-send="{{ option.value != option.display }}"
+                           data-ng-model="field.value" type="radio" name="{{ field.field.field }}"
                            id="field-{{ field.field.field }}" value="{{ option.value }}">{{ option.display }}</input>
-                    <br />
+                    <br/>
                   </span>
+
                 <div data-ng-show="field.field.fieldValue.values.indexOf(field.value) === -1">
-                  <input data-ng-model="field.value" sf-radio-extended-text-field="{{ field.field.fieldValue.extendedValues }}" type="text" name="{{ field.field.field }}">
+                  <input data-ng-model="field.value"
+                         sf-radio-extended-text-field="{{ field.field.fieldValue.extendedValues }}" type="text"
+                         name="{{ field.field.field }}">
                 </div>
               </div>
             </div>
@@ -131,12 +151,15 @@
             <div data-ng-switch-when="se.streamsource.streamflow.api.administration.form.CheckboxesFieldValue">
               <div class="radio col-2 form" id="{{field.field.field}}">
                 <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
-                <br />
+                <br/>
                   <span data-ng-repeat="option in field.field.fieldValue.checkings">
-                    <input class="form-checkbox" type="checkbox" value="{{option.name}}" data-ng-model="option.checked" type="radio" name="{{ field.field.field }}"
-                           id="field-{{ field.field.field }}" ng-change="addToSelected(field)" sf-generic-auto-send data-field-type="{{ field.field.fieldValue._type }}"
-                           data-backing-field="{{ field.field.fieldValue.checkings }}"><label for="{{ field.field.field }}">{{ option.name }}</label></input>
-                    <br />
+                    <input class="form-checkbox" type="checkbox" value="{{option.name}}" data-ng-model="option.checked"
+                           type="radio" name="{{ field.field.field }}"
+                           id="field-{{ field.field.field }}" ng-change="addToSelected(field)" sf-generic-auto-send
+                           data-field-type="{{ field.field.fieldValue._type }}"
+                           data-backing-field="{{ field.field.fieldValue.checkings }}"><label
+                          for="{{ field.field.field }}">{{ option.name }}</label></input>
+                    <br/>
                   </span>
               </div>
             </div>
@@ -144,6 +167,7 @@
             <div data-ng-switch-when="se.streamsource.streamflow.api.administration.form.AttachmentFieldValue">
               <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
               <div ng-repeat="attachment in formAttachments">
+<<<<<<< HEAD
               	<label class="file-input-button" ng-show="!attachment.id && attachment.fieldId === field.field.field">
 	                <i class="icon-plus icon-white"></i>
 	                <span class="button-text">Bifoga fil</span>
@@ -154,24 +178,46 @@
 	                  <li>
 	                    <a href="">{{ attachment.name }}</a>
 	                    <a data-ng-click="deleteFormDraftAttachment(field.field.field)" href="" class="delete" title="Radera fil">
+=======
+                <div class="file-input-button" ng-show="!attachment.id && attachment.fieldId === field.field.field">
+                  <i class="icon-plus icon-white"></i>
+                  <span class="button-text">Bifoga fil</span>
+                  <input type="file" id="field-{{ field.field.field }}" name="file"
+                         ng-file-select="onFormDraftFileSelect($files, field.field.field )"/>
+                </div>
+                <div class="m m-attachments form-attachments" id="form-attachment-{{field.field.field}}"
+                     style="float:left" ng-show="attachment.id && attachment.fieldId === field.field.field">
+                  <ul class="zebra-list">
+                    <li>
+                      <a href="">{{ attachment.name }}</a>
+                      <a data-ng-click="deleteFormDraftAttachment(field.field.field)" href="" class="delete"
+                         title="Radera fil">
+>>>>>>> Google maps integration. Some quite minor issues remain like init position settings, icon for Find my location, and more.
                         <i class="icon-close"></i>
                         <span class="struct">Radera fil</span>
                       </a>
-	                  </li>
-	                </ul>
-	              </div>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
 
 
             <div data-ng-switch-when="se.streamsource.streamflow.api.administration.form.CommentFieldValue">
-              <div class="col medium col-2" id="{{field.field.field}}" data-ng-bind-html-unsafe="field.field.note"></div>
+              <div class="col medium col-2" id="{{field.field.field}}"
+                   data-ng-bind-html-unsafe="field.field.note"></div>
+            </div>
+
+
+            <div data-ng-switch-when="se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue">
+              <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
+              <google-map data-ng-model="field.value" name="{{field.field.field}}" id="field-{{field.field.field}}" map-options="mapOptions" field-settings="field.field.fieldValue" data-sf-generic-auto-send></google-map>
             </div>
 
             <div data-ng-switch-default>
               <div class="text col full col-1">
                 <b>{{ field.field.description }}</b>
-                <br />
+                <br/>
                 Not supported form type
                 <i>{{ field.field.fieldValue._type }}</i>
               </div>
@@ -181,19 +227,25 @@
         </div>
 
         <div data-ng-show="currentFormPage" class="row button-group">
-          <a href="" class="btn inline" data-ng-class="{inactive: isFirstPage() || !issueForm.$valid}" data-ng-click="!isFirstPage() && issueForm.$valid && previousFormPage()">Tillbaka</a>
-          <a data-ng-hide="isLastPage(currentFormPage)" href="" class="btn inline" data-ng-class="{inactive: isLastPage() || !issueForm.$valid}" data-ng-click="!isLastPage() && issueForm.$valid && nextFormPage()">Nästa</a>
-          <input data-ng-show="isLastPage(currentFormPage)" type="submit" id="submitForm" value="Slutför" class="btn inline" data-ng-class="{inactive: !issueForm.$valid}" data-ng-disabled="!issueForm.$valid" /></input>
+          <a href="" class="btn inline" data-ng-class="{inactive: isFirstPage() || !issueForm.$valid}"
+             data-ng-click="!isFirstPage() && issueForm.$valid && previousFormPage()">Tillbaka</a>
+          <a data-ng-hide="isLastPage(currentFormPage)" href="" class="btn inline"
+             data-ng-class="{inactive: isLastPage() || !issueForm.$valid}"
+             data-ng-click="!isLastPage() && issueForm.$valid && nextFormPage()">Nästa</a>
+          <input data-ng-show="isLastPage(currentFormPage)" type="submit" id="submitForm" value="Slutför"
+                 class="btn inline" data-ng-class="{inactive: !issueForm.$valid}"
+                 data-ng-disabled="!issueForm.$valid" /></input>
           <!--<a data-ng-hide=isLastPage(currentFormPage) href="" class="btn inline" data-ng-class="{inactive: isLastPage() || !issueForm.$valid}" data-ng-click="!isLastPage() && issueForm.$valid && nextFormPage()">Nästa</a>-->
         </div>
       </form>
     </div>
     <div ng-show="showSpinner.form" class="spinner"></div>
 
-  </div> <!-- /form-content -->
+  </div>
+  <!-- /form-content -->
   <div>
   </div>
 </div>
 
 <!-- Content secondary -->
-	<sidebar ng-show="!closeWithForm" class="sidebar-content" sidebardata="sidebardata"></sidebar>
+<sidebar ng-show="!closeWithForm" class="sidebar-content" sidebardata="sidebardata"></sidebar>

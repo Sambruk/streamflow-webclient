@@ -194,7 +194,7 @@
 
             <div data-ng-switch-when="se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue">
               <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
-              <google-map data-ng-model="field.value" name="{{field.field.field}}" id="field-{{field.field.field}}" map-options="mapOptions" field-settings="field.field.fieldValue" data-sf-generic-auto-send></google-map>
+              <google-map data-ng-model="field.value" name="{{field.field.field}}" id="field-{{field.field.field}}" location-settings="locationSettings" field-settings="field.field.fieldValue" data-sf-generic-auto-send></google-map>
             </div>
 
             <div data-ng-switch-default>

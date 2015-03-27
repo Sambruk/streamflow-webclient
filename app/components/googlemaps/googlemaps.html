@@ -16,7 +16,7 @@
   <div class="lookup">
     <input type="text" id="map-search-input" class="" data-ng-model="searchValue">
     <button class="btn" type="button" data-ng-click="search($event)">Sök</button>
-    <button class="btn" type="button" data-ng-click="findMe($event)">Min position</button>
+    <button class="btn" type="button" data-ng-click="findMe($event)"><i class="icon-target"></i>&nbsp;Min position</button>
     <div id="mapErrorMsg">{{searchError}}</div>
     <ul class="search-results">
       <li data-ng-repeat="result in searchResults"><a href="" data-ng-click="selectAddress($event, result.location)">{{result.address}}</a></li>

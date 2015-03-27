@@ -609,7 +609,6 @@ angular.module('sf')
         });
       },
       createCaseLogEntry: function(caseId, value) {
-        //debugger;
         var specs = caseBase(caseId).concat([{resources: 'caselog'}, {commands: 'addmessage'}]),
             data = {string: value};
 
@@ -916,6 +915,22 @@ angular.module('sf')
             index.draftId = formDraftId;
 
             result.push(index);
+            caseBase.broadcastMessage(result.status);
+          },
+          onFailure:function(err){
+            caseBase.broadcastMessage(err);
+          }
+        });
+      },
+
+      getFormDraftLocationSettings: function(caseId, formDraftId){
+        return backendService.get({
+          specs:caseBase(caseId).concat([
+            {resources: 'formdrafts/' + formDraftId, unsafe: true},
+            {queries: 'settings'}
+          ]),
+          onSuccess:function(resource, result){
+            result.push(resource.response);
             caseBase.broadcastMessage(result.status);
           },
           onFailure:function(err){

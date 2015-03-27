@@ -21,7 +21,7 @@ angular.module('sf').directive('googleMap', function () {
     templateUrl: '/components/googlemaps/googlemaps.html',
     scope: {
       ngModel: "=",
-      mapOptions: "=",
+      locationSettings: "=",
       fieldSettings: "="
     },
     controller: function ($scope, uiGmapGoogleMapApi, uiGmapIsReady) {
@@ -36,12 +36,11 @@ angular.module('sf').directive('googleMap', function () {
 
         // TODO: Read startPosition and zoomLevel from settings
         var startPosition;
-        var zoomLevel = 14;
 
         if ($scope.mapValue.value.location) {
           startPosition = new LatLong($scope.mapValue.value.location)
         } else {
-          startPosition = {latitude: 59.3500, longitude: 18.0667};
+          startPosition = $scope.locationSettings.location;
         }
 
         var mapOptions = {
@@ -54,7 +53,7 @@ angular.module('sf').directive('googleMap', function () {
 
         $scope.map = {
           center: startPosition,
-          zoom: zoomLevel,
+          zoom: $scope.locationSettings.zoomLevel,
           options: mapOptions,
           control: {},
           markersControl: {}
@@ -157,7 +156,7 @@ angular.module('sf').directive('googleMap', function () {
               map: map
             });
             map.setCenter($scope.marker.position);
-            map.setZoom(14);
+            map.setZoom($scope.locationSettings.zoomLevel);
             reverseGeocode($scope.marker.position, function () {
               changeModel();
             });
@@ -178,7 +177,7 @@ angular.module('sf').directive('googleMap', function () {
               $scope.polygon.setMap(map);
             } else {
               map.setCenter({lat: 59.3500, lng: 18.0667});
-              map.setZoom( 14 );
+              map.setZoom( $scope.locationSettings.zoomLevel );
             }
             reverseGeocode(path[0], function () {
               changeModel();
@@ -186,7 +185,7 @@ angular.module('sf').directive('googleMap', function () {
 
             if (path.length > 0) {
               map.setCenter(path[0]);
-              map.setZoom( 14 );
+              map.setZoom( $scope.locationSettings.zoomLevel );
             }
           }
         }
@@ -224,7 +223,7 @@ angular.module('sf').directive('googleMap', function () {
         var position = location.lat() + ", " + location.lng();
         $scope.mapValue.updateLocation(position);
         map.setCenter($scope.marker.position);
-        map.setZoom(14);
+        map.setZoom($scope.locationSettings.zoomLevel);
 
         reverseGeocode($scope.marker.position, function () {
           changeModel();
@@ -242,7 +241,7 @@ angular.module('sf').directive('googleMap', function () {
           var location = position.coords.latitude + ", " + position.coords.longitude;
           $scope.mapValue.updateLocation(location);
           map.setCenter($scope.marker.position);
-          map.setZoom( 14 );
+          map.setZoom( $scope.locationSettings.zoomLevel );
 
           reverseGeocode($scope.marker.position, function() {
             changeModel();

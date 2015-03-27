@@ -88,11 +88,13 @@ angular.module('sf')
           caseService.getFormDraftId($routeParams.caseId, formId).promise.then(function (response) {
             $scope.formDraftId = response[0].id;
           }).then(function () {
+            var settings = caseService.getFormDraftLocationSettings($routeParams.caseId, $scope.formDraftId);
+            settings.promise.then(function (response) {
+              $scope.locationSettings = response[0];
+            });
             var form = caseService.getFormDraftFromForm($routeParams.caseId, $scope.formDraftId);
             form.promise.then(function (response) {
-
               $scope.getFormData(response);
-
             })
               .then(function () {
                 if ($scope.isLastPage()) {
@@ -108,6 +110,10 @@ angular.module('sf')
             $scope.showSpinner.form = false;
             $scope.possibleForm.invalidate();
             $scope.possibleForm.resolve();
+            var settings = caseService.getFormDraftLocationSettings($routeParams.caseId, $scope.formDraftId);
+            settings.promise.then(function (response) {
+              $scope.locationSettings = response[0];
+            });
             var form = caseService.getFormDraft($routeParams.caseId, draftId);
             form.promise.then(function (response) {
               $scope.form = response;
@@ -149,9 +155,6 @@ angular.module('sf')
             };
 
             $scope.formAttachments.push(attachment);
-          } else if (field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue') {
-            // Init the google map directive
-            console.log(JSON.stringify(field));
           }
         });
       });

@@ -26,14 +26,21 @@
         <div class="form-row cols-1">
           <div class="text select large full">
             <select
-              data-placeholder="Deltagare/e-post"
-              class="chosen-conversation-participant chosen-select"
-              style="width: 100%;"
-              data-ng-options="option.id as option.text for option in possibleParticipants"
-              data-ng-model="participant"
-              name="convo-text"
-              id="convo-select"
-            >
+                chosen
+                no-results-text="'Inga deltagare funna'"
+                data-placeholder="Deltagare/e-post"
+                data-ng-options="participant.id as participant.text for participant in possibleParticipants"
+                data-ng-model="participant"
+                search_contains="true"
+                style="width: 100%;"
+                name="convo-participant-select"
+                id="convo-participant-select"
+                >
+              <!--
+                  empty option needs to be here due to this issue:
+                  https://github.com/localytics/angular-chosen/issues/8
+              -->
+              <option></option>
             </select>
           </div>
         </div>

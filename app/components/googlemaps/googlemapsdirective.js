@@ -40,7 +40,7 @@ angular.module('sf').directive('googleMap', function () {
         if ($scope.mapValue.value.location) {
           startPosition = new LatLong($scope.mapValue.value.location)
         } else {
-          startPosition = $scope.locationSettings.location;
+          startPosition = new LatLong($scope.locationSettings.location);
         }
 
         var mapOptions = {

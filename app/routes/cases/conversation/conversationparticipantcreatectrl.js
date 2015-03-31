@@ -16,7 +16,7 @@
  */
 'use strict';
 angular.module('sf')
-  .controller('ConversationParticipantCreateCtrl', function($scope, caseService, $routeParams, navigationService) {
+  .controller('ConversationParticipantCreateCtrl', function($scope, caseService, $routeParams, navigationService, $location) {
     $scope.caseId = $routeParams.caseId;
     $scope.conversationId = $routeParams.conversationId;
     $scope.possibleParticipants = caseService.getPossibleConversationParticipants($routeParams.caseId, $routeParams.conversationId);
@@ -60,7 +60,8 @@ angular.module('sf')
       var href = navigationService.caseHrefSimple($routeParams.caseId) + '/conversation/' + $routeParams.conversationId;
       $scope.possibleParticipants.invalidate();
       $scope.possibleParticipants.resolve();
-      window.location.assign(href);
+      var hrefWithoutHash = href.slice(1);
+      $location.path(hrefWithoutHash);
     };
 
     $scope.addParticipant = function($event){

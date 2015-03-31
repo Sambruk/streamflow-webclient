@@ -39,9 +39,8 @@
       <banner data-ng-show="isLoggedIn"></banner>
       <login data-ng-show="!isLoggedIn"></login>
       <div class="main">
+        <div class="main-body cf" data-ng-view=""></div>
         <contextmenu params="contextmenuParams" data-ng-show="isLoggedIn"></contextmenu>
-        <div class="main-body cf" data-ng-view="">
-        </div>
       </div>
     </div>
     <script src="app/vendor.js"></script>

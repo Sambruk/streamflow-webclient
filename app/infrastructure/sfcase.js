@@ -26,6 +26,9 @@ angular.module('sf').factory('SfCase', function() {
     overdueDays: function() {
       var oneDay = 24*60*60*1000;
       var now = new Date();
+      if (!this.dueOn) {
+        return 0;
+      }
       var dueOn = new Date(this.dueOn);
       var diff = Math.floor((now.getTime() - dueOn.getTime())/(oneDay));
       return diff > 0 ? diff : 0;

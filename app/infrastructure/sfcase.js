@@ -50,7 +50,7 @@ angular.module('sf').factory('SfCase', function() {
     },
 
     modificationDate: function() {
-      return this.lastModifiedDate || this.creationDate;
+      return this.lastLogEntryTime || this.creationDate;
     }
   };
   return SfCase;

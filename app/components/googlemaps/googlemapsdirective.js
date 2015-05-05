@@ -18,7 +18,7 @@
 angular.module('sf').directive('googleMap', function () {
   return {
     restrict: "E",
-    templateUrl: '/components/googlemaps/googlemaps.html',
+    templateUrl: 'components/googlemaps/googlemaps.html',
     scope: {
       ngModel: "=",
       locationSettings: "=",

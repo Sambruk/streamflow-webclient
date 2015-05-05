@@ -18,26 +18,29 @@
 
 angular.module('sf')
 .factory('casePropertiesService', function(caseService){
-    
+
     var checkCaseProperties = function(currentCases){
-      _.each(currentCases, function(caze){
-        caseService.getSelectedGeneral(caze.id).promise.then(function(response){
-          if(response[0].dueOnShort){
-            caze.dueOn = response[0].dueOnShort;
-          }
-          if(response[0].priority){
-            caseService.getPossiblePriorities(caze.id).promise.then(function(possiblePriorities){
-              _.each(possiblePriorities, function(priority){
-                if(response[0].priority.id === priority.id){
-                  caze.priority = priority;
-                }
+          _.each(currentCases, function(caze){
+            if(caze.dueOn) {
+              caze.dueOn = caze.dueOn.split('T')[0];
+            }
+
+            if(caze.priority){
+              //reset case priority and set again below if matching possible priority
+              var origPriority = caze.priority;
+              caze.priority = null;
+              caseService.getPossiblePriorities(caze.id).promise.then(function(possiblePriorities){
+                _.each(possiblePriorities, function(priority){
+                  if(origPriority.id === priority.id){
+                    caze.priority = priority;
+                  }
+                });
               });
-            });
-          }
-        });
-      });
-      return currentCases;
-    };
+            }
+
+          });
+          return currentCases;
+        };
 
   return {
     checkCaseProperties: checkCaseProperties

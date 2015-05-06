@@ -77,9 +77,12 @@
             <em>{{ field.field }}</em>: <i class="map-point"></i>Ingen plats angiven på kartan
           </div>
         </div>
-        <div ng-hide="field.fieldType === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue' || field.fieldType === 'se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue'"
+        <div ng-if="field.fieldType === 'se.streamsource.streamflow.api.administration.form.DateFieldValue'"
              class="form-field"><em>{{ field.field }}</em>: {{ field.value  | dateTime}}</div>
+        <div ng-hide="field.fieldType === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue' || field.fieldType === 'se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue' || field.fieldType === 'se.streamsource.streamflow.api.administration.form.DateFieldValue'"
+             class="form-field"><em>{{ field.field }}</em>: {{ field.value }}</div>
       </div>
+      
     </div>
     <div ng-show="$last === true">
       <div class="form-history-submitted" style="float:left;">Submitted: {{ submittedForm[0].submissionDate | dateTime}}</div>

@@ -128,10 +128,19 @@ angular.module('sf')
         if (!newVal) {
           return;
         }
-        $rootScope.$broadcast('breadcrumb-updated',
-          [{projectId: scope.caze[0].owner},
-          {projectType: scope.caze[0].listType},
-          {caseId: scope.caze[0].caseId}]);
+        $rootScope.$broadcast('breadcrumb-updated', [
+          {
+            title: scope.caze[0].owner
+          },
+          {
+            title: scope.caze[0].listType,
+            url: '#/projects/' + scope.caze[0].ownerId + '/' + scope.caze[0].listType
+          },
+          {
+            title: scope.caze[0].caseId,
+            url: '#/cases/' + scope.caze[0].id
+          }
+        ]);
 
         if (scope.sidebardata) {
           scope.sidebardata.caze = scope.caze;

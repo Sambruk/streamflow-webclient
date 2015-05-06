@@ -17,7 +17,7 @@
 'use strict';
 
 angular.module('sf')
-  .controller('CaseListCtrl', function($scope, $routeParams, projectService, $rootScope, caseService, groupByService, paginationService, casePropertiesService) {
+  .controller('CaseListCtrl', function($scope, $location, $routeParams, projectService, $rootScope, caseService, groupByService, paginationService, casePropertiesService) {
     $scope.currentCases = [];
     $scope.currentCases = projectService.getSelected($routeParams.projectId, $routeParams.projectType);
     $scope.totalCases = $scope.currentCases.length;
@@ -69,9 +69,25 @@ angular.module('sf')
       });
 
       if(owner.length > 0){
-        $rootScope.$broadcast('breadcrumb-updated', [{owner: response[0].owner}, {projectType: $routeParams.projectType}]);
+        $rootScope.$broadcast('breadcrumb-updated', [
+          {
+            title: response[0].owner
+          },
+          {
+            title: $routeParams.projectType,
+            url: '#/projects/' + $routeParams.projectId + '/' + $routeParams.projectType
+          }
+        ]);
       } else {
-        $rootScope.$broadcast('breadcrumb-updated', [{projectId: $routeParams.projectId}, {projectType: $routeParams.projectType}]);
+        $rootScope.$broadcast('breadcrumb-updated', [
+          {
+            title: $routeParams.projectId
+          },
+          {
+            title: $routeParams.projectType,
+            url: '#/projects/' + $routeParams.projectId + '/' + $routeParams.projectType
+          }
+        ]);
       }
 
       $scope.showSpinner.currentCases = false;

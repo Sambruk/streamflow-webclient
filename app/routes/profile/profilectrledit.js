@@ -22,8 +22,11 @@ angular.module('sf').controller('ProfileEditCtrl', function ($scope, profileServ
     $scope.profile = result;
 
     $rootScope.$broadcast('breadcrumb-updated', [
-      {projectId: 'Profile'},
-      {caseId: result[0].name}
+      {
+        title: 'Profile'
+      }, {
+        title: result[0].name
+      }
     ]);
   });
 

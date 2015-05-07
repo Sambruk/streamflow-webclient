@@ -201,9 +201,13 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
         $rootScope.$broadcast('case-changed');
         $rootScope.$broadcast('case-owner-changed');
 
-        $rootScope.$broadcast('breadcrumb-updated',
-          [{projectId: projectId},
-          {projectType: projectType}]);
+        debugger
+        $rootScope.$broadcast('breadcrumb-updated', [{
+          title: projectId
+        }, {
+          title: projectType,
+          url: '#/projects/' + projectId + '/' + projectType
+        }]);
 
         window.location.replace(href);
       });

@@ -35,6 +35,7 @@ angular.module('sf')
       });
 
       $rootScope.$on('breadcrumb-updated', function (event, breadcrumbList) {
+        debugger
 //        scope.breadcrumbList = getBreadcrumbItems(breadcrumbList);
         scope.breadcrumbList = breadcrumbList;
       });

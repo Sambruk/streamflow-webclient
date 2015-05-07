@@ -17,7 +17,7 @@
 
 'use strict';
 
-angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $rootScope, searchService, groupByService, paginationService, caseService, casePropertiesService) {
+angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $rootScope, searchService, groupByService, paginationService, caseService) {
   $scope.currentCases = [];
 
   var query = $routeParams.query;
@@ -46,8 +46,6 @@ angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $r
     $scope.currentCases.promise.then(function(){
       originalCurrentCases = $scope.currentCases;
       $rootScope.$broadcast('breadcrumb-updated',[]);
-
-      $scope.currentCases = casePropertiesService.checkCaseProperties($scope.currentCases);
 
       // 'Pagination'
       $scope.itemsLimit = paginationService.itemsLimit(pagesShown);

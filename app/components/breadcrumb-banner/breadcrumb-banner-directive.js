@@ -35,21 +35,8 @@ angular.module('sf')
       });
 
       $rootScope.$on('breadcrumb-updated', function (event, breadcrumbList) {
-        debugger
-//        scope.breadcrumbList = getBreadcrumbItems(breadcrumbList);
         scope.breadcrumbList = breadcrumbList;
       });
-
-      var getBreadcrumbItems = function (breadcrumbList) {
-        debugger
-        var bcList = [];
-        _.each(breadcrumbList, function (breadcrumbItem) {
-          _.each(breadcrumbItem, function (val) {
-            bcList.push(val);
-          });
-        });
-        return bcList;
-      };
     }
   };
 });

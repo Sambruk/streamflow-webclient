@@ -2,13 +2,17 @@
   <a href="" ng-show="canCreateCase()" data-ng-click="createCase()" class="add-new-issue"><i class="icon-plus"></i><span class="struct">Lägg till nytt ärende</span></a>
   <div class="functions-menu" data-ng-class="{open: showSidebar}">
     <div class="functions-header cf">
-      <h2><a href="#/perspectives">Funktioner</a></h2>
+      <!--h2><a href="#/perspectives">Funktioner</a></h2-->
+      <h2><a href="#/perspectives">Funktioner</a>
+        <input type="text" class="filter" placeholder="Filtrera" data-ng-model="functionSearch.$">
+      </h2>
+
       <a href="" class="icon-menu open-toolbar" data-ng-click="toggleSidebar($event)">
         <span class="struct">Visa/dölj funktionsmeny</span>
       </a>
     </div>
     <div class="sub-categories">
-      <div class="sub-category" data-ng-repeat="project in projects">
+      <div class="sub-category" data-ng-repeat="project in projects | filter: functionSearch">
         <h3>{{project.text}}</h3>
         <ul>
           <li data-ng-repeat="type in project.types">

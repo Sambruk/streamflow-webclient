@@ -22,6 +22,8 @@ angular.module('sf')
     $scope.currentCases = projectService.getSelected($routeParams.projectId, $routeParams.projectType);
     $scope.totalCases = $scope.currentCases.length;
     $scope.projectType = $routeParams.projectType;
+    $scope.projects = projectService.getAll();
+
     var originalCurrentCases;
     var pagesShown = 1;
 
@@ -58,6 +60,22 @@ angular.module('sf')
       $scope.specificGroupByDefaultSortExpression = groupByService.getSpecificGroupByDefault(selectedGroupItem);
     };
 
+    $scope.projects.promise.then(function(response){
+      var projectName = _.filter(response, function(projects){
+        _.each(projects, function(project){
+          _.each(project, function(types){
+            var url = types.href;
+            if(url !== undefined){
+              var id = $routeParams.projectId;
+              if(url.contains(id)){
+                $rootScope.projectName = projects.text;
+              }
+            }
+          });
+        }); 
+      });
+    });
+
     //Set breadcrumbs to case-owner if possible else to project id
     $scope.currentCases.promise.then(function(response){
       var owner = _.filter(response, function(sfCase){
@@ -79,7 +97,7 @@ angular.module('sf')
       } else {
         $rootScope.$broadcast('breadcrumb-updated', [
           {
-            title: $routeParams.projectId
+            title: $rootScope.projectName
           },
           {
             title: $routeParams.projectType,

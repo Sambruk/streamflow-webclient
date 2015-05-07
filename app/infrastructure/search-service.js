@@ -22,6 +22,7 @@ angular.module('sf').factory('searchService', function (backendService, projectS
   var workspaceId = 'workspacev2';
 
   function getCases(query) {
+    query = query.replace(/: /g, ':');
     return backendService.get({
       specs: [
         {resources: workspaceId},

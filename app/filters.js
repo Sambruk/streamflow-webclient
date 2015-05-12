@@ -101,7 +101,7 @@ angular.module('sf')
       '2 Förfaller imorgon': 'Förfaller imorgon',
       '3 Förfaller inom en vecka': 'Förfaller inom en vecka',
       '4 Förfaller inom en månad': 'Förfaller inom en månad',
-      '5 Förfaller inom en månad': 'Förfaller om mer än en månad'
+      '5 Förfaller om mer än en månad': 'Förfaller om mer än en månad'
     };
 
     return translation[input] || input;

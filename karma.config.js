@@ -22,6 +22,7 @@ module.exports = function(config){
 
     files : [
       'bower_components/ng-file-upload/angular-file-upload-shim.js',
+      'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
       'bower_components/angular-resource/angular-resource.js',
       'bower_components/angular-growl-v2/build/angular-growl.js',
@@ -41,7 +42,8 @@ module.exports = function(config){
       'app/infrastructure/**/*.js',
       'app/routes/**/*.js',
       'test/fixture/backend.js',
-      'test/unit/**/*.js'
+      'test/unit/**/*.js',
+      'bower_components/ui-select/dist/select.js'
     ],
 
     exclude: ['test/e2e/**/*.js'],

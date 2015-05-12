@@ -21,6 +21,7 @@ angular.module('sf', [
     'ngResource',
     'ngAnimate',
     'angular-growl',
+    'ui.select',
     'ngSanitize',
     'angularFileUpload',
     'sf.config',

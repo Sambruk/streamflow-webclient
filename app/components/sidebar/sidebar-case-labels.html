@@ -1,17 +1,17 @@
-<div class="select">
+
   <label for="label-select">Etiketter</label>
-  <select
-    chosen
-    multiple
-    no-results-text="'Inga etiketter funna'"
-    data-placeholder="Etikett"
-    data-ng-options="label as label.text for label in allCaseLabels"
-    data-ng-model="activeLabels"
-    data-ng-change="changeCaseLabels(activeLabels)"
-    data-ng-disabled="!canChange"
-    name="label-select"
-    id="label-select"
-  >
-  </select>
-</div>
+  <ui-select multiple 
+        data-ng-model="activeLabels" 
+        theme="select2" 
+        data-ng-disabled="canChange" 
+        data-ng-change="changeCaseLabels(activeLabels)" 
+        name="label-select" 
+        id="label-select" 
+        style="width: 100%;">
+    <ui-select-match placeholder="Välj etiketter...">{{$item.text}}</ui-select-match>
+    <ui-select-choices repeat="label in possibleCaseLabels">
+      <div ng-bind-html="label.text"></div>
+    </ui-select-choices>
+  </ui-select>
+
 

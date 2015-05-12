@@ -49,14 +49,16 @@ var buildMode = (function () {
 var paths = {
   scripts: [
     'app/**/*.js',
-    '!app/design/**/*.js'
+    '!app/design/**/*.js',
+    'bower_components/ui-select/dist/select.js'
   ],
   css: [
     'app/design/gui/css/**/*.css',
     'bower_components/angular-growl-v2/build/angular-growl.css',
     'bower_components/pickadate/lib/themes/default.*',
     'bower_components/chosen/chosen.css',
-    'bower_components/angular-chosen-localytics/chosen-spinner.css'
+    'bower_components/angular-chosen-localytics/chosen-spinner.css',
+    'bower_components/ui-select/dist/select.css'
   ],
   templates: [
     'app/**/*.html'

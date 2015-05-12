@@ -51,7 +51,14 @@ angular.module('sf').factory('SfCase', function() {
 
     modificationDate: function() {
       return this.lastLogEntryTime || this.creationDate;
+    },
+
+    labelList: function() {
+      return this.labels.links.map(function(label) {
+        return label.text
+      }).join(', ');
     }
+
   };
   return SfCase;
 });

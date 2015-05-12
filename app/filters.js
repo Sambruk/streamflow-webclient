@@ -151,5 +151,12 @@ angular.module('sf')
     }
 
   };
+})
+.filter('parenthesis', function() {
+  return function(input) {
+    if(input) {
+      return '(' + input + ')';
+    }
+  }
 });
 

@@ -51,7 +51,7 @@
     <div ng-hide="showSpinner.currentCases">
       <ul class="issue-list" ng-init="defaultSortExpression = '-creationDate'">
         <li ng-show="currentCases['grouped'] && selectedItem.value !== 'caseId'" ng-repeat="(key, value) in currentCases | filter: filterSearch | groupBy: selectedItem.value track by $index">
-        	<h3 ng-show="selectedItem.value === 'checkPriority'" id="priorityHeader">{{key}}</h3>
+        	<h3 ng-show="selectedItem.value === 'checkPriority'" id="priorityHeader">{{key | slice: 1}}</h3>
 	        <h3 ng-show="selectedItem.value !== 'checkPriority'" id="groupingHeader">{{key | translate}}</h3>
 
 	        <div class="issue-item {{case.overdueStatus()}} caselistItem" ng-repeat="case in value | filter: filterSearch | orderBy: [sortExpression, specificGroupByDefaultSortExpression, defaultSortExpression]">

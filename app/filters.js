@@ -158,5 +158,18 @@ angular.module('sf')
       return '(' + input + ')';
     }
   }
+})
+.filter('slice', function() {
+  return function(input, start, end) {
+    if(input.slice) {
+      if(end){
+        return input.slice(start, end);
+      } else {
+        return input.slice(start);
+      }
+    } else {
+      return input;
+    }
+  }
 });
 

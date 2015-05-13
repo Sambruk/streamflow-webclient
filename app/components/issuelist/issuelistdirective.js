@@ -24,11 +24,26 @@ angular.module('sf')
     scope: {
       items: '=?'
     },
-    link: function(scope){
-      scope.currentCases = scope.items;
+    link: function (scope) {
+      var initCurrentCases = function () {
+        scope.items = items;
+        scope.currentCases = [];
+      };
+      initCurrentCases();
+
+      $scope.loadCases = function () {
+        var scrollSize = 10;
+        var last = $scope.currentCases.length - 1;
+        for(var i = 1; i <= scrollSize; i++) {
+          $scope.currentCases.push($scope.items[last + i]);
+        }
+      };
+
       scope.$watch('items', function(newVal){
+        debugger
         if(newVal){
-          scope.currentCases = newVal;
+          scope.items = newVal;
+          initCurrentCases();
         }
       });
     }

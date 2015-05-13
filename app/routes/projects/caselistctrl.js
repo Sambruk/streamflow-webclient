@@ -18,32 +18,42 @@
 
 angular.module('sf')
   .controller('CaseListCtrl', function($scope, $location, $routeParams, projectService, $rootScope, caseService, groupByService, paginationService) {
+    var originalCases = projectService.getSelected($routeParams.projectId, $routeParams.projectType);
     $scope.currentCases = [];
-    $scope.currentCases = projectService.getSelected($routeParams.projectId, $routeParams.projectType);
-    $scope.totalCases = $scope.currentCases.length;
     $scope.projectType = $routeParams.projectType;
     $scope.projects = projectService.getAll();
 
-    var originalCurrentCases;
-    var pagesShown = 1;
-
-    $scope.currentCases.promise.then(function(){
-      originalCurrentCases = $scope.currentCases;
+    originalCases.promise.then(function() {
 
       // 'Pagination'
-      $scope.itemsLimit = paginationService.itemsLimit(pagesShown);
-      $scope.hasMoreItemsToShow = paginationService.hasMoreItemsToShow($scope.currentCases, pagesShown);
+      $scope.totalCases = originalCases.length;
+      $scope.currentCases = originalCases.slice(0, 10);
 
       $scope.showMoreItems = function() {
-        pagesShown = paginationService.showMoreItems(pagesShown);
-        $scope.itemsLimit = paginationService.itemsLimit(pagesShown);
-        $scope.hasMoreItemsToShow = paginationService.hasMoreItemsToShow($scope.currentCases, pagesShown);
+        try {
+          if ($scope.currentCases.length >= originalCases.length) {
+            return;
+          }
+          $scope.showSpinner.infiniteScroll = true;
+          var pageSize = paginationService.pageSize;
+          if ($scope.currentCases.length + pageSize >= originalCases.length) {
+            pageSize = originalCases.length % pageSize > 0 ? originalCases.length % pageSize : pageSize;
+          }
+
+          var last = $scope.currentCases.length - 1;
+          for(var i = 1; i <= pageSize; i++) {
+            $scope.currentCases.push(originalCases[last + i]);
+          }
+        } finally {
+          $scope.showSpinner.infiniteScroll = false;
+        }
       };
+      $scope.showMoreItems();
     });
 
-
     $scope.showSpinner = {
-      currentCases: true
+      currentCases: true,
+      infiniteScroll: false
     };
 
     $scope.getHeader = function () {
@@ -56,7 +66,7 @@ angular.module('sf')
     $scope.groupingOptions = groupByService.getGroupingOptions();
 
     $scope.groupBy = function(selectedGroupItem) {
-      $scope.currentCases = groupByService.groupBy($scope.currentCases, originalCurrentCases, selectedGroupItem);
+      $scope.currentCases = groupByService.groupBy($scope.currentCases, originalCases, selectedGroupItem);
       $scope.specificGroupByDefaultSortExpression = groupByService.getSpecificGroupByDefault(selectedGroupItem);
     };
 
@@ -77,7 +87,7 @@ angular.module('sf')
     });
 
     //Set breadcrumbs to case-owner if possible else to project id
-    $scope.currentCases.promise.then(function(response){
+    originalCases.promise.then(function(response){
       var owner = _.filter(response, function(sfCase){
         if(sfCase.owner.length > 0){
           return sfCase.owner;

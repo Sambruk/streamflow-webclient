@@ -22,8 +22,8 @@
       <div class="due-date">
         <span>{{case.overdueDays() | positive}}</span>
         <data-ng-pluralize
-          count="case.overdueDays()"
-          when="{'0': '{{case.dueDate | shortDate}}', '1': 'dag', 'other': 'dagar '}">
+                count="case.overdueDays()"
+                when="{'0': '{{case.dueDate | shortDate}}', '1': 'dag', 'other': 'dagar '}">
         </data-ng-pluralize>
       </div>
       <div class="issue-description">

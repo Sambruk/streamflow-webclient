@@ -27,7 +27,8 @@ angular.module('sf', [
     'sf.config',
     'angular.filter',
     'localytics.directives',
-    'uiGmapgoogle-maps'
+    'uiGmapgoogle-maps',
+    'infinite-scroll'
   ])
   .config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({

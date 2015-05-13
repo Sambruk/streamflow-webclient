@@ -69,6 +69,7 @@ angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $r
           $scope.showSpinner.infiniteScroll = false;
         }
       };
+      $scope.showMoreItems();
     });
 
   });

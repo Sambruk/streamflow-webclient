@@ -189,7 +189,10 @@
 
             <div data-ng-switch-when="se.streamsource.streamflow.api.administration.form.CommentFieldValue">
               <div class="col medium col-2" id="{{field.field.field}}"
-                   data-ng-bind-html-unsafe="field.field.note"></div>
+                   data-ng-bind-html-unsafe="field.field.note">
+                   <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
+                   <div class="text col full col-1">{{field.field.note}}</div>
+              </div>
             </div>
 
             <div data-ng-switch-when="se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue">

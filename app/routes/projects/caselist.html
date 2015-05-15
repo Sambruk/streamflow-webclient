@@ -26,12 +26,12 @@
         <div class="sort">
           <label for="sortDropdown">Sortera</label>
           <select
-                  id="sortDropdown"
-                  ng-model="sortExpression">
-            <option value="">Ingen</option>
-            <option value="text">Beskrivning</option>
+              id="sortDropdown"
+              ng-model="sortExpression"
+              ng-init="sortExpression = '-creationDate'"> 
             <option value="-creationDate">Skapad</option>
             <option value="dueOn">Förfallodatum</option>
+            <option value="text">Beskrivning</option>
             <option value="priority.priority">Prioritet</option>
           </select>
         </div>

@@ -55,7 +55,7 @@ angular.module('sf').factory('SfCase', function() {
 
     labelList: function() {
       return this.labels.links.map(function(label) {
-        return label.text
+        return label.text;
       }).join(', ');
     }
 

@@ -157,7 +157,7 @@ angular.module('sf')
     if(input) {
       return '(' + input + ')';
     }
-  }
+  };
 })
 .filter('slice', function() {
   return function(input, start, end) {
@@ -170,6 +170,6 @@ angular.module('sf')
     } else {
       return input;
     }
-  }
+  };
 });
 

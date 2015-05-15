@@ -201,7 +201,6 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
         $rootScope.$broadcast('case-changed');
         $rootScope.$broadcast('case-owner-changed');
 
-        debugger
         $rootScope.$broadcast('breadcrumb-updated', [{
           title: projectId
         }, {

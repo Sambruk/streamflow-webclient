@@ -40,8 +40,8 @@
           <select
                   ng-options="option.name for option in groupingOptions"
                   ng-model="selectedItem"
-                  ng-change="groupBy(selectedItem)">
-            <option value="">Ingen</option>
+                  ng-change="groupBy(selectedItem)"
+                  ng-init="selectedItem = groupingOptions[0]">
           </select>
         </div>
       </div>

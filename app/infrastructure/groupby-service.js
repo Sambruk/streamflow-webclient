@@ -19,7 +19,10 @@
 angular.module('sf')
 .factory('groupByService', function(SfCase){
 
-  var groupingOptions = [{name:'Ärendetyp', value:'caseTypeText'},
+  var optionNone = {name:'Ingen', value:''};
+
+  var groupingOptions = [optionNone,
+      {name:'Ärendetyp', value:'caseTypeText'},
       {name:'Förfallodatum', value:'checkDueOn'},
       {name:'Förvärvare', value:'assignedTo'},
       {name:'Projekt', value:'owner'},
@@ -37,9 +40,8 @@ angular.module('sf')
 
   var groupBy = function(currentCases, originalCurrentCases, selectedGroupItem){
     var groupCurrentCases = [];
-
     _.each(currentCases, function(item){
-      if(!selectedGroupItem){
+      if(!selectedGroupItem || selectedGroupItem === optionNone){
         currentCases = originalCurrentCases;
         return;
       }
@@ -100,7 +102,7 @@ angular.module('sf')
     if(groupCurrentCases.length){
       currentCases = groupCurrentCases;
     }
-    if(selectedGroupItem){
+    if(selectedGroupItem && selectedGroupItem !== optionNone){
       currentCases.grouped = true;
     }
 

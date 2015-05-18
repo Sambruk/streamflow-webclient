@@ -27,7 +27,7 @@ angular.module('sf').factory('searchService', function (backendService, projectS
       specs: [
         {resources: workspaceId},
         {resources: 'search'},
-        {queries: 'cases?tq=select+*+where+' + query}
+        {queries: 'cases?tq=select+*+where+' + query} //offset+limit+orderby,prio1,prio2
       ],
       onSuccess: function (resource, result) {
         resource.response.links.forEach(function (item) {

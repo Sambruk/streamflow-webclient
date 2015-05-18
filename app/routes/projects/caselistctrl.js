@@ -17,7 +17,7 @@
 'use strict';
 
 angular.module('sf')
-  .controller('CaseListCtrl', function($scope, $location, $routeParams, projectService, $rootScope, caseService, groupByService, paginationService) {
+  .controller('CaseListCtrl', function($scope, $location, $routeParams, $window, projectService, $rootScope, caseService, groupByService, paginationService) {
     var originalCases = projectService.getSelected($routeParams.projectId, $routeParams.projectType);
     $scope.currentCases = [];
     $scope.projectType = $routeParams.projectType;
@@ -63,6 +63,7 @@ angular.module('sf')
       }[$scope.projectType];
     };
 
+    $scope.scroll = 0;
     $scope.groupingOptions = groupByService.getGroupingOptions();
 
     $scope.groupBy = function(selectedGroupItem) {

@@ -47,20 +47,48 @@
       </div>
     </div>
 
-    <h3>{{getHeader()}} <span class="results">Läst in {{currentCases.length}} av {{totalCases}} ärenden</span></h3>
+    <h3 sf-scroll data-ng-class="{'fixed': scroll > 255}">
+      <span class="header">{{getHeader()}}</span> <span class="results">Läst in {{currentCases.length}} av {{totalCases}} ärenden</span></h3>
+    <div class="empty-placeholder">&nbsp;</div>
 
     <div class="due-date-divider"><span>Förfallodatum</span></div>
     <div ng-hide="showSpinner.currentCases">
       <ul class="issue-list" ng-init="defaultSortExpression = '-creationDate'">
-      <div infinite-scroll="showMoreItems()" infinite-scroll-immediate-check="true" infinite-scroll-distance="3">
-        <li ng-show="currentCases['grouped'] && selectedItem.value !== 'caseId'"
-            ng-repeat="(key, value) in currentCases | filter: filterSearch | groupBy: selectedItem.value track by $index">
-          <h3 ng-show="selectedItem.value === 'checkPriority'" id="priorityHeader">{{key | slice: 1}}</h3>
+        <div infinite-scroll="showMoreItems()" infinite-scroll-immediate-check="true" infinite-scroll-distance="3">
+          <li ng-show="currentCases['grouped'] && selectedItem.value !== 'caseId'"
+              ng-repeat="(key, value) in currentCases | filter: filterSearch | groupBy: selectedItem.value track by $index">
+            <h3 ng-show="selectedItem.value === 'checkPriority'" id="priorityHeader">{{key | slice: 1}}</h3>
 
-          <h3 ng-show="selectedItem.value !== 'checkPriority'" id="groupingHeader">{{key | translate}}</h3>
+            <h3 ng-show="selectedItem.value !== 'checkPriority'" id="groupingHeader">{{key | translate}}</h3>
 
-          <div class="issue-item {{case.overdueStatus()}} caselistItem"
-               ng-repeat="case in value | filter: filterSearch | orderBy: [sortExpression, specificGroupByDefaultSortExpression, defaultSortExpression]">
+            <div class="issue-item {{case.overdueStatus()}} caselistItem"
+                 ng-repeat="case in value | filter: filterSearch | orderBy: [sortExpression, specificGroupByDefaultSortExpression, defaultSortExpression]">
+              <a href="{{case.href}}" class="block-link">
+                <div class="due-date">
+                  <span>{{case.overdueDays() | positive}}</span>
+                  <data-ng-pluralize
+                          count="case.overdueDays()"
+                          when="{'0': '{{case.dueOn | shortDate}}', '1': 'dag', 'other': 'dagar '}">
+                  </data-ng-pluralize>
+                </div>
+                <div class="issue-description">
+                  <span class="meta">{{case.caseId}} - {{case.owner}}</span>
+                  <h4>{{case.text}} <span class="label-list">{{case.labelList() | parenthesis}}</span></h4>
+                  <span class="creator">{{case.createdBy}}</span>
+                </div>
+                <div class="issue-actions">
+                  <div>
+                    <span class="action-status updated">Ändrad {{case.modificationDate() | googleDate}}</span>
+                    <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </li>
+
+          <li ng-show="!currentCases['grouped'] || selectedItem.value === 'caseId'"
+              class="issue-item {{case.overdueStatus()}} caselistItem"
+              ng-repeat="case in currentCases | filter: filterSearch | orderBy: [sortExpression, defaultSortExpression] track by $index">
             <a href="{{case.href}}" class="block-link">
               <div class="due-date">
                 <span>{{case.overdueDays() | positive}}</span>
@@ -81,34 +109,8 @@
                 </div>
               </div>
             </a>
-          </div>
-        </li>
-
-        <li ng-show="!currentCases['grouped'] || selectedItem.value === 'caseId'"
-            class="issue-item {{case.overdueStatus()}} caselistItem"
-            ng-repeat="case in currentCases | filter: filterSearch | orderBy: [sortExpression, defaultSortExpression] track by $index">
-          <a href="{{case.href}}" class="block-link">
-            <div class="due-date">
-              <span>{{case.overdueDays() | positive}}</span>
-              <data-ng-pluralize
-                      count="case.overdueDays()"
-                      when="{'0': '{{case.dueOn | shortDate}}', '1': 'dag', 'other': 'dagar '}">
-              </data-ng-pluralize>
-            </div>
-            <div class="issue-description">
-              <span class="meta">{{case.caseId}} - {{case.owner}}</span>
-              <h4>{{case.text}}  <span class="label-list">{{case.labelList() | parenthesis}}</span></h4>
-              <span class="creator">{{case.createdBy}}</span>
-            </div>
-            <div class="issue-actions">
-              <div>
-                <span class="action-status updated">Ändrad {{case.modificationDate() | googleDate}}</span>
-                <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
-              </div>
-            </div>
-          </a>
-        </li>
-      </div>
+          </li>
+        </div>
       </ul>
     </div>
   </div>

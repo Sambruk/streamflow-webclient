@@ -188,7 +188,6 @@
 
             <div data-ng-switch-when="se.streamsource.streamflow.api.administration.form.CommentFieldValue">
               <div class="text col full col-1" id="{{field.field.field}}">
-                comment field
                 <data-ng-form name="{{ field.field.field }}">
                   <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
                   <textarea data-ng-model="field.value" name="{{ field.field.field }}"
@@ -201,7 +200,6 @@
 
             <div data-ng-switch-when="se.streamsource.streamflow.api.administration.form.FieldGroupFieldValue">
               <div class="text col full col-1">
-                field group
                 <data-ng-form name="{{ field.field.field }}">
                   <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
                   <input maxlength="{{ field.field.fieldValue.width }}" data-ng-required="field.field.mandatory"

@@ -78,7 +78,7 @@
                 <div>
                   <span class="action-status updated">Ändrad {{case.modificationDate() | googleDate}}</span>
                   <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
-                  <span class="created-on" data-ng-if="case.priority.text">Prioritet: {{ case.priority.text }}</span>
+                  <span class="priority" data-ng-if="case.priority.text">Prioritet: {{ case.priority.text }}</span>
                 </div>
               </div>
             </a>
@@ -105,7 +105,7 @@
               <div>
                 <span class="action-status updated">Ändrad {{case.modificationDate() | googleDate}}</span>
                 <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
-                <span class="created-on" data-ng-if="case.priority.text">Prioritet: {{ case.priority.text }}</span>
+                <span class="priority" data-ng-if="case.priority.text">Prioritet: {{ case.priority.text }}</span>
               </div>
             </div>
           </a>

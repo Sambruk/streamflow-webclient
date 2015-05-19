@@ -18,38 +18,12 @@
 
 angular.module('sf')
   .controller('CaseListCtrl', function($scope, $location, $routeParams, $window, projectService, $rootScope, caseService, groupByService, paginationService) {
-    var originalCases = projectService.getSelected($routeParams.projectId, $routeParams.projectType);
+    var initialCase = projectService.getSelected($routeParams.projectId, $routeParams.projectType, '+offset:0+limit:1');
+    var pageSize = paginationService.pageSize;
     $scope.currentCases = [];
-    $scope.projectType = $routeParams.projectType;
     $scope.projects = projectService.getAll();
-
-    originalCases.promise.then(function() {
-
-      // 'Pagination'
-      $scope.totalCases = originalCases.length;
-      $scope.currentCases = originalCases.slice(0, 10);
-
-      $scope.showMoreItems = function() {
-        try {
-          if ($scope.currentCases.length >= originalCases.length) {
-            return;
-          }
-          $scope.showSpinner.infiniteScroll = true;
-          var pageSize = paginationService.pageSize;
-          if ($scope.currentCases.length + pageSize >= originalCases.length) {
-            pageSize = originalCases.length % pageSize > 0 ? originalCases.length % pageSize : pageSize;
-          }
-
-          var last = $scope.currentCases.length - 1;
-          for(var i = 1; i <= pageSize; i++) {
-            $scope.currentCases.push(originalCases[last + i]);
-          }
-        } finally {
-          $scope.showSpinner.infiniteScroll = false;
-        }
-      };
-      $scope.showMoreItems();
-    });
+    $scope.projectType = $routeParams.projectType;
+    $scope.scroll = 0;
 
     $scope.showSpinner = {
       currentCases: true,
@@ -63,12 +37,27 @@ angular.module('sf')
       }[$scope.projectType];
     };
 
-    $scope.scroll = 0;
     $scope.groupingOptions = groupByService.getGroupingOptions();
 
+    // TODO
     $scope.groupBy = function(selectedGroupItem) {
-      $scope.currentCases = groupByService.groupBy($scope.currentCases, originalCases, selectedGroupItem);
+      $scope.currentCases = groupByService.groupBy($scope.currentCases, initialCase, selectedGroupItem);
       $scope.specificGroupByDefaultSortExpression = groupByService.getSpecificGroupByDefault(selectedGroupItem);
+    };
+
+    $scope.showMoreItems = function() {
+      if ($scope.busyLoadingData) {
+        return;
+      }
+      $scope.busyLoadingData = true;
+      $scope.showSpinner.infiniteScroll = true;
+
+      var query =  '+offset+' + $scope.currentCases.length + '+limit+' + pageSize;
+      projectService.getSelected($routeParams.projectId, $routeParams.projectType, query).promise.then(function (result) {
+        $scope.currentCases = $scope.currentCases.concat(result);
+        $scope.busyLoadingData = false;
+        $scope.showSpinner.infiniteScroll = false;
+      });
     };
 
     $scope.projects.promise.then(function(response){
@@ -88,7 +77,7 @@ angular.module('sf')
     });
 
     //Set breadcrumbs to case-owner if possible else to project id
-    originalCases.promise.then(function(response){
+    initialCase.promise.then(function(response){
       var owner = _.filter(response, function(sfCase){
         if(sfCase.owner.length > 0){
           return sfCase.owner;

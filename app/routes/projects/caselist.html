@@ -47,12 +47,16 @@
       </div>
     </div>
 
-    <h3>{{getHeader()}} <span class="results">Läst in {{currentCases.length}} av {{totalCases}} ärenden</span></h3>
+    <div class="cases-header" sf-scroll data-ng-class="{'fixed': scroll > 260}">
+      <h3>
+        <span class="header">{{getHeader()}}</span> <span class="results">Läst in {{currentCases.length}} av {{totalCases}} ärenden</span></h3>
+      <div class="due-date-divider"><span>Förfallodatum</span></div>
+    </div>
+    <div class="empty-placeholder">&nbsp;</div>
 
-    <div class="due-date-divider"><span>Förfallodatum</span></div>
     <div ng-hide="showSpinner.currentCases">
       <ul class="issue-list" ng-init="defaultSortExpression = '-creationDate'">
-        <div infinite-scroll="showMoreItems()" infinite-scroll-immediate-check="true" infinite-scroll-distance="0">
+        <div infinite-scroll="showMoreItems()" infinite-scroll-disabled='busyLoadingData' infinite-scroll-distance="1">
           <li ng-show="currentCases['grouped'] && selectedItem.value !== 'caseId'"
               ng-repeat="(key, value) in currentCases | filter: filterSearch | groupBy: selectedItem.value track by $index">
           <h3 ng-show="selectedItem.value === 'checkPriority'" id="priorityHeader">{{key | slice: 1}}</h3>
@@ -112,5 +116,6 @@
       </div>
       </ul>
     </div>
+    <div ng-show="showSpinner.infiniteScroll" class="spinner"></div>
   </div>
 </div> <!-- content-primary -->

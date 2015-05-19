@@ -20,6 +20,7 @@
 angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $rootScope, searchService, groupByService, paginationService, caseService) {
   $scope.currentCases = [];
   $scope.scroll = 0;
+  $scope.busyLoadingData = false;
 
   var query = $routeParams.query;
   var originalCases = [];
@@ -27,7 +28,7 @@ angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $r
 
   $scope.showSpinner = {
     currentCases: false,
-    infiniteScroll: false
+    infiniteScroll: true
   };
 
   $scope.getHeader = function () {
@@ -36,54 +37,23 @@ angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $r
 
   $scope.groupingOptions = groupByService.getGroupingOptions();
 
+  // TODO
   $scope.groupBy = function(selectedGroupItem) {
     $scope.currentCases = groupByService.groupBy($scope.currentCases, originalCases, selectedGroupItem);
     $scope.specificGroupByDefaultSortExpression = groupByService.getSpecificGroupByDefault(selectedGroupItem);
   };
 
   $scope.showMoreItems = function() {
-    try {
-      /*
-      if ($scope.currentCases.length >= $scope.totalCases) {
-        return;
-      }
-      */
-      console.log('SHOW MORE ITEMS' + $scope.currentCases.length);
-      $scope.showSpinner.infiniteScroll = true;
-
-      searchService.getCases(query + '+offset+' + $scope.currentCases.length + '+limit+' + pageSize).promise.then(function (result2) {
-        _.each(result2, function (item) {
-          $scope.currentCases.push(item);
-        });
-      });
-/*
-      if ($scope.currentCases.length + pageSize >= $scope.totalCases) {
-        pageSize = $scope.totalCases % pageSize > 0 ? $scope.totalCases % pageSize : pageSize;
-      }
-
-      var last = $scope.currentCases.length - 1;
-      for(var i = 1; i <= pageSize; i++) {
-        $scope.currentCases.push(originalCases[last + i]);
-      }
-*/
-    } finally {
-      $scope.showSpinner.infiniteScroll = false;
+    if ($scope.busyLoadingData) {
+      return;
     }
-  };
-  //$scope.showMoreItems();
-/*
-  searchService.getCases(query).promise.then(function (result) {
-    originalCases = result;
-    $scope.showSpinner.currentCases = false;
+    $scope.busyLoadingData = true;
+    $scope.showSpinner.infiniteScroll = true;
 
-    originalCases.promise.then(function() {
-      $rootScope.$broadcast('breadcrumb-updated',[]);
-
-      // 'Pagination'
-      $scope.totalCases = originalCases.length;
-      $scope.currentCases = originalCases.slice(0, 10);
-      //$scope.showMoreItems();
+    searchService.getCases(query + '+offset+' + $scope.currentCases.length + '+limit+' + pageSize).promise.then(function (result) {
+      $scope.currentCases = $scope.currentCases.concat(result);
+      $scope.busyLoadingData = false;
+      $scope.showSpinner.infiniteScroll = false;
     });
-  });
-*/
+  };
 });

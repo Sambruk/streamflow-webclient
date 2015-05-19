@@ -52,11 +52,10 @@
     <div class="due-date-divider"><span>Förfallodatum</span></div>
     <div ng-hide="showSpinner.currentCases">
       <ul class="issue-list" ng-init="defaultSortExpression = '-creationDate'">
-      <div infinite-scroll="showMoreItems()" infinite-scroll-immediate-check="true" infinite-scroll-distance="3">
-        <li ng-show="currentCases['grouped'] && selectedItem.value !== 'caseId'"
-            ng-repeat="(key, value) in currentCases | filter: filterSearch | groupBy: selectedItem.value track by $index">
+        <div infinite-scroll="showMoreItems()" infinite-scroll-immediate-check="true" infinite-scroll-distance="0">
+          <li ng-show="currentCases['grouped'] && selectedItem.value !== 'caseId'"
+              ng-repeat="(key, value) in currentCases | filter: filterSearch | groupBy: selectedItem.value track by $index">
           <h3 ng-show="selectedItem.value === 'checkPriority'" id="priorityHeader">{{key | slice: 1}}</h3>
-
           <h3 ng-show="selectedItem.value !== 'checkPriority'" id="groupingHeader">{{key | translate}}</h3>
 
           <div class="issue-item {{case.overdueStatus()}} caselistItem"

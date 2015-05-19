@@ -19,13 +19,15 @@
 
 angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $rootScope, searchService, groupByService, paginationService, caseService) {
   $scope.currentCases = [];
+  $scope.scroll = 0;
 
   var query = $routeParams.query;
   var originalCases = [];
+  var pageSize = paginationService.pageSize;
 
   $scope.showSpinner = {
-    currentCases: true,
-    infiniteScroll: true
+    currentCases: false,
+    infiniteScroll: false
   };
 
   $scope.getHeader = function () {
@@ -39,7 +41,37 @@ angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $r
     $scope.specificGroupByDefaultSortExpression = groupByService.getSpecificGroupByDefault(selectedGroupItem);
   };
 
-  $scope.scroll = 0;
+  $scope.showMoreItems = function() {
+    try {
+      /*
+      if ($scope.currentCases.length >= $scope.totalCases) {
+        return;
+      }
+      */
+      console.log('SHOW MORE ITEMS' + $scope.currentCases.length);
+      $scope.showSpinner.infiniteScroll = true;
+
+      searchService.getCases(query + '+offset+' + $scope.currentCases.length + '+limit+' + pageSize).promise.then(function (result2) {
+        _.each(result2, function (item) {
+          $scope.currentCases.push(item);
+        });
+      });
+/*
+      if ($scope.currentCases.length + pageSize >= $scope.totalCases) {
+        pageSize = $scope.totalCases % pageSize > 0 ? $scope.totalCases % pageSize : pageSize;
+      }
+
+      var last = $scope.currentCases.length - 1;
+      for(var i = 1; i <= pageSize; i++) {
+        $scope.currentCases.push(originalCases[last + i]);
+      }
+*/
+    } finally {
+      $scope.showSpinner.infiniteScroll = false;
+    }
+  };
+  //$scope.showMoreItems();
+/*
   searchService.getCases(query).promise.then(function (result) {
     originalCases = result;
     $scope.showSpinner.currentCases = false;
@@ -50,29 +82,8 @@ angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $r
       // 'Pagination'
       $scope.totalCases = originalCases.length;
       $scope.currentCases = originalCases.slice(0, 10);
-
-      $scope.showMoreItems = function() {
-        try {
-          if ($scope.currentCases.length >= originalCases.length) {
-            return;
-          }
-          $scope.showSpinner.infiniteScroll = true;
-          var pageSize = paginationService.pageSize;
-          if ($scope.currentCases.length + pageSize >= originalCases.length) {
-            pageSize = originalCases.length % pageSize > 0 ? originalCases.length % pageSize : pageSize;
-          }
-
-          var last = $scope.currentCases.length - 1;
-          for(var i = 1; i <= pageSize; i++) {
-            $scope.currentCases.push(originalCases[last + i]);
-          }
-        } finally {
-          $scope.showSpinner.infiniteScroll = false;
-        }
-      };
-      $scope.showMoreItems();
+      //$scope.showMoreItems();
     });
-
   });
-
+*/
 });

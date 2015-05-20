@@ -187,14 +187,10 @@
             </div>
 
             <div data-ng-switch-when="se.streamsource.streamflow.api.administration.form.CommentFieldValue">
-              <div class="text col full col-1" id="{{field.field.field}}">
-                <data-ng-form name="{{ field.field.field }}">
-                  <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
-                  <textarea data-ng-model="field.value" name="{{ field.field.field }}"
-                            id="field-{{ field.field.field }}" cols="{{ field.field.fieldValue.cols }}"
-                            rows="{{ field.field.fieldValue.rows }}" 
-                            sf-generic-auto-send></textarea>
-                </data-ng-form>
+              <div class="col medium col-1" id="{{field.field.field}}"
+                   data-ng-bind-html="field.field.note">
+                   <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
+                   <div class="text col full col-1">{{field.field.note}}</div>
               </div>
             </div>
 

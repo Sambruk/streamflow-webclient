@@ -28,11 +28,13 @@ angular.module('sf').directive('sfDatePickerFancy', function () {
         el.val(date).blur();
       }
 
+      var tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate()+1);
       $element.pickadate({
         selectYears: true,
         selectMonths: true,
         format: 'yyyy-mm-dd',
-        min: new Date(),
+        min: tomorrow,
         close: false,
         clear: false,
         onStart: function () {

@@ -33,6 +33,7 @@ angular.module('sf').directive('sfDatePickerFancy', function () {
       $element.pickadate({
         selectYears: true,
         selectMonths: true,
+        firstDay: 1,
         format: 'yyyy-mm-dd',
         min: tomorrow,
         close: false,

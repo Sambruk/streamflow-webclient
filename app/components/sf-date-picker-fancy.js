@@ -28,16 +28,25 @@ angular.module('sf').directive('sfDatePickerFancy', function () {
         el.val(date).blur();
       }
 
-      var tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate()+1);
       $element.pickadate({
+        monthsFull: ['Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'Oktober', 'November', 'December'],
+        monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+        weekdaysFull: ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'],
+        weekdaysShort: ['Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör'],
+        labelMonthNext: 'Nästa månad',
+        labelMonthPrev: 'Föregående månad',
+        labelMonthSelect: 'Välj månad',
+        labelYearSelect: 'Välj år',
+        today: false, //'Idag',
+        clear: false, //'Rensa',
+        close: false, //'Stäng',
+        showMonthsShort: false,
+        showWeekdaysFull: false,
         selectYears: true,
         selectMonths: true,
         firstDay: 1,
         format: 'yyyy-mm-dd',
-        min: tomorrow,
-        close: false,
-        clear: false,
+        min: +1,
         onStart: function () {
           scope.$watch('dueOn', function (value) {
             setDateWithoutTriggeringChange($element, value);

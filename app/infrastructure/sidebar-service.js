@@ -357,10 +357,9 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
   };
 
   var _changeDueOn = function (scope, date) {
-    // Must be in the future and time must be set (but is not used).
-    var isoString = (new Date(date + 'T00:00:00.000Z')).toISOString();
+    var toSave = moment(new Date(date)).utc().format();
     if (scope.canChange) {
-      caseService.changeDueOn($routeParams.caseId, isoString).then(function () {
+      caseService.changeDueOn($routeParams.caseId, toSave).then(function () {
         scope.general.invalidate();
         scope.general.resolve().then(function (result) {
           scope.dueOn = result[0].dueOnShort;

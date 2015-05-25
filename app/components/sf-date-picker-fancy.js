@@ -28,6 +28,13 @@ angular.module('sf').directive('sfDatePickerFancy', function () {
         el.val(date).blur();
       }
 
+      function setExpirationDateInPicker(date, picker) {
+        if(date) {
+            date = new Date(date);
+            picker.set('select', [date.getFullYear(), date.getMonth(), date.getDate()]);
+        }
+      }
+
       $element.pickadate({
         monthsFull: ['Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'Oktober', 'November', 'December'],
         monthsShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
@@ -48,7 +55,9 @@ angular.module('sf').directive('sfDatePickerFancy', function () {
         format: 'yyyy-mm-dd',
         min: +1,
         onStart: function () {
+          var picker = this;
           scope.$watch('dueOn', function (value) {
+            setExpirationDateInPicker(value, picker);
             setDateWithoutTriggeringChange($element, value);
           });
         }

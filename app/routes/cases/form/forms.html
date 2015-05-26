@@ -168,7 +168,7 @@
               <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
               <div ng-repeat="attachment in formAttachments">
               	<label class="file-input-button" ng-show="!attachment.id && attachment.fieldId === field.field.field">
-	                <i class="icon-plus icon-white"></i>
+	                <i class="icon-attach icon-white"></i>
 	                <span class="button-text">Bifoga fil</span>
                   <input type="file" id="field-{{ field.field.field }}" name="file" ng-file-select="onFormDraftFileSelect($files, field.field.field )" />
 	              </label>
@@ -220,10 +220,8 @@
           <a data-ng-hide="isLastPage(currentFormPage)" href="" class="btn inline"
              data-ng-class="{inactive: isLastPage() || !issueForm.$valid}"
              data-ng-click="!isLastPage() && issueForm.$valid && nextFormPage()">Nästa</a>
-          <input data-ng-show="isLastPage(currentFormPage)" type="submit" id="submitForm" value="Slutför"
-                 class="btn inline" data-ng-class="{inactive: !issueForm.$valid}"
-                 data-ng-disabled="!issueForm.$valid" /></input>
-          <!--<a data-ng-hide=isLastPage(currentFormPage) href="" class="btn inline" data-ng-class="{inactive: isLastPage() || !issueForm.$valid}" data-ng-click="!isLastPage() && issueForm.$valid && nextFormPage()">Nästa</a>-->
+          <a data-ng-show="isLastPage(currentFormPage)" data-ng-class="{inactive: !issueForm.$valid}" 
+             data-ng-disabled="!issueForm.$valid" data-ng-click="submitForm()" href="" class="btn inline">Slutför</a>
         </div>
       </form>
     </div>

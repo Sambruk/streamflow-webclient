@@ -40,7 +40,7 @@
           <li><a data-ng-show="canMarkUnread" data-ng-click="markReadUnread(false)" href="" class="btn">Markera oläst</a></li>
           <li><a data-ng-show="canRestrict" data-ng-click="restrict()" href="" class="btn">Begränsa</a></li>
           <li><a data-ng-show="canUnrestrict" data-ng-click="unrestrict()" href="" class="btn">Begränsa inte</a></li>
-          <li data-ng-show="canExportCase"><a data-ng-click="toggleExportPopup(true)" href="" class="btn">Exportera</a></li>
+          <li><a data-ng-show="canExportCase" data-ng-click="toggleExportPopup(true)" href="" class="btn">Exportera</a></li>
         </ul>
       </li>
     </ul>
@@ -50,7 +50,7 @@
       <div data-ng-switch on="commandView">
 
         <div class="toolbar-content-style" data-ng-switch-when="close">
-          <button data-ng-click="onCloseButtonClicked($event)">Stäng</button>
+          <a href="" data-ng-click="onCloseButtonClicked($event)" class="btn">Stäng</a>
         </div>
 
         <div class="toolbar-content-popup" data-ng-switch-when="formonclose" ng-controller="FormCtrl">
@@ -71,8 +71,8 @@
               </div>
             </div>
             <div class="submit-area cf dialog-submit">
-              <button data-ng-click="onResolveButtonClicked()">Avsluta</button>
-              <button data-ng-click="onCancelResolveButtonClicked()">Avbryt</button>
+              <a href="" data-ng-click="onResolveButtonClicked()" class="btn">Avsluta</a>
+              <a href="" data-ng-click="onCancelResolveButtonClicked()" class="btn">Avbryt</a>
             </div>
           </modal>
         </div>
@@ -83,7 +83,7 @@
             <div class="row cf">
             </div>
             <div class="submit-area cf dialog-submit">
-              <button data-ng-click="onCancelRequiredCaseTypeButtonClicked()">Avbryt</button>
+              <a href="" data-ng-click="onCancelRequiredCaseTypeButtonClicked()" class="btn">Avbryt</a>
             </div>
           </modal>
         </div>
@@ -103,7 +103,7 @@
               </div>
             </div>
             <div class="submit-area cf dialog-submit">
-              <button type="submit" name="save-issue-owner" data-ng-click="onSendToButtonClicked($event)">Spara</button>
+              <a href="" name="save-issue-owner" data-ng-click="onSendToButtonClicked($event)" class="btn">Spara</a>
             </div>
           </modal>
         </div>
@@ -142,7 +142,7 @@
       </li>
     </ul>
     <div class="submit-area cf dialog-submit">
-      <button type="submit" name="save-issue-owner" data-ng-click="onExportButtonClicked()">Exportera</button>
+      <a href="" data-ng-click="onExportButtonClicked()" class="btn">Exportera</a>
     </div>
   </modal>
   <!-- / Pop up export to pdf -->

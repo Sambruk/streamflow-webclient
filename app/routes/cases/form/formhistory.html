@@ -51,8 +51,7 @@
       <div class="form-field"><em>Länk till följdformulär</em>: <a href="{{submittedForm[0].secondSignee.secondDraftUrl}}" target="_blank">{{submittedForm[0].secondSignee.secondDraftUrl}}</a></div>
      </div>
     <div class="form-history-field" ng-if="!submittedForm[0].secondSignee.singlesignature">
-      <div class="form-field" ng-if="submittedForm[0].secondSignee.secondsigneetaskref">
-        <a href="" data-ng-click="sendSignatureReminder(submittedForm[0].secondSignee.secondsigneetaskref)" class="btn">Skicka påminnelse</a> Senaste påminnelse skickad: {{submittedForm[0].secondSignee.lastReminderSent | googleDate}}</div>
+      <div class="form-field" ng-if="submittedForm[0].secondSignee.secondsigneetaskref"><button ng-click="sendSignatureReminder(submittedForm[0].secondSignee.secondsigneetaskref)">Skicka påminnelse</button> Senaste påminnelse skickad: {{submittedForm[0].secondSignee.lastReminderSent | googleDate}}</div>
     </div>
     <div class="form-history-field" ng-if="submittedForm[0].secondSignee.singlesignature">
       <div class="form-field">Alternativet att endast ha en signatur är valt.</div>

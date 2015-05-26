@@ -50,7 +50,7 @@
       <div data-ng-switch on="commandView">
 
         <div class="toolbar-content-style" data-ng-switch-when="close">
-          <a href="" data-ng-click="onCloseButtonClicked($event)" class="btn">Stäng</a>
+          <button data-ng-click="onCloseButtonClicked($event)">Stäng</button>
         </div>
 
         <div class="toolbar-content-popup" data-ng-switch-when="formonclose" ng-controller="FormCtrl">
@@ -71,8 +71,8 @@
               </div>
             </div>
             <div class="submit-area cf dialog-submit">
-              <a href="" data-ng-click="onResolveButtonClicked()" class="btn">Avsluta</a>
-              <a href="" data-ng-click="onCancelResolveButtonClicked()" class="btn">Avbryt</a>
+              <button data-ng-click="onResolveButtonClicked()">Avsluta</button>
+              <button data-ng-click="onCancelResolveButtonClicked()">Avbryt</button>
             </div>
           </modal>
         </div>
@@ -83,7 +83,7 @@
             <div class="row cf">
             </div>
             <div class="submit-area cf dialog-submit">
-              <a href="" data-ng-click="onCancelRequiredCaseTypeButtonClicked()" class="btn">Avbryt</a>
+              <button data-ng-click="onCancelRequiredCaseTypeButtonClicked()">Avbryt</button>
             </div>
           </modal>
         </div>
@@ -103,7 +103,7 @@
               </div>
             </div>
             <div class="submit-area cf dialog-submit">
-              <a href="" name="save-issue-owner" data-ng-click="onSendToButtonClicked($event)" class="btn">Spara</a>
+              <button type="submit" name="save-issue-owner" data-ng-click="onSendToButtonClicked($event)">Spara</button>
             </div>
           </modal>
         </div>
@@ -142,7 +142,7 @@
       </li>
     </ul>
     <div class="submit-area cf dialog-submit">
-      <a href="" data-ng-click="onExportButtonClicked()" class="btn">Exportera</a>
+      <button type="submit" name="save-issue-owner" data-ng-click="onExportButtonClicked()">Exportera</button>
     </div>
   </modal>
   <!-- / Pop up export to pdf -->

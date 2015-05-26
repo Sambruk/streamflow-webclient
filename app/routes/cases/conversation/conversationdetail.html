@@ -56,12 +56,12 @@
           </ul>
         </div>
         <div class="send">
-          <a href="" data-ng-click="submitMessage($event)" class="btn right" name="convo-submit">Skicka</a>
+          <button data-ng-click="submitMessage($event)" name="convo-submit">Skicka</button>
         </div>
         <div class="upload">
-          <label class="file-input-button right">
-            <i class="icon-attach icon-white"></i>
+          <label class="file-input-label">
             <input type="file" class="file-input" name="file" ng-file-select="onMessageFileSelect($files)" />
+            <div class="icon-attach upload-file"><span class="struct">Ladda upp en fil</span></div>
           </label>
         </div>
       </form>

@@ -393,6 +393,9 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
     ]).then(function (results) {
       scope.caseType = results[1][0].caseType && results[1][0].caseType.id;
       scope.possibleCaseTypes = results[0].sort(sortByText);
+      _.each(scope.possibleCaseTypes, function (caseType) {
+        caseType.labels = caseType.classes ? ' [' + caseType.classes.trim() + '] ' : '';
+      });
     });
   };
 

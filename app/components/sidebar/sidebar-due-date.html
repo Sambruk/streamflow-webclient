@@ -2,15 +2,8 @@
   <div class="text">
     <label for="issue-due-date">Förfaller</label>
     <div class="set-due-date">
-      <input sf-date-picker-fancy
-        type="text"
-        id="issue-due-date"
-        name="issue-due-date"
-        placeholder="Förfallodatum"
-        data-ng-model="dueOn"
-        data-ng-change="changeDueOn(dueOn)"
-        data-ng-disabled="!canChange"
-      >
+      <input sf-date-picker-fancy type="text" id="issue-due-date" name="issue-due-date" placeholder="Förfallodatum"
+        data-ng-model="dueOn" data-ng-change="changeDueOn(dueOn)" data-ng-disabled="!canChange">
     </div>
   </div>
 </div>

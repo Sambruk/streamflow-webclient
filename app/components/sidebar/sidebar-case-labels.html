@@ -1,13 +1,7 @@
 
   <label for="label-select">Etiketter</label>
-  <ui-select multiple 
-        data-ng-model="activeLabels" 
-        theme="select2" 
-        data-ng-disabled="canChange" 
-        data-ng-change="changeCaseLabels(activeLabels)" 
-        name="label-select" 
-        id="label-select" 
-        style="width: 100%;">
+  <ui-select multiple data-ng-model="activeLabels" theme="select2" data-ng-disabled="canChange"
+        data-ng-change="changeCaseLabels(activeLabels)" name="label-select" id="label-select" style="width: 100%;">
     <ui-select-match placeholder="Välj etiketter...">{{$item.text}}</ui-select-match>
     <ui-select-choices repeat="label in possibleCaseLabels">
       <div ng-bind-html="label.text"></div>

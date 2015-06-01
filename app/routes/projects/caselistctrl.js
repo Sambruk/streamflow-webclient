@@ -54,7 +54,14 @@ angular.module('sf')
 
       var query =  '+offset+' + $scope.currentCases.length + '+limit+' + pageSize;
       projectService.getSelected($routeParams.projectId, $routeParams.projectType, query).promise.then(function (result) {
-        $scope.currentCases = $scope.currentCases.concat(result);
+        if($scope.currentCases.length == 0) {
+            $scope.currentCases = result;
+            $scope.currentCases.invalidateFunctions = [result.invalidate];
+        } else {
+            Array.prototype.push.apply($scope.currentCases, result);
+            $scope.currentCases.invalidateFunctions.push(result.invalidate);
+        }
+
         $scope.busyLoadingData = false;
         $scope.showSpinner.infiniteScroll = false;
       });
@@ -109,35 +116,40 @@ angular.module('sf')
       $scope.showSpinner.currentCases = false;
     });
 
-    var updateObject = function(itemToUpdate){
-      itemToUpdate.invalidate();
-      itemToUpdate.resolve();
+    var updateCases = function(currentCases) {
+        if(currentCases.invalidateFunctions) {
+          currentCases.invalidateFunctions.forEach(function (invalidate) { invalidate(); });
+          currentCases.resolve();
+        }
     };
 
     // Event listeners
     $rootScope.$on('case-created', function(){
-      updateObject($scope.currentCases);
+      updateCases($scope.currentCases);
     });
     $rootScope.$on('case-closed', function(){
-      updateObject($scope.currentCases);
+      updateCases($scope.currentCases);
     });
     $rootScope.$on('case-assigned', function(){
-      updateObject($scope.currentCases);
+      updateCases($scope.currentCases);
     });
     $rootScope.$on('case-unassigned', function(){
-      updateObject($scope.currentCases);
+      updateCases($scope.currentCases);
     });
     $rootScope.$on('case-resolved', function(){
-      updateObject($scope.currentCases);
+      updateCases($scope.currentCases);
     });
     $rootScope.$on('case-deleted', function(){
-      updateObject($scope.currentCases);
+      updateCases($scope.currentCases);
     });
     $rootScope.$on('case-owner-changed', function(){
-      updateObject($scope.currentCases);
+      updateCases($scope.currentCases);
     });
     $rootScope.$on('casedescription-changed', function(){
-      updateObject($scope.currentCases);
+      updateCases($scope.currentCases);
+    });
+    $rootScope.$on('case-edited', function() {
+      updateCases($scope.currentCases);
     });
     // End Event listeners
   });

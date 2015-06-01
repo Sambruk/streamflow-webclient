@@ -15,6 +15,7 @@ angular.module('sf').directive('sidebarDueDate', function (sidebarService) {
       });
 
       scope.changeDueOn = function (date) {
+        scope.$root.$broadcast('case-edited', scope.$parent.caze);
         sidebarService.changeDueOn(scope, date);
       };
     }

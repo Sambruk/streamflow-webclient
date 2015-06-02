@@ -20,30 +20,27 @@
 angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', 'caseService', 'formMapperService', function($parse, $routeParams, caseService, formMapper) {
   return {
     require: 'ngModel',
-    link: function(scope, element, attr) {
+    priority: 1010,
+    link: function(scope, element, attr, ctrl) {
 
-      var hasRunAtLeastOnce = false;
-      scope.$watch(attr.ngModel, function (newValue) {
-        if (hasRunAtLeastOnce) {
+      element.on('blur', function (event) {
+        var newValue = event.target.value;
 
-          // Validation
-          if (element.hasClass('ng-invalid')) {
-            _.each(element.attr('class').split(' '), function (klass) {
-              var errorClass = '.error-' + klass;
-              $(errorClass, element.parent()).show();
-            });
+        // Validation
+        if (element.hasClass('ng-invalid')) {
+          _.each(element.attr('class').split(' '), function (klass) {
+            var errorClass = '.error-' + klass;
+            $(errorClass, element.parent()).show();
+          });
 
-            return;
-          }
-
-          // Valid input, clear error warnings
-          $('[class^=error]', element.parent()).hide();
-
-          var value = formMapper.getValue(newValue, attr);
-          caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
+          return;
         }
 
-        hasRunAtLeastOnce = true;
+        // Valid input, clear error warnings
+        $('[class^=error]', element.parent()).hide();
+
+        var value = formMapper.getValue(newValue, attr);
+        caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
       });
     }
   };

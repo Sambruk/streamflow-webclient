@@ -3,7 +3,7 @@
   <select chosen no-results-text="'Inga ärendetyper funna'" data-placeholder="Ärendetyp"
           data-ng-options="caseType.id as (caseType.text + caseType.labels) group by caseType.title for caseType in possibleCaseTypes"
           data-ng-model="caseType" data-ng-change="changeCaseType(caseType)" data-ng-disabled="!canChange"
-          allow-single-deselect="true" name="name-select" id="type-select">
+          allow-single-deselect="true" search-contains="true" name="name-select" id="type-select">
   <option></option>
   </select>
 </div>

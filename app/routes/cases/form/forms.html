@@ -56,7 +56,7 @@
               <div class="text col full col-1">
                 <data-ng-form name="{{ field.field.field }}">
                   <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
-                  <input maxlength="{{ field.field.fieldValue.width }}" data-required="field.field.mandatory"
+                  <input maxlength="{{ field.field.fieldValue.width }}" data-ng-required="field.field.mandatory"
                          type="text" date-input-type="date" sf-date-picker data-ng-model="field.value"
                          name="{{ field.field.field }}" id="field-{{ field.field.field }}" sf-generic-auto-send
                          data-field-type="{{ field.field.fieldValue._type }}">

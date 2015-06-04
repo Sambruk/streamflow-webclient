@@ -33,7 +33,7 @@ angular.module('sf')
 
     $scope.trustAsHtml = function(text) {
       return $sce.trustAsHtml(text);
-    }
+    };
 
     $scope.$watch('currentFormPage', function (newVal) {
       if (!newVal) {

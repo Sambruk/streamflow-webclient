@@ -20,10 +20,6 @@
   <div class="m single-issue">
     <div class="m-h cf">
       <h2 class="id">{{caze[0].caseId}}</h2>
-      <a href="#/cases/{{ caze[0].id }}" class="action-btn editing">
-        <i class="icon-direction backwards"></i>
-        Gå tillbaka
-      </a>
     </div>
     <div class="m-c">
       <div class="issue-body">
@@ -39,6 +35,25 @@
             </div>
           </div>
         </form>
+      </div>
+      <div class="m" ng-hide="notesHistory.length === 0">
+        <h2>Ärendebeskrivning, historik</h2>
+        <div ng-hide="showSpinner.notesHistory">
+          <div class="posted-notes">
+            <div data-ng-repeat="note in notesHistory">
+              <div class="note-item cf">
+                <div class="note-posted-by">
+                  <span class="struct">Postad av: </span>{{ note.creator }}
+                  <span class="note-timestamp">{{ note.createdOn | dateTime }}</span>
+                </div>
+                <div class="note-body">
+                  <p>{{ note.note }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div ng-show="showSpinner.notesHistory" class="spinner"></div>
       </div>
     </div>
   </div>

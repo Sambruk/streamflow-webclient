@@ -88,5 +88,24 @@ angular.module('sf').controller('CaseEditCtrl', function($scope, $rootScope, $ro
     }
   };
 
+  $scope.caseId = $routeParams.caseId;
+  $scope.notesHistory = caseService.getAllNotes($routeParams.caseId);
+
+  $scope.showSpinner = {
+    notesHistory: true
+  };
+
+  $scope.notesHistory.promise.then(function(){
+    $scope.showSpinner.notesHistory = false;
+    updateObject($scope.notesHistory);
+  });
+
+  var updateObject = function(itemToUpdate){
+    itemToUpdate.invalidate();
+    itemToUpdate.resolve();
+  };
+
+  
+
 });
 

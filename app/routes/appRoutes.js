@@ -44,13 +44,9 @@ angular.module('sf')
       templateUrl: 'routes/projects/caselist.html',
       controller: 'CaseListCtrl'
     })
-    .when('/cases/:caseId/edit', {
+    .when('/cases/:caseId', {
       templateUrl:'routes/cases/case-edit/caseedit.html',
       controller: 'CaseEditCtrl'
-    })
-    .when('/cases/:caseId', {
-      templateUrl:'routes/cases/case-details/casedetail.html',
-      controller: 'CaseDetailCtrl'
     })
     //TODO: This should probably not be in a route but maybe
     .when('/cases/:caseId/conversation/create', {

@@ -1,21 +1,15 @@
 <div class="m-h">
-  <a href="#/cases/{{ caze[0].id }}/edit" data-ng-show="!caze[0].text"><h2>Ärende</h2></a>
-  <a href="#/cases/{{ caze[0].id }}" data-ng-show="caze[0].text"><h2>Ärende</h2></a>
+  <a href="#/cases/{{ caze[0].id }}"><h2>Ärende</h2></a>
   <a href="" class="action-btn" data-ng-click="showCaseInfoPopUp()"><i class="icon-info"></i></a>
 </div>
 <div class="m-c">
   <ul>
     <li>
-      <a href="#/cases/{{ caze[0].id }}/edit" class="block-link convCaseSidebar">
+      <a href="#/cases/{{ caze[0].id }}" class="block-link convCaseSidebar">
         <span class="contact-no-name" data-ng-if="caze[0].text.length === 0">Ärendetitel saknas</span>
         <h3 data-ng-hide="caze[0].text.length === 0">{{caze[0].text}}</h3>
         <span data-ng-hide="notes[0].length === 0" data-ng-bind-html="notes[0].note | limitTo: 250"></span>
       </a>
-      <div class="convo-status">
-        <a href="#/cases/{{ caze[0].id }}/noteshistory" class="icon-history icon-case-history" title="Ärendebeskrivning, historik">
-          <span class="struct">Ärendebeskrivning, historik</span>
-        </a>
-      </div>
     </li>
   </ul>
 </div>

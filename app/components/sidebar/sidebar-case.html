@@ -8,7 +8,9 @@
       <a href="#/cases/{{ caze[0].id }}" class="block-link convCaseSidebar">
         <span class="contact-no-name" data-ng-if="caze[0].text.length === 0">Ärendetitel saknas</span>
         <h3 data-ng-hide="caze[0].text.length === 0">{{caze[0].text}}</h3>
-        <span data-ng-hide="notes[0].length === 0" data-ng-bind-html="notes[0].note | limitTo: 250"></span>
+        <div>
+          <span data-ng-hide="notes[0].length === 0" data-ng-bind-html="notes[0].note | limitTo: 250"></span>
+        </div>
       </a>
     </li>
   </ul>

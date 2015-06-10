@@ -65,7 +65,7 @@ angular.module('sf').directive('contextmenu', function (projectService, navigati
 
           $rootScope.$broadcast('case-created');
 
-          window.location.replace(href + '/edit');
+          window.location.replace(href + '');
         });
       };
 

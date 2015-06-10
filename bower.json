@@ -30,7 +30,8 @@
     "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip",
     "angular-google-maps": "~2.0.17",
     "angular-ui-select": "~0.11.2",
-    "ngInfiniteScroll": "~1.2.1"
+    "ngInfiniteScroll": "~1.2.1",
+    "Stickyfill": "~1.1.2"
   },
   "overrides": {
     "chosen": {

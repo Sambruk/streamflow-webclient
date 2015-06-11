@@ -1,10 +1,38 @@
 'use strict';
 
-angular.module('sf').directive('search', function ($location, $timeout, navigationService) {
+angular.module('sf').directive('search', function ($location, $timeout, searchService, navigationService) {
   return {
     restrict: 'E',
     templateUrl: 'components/search/search.html',
     link: function (scope, element) {
+      scope.showSearchFilter = false;
+      scope.possibleLabels = [];
+
+      searchService.getPossibleAssignees().promise.then(function (assignees) {
+        scope.possibleAssignees = assignees;
+      });
+
+      searchService.getPossibleCreatedBy().promise.then(function (createdBy) {
+        scope.possibleCreatedBy = createdBy;
+      });
+
+      searchService.getPossibleCaseTypes().promise.then(function (caseTypes) {
+        scope.possibleCaseTypes = caseTypes;
+      });
+
+      searchService.getPossibleLabels().promise.then(function (labels) {
+        scope.possibleLabels = labels;
+      });
+
+      searchService.getPossibleProjects().promise.then(function (projects) {
+        scope.possibleProjects = projects;
+      });
+
+      searchService.getPossibleStatus().promise.then(function (status) {
+        scope.possibleStatus = status;
+      });
+
+
       // Translation map. Should use i18n for this.
       scope.searchTerms = {
         'skapad': 'createdOn', // +1
@@ -58,6 +86,10 @@ angular.module('sf').directive('search', function ($location, $timeout, navigati
         _.defer(function () {
           element.find('#main-searchtext').focus();
         });
+      };
+
+      scope.toggleSearchFilter = function () {
+        scope.showSearchFilter = !scope.showSearchFilter;
       };
 
       scope.search = function (query) {

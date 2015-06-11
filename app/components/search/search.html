@@ -2,7 +2,7 @@
   <fieldset>
     <label for="main-searchtext" class="struct">Sök</label>
     <input type="search" placeholder="Sök" id="main-searchtext" data-ng-model="query" data-ng-focus="toggleSearchTerms(true)" data-ng-blur="toggleSearchTerms(false)">
-    <a href=""><i class="filter-dropdown icon-direction downwards"></i></a>
+    <a href="" id="main-search-filter" data-ng-model="filter" data-ng-click="toggleSearchFilter()"><i class="filter-dropdown icon-filter"></i></a>
     <button type="submit" class="icon-search" data-ng-blur="toggleSearchTerms(false)"><span>Sök</span></button>
   </fieldset>
 </form>
@@ -12,5 +12,65 @@
   </div>
   <div>
     <button data-ng-click="addSearchTermToQuery($event)" data-ng-blur="toggleSearchTerms(false)" data-ng-repeat="(key, value) in searchTerms">{{key}}</button>
+  </div>
+</div>
+<div class="search-filter m m-filter" data-ng-show="showSearchFilter">
+  <label for="search-due-date-from">Förfallodatum</label>
+  <div class="set-due-date">
+    <input sf-date-picker-fancy type="text" id="search-due-date-from" name="search-due-date-from" placeholder="Från"
+           data-ng-model="dueOnFrom">
+    <input sf-date-picker-fancy type="text" id="search-due-date-to" name="search-due-date-to" placeholder="Till"
+           data-ng-model="dueOnTo">
+  </div>
+  <div class="select">
+    <label for="type-select">Projekt</label>
+    <select chosen no-results-text="'Inga project funna'" data-placeholder="Project"
+            data-ng-options="project.id as (project.text) group by project.title for project in possibleProjects"
+            data-ng-model="project"
+            allow-single-deselect="true" search-contains="true" name="name-select" id="project-select">
+      <option></option>
+    </select>
+  </div>
+  <div class="select">
+    <label for="type-select">Ärendetyp</label>
+    <select chosen no-results-text="'Inga ärendetyper funna'" data-placeholder="Ärendetyp"
+            data-ng-options="caseType.id as (caseType.text + caseType.labels) group by caseType.title for caseType in possibleCaseTypes"
+            data-ng-model="caseType" data-ng-change="changeCaseType(caseType)"
+            allow-single-deselect="true" search-contains="true" name="name-select" id="type-select">
+      <option></option>
+    </select>
+  </div>
+  <label for="label-select">Etiketter</label>
+  <ui-select multiple data-ng-model="searchLabels" theme="select2"
+             name="label-select" id="label-select" style="width: 100%;">
+    <ui-select-match placeholder="Välj etiketter...">{{$item.text}}</ui-select-match>
+    <ui-select-choices repeat="label.id as label in possibleLabels | filter: $select.search" group-by="'title'">
+      <div ng-bind-html="label.text"></div>
+    </ui-select-choices>
+  </ui-select>
+  <div class="select">
+    <label for="type-select">Tilldelad</label>
+    <select chosen no-results-text="'Inga användare funna'" data-placeholder="Tilldelad"
+            data-ng-options="assignee.id as assignee.text for assignee in possibleAssignees"
+            data-ng-model="assignee"
+            allow-single-deselect="true" search-contains="true" name="name-select" id="assignee-select">
+      <option></option>
+    </select>
+  </div>
+  <div class="select">
+    <label for="type-select">Skapad av</label>
+    <select chosen no-results-text="'Inga användare funna'" data-placeholder="Skapad av"
+            data-ng-options="createdBy.id as createdBy.text for createdBy in possibleCreatedBy"
+            data-ng-model="createdBy"
+            allow-single-deselect="true" search-contains="true" name="name-select" id="createdby-select">
+      <option></option>
+    </select>
+  </div>
+  <label for="issue-created-from-date">Skapat</label>
+  <div class="set-created-date">
+    <input sf-date-picker-fancy type="text" id="issue-created-from-date" name="issue-created-from-date" placeholder="Från"
+           data-ng-model="createdOnFrom">
+    <input sf-date-picker-fancy type="text" id="issue-created-to-date" name="issue-created-to-date" placeholder="Till"
+           data-ng-model="createdOnTo">
   </div>
 </div>

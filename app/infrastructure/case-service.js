@@ -387,7 +387,12 @@ angular.module('sf')
             {resources: 'note'},
             {commands: 'addnote'}
           ]),
-          value);
+          value).then(function(result){
+            caseBase.broadcastMessage(result.status);
+          },
+          function(error){
+            caseBase.broadcastMessage(error);
+          });
       },
 
       getAllNotes: function(caseId) {
@@ -399,8 +404,8 @@ angular.module('sf')
           onSuccess:function (resource, result) {
             resource.response.links.forEach(function(item){
               result.push(item);
+              caseBase.broadcastMessage(result.status);
             });
-            caseBase.broadcastMessage(result.status);
           },
           onFailure:function(err){
             caseBase.broadcastMessage(err);

@@ -19,6 +19,8 @@
 
 angular.module('sf').controller('CaseEditCtrl', function($scope, $rootScope, $routeParams, caseService ) {
   $scope.sidebardata = {};
+  $scope.caseId = $routeParams.caseId;
+  $scope.notesHistory = caseService.getAllNotes($routeParams.caseId);
 
   $scope.$watch('sidebardata.caze', function(newVal){
     if(!newVal){
@@ -62,10 +64,10 @@ angular.module('sf').controller('CaseEditCtrl', function($scope, $rootScope, $ro
     $scope.notes[0].note = $scope.caseNote;
     if($scope.notes[0].note === $event.target.value){
       caseService.addNote($routeParams.caseId, $scope.notes[0])
-      .then(function () {
-        $rootScope.$broadcast('note-changed');
+        .then(function () {
+        updateObject($scope.notesHistory);
         $success($($event.target));
-      }, function () {
+      }, function () {  
         $error($error($event.target));
       });
     }
@@ -88,24 +90,18 @@ angular.module('sf').controller('CaseEditCtrl', function($scope, $rootScope, $ro
     }
   };
 
-  $scope.caseId = $routeParams.caseId;
-  $scope.notesHistory = caseService.getAllNotes($routeParams.caseId);
-
   $scope.showSpinner = {
     notesHistory: true
   };
 
   $scope.notesHistory.promise.then(function(){
     $scope.showSpinner.notesHistory = false;
-    updateObject($scope.notesHistory);
   });
 
   var updateObject = function(itemToUpdate){
     itemToUpdate.invalidate();
     itemToUpdate.resolve();
   };
-
-  
 
 });
 

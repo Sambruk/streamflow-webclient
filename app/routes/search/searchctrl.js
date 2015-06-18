@@ -50,7 +50,7 @@ angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $r
     $scope.busyLoadingData = true;
     $scope.showSpinner.infiniteScroll = true;
 
-    searchService.getCases(query + '+offset+' + $scope.currentCases.length + '+limit+' + pageSize).promise.then(function (result) {
+    searchService.getCases(query + '+limit+' + pageSize + '+offset+' + $scope.currentCases.length).promise.then(function (result) {
       $scope.currentCases = $scope.currentCases.concat(result);
       $scope.busyLoadingData = false;
       $scope.showSpinner.infiniteScroll = false;

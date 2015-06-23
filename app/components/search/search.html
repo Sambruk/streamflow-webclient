@@ -1,9 +1,10 @@
 <form data-ng-submit="search(query)" role="search">
   <fieldset>
     <label for="main-searchtext" class="struct">Sök</label>
-    <input type="search" placeholder="Sök" id="main-searchtext" data-ng-model="query" data-ng-focus="toggleSearchTerms(true)" data-ng-blur="toggleSearchTerms(false)">
-    <a href="" id="main-search-filter" data-ng-model="filter" data-ng-click="toggleSearchFilter()"><i class="filter-dropdown icon-filter"></i></a>
-    <button type="submit" class="icon-search" data-ng-blur="toggleSearchTerms(false)"><span>Sök</span></button>
+    <input type="search" placeholder="Sök" id="main-searchtext" data-ng-model="query">
+    <a href="" id="main-search-filter" data-ng-model="filter" data-ng-click="toggleSearchFilter()"><i
+            class="filter-dropdown icon-filter"></i></a>
+    <button type="submit" class="icon-search"><span>Sök</span></button>
   </fieldset>
 </form>
 <div class="search-terms" data-ng-show="showSearchTerms">
@@ -11,23 +12,17 @@
     <span>Lägg till sökterm</span>
   </div>
   <div>
-    <button data-ng-click="addSearchTermToQuery($event)" data-ng-blur="toggleSearchTerms(false)" data-ng-repeat="(key, value) in searchTerms">{{key}}</button>
+    <button data-ng-click="addSearchTermToQuery($event)" data-ng-repeat="(key, value) in searchTerms">{{key}}</button>
   </div>
 </div>
 <div class="search-filter m m-filter" data-ng-show="showSearchFilter">
-  <label for="search-due-date-from">Förfallodatum</label>
-  <div class="set-due-date">
-    <input sf-date-picker-fancy type="text" id="search-due-date-from" name="search-due-date-from" placeholder="Från"
-           data-ng-model="dueOnFrom">
-    <input sf-date-picker-fancy type="text" id="search-due-date-to" name="search-due-date-to" placeholder="Till"
-           data-ng-model="dueOnTo">
-  </div>
+  <div class="title-divider"><span>Sökfilter</span></div>
   <div class="select">
     <label for="type-select">Projekt</label>
     <select chosen no-results-text="'Inga project funna'" data-placeholder="Project"
             data-ng-options="project.id as (project.text) group by project.title for project in possibleProjects"
-            data-ng-model="project"
-            allow-single-deselect="true" search-contains="true" name="name-select" id="project-select">
+            data-ng-model="filter.project"
+            allow-single-deselect="true" search-contains="true" name="name-select" id="project-select" class="item">
       <option></option>
     </select>
   </div>
@@ -35,42 +30,108 @@
     <label for="type-select">Ärendetyp</label>
     <select chosen no-results-text="'Inga ärendetyper funna'" data-placeholder="Ärendetyp"
             data-ng-options="caseType.id as (caseType.text + caseType.labels) group by caseType.title for caseType in possibleCaseTypes"
-            data-ng-model="caseType" data-ng-change="changeCaseType(caseType)"
+            data-ng-model="filter.caseType" data-ng-change="changeCaseType(caseType)"
             allow-single-deselect="true" search-contains="true" name="name-select" id="type-select">
       <option></option>
     </select>
   </div>
-  <label for="label-select">Etiketter</label>
-  <ui-select multiple data-ng-model="searchLabels" theme="select2"
-             name="label-select" id="label-select" style="width: 100%;">
-    <ui-select-match placeholder="Välj etiketter...">{{$item.text}}</ui-select-match>
-    <ui-select-choices repeat="label.id as label in possibleLabels | filter: $select.search" group-by="'title'">
-      <div ng-bind-html="label.text"></div>
-    </ui-select-choices>
-  </ui-select>
+  <div>
+    <label for="label-select">Etiketter</label>
+    <ui-select multiple data-ng-model="filter.label" theme="select2"
+               name="label-select" id="label-select" style="width: 100%;"
+               data-ng-change="labelsChanged(filter.label)">
+      <ui-select-match placeholder="Välj etiketter...">{{$item.text}}</ui-select-match>
+      <ui-select-choices repeat="label.id as label in possibleLabels | filter: $select.search" group-by="'title'">
+        <div ng-bind-html="label.text"></div>
+      </ui-select-choices>
+    </ui-select>
+  </div>
+  <div>
+    <label for="search-due-date-from">Förfallodatum</label>
+
+    <div class="set-due-date date-container">
+      <input sf-date-picker-fancy type="text" id="search-due-date-from" name="search-due-date-from" placeholder="Från"
+             data-ng-model="filter.dueOnFrom">
+      <input sf-date-picker-fancy type="text" id="search-due-date-to" name="search-due-date-to" placeholder="Till"
+             data-ng-model="filter.dueOnTo">
+    </div>
+  </div>
   <div class="select">
     <label for="type-select">Tilldelad</label>
     <select chosen no-results-text="'Inga användare funna'" data-placeholder="Tilldelad"
             data-ng-options="assignee.id as assignee.text for assignee in possibleAssignees"
-            data-ng-model="assignee"
+            data-ng-model="filter.assignedTo"
             allow-single-deselect="true" search-contains="true" name="name-select" id="assignee-select">
       <option></option>
     </select>
   </div>
-  <div class="select">
-    <label for="type-select">Skapad av</label>
-    <select chosen no-results-text="'Inga användare funna'" data-placeholder="Skapad av"
-            data-ng-options="createdBy.id as createdBy.text for createdBy in possibleCreatedBy"
-            data-ng-model="createdBy"
-            allow-single-deselect="true" search-contains="true" name="name-select" id="createdby-select">
-      <option></option>
-    </select>
+  <div>
+    <label for="issue-created-from-date">Skapat</label>
+
+    <div class="set-created-date date-container">
+      <input sf-date-picker-fancy type="text" id="issue-created-from-date" name="issue-created-from-date"
+             placeholder="Från"
+             data-ng-model="filter.createdOnFrom">
+      <input sf-date-picker-fancy type="text" id="issue-created-to-date" name="issue-created-to-date" placeholder="Till"
+             data-ng-model="filter.createdOnTo">
+    </div>
   </div>
-  <label for="issue-created-from-date">Skapat</label>
-  <div class="set-created-date">
-    <input sf-date-picker-fancy type="text" id="issue-created-from-date" name="issue-created-from-date" placeholder="Från"
-           data-ng-model="createdOnFrom">
-    <input sf-date-picker-fancy type="text" id="issue-created-to-date" name="issue-created-to-date" placeholder="Till"
-           data-ng-model="createdOnTo">
+  <div>
+    <div class="select">
+      <label for="type-select">Skapad av</label>
+      <select chosen no-results-text="'Inga användare funna'" data-placeholder="Skapad av"
+              data-ng-options="createdBy.id as createdBy.text for createdBy in possibleCreatedBy"
+              data-ng-model="filter.createdBy"
+              allow-single-deselect="true" search-contains="true" name="name-select" id="createdby-select">
+        <option></option>
+      </select>
+    </div>
+  </div>
+
+  <div class="title-divider"><span>Gruppera & sortera</span></div>
+
+  <label for="group">Gruppera</label>
+
+  <div class="select group">
+    <select class="hasCustomSelect" data-ng-model="group.value" id="group" name="group">
+      <option value="caseType" label="Ärendetyp">Ärendetyp</option>
+      <option value="dueOn" label="Förfallodatum">Förfallodatum</option>
+      <option value="assignedTo" label="Förvärvare">Förvärvare</option>
+      <option value="project" label="Projekt">Projekt</option>
+      <option value="priority" label="Prioritet">Prioritet</option>
+    </select>
+
+    <div class="group-container">
+      <div class="group-asc">
+        <input type="radio" value="asc" name="group-asc" id="group-asc" data-ng-model="group.order"><label for="group-asc">Stigande</label>
+      </div>
+      <div class="group-desc">
+        <input type="radio" value="desc" name="group-desc" id="group-desc" data-ng-model="group.order"><label for="group-desc">Fallande</label>
+      </div>
+    </div>
+  </div>
+  <label for="sort">Sortera</label>
+
+  <div class="select sort">
+    <select class="hasCustomSelect" data-ng-model="sort.value" id="sort" name="sort">
+      <option value="creationDate">Skapad</option>
+      <option value="dueOn">Förfallodatum</option>
+      <option value="description">Beskrivning</option>
+      <option value="priority">Prioritet</option>
+    </select>
+    
+    <div class="sort-container">
+      <div class="sort-asc">
+        <input type="radio" value="asc" id="sort-asc" name="sort-asc" data-ng-model="sort.order"><label for="sort-asc">Stigande</label>
+      </div>
+      <div class="sort-desc">
+        <input type="radio" value="desc" id="sort-desc" name="sort-desc" data-ng-model="sort.order"><label for="sort-desc">Fallande</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="submit-container">
+    <button type="button" class="icon-search" data-ng-click="search(query)">&nbsp;Sök</button>
+    <button type="button" class="icon-cancel" data-ng-click="resetSearchFilter()">&nbsp;Rensa</button>
   </div>
 </div>

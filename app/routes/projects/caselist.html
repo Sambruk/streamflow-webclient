@@ -25,10 +25,7 @@
       <div class="options">
         <div class="sort">
           <label for="sortDropdown">Sortera</label>
-          <select
-              id="sortDropdown"
-              ng-model="sortExpression"
-              ng-init="sortExpression = '-creationDate'"> 
+          <select id="sortDropdown" ng-model="sortExpression" ng-init="sortExpression = '-creationDate'"> 
             <option value="-creationDate">Skapad</option>
             <option value="dueOn">Förfallodatum</option>
             <option value="text">Beskrivning</option>
@@ -37,11 +34,8 @@
         </div>
         <div class="group">
           <label for="groupOptions">Gruppera</label>
-          <select
-                  ng-options="option.name for option in groupingOptions"
-                  ng-model="selectedItem"
-                  ng-change="groupBy(selectedItem)"
-                  ng-init="selectedItem = groupingOptions[0]">
+          <select ng-options="option.name for option in groupingOptions" ng-model="selectedItem"
+                  ng-change="groupBy(selectedItem)" ng-init="selectedItem = groupingOptions[0]">
           </select>
         </div>
       </div>
@@ -55,15 +49,15 @@
     <div class="empty-placeholder">&nbsp;</div>
 
     <div ng-hide="showSpinner.currentCases">
-      <ul class="issue-list" ng-init="defaultSortExpression = '-creationDate'">
+      <ul class="issue-list">
         <div infinite-scroll="showMoreItems()" infinite-scroll-disabled='busyLoadingData' infinite-scroll-distance="1">
           <li ng-show="currentCases['grouped'] && selectedItem.value !== 'caseId'"
-              ng-repeat="(key, value) in currentCases | filter: filterSearch | groupBy: selectedItem.value track by $index">
+              ng-repeat="(key, value) in currentCases track by $index">
           <h3 ng-show="selectedItem.value === 'checkPriority'" id="priorityHeader">{{key | slice: 1}}</h3>
           <h3 ng-show="selectedItem.value !== 'checkPriority'" id="groupingHeader">{{key | translate}}</h3>
 
           <div class="issue-item {{case.overdueStatus()}} caselistItem"
-               ng-repeat="case in value | filter: filterSearch | orderBy: [sortExpression, specificGroupByDefaultSortExpression, defaultSortExpression]">
+               ng-repeat="case in value">
             <a href="{{case.href}}" class="block-link">
               <div class="due-date">
                 <span>{{case.overdueDays() | positive}}</span>
@@ -90,7 +84,7 @@
 
         <li ng-show="!currentCases['grouped'] || selectedItem.value === 'caseId'"
             class="issue-item {{case.overdueStatus()}} caselistItem"
-            ng-repeat="case in currentCases | filter: filterSearch | orderBy: [sortExpression, defaultSortExpression] track by $index">
+            ng-repeat="case in currentCases track by $index">
           <a href="{{case.href}}" class="block-link">
             <div class="due-date">
               <span>{{case.overdueDays() | positive}}</span>

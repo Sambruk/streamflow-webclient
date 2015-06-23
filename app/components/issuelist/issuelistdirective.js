@@ -40,7 +40,6 @@ angular.module('sf')
       };
 
       scope.$watch('items', function(newVal){
-        debugger
         if(newVal){
           scope.items = newVal;
           initCurrentCases();

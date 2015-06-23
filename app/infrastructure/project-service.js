@@ -28,7 +28,6 @@ angular.module('sf')
             //{resources: 'projects'}
           ],
           onSuccess:function (resource, result) {
-
             var projects = _.chain(resource.response.index.links)
               .filter(function(item){
                 return item.rel === 'inbox' || item.rel === 'assignments';
@@ -44,6 +43,7 @@ angular.module('sf')
 
               result.push({text: key, types: types});
             });
+            result.unlimitedResultCount = resource.response.unlimitedResultCount;
           }
         });
       },

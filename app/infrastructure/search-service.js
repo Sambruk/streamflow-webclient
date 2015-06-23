@@ -33,6 +33,7 @@ angular.module('sf').factory('searchService', function (backendService, projectS
         resource.response.links.forEach(function (item) {
           result.push(projectService.sfCaseFactory(item));
         });
+        result.unlimitedResultCount = resource.response.unlimitedResultCount;
       }
     });
   }

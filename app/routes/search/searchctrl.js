@@ -27,8 +27,8 @@ angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $r
   var pageSize = paginationService.pageSize;
 
   $scope.showSpinner = {
-    currentCases: false,
-    infiniteScroll: true
+    currentCases: true,
+    infiniteScroll: false
   };
 
   $scope.getHeader = function () {
@@ -53,6 +53,7 @@ angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $r
     searchService.getCases(query + '+limit+' + pageSize + '+offset+' + $scope.currentCases.length).promise.then(function (result) {
       $scope.totalCases = result.unlimitedResultCount;
       $scope.currentCases = $scope.currentCases.concat(result);
+      $scope.showSpinner.currentCases = false;
       $scope.busyLoadingData = false;
       $scope.showSpinner.infiniteScroll = false;
     });

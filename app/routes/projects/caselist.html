@@ -18,7 +18,7 @@
 -->
 <div class="content-primary" role="main">
   <div ng-show="showSpinner.currentCases" class="spinner"></div>
-  <div class="issues-overview" data-ng-hide="currentCases.length === 0">
+  <div class="issues-overview" ng-hide="showSpinner.currentCases">
     <div class="filter cf">
       <input type="text" ng-model="filterSearch" id="search" placeholder="Filtrera sökning">
 

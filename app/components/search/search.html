@@ -1,3 +1,21 @@
+<!--
+
+
+    Copyright 2009-2014 Jayway Products AB
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
 <form data-ng-submit="search(query)" role="search">
   <fieldset>
     <label for="main-searchtext" class="struct">Sök</label>
@@ -50,9 +68,9 @@
     <label for="search-due-date-from">Förfallodatum</label>
 
     <div class="set-due-date date-container">
-      <input sf-date-picker-fancy type="text" id="search-due-date-from" name="search-due-date-from" placeholder="Från"
+      <input sf-date-picker-fancy picker-options="datePickerOptions" type="text" id="search-due-date-from" name="search-due-date-from" placeholder="Från"
              data-ng-model="filter.dueOnFrom">
-      <input sf-date-picker-fancy type="text" id="search-due-date-to" name="search-due-date-to" placeholder="Till"
+      <input sf-date-picker-fancy picker-options="datePickerOptions" type="text" id="search-due-date-to" name="search-due-date-to" placeholder="Till"
              data-ng-model="filter.dueOnTo">
     </div>
   </div>
@@ -69,10 +87,10 @@
     <label for="issue-created-from-date">Skapat</label>
 
     <div class="set-created-date date-container">
-      <input sf-date-picker-fancy type="text" id="issue-created-from-date" name="issue-created-from-date"
+      <input sf-date-picker-fancy picker-options="datePickerOptions" type="text" id="issue-created-from-date" name="issue-created-from-date"
              placeholder="Från"
              data-ng-model="filter.createdOnFrom">
-      <input sf-date-picker-fancy type="text" id="issue-created-to-date" name="issue-created-to-date" placeholder="Till"
+      <input sf-date-picker-fancy picker-options="datePickerOptions" type="text" id="issue-created-to-date" name="issue-created-to-date" placeholder="Till"
              data-ng-model="filter.createdOnTo">
     </div>
   </div>

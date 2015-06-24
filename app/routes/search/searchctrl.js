@@ -44,6 +44,7 @@ angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $r
   };
 
   $scope.showMoreItems = function() {
+    $scope.groupByValue = groupByService.getGroupByValue();
     if ($scope.busyLoadingData) {
       return;
     }
@@ -53,6 +54,9 @@ angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $r
     searchService.getCases(query + '+limit+' + pageSize + '+offset+' + $scope.currentCases.length).promise.then(function (result) {
       $scope.totalCases = result.unlimitedResultCount;
       $scope.currentCases = $scope.currentCases.concat(result);
+      if ($scope.groupByValue) {
+        $scope.currentCases = groupByService.groupBy($scope.currentCases, $scope.currentCases, $scope.groupByValue);
+      }
       $scope.showSpinner.currentCases = false;
       $scope.busyLoadingData = false;
       $scope.showSpinner.infiniteScroll = false;

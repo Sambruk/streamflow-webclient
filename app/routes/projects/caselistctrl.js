@@ -46,6 +46,7 @@ angular.module('sf')
     };
 
     $scope.showMoreItems = function() {
+      $scope.groupByValue = groupByService.getGroupByValue();
       if ($scope.busyLoadingData) {
         return;
       }

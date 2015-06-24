@@ -111,12 +111,8 @@
   <label for="group">Gruppera</label>
 
   <div class="select group">
-    <select class="hasCustomSelect" data-ng-model="group.value" id="group" name="group">
-      <option value="caseType" label="Ärendetyp">Ärendetyp</option>
-      <option value="dueOn" label="Förfallodatum">Förfallodatum</option>
-      <option value="assignedTo" label="Förvärvare">Förvärvare</option>
-      <option value="project" label="Projekt">Projekt</option>
-      <option value="priority" label="Prioritet">Prioritet</option>
+    <select class="hasCustomSelect" ng-options="option.name for option in groupingOptions"
+            ng-model="group.value" ng-change="groupBy(group.value)">
     </select>
 
     <div class="group-container">

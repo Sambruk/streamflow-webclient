@@ -19,27 +19,6 @@
 <div class="content-primary" role="main">
   <div ng-show="showSpinner.currentCases" class="spinner"></div>
   <div class="issues-overview" ng-hide="showSpinner.currentCases">
-    <div class="filter cf">
-      <input type="text" ng-model="filterSearch" id="search" placeholder="Filtrera sökning">
-
-      <div class="options">
-        <div class="sort">
-          <label for="sortDropdown">Sortera</label>
-          <select id="sortDropdown" ng-model="sortExpression" ng-init="sortExpression = '-creationDate'"> 
-            <option value="-creationDate">Skapad</option>
-            <option value="dueOn">Förfallodatum</option>
-            <option value="text">Beskrivning</option>
-            <option value="priority.priority">Prioritet</option>
-          </select>
-        </div>
-        <div class="group">
-          <label for="groupOptions">Gruppera</label>
-          <select ng-options="option.name for option in groupingOptions" ng-model="selectedItem"
-                  ng-change="groupBy(selectedItem)" ng-init="selectedItem = groupingOptions[0]">
-          </select>
-        </div>
-      </div>
-    </div>
 
     <div class="cases-header sticky" sf-scroll data-ng-class="{'fixed': scroll > 260}">
       <h3>
@@ -47,14 +26,13 @@
       <div class="due-date-divider"><span>Förfallodatum</span></div>
     </div>
     <div class="empty-placeholder">&nbsp;</div>
-
     <div ng-hide="showSpinner.currentCases">
       <ul class="issue-list">
         <div infinite-scroll="showMoreItems()" infinite-scroll-disabled='busyLoadingData' infinite-scroll-distance="1">
-          <li ng-show="currentCases['grouped'] && selectedItem.value !== 'caseId'"
-              ng-repeat="(key, value) in currentCases track by $index">
-          <h3 ng-show="selectedItem.value === 'checkPriority'" id="priorityHeader">{{key | slice: 1}}</h3>
-          <h3 ng-show="selectedItem.value !== 'checkPriority'" id="groupingHeader">{{key | translate}}</h3>
+          <li ng-show="currentCases['grouped'] && groupByValue.value !== 'caseId'"
+              ng-repeat="(key, value) in currentCases | groupBy: groupByValue.value track by $index">
+          <h3 ng-show="groupByValue.value === 'checkPriority'" id="priorityHeader">{{key | slice: 1}}</h3>
+          <h3 ng-show="groupByValue.value !== 'checkPriority'" id="groupingHeader">{{key | translate}}</h3>
 
           <div class="issue-item {{case.overdueStatus()}} caselistItem"
                ng-repeat="case in value">

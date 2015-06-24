@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sf').directive('search', function ($location, $timeout, searchService, navigationService) {
+angular.module('sf').directive('search', function ($location, $timeout, searchService, navigationService, groupByService) {
   return {
     restrict: 'E',
     templateUrl: 'components/search/search.html',
@@ -14,7 +14,6 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
         };
       },
       post: function (scope) {
-        console.log(scope.datePickerOptions);
         searchService.getPossibleAssignees().promise.then(function (assignees) {
           scope.possibleAssignees = assignees;
         });
@@ -46,6 +45,8 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
         scope.group.order = "asc";
         scope.sort = {};
         scope.sort.order = "asc";
+
+        scope.groupingOptions = groupByService.getGroupingOptions();
 
         // Translation map. Should use i18n for this.
         scope.searchTerms = {
@@ -199,9 +200,9 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
         var buildSearchGroupingSorting = function () {
           scope.queryGroupSorting = '';
           if (scope.group.value && scope.sort.value) {
-            scope.queryGroupSorting = ' order by ' + scope.group.value + ' ' + scope.group.order + ', ' + scope.sort.value + ' ' + scope.sort.order;
+            scope.queryGroupSorting = ' order by ' + scope.group.value.query + ' ' + scope.group.order + ', ' + scope.sort.value + ' ' + scope.sort.order;
           } else if (scope.group.value) {
-            scope.queryGroupSorting = ' order by ' + scope.group.value + ' ' + scope.group.order;
+            scope.queryGroupSorting = ' order by ' + scope.group.value.query + ' ' + scope.group.order;
           } else if (scope.sort.value) {
             scope.queryGroupSorting = ' order by ' + scope.sort.value + ' ' + scope.sort.order;
           }
@@ -228,6 +229,7 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
           if (scope.queryGroupSorting) {
             query = query + scope.queryGroupSorting;
           }
+          groupByService.setGroupByValue(scope.group.value);
 
           // Replace any search term with its proper API equivalent.
           query = query.replace(/([a-z\xE5\xE4\xF6]+)(?=:)/gi, function (match) {

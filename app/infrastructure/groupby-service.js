@@ -25,7 +25,7 @@ angular.module('sf')
       {name: 'Ärendetyp', value: 'caseTypeText', query: 'caseType'},
       {name: 'Förfallodatum', value: 'checkDueOn', query: 'dueOn'},
       {name: 'Förvärvare', value: 'assignedTo', query: 'assignedTo'},
-      {name: 'Projekt', value: 'project', query: 'project'},
+      {name: 'Projekt', value: 'owner', query: 'project'},
       {name: 'Prioritet', value: 'checkPriority', query: 'priority'}];
 
     var groupByValue;
@@ -60,14 +60,14 @@ angular.module('sf')
               item.assignedTo = 'Ingen förvärvare';
             }
             break;
-          case 'project':
+          case 'owner':
             if (!item.owner) {
               item.owner = 'Inget projekt';
             }
             break;
           case 'checkDueOn':
             if (!item.dueOn) {
-              item.checkDueOn = '-1 Inget förfallodatum';
+              item.checkDueOn = 'Inget förfallodatum';
             } else {
               var dueDate = item.checkdueDay();
               if (dueDate === 0) {

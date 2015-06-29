@@ -27,9 +27,19 @@
     <search class="main-search"></search>
 
     <div class="user-area">
-      <!--<a href="#/logout" class="btn btn-xs">Logga ut</a>-->
-      <a href="#/profile" class="logged-in">
-        <i class="icon-user"></i>{{profile[0].name}}</a>
+      <a href="" class="logged-in" data-ng-click="toggleUserActions()">
+        <i class="icon-user"></i>{{profile[0].name}}
+      </a>
+      <div class="user-actions" data-ng-show="showUserActions">
+        <ul>
+          <li>
+            <a href="#/profile" class="" data-ng-click="toggleUserActions()">Profil</a>
+          </li>
+          <li>
+            <a href="#/logout" class="" data-ng-click="toggleUserActions()">Logga ut</a>
+          </li>
+        </ul>
+      </div>
     </div>
     <!-- /user-area -->
   </div>

@@ -27,7 +27,8 @@ angular.module('sf').directive('banner', function ($rootScope, $q, profileServic
       // directive.
       profile: '=?'
     },
-    link: function(scope){
+    link: function(scope) {
+      scope.showUserActions = false;
       var profile = profileService.getCurrent();
 
       $q.all([profile.promise])
@@ -40,6 +41,20 @@ angular.module('sf').directive('banner', function ($rootScope, $q, profileServic
       scope.$on('profile-name-updated', function(){
         scope.profile.invalidate();
         scope.profile.resolve();
+      });
+
+      scope.toggleUserActions = function (bool) {
+        if (bool !== undefined) {
+          scope.showUserActions = bool;
+        } else {
+          scope.showUserActions = !scope.showUserActions;
+        }
+      };
+
+      scope.$on('dialogCloseEvent', function (e, data) {
+        if (data.dialog === 'showUserActions') {
+          scope.toggleUserActions(false);
+        }
       });
     }
   };

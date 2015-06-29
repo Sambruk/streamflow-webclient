@@ -62,23 +62,31 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
           'skapadav': 'createdBy'
         };
 
-        /*
-         var initFromQueryParams = function () {
-         scope.filter = parseSearchQuery($location.search().query);
-         };
+        var initFromQueryParams = function () {
+          var queryString = $location.search().query;
+          var patt = /([a-z]+([:]){1}[\S]+)+/gi;
+          var res = patt.exec(queryString);
 
-         var parseSearchQuery = function (query) {
-         var result = {};
-         query.split(' ').forEach(function(part) {
-         var item = part.split(/([a-z\xE5\xE4\xF6]+)(?=:)/gi);
-         result[item[0]] = decodeURIComponent(item[1]);
-         });
-         debugger
-         return result;
-         };
+          //var freeText = queryString.split(/([* a-z\xE5\xE4\xF60-9]+[^a-z:])(.*?)/i);
+          //var filter = queryString.split(/([a-z]+[:]{1}[\S]+)+/gi);
+          //scope.filter = parseSearchQuery($location.search().query);
+        };
 
-         initFromQueryParams();
-         */
+        var parseSearchQuery = function (query) {
+          if (!query) {
+            return;
+          }
+          var result = {};
+          debugger
+          query.split(' ').forEach(function (part) {
+//            var item = part.split(/([a-z\xE5\xE4\xF6]+)(?=:)/gi);
+            var item = part.split(/([a-z\xE5\xE4\xF6]+)(?=:)/gi);
+            result[item[0]] = decodeURIComponent(item[1]);
+          });
+          return result;
+        };
+
+        initFromQueryParams();
 
         scope.$watch('filter.dueOnFrom', function () {
           if (!scope.filter || !scope.filter.dueOnFrom) {
@@ -218,7 +226,7 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
         };
 
         scope.search = function (query) {
-          query = query || '*';
+          query = query || '';
 
           scope.showSearchFilter = false;
 

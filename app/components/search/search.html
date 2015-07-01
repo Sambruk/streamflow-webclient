@@ -37,7 +37,7 @@
   <div class="title-divider"><span>Sökfilter</span></div>
   <div class="select">
     <label for="type-select">Projekt</label>
-    <select chosen no-results-text="'Inga project funna'" data-placeholder="Project"
+    <select chosen no-results-text="'Inga project funna'" data-placeholder="Projekt"
             data-ng-options="project.id as (project.text) group by project.title for project in possibleProjects"
             data-ng-model="filter.project"
             allow-single-deselect="true" search-contains="true" name="name-select" id="project-select" class="item">
@@ -111,8 +111,8 @@
   <label for="group">Gruppera</label>
 
   <div class="select group">
-    <select class="hasCustomSelect" ng-options="option.name for option in groupingOptions"
-            ng-model="group.value" ng-change="groupBy(group.value)">
+    <select class="hasCustomSelect" name="group" id="group" ng-options="option.name for option in groupingOptions"
+            ng-model="group.value">
     </select>
 
     <div class="group-container">
@@ -127,7 +127,7 @@
   <label for="sort">Sortera</label>
 
   <div class="select sort">
-    <select class="hasCustomSelect" data-ng-model="sort.value" id="sort" name="sort">
+    <select class="hasCustomSelect" allow-single-deselect="true" data-ng-model="sort.value" id="sort" name="sort">
       <option value="createdOn">Skapad</option>
       <option value="dueOn">Förfallodatum</option>
       <option value="description">Beskrivning</option>

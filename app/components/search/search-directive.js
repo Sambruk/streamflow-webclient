@@ -63,27 +63,90 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
         };
 
         var initFromQueryParams = function () {
-          var queryString = $location.search().query;
-          var patt = /([a-z]+([:]){1}[\S]+)+/gi;
-          var res = patt.exec(queryString);
-
-          //var freeText = queryString.split(/([* a-z\xE5\xE4\xF60-9]+[^a-z:])(.*?)/i);
-          //var filter = queryString.split(/([a-z]+[:]{1}[\S]+)+/gi);
-          //scope.filter = parseSearchQuery($location.search().query);
+          var query = $location.search().query;
+          retrieveQuery(query);
+          retrieveFilter(query);
+          retrieveGroup(query);
+          retrieveSort(query);
         };
 
-        var parseSearchQuery = function (query) {
-          if (!query) {
-            return;
+        var retrieveQuery = function (query) {
+          var re = /([0-9a-z\xE5\xE4\xF6\s]*[^\w:])/i;
+          var str = query;
+          var m;
+
+          if ((m = re.exec(str)) !== null) {
+            if (m.index === re.lastIndex) {
+              re.lastIndex++;
+            }
+            scope.query = m[0];
           }
-          var result = {};
-          debugger
-          query.split(' ').forEach(function (part) {
-//            var item = part.split(/([a-z\xE5\xE4\xF6]+)(?=:)/gi);
-            var item = part.split(/([a-z\xE5\xE4\xF6]+)(?=:)/gi);
-            result[item[0]] = decodeURIComponent(item[1]);
-          });
-          return result;
+/*
+          var regExp = /([\w\s]*[^\w:])/i;
+          var match;
+
+          while ((match = regExp.exec(query)) !== null) {
+            scope.query = match[0];
+
+            if (match.index === regExp.lastIndex) {
+              regExp.lastIndex++;
+            }
+          }
+*/
+        };
+
+        var retrieveFilter = function (query) {
+          scope.filter = scope.filter || {};
+          var regExp = /([a-z]+([:]){1}[\S]+)+/gi;
+          var match;
+
+          while ((match = regExp.exec(query)) !== null) {
+            var result = match[0].split(':');
+
+            if (result[0] === 'dueOn') {
+              scope.filter.dueOnFrom = moment(result[1].split('-')[0], 'YYYYMMDD').format('YYYY-MM-DD');
+              scope.filter.dueOnTo = moment(result[1].split('-')[1], 'YYYYMMDD').format('YYYY-MM-DD');
+            } else if (result[0] === 'createdOn') {
+              scope.filter.createdOnFrom = moment(result[1].split('-')[0], 'YYYYMMDD').format('YYYY-MM-DD');
+              scope.filter.createdOnTo = moment(result[1].split('-')[1], 'YYYYMMDD').format('YYYY-MM-DD');
+            } else if (result[0] === 'label') {
+              scope.filter.label = scope.filter.label || [];
+              scope.filter.label.push(result[1]);
+            } else {
+              scope.filter[result[0]] = result[1];
+            }
+          }
+        };
+
+        var retrieveGroup = function (query) {
+          scope.group = scope.group || {};
+
+          var groupingOptions = groupByService.getGroupingOptions();
+
+          var regExp = /(group by[\s]+[\w]+[\s]*[\w]*)/gi;
+          var match;
+
+          while ((match = regExp.exec(query)) !== null) {
+            var result = match[0].split(' ');
+
+            var valueObject = _.where(groupingOptions, { query: result[2]})
+            scope.group.value = valueObject[0];
+            scope.group.order = result[3] || 'asc';
+          }
+        };
+
+        var retrieveSort = function (query) {
+          scope.sort = scope.sort || {};
+
+          var regExp = /(sort by[\s]+[\w]+[\s]*[\w]*)/gi;
+          var match;
+
+          while ((match = regExp.exec(query)) !== null) {
+            var result = match[0].split(' ');
+
+            scope.sort.value = result[2];
+            scope.sort.order = result[3] || 'asc';
+          }
         };
 
         initFromQueryParams();
@@ -208,11 +271,11 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
         var buildSearchGroupingSorting = function () {
           scope.queryGroupSorting = '';
           if (scope.group.value && scope.sort.value) {
-            scope.queryGroupSorting = ' order by ' + scope.group.value.query + ' ' + scope.group.order + ', ' + scope.sort.value + ' ' + scope.sort.order;
+            scope.queryGroupSorting = ' group by ' + scope.group.value.query + ' ' + scope.group.order + ', sort by ' + scope.sort.value + ' ' + scope.sort.order;
           } else if (scope.group.value) {
-            scope.queryGroupSorting = ' order by ' + scope.group.value.query + ' ' + scope.group.order;
+            scope.queryGroupSorting = ' group by ' + scope.group.value.query + ' ' + scope.group.order;
           } else if (scope.sort.value) {
-            scope.queryGroupSorting = ' order by ' + scope.sort.value + ' ' + scope.sort.order;
+            scope.queryGroupSorting = ' sort by ' + scope.sort.value + ' ' + scope.sort.order;
           }
 
         };

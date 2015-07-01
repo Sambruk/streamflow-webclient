@@ -23,6 +23,16 @@ angular.module('sf').factory('searchService', function (backendService, projectS
 
   function getCases(query) {
     query = query.replace(/: /g, ':');
+    // Replace 'group by X desc, sort by Y asc'
+    // with 'order by X desc, Y asc'
+    if (query.indexOf('group by') > 0 && query.indexOf('sort by') > 0) {
+      query = query.replace('group', 'order');
+      query = query.replace('sort by ', '');
+    } else if (query.indexOf('group by ') > 0) {
+      query = query.replace('group', 'order');
+    } else if (query.indexOf('sort by') > 0) {
+      query = query.replace('sort', 'order');
+    }
     return backendService.get({
       specs: [
         {resources: workspaceId},

@@ -28,11 +28,12 @@ angular.module('sf').directive('contextmenu', function (projectService, navigati
 
       scope.projects = projectService.getAll();
 
-      scope.navigateTo = function (href, projectName, $event){
+      scope.navigateTo = function (href, projectName, caseCount, $event){
         $event.preventDefault();
         scope.toggleSidebar($event);
         navigationService.linkTo(href);
         $rootScope.projectName = projectName;
+        $rootScope.caseCount = caseCount;
       };
 
       scope.toggleSidebar = function ($event) {

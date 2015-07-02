@@ -20,19 +20,12 @@
   <fieldset>
     <label for="main-searchtext" class="struct">Sök</label>
     <input type="search" placeholder="Sök" id="main-searchtext" data-ng-model="query">
-    <a href="" id="main-search-filter" data-ng-model="filter" data-ng-click="toggleSearchFilter()"><i
-            class="filter-dropdown icon-filter"></i></a>
+    <a href="" id="main-search-filter" data-ng-model="filter" data-ng-click="toggleSearchFilter()">
+      <i class="filter-dropdown icon-filter"></i></a>
     <button type="submit" class="icon-search"><span>Sök</span></button>
   </fieldset>
 </form>
-<div class="search-terms" data-ng-show="showSearchTerms">
-  <div class="due-date-divider">
-    <span>Lägg till sökterm</span>
-  </div>
-  <div>
-    <button data-ng-click="addSearchTermToQuery($event)" data-ng-repeat="(key, value) in searchTerms">{{key}}</button>
-  </div>
-</div>
+
 <div class="search-filter m m-filter" data-ng-show="showSearchFilter">
   <div class="title-divider"><span>Sökfilter</span></div>
   <div class="select">
@@ -111,9 +104,13 @@
   <label for="group">Gruppera</label>
 
   <div class="select group">
-    <select class="hasCustomSelect" name="group" id="group" ng-options="option.name for option in groupingOptions"
-            ng-model="group.value">
-    </select>
+    <div class="">
+      <select class="hasCustomSelect" name="group" id="group" ng-options="option.name for option in groupingOptions"
+              ng-model="group.value">
+      </select>
+      <a href="" id="" data-ng-click="clearGrouping()" data-ng-show="group.value">
+        <i class="icon-cancel"></i></a>
+    </div>
 
     <div class="group-container">
       <div class="group-asc">
@@ -127,13 +124,17 @@
   <label for="sort">Sortera</label>
 
   <div class="select sort">
-    <select class="hasCustomSelect" allow-single-deselect="true" data-ng-model="sort.value" id="sort" name="sort">
-      <option value="createdOn">Skapad</option>
-      <option value="dueOn">Förfallodatum</option>
-      <option value="description">Beskrivning</option>
-      <option value="priority">Prioritet</option>
-    </select>
-    
+    <div class="">
+      <select class="hasCustomSelect" allow-single-deselect="true" data-ng-model="sort.value" id="sort" name="sort">
+        <option value="createdOn">Skapad</option>
+        <option value="dueOn">Förfallodatum</option>
+        <option value="description">Beskrivning</option>
+        <option value="priority">Prioritet</option>
+      </select>
+      <a href="" id="" data-ng-click="clearSorting()" data-ng-show="sort.value">
+        <i class="icon-cancel"></i></a>
+    </div>
+
     <div class="sort-container">
       <div class="sort-asc">
         <input type="radio" value="asc" id="sort-asc" name="sort-asc" data-ng-model="sort.order"><label for="sort-asc">Stigande</label>

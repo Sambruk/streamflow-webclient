@@ -71,36 +71,22 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
         };
 
         var retrieveQuery = function (query) {
-          var re = /([0-9a-z\xE5\xE4\xF6\s]*[^\w:])/i;
-          var str = query;
-          var m;
-
-          if ((m = re.exec(str)) !== null) {
-            if (m.index === re.lastIndex) {
-              re.lastIndex++;
-            }
-            scope.query = m[0];
-          }
-/*
-          var regExp = /([\w\s]*[^\w:])/i;
+          var regExp = /(^.*?)((?=\w*:)|(?=group by)|(?=sort by))/i;
           var match;
 
-          while ((match = regExp.exec(query)) !== null) {
-            scope.query = match[0];
-
+          if ((match = regExp.exec(query)) !== null) {
             if (match.index === regExp.lastIndex) {
               regExp.lastIndex++;
             }
+            var result = match[0];
+            scope.query = result;
           }
-*/
         };
 
         var retrieveFilter = function (query) {
           scope.filter = scope.filter || {};
-          var regExp = /([a-z]+([:]){1}[\S]+)+/gi;
-          var match;
 
-          while ((match = regExp.exec(query)) !== null) {
+          matchRegExp(query, /([a-z]+([:]){1}[\S]+)+/gi, function (match) {
             var result = match[0].split(':');
 
             if (result[0] === 'dueOn') {
@@ -115,40 +101,42 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
             } else {
               scope.filter[result[0]] = result[1];
             }
-          }
+          });
         };
 
         var retrieveGroup = function (query) {
           scope.group = scope.group || {};
-
           var groupingOptions = groupByService.getGroupingOptions();
 
-          var regExp = /(group by[\s]+[\w]+[\s]*[\w]*)/gi;
-          var match;
-
-          while ((match = regExp.exec(query)) !== null) {
+          matchRegExp(query, /(group by[\s]+[\w]+[\s]*[\w]*)/gi, function (match) {
             var result = match[0].split(' ');
 
-            var valueObject = _.where(groupingOptions, { query: result[2]})
+            var valueObject = _.where(groupingOptions, { query: result[2]});
             scope.group.value = valueObject[0];
             scope.group.order = result[3] || 'asc';
-          }
+          });
         };
 
         var retrieveSort = function (query) {
           scope.sort = scope.sort || {};
 
-          var regExp = /(sort by[\s]+[\w]+[\s]*[\w]*)/gi;
-          var match;
-
-          while ((match = regExp.exec(query)) !== null) {
+          matchRegExp(query, /(sort by[\s]+[\w]+[\s]*[\w]*)/gi, function (match) {
             var result = match[0].split(' ');
 
             scope.sort.value = result[2];
             scope.sort.order = result[3] || 'asc';
-          }
+          });
         };
 
+        var matchRegExp = function (query, regExp, callback) {
+          var match;
+          while ((match = regExp.exec(query)) !== null) {
+            if (match.index === regExp.lastIndex) {
+              regExp.lastIndex++;
+            }
+            callback(match)
+          }
+        };
         initFromQueryParams();
 
         scope.$watch('filter.dueOnFrom', function () {
@@ -216,11 +204,9 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
         };
 
         scope.resetSearchFilter = function () {
+          scope.clearGrouping();
+          scope.clearSorting();
           scope.filter = undefined;
-          scope.group.value = undefined;
-          scope.group.order = "asc";
-          scope.sort.value = undefined;
-          scope.sort.order = "asc";
         };
 
         var isSet = function (values) {
@@ -231,6 +217,16 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
             }
           });
           return set;
+        };
+
+        scope.clearGrouping = function () {
+          scope.group.value = undefined;
+          scope.group.order = "asc";
+        };
+
+        scope.clearSorting = function () {
+          scope.sort.value = undefined;
+          scope.sort.order = "asc";
         };
 
         var buildSearchFilter = function () {

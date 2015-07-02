@@ -52,7 +52,7 @@ angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $r
     $scope.showSpinner.infiniteScroll = true;
 
     searchService.getCases(query + '+limit+' + pageSize + '+offset+' + $scope.currentCases.length).promise.then(function (result) {
-      $scope.totalCases = result.unlimitedResultCount;
+      $scope.caseCount = result.unlimitedResultCount;
       $scope.currentCases = $scope.currentCases.concat(result);
       if ($scope.groupByValue) {
         $scope.currentCases = groupByService.groupBy($scope.currentCases, $scope.currentCases, $scope.groupByValue);

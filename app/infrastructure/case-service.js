@@ -1006,6 +1006,20 @@ angular.module('sf')
           });
           }, 1000),
 
+       updateFieldWithoutDelay: function(caseId, formId, fieldId, value) {
+            return backendService.postNested(
+                caseBase(caseId).concat([
+                    {resources: 'formdrafts/' + formId, unsafe: true},
+                    {commands: 'updatefield'}
+                ]),
+                {field: fieldId, value: value}).then(function(result){
+                    caseBase.broadcastMessage(result.status);
+                },
+                function(error){
+                    caseBase.broadcastMessage(error);
+                });
+        },
+
       submitForm: function(caseId, formId) {
         return backendService.postNested(
           caseBase(caseId).concat([

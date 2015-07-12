@@ -177,18 +177,33 @@ angular.module('sf')
     };
 
     $scope.submitForm = function () {
-      caseService.submitForm($routeParams.caseId, $scope.form[0].draftId).then(function () {
-        if (!$scope.closeWithForm) {
-          formSubmitted();
-        } else {
-          caseService.closeFormOnClose($routeParams.caseId).then(function () {
-            formSubmitted();
-            $timeout(function () {
-              sidebarService.close($scope);
-            }, 1000);
+        updateFieldsOnPages($scope.form[0]).then(function(){
+          caseService.submitForm($routeParams.caseId, $scope.form[0].draftId).then(function () {
+
+            if (!$scope.closeWithForm) {
+              formSubmitted();
+            } else {
+              caseService.closeFormOnClose($routeParams.caseId).then(function () {
+                formSubmitted();
+                $timeout(function () {
+                  sidebarService.close($scope);
+                }, 1000);
+              });
+            }
           });
-        }
       });
+    };
+
+    var updateFieldsOnPages = function(form) {
+        var p = Promise.resolve();
+        form.enhancedPages.forEach(function (pages) {
+            pages.fields.forEach(function (field) {
+                p = p.then(function() {
+                    caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, field.value)
+                });
+            });
+        });
+        return p;
     };
 
     var formSubmitted = function () {

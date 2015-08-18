@@ -31,7 +31,9 @@ angular.module('sf').directive('sfDatePickerFancy', function () {
 
 
         function setDateWithoutTriggeringChange(el, date) {
-          el.val(date).blur();
+          if(date) {
+            el.val(date).blur();
+          }
         }
 
         function setExpirationDateInPicker(date, picker) {

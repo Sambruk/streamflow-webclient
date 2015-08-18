@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sf').directive('search', function ($location, $timeout, searchService, navigationService, groupByService) {
+angular.module('sf').directive('search', function ($location, $timeout, searchService, navigationService, groupByService, $rootScope) {
   return {
     restrict: 'E',
     templateUrl: 'components/search/search.html',
@@ -284,6 +284,15 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
           }
         };
 
+        var clearBreadCrumb = function () {
+          $rootScope.$broadcast('breadcrumb-updated', [
+            {
+                 title: '',
+                 url: ''
+            }
+          ]);
+        };
+
         scope.search = function (query) {
           query = query || '';
 
@@ -305,6 +314,8 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
 
           $location.search({'query': query});
           navigationService.linkTo('/search');
+
+          clearBreadCrumb();
         };
       }
     }

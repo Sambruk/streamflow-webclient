@@ -219,13 +219,16 @@
         </div>
 
         <div data-ng-show="currentFormPage" class="row button-group">
-          <a href="" class="btn inline" data-ng-class="{inactive: isFirstPage() || !issueForm.$valid}"
-             data-ng-click="!isFirstPage() && issueForm.$valid && previousFormPage()">Tillbaka</a>
+          <a data-ng-hide="isFirstPage()" href="" class="btn inline" 
+             data-ng-class="{inactive: isFirstPage()}" 
+             data-ng-click="!isFirstPage() && previousFormPage()">Tillbaka</a>
           <a data-ng-hide="isLastPage(currentFormPage)" href="" class="btn inline"
              data-ng-class="{inactive: isLastPage() || !issueForm.$valid}"
              data-ng-click="!isLastPage() && issueForm.$valid && nextFormPage()">Nästa</a>
-          <a data-ng-show="isLastPage(currentFormPage)" data-ng-class="{inactive: !issueForm.$valid}" 
-             data-ng-disabled="!issueForm.$valid" data-ng-click="submitForm()" href="" class="btn inline">Slutför</a>
+          <a data-ng-show="isLastPage(currentFormPage)" href="" class="btn inline"
+             data-ng-class="{inactive: !issueForm.$valid}" 
+             data-ng-disabled="!issueForm.$valid" 
+             data-ng-click="submitForm()">Slutför</a>
         </div>
       </form>
     </div>

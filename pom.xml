@@ -59,6 +59,7 @@
               <resources>
                 <resource>
                   <directory>${basedir}/build</directory>
+                  <filtering>true</filtering>
                 </resource>
               </resources>
             </configuration>

@@ -57,8 +57,11 @@ angular.module('sf').factory('SfCase', function() {
       return this.labels.links.map(function(label) {
         return label.text;
       }).join(', ');
-    }
+    },
 
+    closed: function() {
+      return 'CLOSED' === this.status;
+    }
   };
   return SfCase;
 });

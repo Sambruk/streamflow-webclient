@@ -59,7 +59,17 @@
               <resources>
                 <resource>
                   <directory>${basedir}/build</directory>
+                  <includes>
+                      <include>**/*.html</include>
+                  </includes>
                   <filtering>true</filtering>
+                </resource>
+                <resource>
+                  <directory>${basedir}/build</directory>
+                  <excludes>
+                      <exclude>**/*.html</exclude>
+                  </excludes>
+                  <filtering>false</filtering>
                 </resource>
               </resources>
             </configuration>

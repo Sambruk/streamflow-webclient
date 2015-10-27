@@ -51,16 +51,18 @@
                           when="{'0': '{{case.dueOn | shortDate}}', '1': 'dag', 'other': 'dagar '}">
                   </data-ng-pluralize>
                 </div>
-                <div class="issue-description">
-                  <span class="meta">{{case.caseId}} - {{case.owner}} - {{case.caseType.text}}</span>
-                    <h4 data-ng-class="{'issue-closed': case.closed()}">{{case.text}} <span class="label-list">{{case.labelList() | parenthesis}}</span></h4>
-                  <span class="creator">{{case.createdBy}}</span>
-                </div>
-                <div class="issue-actions">
-                  <div>
-                    <span class="action-status updated">Ändrad {{case.modificationDate() | googleDate}}</span>
-                    <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
-                    <span class="priority" data-ng-if="case.priority.text">Prioritet: {{ case.priority.text }}</span>
+                <div data-ng-class="{'issue-closed': case.closed()}">
+                  <div class="issue-description">
+                    <span class="meta">{{case.caseId}} - {{case.owner}} - {{case.caseType.text}}</span>
+                      <h4 data-ng-class="{'issue-closed': case.closed()}">{{case.text}} <span class="label-list">{{case.labelList() | parenthesis}}</span></h4>
+                    <span class="creator">{{case.createdBy}}</span>
+                  </div>
+                  <div class="issue-actions">
+                    <div>
+                      <span class="action-status updated">Ändrad {{case.modificationDate() | googleDate}}</span>
+                      <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
+                      <span class="priority" data-ng-if="case.priority.text">Prioritet: {{ case.priority.text }}</span>
+                    </div>
                   </div>
                 </div>
               </a>
@@ -78,16 +80,18 @@
                         when="{'0': '{{case.dueOn | shortDate}}', '1': 'dag', 'other': 'dagar '}">
                 </data-ng-pluralize>
               </div>
-              <div class="issue-description">
-                <span class="meta">{{case.caseId}} - {{case.owner}} - {{case.caseType.text}}</span>
-                  <h4 data-ng-class="{'issue-closed': case.closed()}">{{case.text}} <span class="label-list">{{case.labelList() | parenthesis}}</span></h4>
-                <span class="creator">{{case.createdBy}}</span>
-              </div>
-              <div class="issue-actions">
-                <div>
-                  <span class="action-status updated">Ändrad {{case.modificationDate() | googleDate}}</span>
-                  <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
-                  <span class="priority" data-ng-if="case.priority.text">Prioritet: {{ case.priority.text }}</span>
+              <div data-ng-class="{'issue-closed': case.closed()}">
+                <div class="issue-description">
+                  <span class="meta">{{case.caseId}} - {{case.owner}} - {{case.caseType.text}}</span>
+                    <h4 data-ng-class="{'issue-closed': case.closed()}">{{case.text}} <span class="label-list">{{case.labelList() | parenthesis}}</span></h4>
+                  <span class="creator">{{case.createdBy}}</span>
+                </div>
+                <div class="issue-actions">
+                  <div>
+                    <span class="action-status updated">Ändrad {{case.modificationDate() | googleDate}}</span>
+                    <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
+                    <span class="priority" data-ng-if="case.priority.text">Prioritet: {{ case.priority.text }}</span>
+                  </div>
                 </div>
               </div>
             </a>

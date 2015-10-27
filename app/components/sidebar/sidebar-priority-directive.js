@@ -20,6 +20,10 @@ angular.module('sf').directive('sidebarPriority', function (sidebarService) {
       scope.changePriorityLevel = function (priorityId) {
         sidebarService.changePriorityLevel(scope, priorityId);
       };
+
+      scope.$on('case-type-changed', function(){
+        sidebarService.priority(scope);
+      });
     }
   };
 });

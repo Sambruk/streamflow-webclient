@@ -55,7 +55,7 @@
                     <span class="meta">{{case.caseId}} - {{case.owner}} - {{case.caseType.text}}</span>
                       <h4 data-ng-class="{'issue-closed': case.closed()}">{{case.text}} <span class="label-list">{{case.labelList() | parenthesis}}</span></h4>
                     <span class="creator">{{case.createdBy}}</span>
-                    <span ng-if="case.unread"><span class="issue-unread">&#x2709;</span></span>
+                    <span ng-if="case.unread"><span class="issue-unread">&#x2709;!</span></span>
                   </div>
                   <div class="issue-actions">
                     <div>
@@ -87,7 +87,7 @@
                   <span class="meta">{{case.caseId}} - {{case.owner}} - {{case.caseType.text}}</span>
                     <h4 data-ng-class="{'issue-closed': case.closed()}">{{case.text}} <span class="label-list">{{case.labelList() | parenthesis}}</span></h4>
                   <span class="creator">{{case.createdBy}}</span>
-                  <span ng-if="case.unread"><span class="issue-unread">&#x2709;</span></span>
+                  <span ng-if="case.unread"><span class="issue-unread">&#x2709;!</span></span>
                 </div>
 
                 <div class="issue-actions">

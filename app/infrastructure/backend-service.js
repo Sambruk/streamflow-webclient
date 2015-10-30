@@ -214,7 +214,6 @@
 
       // Works in a similar way to get, but does a post instead
       postNested: function (specs, data, responseSelector) {
-        debugger
         function findInJson(spec, json) {
           var key = Object.keys(spec)[0];
           var id = spec[key];

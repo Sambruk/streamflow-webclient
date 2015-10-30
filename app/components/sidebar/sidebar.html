@@ -25,6 +25,15 @@
     <ul class="buttons cf" data-ng-show="commands[0]">
       <li data-ng-show="canSendTo"><a href="" data-ng-click="sendTo()" class="btn">Byt ägare</a></li>
       <li data-ng-show="canAssign"><a href="" data-ng-click="assign()" class="btn">Tilldela</a></li>
+      <li data-ng-show="canAssign">
+          <a href="" class="btn dropdown">Tilldela <i class="icon-direction downwards"></i></a>
+          <ul>
+              <li class="user-item"
+                  ng-repeat="user in possibleAssignees">
+                  <a href="" ng-click="a" class="btn">{{user.text}}</a>
+              </li>
+          </ul>
+      </li>
       <li data-ng-show="canUnassign"><a href="" data-ng-click="unassign()" class="btn">Återlämna</a></li>
       <li data-ng-show="canResolve"><a href="" data-ng-click="resolveCase()" class="btn">Stäng</a></li>
       <li data-ng-show="canClose"><a href="" data-ng-click="close()" class="btn">Stäng</a></li>

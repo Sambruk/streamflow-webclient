@@ -283,6 +283,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
 
   // Assign / Unassign
   var _assign = function (scope) {
+      debugger
     caseService.assignCase($routeParams.caseId).then(function () {
       $rootScope.$broadcast('case-assigned');
       _updateToolbar(scope);
@@ -292,6 +293,15 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
     });
   };
 
+  var _assignTo = function (id) {
+        caseService.assignCase($routeParams.caseId,id).then(function () {
+            $rootScope.$broadcast('case-assigned');
+            _updateToolbar(scope);
+
+            var href = navigationService.caseListHrefFromCase(scope.caze);
+            window.location.replace(href);
+        });
+  };
   var _unassign = function (scope) {
     caseService.unassignCase($routeParams.caseId).then(function () {
       $rootScope.$broadcast('case-unassigned');
@@ -441,6 +451,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
     reopen: _reopen,
     deleteCase: _deleteCase,
     assign: _assign,
+    assignTo: _assignTo,
     unassign: _unassign,
     downloadAttachment: _downloadAttachment,
     deleteAttachment: _deleteAttachment,

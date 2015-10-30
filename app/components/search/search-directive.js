@@ -16,6 +16,7 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
       post: function (scope) {
         searchService.getPossibleAssignees().promise.then(function (assignees) {
           scope.possibleAssignees = assignees;
+
         });
 
         searchService.getPossibleCreatedBy().promise.then(function (createdBy) {

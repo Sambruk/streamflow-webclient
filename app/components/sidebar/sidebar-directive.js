@@ -18,7 +18,7 @@
 'use strict';
 
 angular.module('sf')
-.directive('sidebar', function($location, growl, contactService, sidebarService, fileService, $cacheFactory, $rootScope, $routeParams, projectService, caseService, httpService, navigationService, $q, tokenService, checkPermissionService){
+.directive('sidebar', function($location, growl, contactService, sidebarService, fileService, $cacheFactory, $rootScope, $routeParams, projectService, caseService, httpService, navigationService, $q, tokenService, checkPermissionService, searchService){
   return {
     restrict: 'E',
     templateUrl: 'components/sidebar/sidebar.html',
@@ -40,6 +40,10 @@ angular.module('sf')
       scope.possibleForms = caseService.getSelectedPossibleForms($routeParams.caseId);
       scope.submittedFormList = caseService.getSubmittedFormList($routeParams.caseId);
       scope.notes = caseService.getSelectedNote($routeParams.caseId);
+      searchService.getPossibleAssignees().promise.then(function (assignees) {
+              scope.possibleAssignees = assignees;
+
+      });
       // scope.notesHistory = caseService.getAllNotes($routeParams.caseId);
       scope.caze = caseService.getSelected($routeParams.caseId);
       scope.possibleSendTo = caseService.getPossibleSendTo($routeParams.caseId);
@@ -272,6 +276,11 @@ angular.module('sf')
       scope.assign = function () {
         sidebarService.assign(scope);
       };
+
+      scope.assignTo = function (id) {
+        sidebarService.assignTo(id);
+      };
+
       scope.unassign = function () {
         sidebarService.unassign(scope);
       }; // End Assign / Unassign

@@ -311,7 +311,8 @@ angular.module('sf')
           }).then(callback);
       },
 
-      assignCase: function(caseId, callback) {
+      assignCase: function(caseId, id, callback) {
+        if (id == null) {
         return backendService.postNested(
           caseBase(caseId).concat([
             {commands: 'assign'}
@@ -321,6 +322,19 @@ angular.module('sf')
           }, function(error){
             caseBase.broadcastMessage(error);
           }).then(callback);
+        }
+        else {
+            return backendService.postNested(
+                caseBase(caseId).concat([
+                    {commands: 'assignTo',
+                     params: {'param1': id}}
+                ]),
+                {}).then(function(result){
+                    caseBase.broadcastMessage(result.status);
+                }, function(error){
+                    caseBase.broadcastMessage(error);
+                }).then(callback);
+        }
       },
 
       unassignCase: function(caseId, callback) {

@@ -67,6 +67,7 @@ angular.module('sf').controller('CaseEditCtrl', function($scope, $rootScope, $ro
         .then(function () {
         updateObject($scope.notesHistory);
         $success($($event.target));
+        $event.currentTarget.value="";
       }, function () {  
         $error($error($event.target));
       });

@@ -25,7 +25,7 @@ angular.module('sf')
       {name: 'Ärendetyp', value: 'caseTypeText', query: 'caseType'},
       {name: 'Förfallodatum', value: 'checkDueOn', query: 'dueOn'},
       {name: 'Förvärvare', value: 'assignedTo', query: 'assignedTo'},
-      {name: 'Projekt', value: 'owner', query: 'project'},
+      {name: 'Funktion', value: 'owner', query: 'project'},
       {name: 'Prioritet', value: 'checkPriority', query: 'priority'}];
 
     var groupByValue;

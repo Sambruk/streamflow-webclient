@@ -29,8 +29,8 @@
 <div class="search-filter m m-filter" data-ng-show="showSearchFilter">
   <div class="title-divider"><span>Sökfilter</span></div>
   <div class="select">
-    <label for="type-select">Projekt</label>
-    <select chosen no-results-text="'Inga project funna'" data-placeholder="Projekt"
+    <label for="type-select">Funktion</label>
+    <select chosen no-results-text="'Inga funktioner funna'" data-placeholder="Funktion"
             data-ng-options="project.id as (project.text) group by project.title for project in possibleProjects"
             data-ng-model="filter.project"
             allow-single-deselect="true" search-contains="true" name="name-select" id="project-select" class="item">

@@ -237,8 +237,8 @@ angular.module('sf')
         scope.commandView = true;
       }; // End Show Export Pdf
 
-      scope.onExportButtonClicked = function () {
-        caseService.getCasePdf($routeParams.caseId, scope.exportSubmittedForms, scope.exportAttachments, scope.exportConversations, scope.exportContacts, scope.exportCaseLog);
+      scope.onExportButtonClicked = function (submittedForms, attachments, conversations, contacts, caseLog) {
+        caseService.getCasePdf($routeParams.caseId, submittedForms, attachments, conversations, contacts, caseLog);
         scope.toggleExportPopup(false);
         console.log('Hide');
       };// End Send to

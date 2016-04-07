@@ -31,7 +31,9 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
   };
 
   var _updateObject = function(itemToUpdate){
-    itemToUpdate.invalidate();
+
+    console.log('Update triggered');
+    console.log(itemToUpdate);itemToUpdate.invalidate();
     itemToUpdate.resolve();
   };
 
@@ -55,6 +57,8 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
 
   var _changeCaseType = function (scope, casetype) {
     caseService.changeCaseType($routeParams.caseId, casetype).then(function () {
+      console.log('CaseType called');
+      console.log(casetype);
       if (!scope.possibleForms) {
         scope.possibleForms = caseService.getSelectedPossibleForms($routeParams.caseId);
       } else {
@@ -80,7 +84,50 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
         }
       });
 
-      _updateObject(scope.possibleResolutions);
+      //Getting avaliable types and labels
+      var caseTypes  =  caseService.getPossibleCaseTypes($routeParams.caseId);
+      var caseLabels = caseService.getPossibleCaseLabels($routeParams.caseId);
+
+      //Getting result after executing of promise
+      $q.all([
+        caseTypes.promise,
+        caseLabels.promise
+      ]).then(function (results) {
+        //TODO not the best approach
+        caseTypes = results[0];
+        caseLabels = results[1]
+        //checkPermissionService.checkPermissions(scope, scope.caseLabel.commands, ['addlabel'], ['canAddLabel']);
+        //scope.activeLabels = results[0].map(function (i) {
+        //  i.selected = true;
+        //  return i;
+        //});
+
+        if($.isEmptyObject(caseTypes) ||$.isEmptyObject(caseLabels)) {
+          var finalType = $.grep(caseTypes, function (e) {
+            return e.id == casetype;
+          });
+
+          var finalTypeCaseId = $.grep(caseLabels, function (e) {
+            //TODO get value from search value
+            //return e.text == finalType[0].labels;
+            return e.text == 'E-post';
+          });
+
+
+          //TODO Find Out how to update labels
+          //caseService.addCaseLabel($routeParams.caseId, finalTypeCaseId[0].id);
+          //_updateCaseLabels(scope);
+
+          ////_changeCaseLabels(scope,finalType.labels)
+          //console.log(finalType);
+        }
+      });
+
+      //caseTypes
+
+      _updateCaseLabels(scope);
+
+        _updateObject(scope.possibleResolutions);
 
       $rootScope.$broadcast('case-type-changed');
 

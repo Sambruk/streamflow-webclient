@@ -2,10 +2,6 @@
   "name": "webclient",
   "version": "0.0.0",
   "main": "app.js",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:jayway/streamflow-webclient.git"
-  },
   "devDependencies": {
     "del": "^0.1.2",
     "gulp": "^3.8.10",

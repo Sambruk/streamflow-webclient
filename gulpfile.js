@@ -37,6 +37,27 @@ var sourcemaps = require('gulp-sourcemaps');
 var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
 
+//var CORSheaders = {'Cache-Control': 'max-age=315360000, no-transform, public'};
+var CORSheaders = {'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE',
+                    'Access-Control-Allow-Headers':'Content-Type'};
+
+
+//es.header('Access-Control-Allow-Origin'­, "*"); res.header('Access-Control-Allow-Methods­','GET,PUT,POST,DELETE'); res.header('Access-Control-Allow-Headers­', 'Content-Type'
+
+var cors = function (req, res, next) {
+  console.log('Surprise mazafacka');
+
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
+  res.setHeader('Access-Control-Allow-Headers','Content-Type');
+  //res.setHeader('Access-Control-Allow-Origin', '*');
+  //res.setHeader('Access-Control-Allow-Headers', '*');
+  console.log('ALL HALE SATAN');
+  console.log(res);
+  next();
+};
+
 var testFiles = ['unit/filters-unit.js'];
 var buildMode = (function () {
   if (args.prod) {
@@ -173,11 +194,22 @@ gulp.task('copy-images', function () {
     .pipe(connect.reload());
 });
 
+//gulp.task('connect', function () {
+//  connect.server({
+//    root: 'build',
+//    port: 8080,
+//    livereload: true
+//  });
+//});
+
 gulp.task('connect', function () {
   connect.server({
     root: 'build',
-    port: 9999,
-    livereload: true
+    livereload: true,
+    port: 9999
+    //middleware: function () {
+    //  return [cors];
+    //}
   });
 });
 

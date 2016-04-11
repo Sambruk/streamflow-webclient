@@ -32,7 +32,6 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
 
   var _updateObject = function(itemToUpdate){
 
-    console.log('Update triggered');
     console.log(itemToUpdate);itemToUpdate.invalidate();
     itemToUpdate.resolve();
   };
@@ -57,8 +56,6 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
 
   var _changeCaseType = function (scope, casetype) {
     caseService.changeCaseType($routeParams.caseId, casetype).then(function () {
-      console.log('CaseType called');
-      console.log(casetype);
       if (!scope.possibleForms) {
         scope.possibleForms = caseService.getSelectedPossibleForms($routeParams.caseId);
       } else {
@@ -84,46 +81,27 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
         }
       });
 
-      //Getting avaliable types and labels
-      var caseTypes  =  caseService.getPossibleCaseTypes($routeParams.caseId);
-      var caseLabels = caseService.getPossibleCaseLabels($routeParams.caseId);
+      //Getting avaliable labels
+      var possibleCaseLabels = caseService.getPossibleCaseLabels($routeParams.caseId);
 
       //Getting result after executing of promise
       $q.all([
-        caseTypes.promise,
-        caseLabels.promise
+        possibleCaseLabels.promise
       ]).then(function (results) {
-        //TODO not the best approach
-        caseTypes = results[0];
-        caseLabels = results[1]
-        //checkPermissionService.checkPermissions(scope, scope.caseLabel.commands, ['addlabel'], ['canAddLabel']);
-        //scope.activeLabels = results[0].map(function (i) {
-        //  i.selected = true;
-        //  return i;
-        //});
+        var caseLabels = results[0];
 
-        if($.isEmptyObject(caseTypes) ||$.isEmptyObject(caseLabels)) {
-          var finalType = $.grep(caseTypes, function (e) {
-            return e.id == casetype;
-          });
+        if (!$.isEmptyObject(caseLabels)) {
+          if (!$.isEmptyObject(scope.caseTypeSearchInput)) {
+            var finalTypeLabels = $.grep(caseLabels, function (e) {
+              return e.text.toLowerCase().indexOf(scope.caseTypeSearchInput.toLowerCase()) != -1;
+            });
 
-          var finalTypeCaseId = $.grep(caseLabels, function (e) {
-            //TODO get value from search value
-            //return e.text == finalType[0].labels;
-            return e.text == 'E-post';
-          });
-
-
-          //TODO Find Out how to update labels
-          //caseService.addCaseLabel($routeParams.caseId, finalTypeCaseId[0].id);
-          //_updateCaseLabels(scope);
-
-          ////_changeCaseLabels(scope,finalType.labels)
-          //console.log(finalType);
+            finalTypeLabels.forEach(function (entry) {
+              caseService.addCaseLabel($routeParams.caseId, entry.id);
+            });
+          }
         }
       });
-
-      //caseTypes
 
       _updateCaseLabels(scope);
 

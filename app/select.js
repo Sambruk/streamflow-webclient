@@ -203,7 +203,6 @@ uis.directive('uiSelectChoices',
         }
 
         var choices = element.querySelectorAll('.ui-select-choices-row');
-        console.log('Select js at SelectorAll');
         if (choices.length !== 1) {
           throw uiSelectMinErr('rows', "Expected 1 .ui-select-choices-row but got '{0}'.", choices.length);
         }
@@ -277,7 +276,6 @@ uis.controller('uiSelectCtrl',
   ctrl.$filter = $filter;
 
   ctrl.searchInput = $element.querySelectorAll('input.ui-select-search');
-    //console.log('Searched input', ctrl.searchInput);
   if (ctrl.searchInput.length !== 1) {
     throw uiSelectMinErr('searchInput', "Expected 1 input.ui-select-search but got '{0}'.", ctrl.searchInput.length);
   }
@@ -458,7 +456,6 @@ uis.controller('uiSelectCtrl',
 
   // When the user selects an item with ENTER or clicks the dropdown
   ctrl.select = function(item, skipFocusser, $event) {
-    console.log('Something pressed', ctrl.searchInput);
 
     if (item === undefined || !item._uiSelectChoiceDisabled) {
 
@@ -616,7 +613,6 @@ uis.controller('uiSelectCtrl',
         if (!ctrl.multiple || ctrl.open) ctrl.select(ctrl.items[ctrl.activeIndex], true);
         break;
       case KEY.ENTER:
-          console.log('Enter pressed');
         if(ctrl.open && ctrl.activeIndex >= 0){
           ctrl.select(ctrl.items[ctrl.activeIndex]); // Make sure at least one dropdown item is highlighted before adding.
         } else {
@@ -665,7 +661,6 @@ uis.controller('uiSelectCtrl',
                 newItem = ctrl.tagging.fct( newItem );
               }
               if (newItem) ctrl.select(newItem, true);
-              console.log('newItem', newItem);
             });
           }
         }
@@ -1383,7 +1378,6 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
           return false;
         }
         var hasDupe = arr.filter( function (origItem) {
-              console.log('Filtering something');
           if ( $select.search.toUpperCase() === undefined || origItem === undefined ) {
             return false;
           }
@@ -1394,7 +1388,6 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
       }
       function _findApproxDupe(haystack, needle) {
         var dupeIndex = -1;
-        console.log('Filtering something');
         if(angular.isArray(haystack)) {
           var tempArr = angular.copy(haystack);
           for (var i = 0; i <tempArr.length; i++) {
@@ -1418,7 +1411,6 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
       }
 
       $select.searchInput.on('blur', function() {
-        console.log('Filtering something');
         $timeout(function() {
           $selectMultiple.activeMatchIndex = -1;
         });
@@ -1441,15 +1433,12 @@ uis.directive('uiSelectSingle', ['$timeout','$compile', function($timeout, $comp
         var locals = {},
             result;
         locals[$select.parserResult.itemName] = inputValue;
-        console.log('viem->model');
         result = $select.parserResult.modelMapper(scope, locals);
         return result;
       });
 
       //From model --> view
       ngModel.$formatters.unshift(function (inputValue) {
-        console.log('viem<-model');
-
         var data = $select.parserResult.source (scope, { $select : {search:''}}), //Overwrite $search
             locals = {},
             result;
@@ -1541,7 +1530,6 @@ uis.directive('uiSelectSingle', ['$timeout','$compile', function($timeout, $comp
       focusser.bind("keyup input", function(e){
 
         if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC || e.which == KEY.ENTER || e.which === KEY.BACKSPACE) {
-          console.log('keyinput');
 
           return;
         }

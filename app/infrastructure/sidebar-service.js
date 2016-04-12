@@ -31,8 +31,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
   };
 
   var _updateObject = function(itemToUpdate){
-
-    console.log(itemToUpdate);itemToUpdate.invalidate();
+    itemToUpdate.invalidate();
     itemToUpdate.resolve();
   };
 
@@ -91,24 +90,105 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
         var caseLabels = results[0];
 
         if (!$.isEmptyObject(caseLabels)) {
+          //scope.previousActiveLabels = scope.activeLabels;
           if (!$.isEmptyObject(scope.caseTypeSearchInput)) {
             var finalTypeLabels = $.grep(caseLabels, function (e) {
               return e.text.toLowerCase().indexOf(scope.caseTypeSearchInput.toLowerCase()) != -1;
             });
 
+            //_changeCaseLabels(scope, finalTypeLabels);
+
+
+            ////
             finalTypeLabels.forEach(function (entry) {
               caseService.addCaseLabel($routeParams.caseId, entry.id);
             });
+            //_updateCaseLabels(scope);
+
+            //$rootScope.$broadcast('case-type-changed');
+
+            //scope.caseLabel = caseService.getCaseLabel($routeParams.caseId);
+
+            //scope.caseLabel = caseService.getCaseLabel($routeParams.caseId);
+            //scope.possibleCaseLabels = caseService.getPossibleCaseLabels($routeParams.caseId);
+            //console.log(scope.caseLabel);
+
+            //$q.all([
+            //  scope.caseLabel.promise
+          //]).then(function (results) {
+        //var caseLabels = results[0];
+            //_changeCaseLabels(scope, finalTypeLabels);
+
+
+
+
+            //_updateObject(scope.possibleResolutions);
+
+            //if(!$.isEmptyObject(finalTypeLabels)){
+            //  _changeCaseLabels(scope, finalTypeLabels)
+            //
+            //}
+            //$rootScope.$broadcast('case-type-changed');
+            //console.log(finalTypeLab//els);
+            //_updateCaseLabels(scope);
+            //_updateToolbar(scope);
+
+
+            //scope.apply();
+            //scope.possibleCaseLabels = caseService.getPossibleCaseLabels($routeParams.caseId);
+
+            //sidebarService.updateCaseLabels(scope);
+
+
+            //_updateObject(scope.possibleCaseLabels);
+            //_updateCaseLabels(scope);
+            //$rootScope.$broadcast('case-type-changed');
+
+            //_updateCaseLabels(scope);
+            //_updateToolbar(scope);
+
+
+            //$rootScope.$broadcast('case-changed');
+            //_updateObject(scope.possibleResolutions);
+            //_updateObject(scope.caseLabel);
+            //_updateObject(scope);
+            //_updateToolbar(scope);
+
+            //$q.all([
+            //  scope.caseLabel.promise,
+            //  scope.possibleCaseLabels.promise
+            //]).then(function (results) {
+            //  checkPermissionService.checkPermissions(scope, scope.caseLabel.commands, ['addlabel'], ['canAddLabel']);
+            //  scope.activeLabels = results[0].map(function (i) {
+            //    i.selected = true;
+            //    return i;
+            //  });
+            //
+            //  scope.allCaseLabels = scope.activeLabels.concat(results[1].map(function (i) {
+            //    i.selected = false;
+            //    return i;
+            //  })).sort(sortByText);
+            //
+            //  //scope.previousActiveLabels = scope.activeLabels;
+            //
+            //});
+
           }
+          //_updateCaseLabels(scope);
         }
       });
 
-      _updateCaseLabels(scope);
+      //_updateCaseLabels(scope);
+      scope.caseLabel = caseService.getCaseLabel($routeParams.caseId);
+      scope.possibleCaseLabels = caseService.getPossibleCaseLabels($routeParams.caseId);
+       _updateObject(scope.possibleResolutions);
 
-        _updateObject(scope.possibleResolutions);
-
+      //if(!$.isEmptyObject(finalTypeLabels)){
+      //  _changeCaseLabels(scope, finalTypeLabels)
+      //
+      //}
       $rootScope.$broadcast('case-type-changed');
-
+      //console.log(finalTypeLab//els);
       _updateCaseLabels(scope);
       _updateToolbar(scope);
     });
@@ -131,18 +211,25 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
   };
 
   var _updateCaseLabels = function (scope) {
-    if (!scope.caseLabel) {
+    //if (!scope.caseLabel) {
       scope.caseLabel = caseService.getCaseLabel($routeParams.caseId);
 
-    } else {
+    //} else {
       _updateObject(scope.caseLabel);
-    }
+    //}
 
-    if (!scope.possibleCaseLabels) {
+    //if (!scope.possibleCaseLabels) {
       scope.possibleCaseLabels = caseService.getPossibleCaseLabels($routeParams.caseId);
-    } else {
+    //} else {
       _updateObject(scope.possibleCaseLabels);
-    }
+    //}
+
+console.log($q.defer());
+    $q.all([
+      scope.caseLabel.promise,
+      scope.possibleCaseLabels.promise
+    ]).then(function (results) {
+
 
     $q.all([
       scope.caseLabel.promise,
@@ -153,6 +240,11 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
         i.selected = true;
         return i;
       });
+      console.log(results[0]);
+      console.log(results[1]);
+      //scope.activeLabels = results[0];
+
+      //scope.allCaseLabels = scope.activeLabels.sort(sortByText);
 
       scope.allCaseLabels = scope.activeLabels.concat(results[1].map(function (i) {
         i.selected = false;
@@ -160,6 +252,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
       })).sort(sortByText);
 
       scope.previousActiveLabels = scope.activeLabels;
+    });
     });
   };
 

@@ -123,11 +123,15 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
             });
 
             $q.all(addPromises).then(function(){
-              _updateCaseLabels(scope);
+              scope.caseLabel = caseService.getCaseLabel($routeParams.caseId);
+              scope.possibleCaseLabels = caseService.getPossibleCaseLabels($routeParams.caseId);
+              _updateObject(scope.possibleResolutions);
+
               $rootScope.$broadcast('case-type-changed');
+              _updateCaseLabels(scope);
+              _updateToolbar(scope);
 
             });
-
 
             //_updateCaseLabels(scope);
 

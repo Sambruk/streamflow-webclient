@@ -85,24 +85,50 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
 
       //Getting result after executing of promise
       $q.all([
-        possibleCaseLabels.promise
+        possibleCaseLabels.promise,
+        scope.possibleCaseTypes.promise
       ]).then(function (results) {
-        var caseLabels = results[0];
+        var possibleCaseLabels = results[0];
+        var caseTypes = results[1];
 
-        if (!$.isEmptyObject(caseLabels)) {
-          //scope.previousActiveLabels = scope.activeLabels;
+
+        if (!$.isEmptyObject(possibleCaseLabels)) {
           if (!$.isEmptyObject(scope.caseTypeSearchInput)) {
-            var finalTypeLabels = $.grep(caseLabels, function (e) {
-              return e.text.toLowerCase().indexOf(scope.caseTypeSearchInput.toLowerCase()) != -1;
+            var currentCase = caseTypes.filter(function (e) {
+              return e.id == casetype;
+            });
+
+            //Removing square braces
+            var caseLabels = currentCase[0].labels.slice(2,-2).split(" ");
+
+            var finalCaseLabels = $.grep(caseLabels, function (e) {
+              return e.toLowerCase().indexOf(scope.caseTypeSearchInput.toLowerCase()) != -1;
+            });
+
+            finalCaseLabels = possibleCaseLabels.filter(function(e){
+              return  finalCaseLabels.indexOf(e.text) > -1;
+
             });
 
             //_changeCaseLabels(scope, finalTypeLabels);
 
-
-            ////
-            finalTypeLabels.forEach(function (entry) {
+          /*  finalTypeLabels.forEach(function (entry) {
               caseService.addCaseLabel($routeParams.caseId, entry.id);
+            });*/
+
+
+            //More correct way to add labels
+            var addPromises = finalCaseLabels.map(function (label) {
+              return caseService.addCaseLabel($routeParams.caseId, label.id);
             });
+
+            $q.all(addPromises).then(function(){
+              _updateCaseLabels(scope);
+              $rootScope.$broadcast('case-type-changed');
+
+            });
+
+
             //_updateCaseLabels(scope);
 
             //$rootScope.$broadcast('case-type-changed');
@@ -211,25 +237,20 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
   };
 
   var _updateCaseLabels = function (scope) {
-    //if (!scope.caseLabel) {
+    if (!scope.caseLabel) {
       scope.caseLabel = caseService.getCaseLabel($routeParams.caseId);
 
-    //} else {
+    } else {
       _updateObject(scope.caseLabel);
-    //}
+    }
 
-    //if (!scope.possibleCaseLabels) {
+    if (!scope.possibleCaseLabels) {
       scope.possibleCaseLabels = caseService.getPossibleCaseLabels($routeParams.caseId);
-    //} else {
+    } else {
       _updateObject(scope.possibleCaseLabels);
-    //}
+    }
 
 console.log($q.defer());
-    $q.all([
-      scope.caseLabel.promise,
-      scope.possibleCaseLabels.promise
-    ]).then(function (results) {
-
 
     $q.all([
       scope.caseLabel.promise,
@@ -252,7 +273,6 @@ console.log($q.defer());
       })).sort(sortByText);
 
       scope.previousActiveLabels = scope.activeLabels;
-    });
     });
   };
 

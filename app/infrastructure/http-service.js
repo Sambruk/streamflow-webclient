@@ -41,11 +41,10 @@ angular.module('sf').factory('httpService', function ($q, $cacheFactory, buildMo
 
     switch (buildMode) {
       case 'prod':
-        //return prodUrl;
+        return prodUrl;
       case 'dev':
-        //return 'https://administrator:administrator@test-sf.jayway.com/streamflow/';
-        //return 'http://username:password@localhost:8082/streamflow/';
-      return 'http://administrator:administrator@localhost:8082/streamflow/';
+        return 'https://test-sf.jayway.com/streamflow/';
+        //return 'http://localhost:8082/streamflow/';
       default:
         return 'https://dummyuser:dummypass@test-sf.jayway.com/streamflow/';
         /*return baseUrl.replace(/(https?:\/\/)/, function (protocol) {

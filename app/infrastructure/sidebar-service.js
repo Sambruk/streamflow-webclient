@@ -110,115 +110,23 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
 
             });
 
-            //_changeCaseLabels(scope, finalTypeLabels);
-
-          /*  finalTypeLabels.forEach(function (entry) {
-              caseService.addCaseLabel($routeParams.caseId, entry.id);
-            });*/
-
-
-            //More correct way to add labels
             var addPromises = finalCaseLabels.map(function (label) {
               return caseService.addCaseLabel($routeParams.caseId, label.id);
             });
 
             $q.all(addPromises).then(function(){
-              scope.caseLabel = caseService.getCaseLabel($routeParams.caseId);
-              scope.possibleCaseLabels = caseService.getPossibleCaseLabels($routeParams.caseId);
-              _updateObject(scope.possibleResolutions);
-
               $rootScope.$broadcast('case-type-changed');
-              _updateCaseLabels(scope);
-              _updateToolbar(scope);
-
             });
 
-            //_updateCaseLabels(scope);
-
-            //$rootScope.$broadcast('case-type-changed');
-
-            //scope.caseLabel = caseService.getCaseLabel($routeParams.caseId);
-
-            //scope.caseLabel = caseService.getCaseLabel($routeParams.caseId);
-            //scope.possibleCaseLabels = caseService.getPossibleCaseLabels($routeParams.caseId);
-            //console.log(scope.caseLabel);
-
-            //$q.all([
-            //  scope.caseLabel.promise
-          //]).then(function (results) {
-        //var caseLabels = results[0];
-            //_changeCaseLabels(scope, finalTypeLabels);
-
-
-
-
-            //_updateObject(scope.possibleResolutions);
-
-            //if(!$.isEmptyObject(finalTypeLabels)){
-            //  _changeCaseLabels(scope, finalTypeLabels)
-            //
-            //}
-            //$rootScope.$broadcast('case-type-changed');
-            //console.log(finalTypeLab//els);
-            //_updateCaseLabels(scope);
-            //_updateToolbar(scope);
-
-
-            //scope.apply();
-            //scope.possibleCaseLabels = caseService.getPossibleCaseLabels($routeParams.caseId);
-
-            //sidebarService.updateCaseLabels(scope);
-
-
-            //_updateObject(scope.possibleCaseLabels);
-            //_updateCaseLabels(scope);
-            //$rootScope.$broadcast('case-type-changed');
-
-            //_updateCaseLabels(scope);
-            //_updateToolbar(scope);
-
-
-            //$rootScope.$broadcast('case-changed');
-            //_updateObject(scope.possibleResolutions);
-            //_updateObject(scope.caseLabel);
-            //_updateObject(scope);
-            //_updateToolbar(scope);
-
-            //$q.all([
-            //  scope.caseLabel.promise,
-            //  scope.possibleCaseLabels.promise
-            //]).then(function (results) {
-            //  checkPermissionService.checkPermissions(scope, scope.caseLabel.commands, ['addlabel'], ['canAddLabel']);
-            //  scope.activeLabels = results[0].map(function (i) {
-            //    i.selected = true;
-            //    return i;
-            //  });
-            //
-            //  scope.allCaseLabels = scope.activeLabels.concat(results[1].map(function (i) {
-            //    i.selected = false;
-            //    return i;
-            //  })).sort(sortByText);
-            //
-            //  //scope.previousActiveLabels = scope.activeLabels;
-            //
-            //});
-
+            scope.caseTypeSearchInput = null;
           }
-          //_updateCaseLabels(scope);
         }
       });
-
-      //_updateCaseLabels(scope);
       scope.caseLabel = caseService.getCaseLabel($routeParams.caseId);
       scope.possibleCaseLabels = caseService.getPossibleCaseLabels($routeParams.caseId);
        _updateObject(scope.possibleResolutions);
 
-      //if(!$.isEmptyObject(finalTypeLabels)){
-      //  _changeCaseLabels(scope, finalTypeLabels)
-      //
-      //}
       $rootScope.$broadcast('case-type-changed');
-      //console.log(finalTypeLab//els);
       _updateCaseLabels(scope);
       _updateToolbar(scope);
     });
@@ -253,8 +161,6 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
     } else {
       _updateObject(scope.possibleCaseLabels);
     }
-
-console.log($q.defer());
 
     $q.all([
       scope.caseLabel.promise,

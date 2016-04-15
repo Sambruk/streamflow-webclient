@@ -27,18 +27,13 @@ angular.module('sf').directive('login', function($rootScope, buildMode, $locatio
       scope.errorMessage = '';
       scope.username = '';
       scope.password = '';
-      //scope.username = 'administrator';
-      //scope.password = 'administrator';
       scope.hasToken = tokenService.hasToken();
       scope.hasLoggedOut = $rootScope.hasLoggedOut;
 
       function getLogoutUrl() {
         var url;
         if (buildMode === 'dev') {
-          //url= 'https://username:password@test-sf.jayway.com/streamflow/';
-          //url= 'https://administrator:administrator@test-sf.jayway.com/streamflow/';
-          //url= 'https://username:password@localhost:8082/streamflow/';
-          url= 'http://username:password@localhost:8082/streamflow/';
+          url= 'https://username:password@test-sf.jayway.com/streamflow/';
         } else {
           url= $location.$$protocol + '://username:password@' + $location.$$host + ':' + $location.$$port + '/webclient/api';
         }

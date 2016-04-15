@@ -456,7 +456,6 @@ uis.controller('uiSelectCtrl',
 
   // When the user selects an item with ENTER or clicks the dropdown
   ctrl.select = function(item, skipFocusser, $event) {
-
     if (item === undefined || !item._uiSelectChoiceDisabled) {
 
       if ( ! ctrl.items && ! ctrl.search ) return;
@@ -1530,7 +1529,6 @@ uis.directive('uiSelectSingle', ['$timeout','$compile', function($timeout, $comp
       focusser.bind("keyup input", function(e){
 
         if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC || e.which == KEY.ENTER || e.which === KEY.BACKSPACE) {
-
           return;
         }
 

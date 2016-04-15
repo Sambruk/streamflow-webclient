@@ -127,6 +127,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
        _updateObject(scope.possibleResolutions);
 
       $rootScope.$broadcast('case-type-changed');
+
       _updateCaseLabels(scope);
       _updateToolbar(scope);
     });
@@ -171,11 +172,6 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
         i.selected = true;
         return i;
       });
-      console.log(results[0]);
-      console.log(results[1]);
-      //scope.activeLabels = results[0];
-
-      //scope.allCaseLabels = scope.activeLabels.sort(sortByText);
 
       scope.allCaseLabels = scope.activeLabels.concat(results[1].map(function (i) {
         i.selected = false;

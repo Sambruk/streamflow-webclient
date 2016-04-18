@@ -36,6 +36,7 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
       };
 
       var updateField = function (newValue) {
+        console.log('it send here');
         var value = formMapper.getValue(newValue, attr);
         caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
       };
@@ -54,8 +55,13 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
           $('[class^=error]', element.parent()).hide();
 
           if (validates()) {
-            updateField(newValue);
+            scope.isValid=true;
+            //updateField(newValue);
+          } else{
+            scope.isValid=false;
+
           }
+          console.log('isValid',scope.isValid);
         });
       } else {
         scope.$watch(attr.ngModel, function (value) {
@@ -68,8 +74,15 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
           $('[class^=error]', element.parent()).hide();
 
           if (validates()) {
-            updateField(newValue);
+            scope.isValid=true;
+
+            //updateField(newValue);
           }
+          else{
+            scope.isValid=false;
+          }
+          console.log('isValid',scope.isValid);
+
         });
       }
     }

@@ -177,6 +177,7 @@ angular.module('sf')
     };
 
     $scope.submitForm = function () {
+        console.log('Submited');
         updateFieldsOnPages($scope.form[0]).then(function(){
           caseService.submitForm($routeParams.caseId, $scope.form[0].draftId).then(function () {
 
@@ -194,8 +195,48 @@ angular.module('sf')
       });
     };
 
+     $scope.isValid = false;
+
+      $scope.validateNestedForms = function () {
+          console.log('Validated');
+          if(!$.isEmptyObject($scope.form)) {
+              console.log('form',$scope.form[0]);
+              $scope.form[0].enhancedPages.forEach(function (pages) {
+                  pages.fields.forEach(function (field) {
+
+                      //caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, field.value)
+
+                      if ($.isEmptyObject(field.value) && field.field.fieldId !="Comment5") {
+
+                          //field = field.then(function () {
+                          //    if (field.hasClass('ng-invalid')) {
+                          //        _.each(field.attr('class').split(' '), function (klass) {
+                          //            var errorClass = '.error-' + klass;
+                          //            $(errorClass, field.parent()).show();
+                          //        });
+                          console.log('false', field);
+
+                          return false;
+                      }
+
+                      //caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, field.value)
+                      //});
+                  });
+              });
+              return true;
+              //console.log('true', field);
+
+          }
+          return false;
+      };
+
+
+
     var updateFieldsOnPages = function(form) {
+        console.log('update called');
         var p = Promise.resolve();
+        console.log('engPages', form.enhancedPages);
+        console.log('form', form);
         form.enhancedPages.forEach(function (pages) {
             pages.fields.forEach(function (field) {
                 p = p.then(function() {

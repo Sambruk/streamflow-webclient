@@ -34,7 +34,7 @@
         </li>
       </ol>
 
-      <form name="issueForm" method="post" novalidate data-ng-submit="submitForm()" class="cf">
+      <form name="issueForm" method="post" novalidate data-ng-submit="issueForm.$valid && submitForm()" class="cf">
         <div>{{ formMessage }}</div>
         <div data-ng-repeat="field in currentFormPage.fields" class="row cols-1 cf">
           <div class="form-row" data-ng-switch on="field.field.fieldValue._type">
@@ -100,7 +100,7 @@
                         name="{{ field.field.field }}" id="field-{{ field.field.field }}"
                         data-ng-options="option.value as option.name for option in field.field.fieldValue.options"
                         ng-change="reapplyRules()" sf-generic-auto-send
-                        data-field-type="{{ field.field.fieldValue._type }}">
+                        data-field-type="{{ field.field.fieldValue._type }}" required>
                 </select>
               </div>
             </div>
@@ -223,12 +223,12 @@
              data-ng-class="{inactive: isFirstPage()}" 
              data-ng-click="!isFirstPage() && previousFormPage()">Tillbaka</a>
           <a data-ng-hide="isLastPage(currentFormPage)" href="" class="btn inline"
-             data-ng-class="{inactive: isLastPage() || !issueForm.$valid}"
-             data-ng-click="!isLastPage() && issueForm.$valid && nextFormPage()">Nästa</a>
+             data-ng-class="{inactive: isLastPage()}"
+             data-ng-click="!isLastPage() && nextFormPage()">Nästa</a>
           <a data-ng-show="isLastPage(currentFormPage)" href="" class="btn inline"
-             data-ng-class="{inactive: !issueForm.$valid}" 
-             data-ng-disabled="!issueForm.$valid" 
-             data-ng-click="submitForm()">Slutför</a>
+             data-ng-class="{inactive: !issueForm.$valid && !isValid}"
+             data-ng-disabled="!issueForm.$valid && !isValid"
+             data-ng-click="issueForm.$valid && isValid && submitForm()">Slutför</a>
         </div>
       </form>
     </div>

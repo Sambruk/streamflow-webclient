@@ -100,7 +100,7 @@
                         name="{{ field.field.field }}" id="field-{{ field.field.field }}"
                         data-ng-options="option.value as option.name for option in field.field.fieldValue.options"
                         ng-change="reapplyRules()" sf-generic-auto-send
-                        data-field-type="{{ field.field.fieldValue._type }}" required>
+                        data-field-type="{{ field.field.fieldValue._type }}">
                 </select>
               </div>
             </div>
@@ -219,16 +219,16 @@
         </div>
 
         <div data-ng-show="currentFormPage" class="row button-group">
-          <a data-ng-hide="isFirstPage()" href="" class="btn inline" 
-             data-ng-class="{inactive: isFirstPage()}" 
+          <a data-ng-hide="isFirstPage()" href="" class="btn inline"
+             data-ng-class="{inactive: isFirstPage()}"
              data-ng-click="!isFirstPage() && previousFormPage()">Tillbaka</a>
           <a data-ng-hide="isLastPage(currentFormPage)" href="" class="btn inline"
              data-ng-class="{inactive: isLastPage()}"
              data-ng-click="!isLastPage() && nextFormPage()">Nästa</a>
           <a data-ng-show="isLastPage(currentFormPage)" href="" class="btn inline"
-             data-ng-class="{inactive: !issueForm.$valid && !isValid}"
-             data-ng-disabled="!issueForm.$valid && !isValid"
-             data-ng-click="issueForm.$valid && isValid && submitForm()">Slutför</a>
+             data-ng-class="{inactive: !issueForm.$valid || !isValidForm}"
+             data-ng-disabled="!issueForm.$valid || !isValidForm"
+             data-ng-click="issueForm.$valid && isValidForm && submitForm()">Slutför</a>
         </div>
       </form>
     </div>

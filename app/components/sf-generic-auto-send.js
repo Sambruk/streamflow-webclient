@@ -23,6 +23,7 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
     priority: 1010,
     link: function(scope, element, attr, ctrl) {
 
+      scope.$root.$root.isValidForm=true;
       var validates = function () {
         // Validation
         if (element.hasClass('ng-invalid')) {
@@ -36,7 +37,6 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
       };
 
       var updateField = function (newValue) {
-        console.log('it send here');
         var value = formMapper.getValue(newValue, attr);
         caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
       };
@@ -49,40 +49,29 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
             return;
           }
 
-          var newValue = event.target.value;
-
           // Valid input, clear error warnings
           $('[class^=error]', element.parent()).hide();
 
           if (validates()) {
-            scope.isValid=true;
-            //updateField(newValue);
+            scope.$root.$root.isValidForm=true;
           } else{
-            scope.isValid=false;
-
+            scope.$root.$root.isValidForm=false;
           }
-          console.log('isValid',scope.isValid);
         });
       } else {
         scope.$watch(attr.ngModel, function (value) {
           if (!ctrl.$dirty) {
             return;
           }
-          var newValue = value;
 
           // Valid input, clear error warnings
           $('[class^=error]', element.parent()).hide();
 
           if (validates()) {
-            scope.isValid=true;
-
-            //updateField(newValue);
+            scope.$root.$root.isValidForm=true;
+          } else {
+            scope.$root.$root.isValidForm=false;
           }
-          else{
-            scope.isValid=false;
-          }
-          console.log('isValid',scope.isValid);
-
         });
       }
     }

@@ -35,7 +35,7 @@
       <li data-ng-show="canDelete || canMarkRead || canMarkUnread || canRestrict || canUnrestrict || canExportCase">
         <a href="" class="btn dropdown">Mer <i class="icon-direction downwards"></i></a>
         <ul>
-          <li><a href="" data-ng-show="canDelete" data-ng-click="deleteCase()" class="btn">Radera</a></li>
+         <li><a href="" data-ng-show="canDelete" data-ng-click="toggleDeletePopup(true)" class="btn">Radera</a></li>
           <li><a data-ng-show="canMarkRead" data-ng-click="markReadUnread(true)" href="" class="btn">Markera läst</a></li>
           <li><a data-ng-show="canMarkUnread" data-ng-click="markReadUnread(false)" href="" class="btn">Markera oläst</a></li>
           <li><a data-ng-show="canRestrict" data-ng-click="restrict()" href="" class="btn">Begränsa</a></li>
@@ -76,6 +76,14 @@
             </div>
           </modal>
         </div>
+
+        <!--Delete pop up-->
+        <modal dialog-title="Vill du verkligen radera ärendet" show="showDelete">
+          <div class="submit-area cf dialog-submit">
+            <button data-ng-click="deleteCase()">Ja</button>
+            <button data-ng-click="onCancelResolveButtonClicked()">Nej</button>
+          </div>
+        </modal>
 
         <div class="toolbar-content-popup" data-ng-switch-when="requiredCaseType">
           <modal dialog-title="Ange ärendetyp" show="show">

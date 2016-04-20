@@ -243,6 +243,11 @@ angular.module('sf')
         console.log('Hide');
       };// End Send to
 
+      scope.toggleDeletePopup = function (visible) {
+        scope.showDelete = visible;
+        scope.commandView = true;
+      };
+
       // Close
       scope.close = function () {
         sidebarService.close(scope);

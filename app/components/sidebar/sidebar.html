@@ -23,7 +23,19 @@
   <!-- Issue toolbar -->
   <div class="toolbar" data-sf-fixed-toolbar>
     <ul class="buttons cf" data-ng-show="commands[0]">
-      <li data-ng-show="canSendTo"><a href="" data-ng-click="sendTo()" class="btn">Byt ägare</a></li>
+
+
+      <!--TODO is canUnassign check required here-->
+      <li data-ng-show="canSendTo || canAssign || canUnassign">
+        <a href="" class="btn dropdown">Administrera <i class="icon-direction downwards"></i></a>
+        <ul>
+          <li data-ng-show="canSendTo"><a href="" data-ng-click="sendTo()" class="btn">Byt ägare</a></li>
+          <li data-ng-show="canAssign"><a href="" data-ng-click="assignTo()" class="btn">Tilldela till</a></li>
+        </ul>
+      </li>
+
+
+      <!--<li data-ng-show="canSendTo"><a href="" data-ng-click="sendTo()" class="btn">Byt ägare</a></li>-->
       <li data-ng-show="canAssign"><a href="" data-ng-click="assign()" class="btn">Tilldela</a></li>
       <li data-ng-show="canUnassign"><a href="" data-ng-click="unassign()" class="btn">Återlämna</a></li>
       <li data-ng-show="canResolve"><a href="" data-ng-click="resolveCase()" class="btn">Stäng</a></li>
@@ -115,6 +127,28 @@
             </div>
           </modal>
         </div>
+
+        <div class="toolbar-content-popup" data-ng-switch-when="assignTo">
+          <modal dialog-title="Tilldela till" show="show">
+            <div class="row cf">
+              <div class="select">
+                <select
+                        class="popup-select"
+                        id="issue-assignee"
+                        name="issue-assignee"
+                        data-ng-options="option.id as option.text group by option.title for option in sendToRecipients | orderBy: ['title', 'text']"
+                        data-ng-model="assignToId"
+                        data-ng-change='assignToIdChanged(sendToId)'>
+                </select>
+              </div>
+            </div>
+            <div class="submit-area cf dialog-submit">
+              <button type="submit" name="save-issue-assignee" data-ng-click="onAssignToButtonClicked($event)">Spara</button>
+            </div>
+          </modal>
+        </div>
+
+
 
         <div data-ng-switch-default></div>
 

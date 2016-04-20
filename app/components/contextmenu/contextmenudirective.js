@@ -45,10 +45,7 @@ angular.module('sf').directive('contextmenu', function (projectService, navigati
         if(!scope.params){
           return false;
         }
-        if (scope.params.projectType === 'inbox') {
-          return false;
-        }
-        if (!scope.params.projectType) {
+        if (!scope.params.projectType && $rootScope.location.$$path.indexOf('cases') < 0) {
           return false;
         }
         return true;
@@ -58,15 +55,20 @@ angular.module('sf').directive('contextmenu', function (projectService, navigati
         if(!scope.canCreateCase()){
           return;
         }
+        var projectId = navigationService.projectId();
 
-        projectService.createCase(scope.params.projectId, scope.params.projectType).then(function(response){
-          //NOTE: Why is caseId defined here?
+        //TODO Find out better way of getting projectId
+        if(!projectId){
+          projectId = 'f32e177c-86e8-4c7b-9abf-9f7267eb7769-76';
+        }
+        //Add cases possible only with that type
+        var projectType = 'assignments';
+
+        projectService.createCase(projectId, projectType).then(function(response){
           var caseId = response.data.events[1].entity;
           var href = navigationService.caseHrefSimple(caseId);
-
           $rootScope.$broadcast('case-created');
-
-          window.location.replace(href + '');
+          window.open(href);
         });
       };
 

@@ -257,6 +257,43 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
     });
   };
 
+  var _assignTo = function(scope) {
+    scope.possibleSendTo.promise.then(function (response) {
+      scope.sendToRecipients = response;
+      if (response[0]) {
+        scope.show = true;
+        scope.assignToId = response[0] && response[0].id;
+      }
+      scope.commandView = 'assignTo';
+    });
+  };
+
+  var _onAssignToButtonClicked = function(scope) {
+    var assignToId = scope.assignToId;
+
+    caseService.sendCaseTo($routeParams.caseId, sendToId, function(){
+      var href = navigationService.caseListHrefFromCase(scope.caze);
+      var projectId = scope.caze[0].owner;
+      var projectType = scope.caze[0].listType;
+
+      scope.show = false;
+      scope.caze.invalidate();
+      scope.caze.resolve().then(function(){
+        $rootScope.$broadcast('case-changed');
+        $rootScope.$broadcast('case-owner-changed');
+
+        $rootScope.$broadcast('breadcrumb-updated', [{
+          title: projectId
+        }, {
+          title: projectType,
+          url: '#/projects/' + projectId + '/' + projectType
+        }]);
+
+        window.location.replace(href);
+      });
+    });
+  };
+
   var _unrestrict = function (scope) {
     caseService.unrestrictCase($routeParams.caseId).then(function () {
       scope.permissions.invalidate();
@@ -478,6 +515,8 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
     updateToolbar: _updateToolbar,
     sendTo: _sendTo,
     onSendToButtonClicked: _onSendToButtonClicked,
+    assignTo: _assignTo,
+    onAssignToButtonClicked: _onAssignToButtonClicked,
     unrestrict: _unrestrict,
     restrict: _restrict,
     markReadUnread: _markReadUnread,

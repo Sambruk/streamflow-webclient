@@ -208,23 +208,23 @@ angular.module('sf')
       scope.sendTo = function () {
         sidebarService.sendTo(scope);
       };
-      scope.assignToIdChanged = function (id) {
-        scope.assignToId = id;
+      scope.sendToIdChanged = function (id) {
+        scope.sendToId = id;
       };
-      scope.onAssignToButtonClicked = function () {
-        sidebarService.onAssignToButtonClicked(scope);
+      scope.onSendToButtonClicked = function () {
+        sidebarService.onSendToButtonClicked(scope);
       };// End Send to
 
       //TODO change method to assign to
       // Assign to
       scope.assignTo = function () {
-        sidebarService.sendTo(scope);
+        sidebarService.assignTo(scope);
       };
-      scope.sendToIdChanged = function (id) {
-        scope.sendToId = id;
+      scope.assignToIdChanged = function (id) {
+        scope.assignToId = id;
       };
       scope.onAssignToButtonClicked = function () {
-        sidebarService.onSendToButtonClicked(scope);
+        sidebarService.onAssignToButtonClicked(scope);
       };// End assign to
 
       // Restrict / Unrestrict

@@ -202,6 +202,25 @@ angular.module('sf')
         });
       },
 
+      getPossibleAssignees: function(caseId) {
+          return backendService.get({
+              specs: caseBase(caseId).concat([
+                  {queries: 'possibleassignees'}
+              ]),
+              onSuccess: function (resource, result) {
+                  //NOTE: pushing resource.response.links to result if no links.
+                  // this might be wrong approach
+                  if (resource.response.links.length === 0) {
+                      result.push(resource.response.links);
+                  } else {
+                      resource.response.links.forEach(function (item) {
+                          result.push(item);
+                      });
+                  }
+              }
+          });
+      },
+
       sendCaseTo: function(caseId, sendToId, callback) {
         return backendService.postNested(
           caseBase(caseId).concat([
@@ -320,6 +339,18 @@ angular.module('sf')
             caseBase.broadcastMessage(result.status);
           }, function(error){
             caseBase.broadcastMessage(error);
+          }).then(callback);
+      },
+
+      assignToCase: function(caseId, callback) {
+          return backendService.postNested(
+              caseBase(caseId).concat([
+                  {commands: 'assignto'}
+              ]),
+              {}).then(function (result) {
+              caseBase.broadcastMessage(result.status);
+          }, function (error) {
+              caseBase.broadcastMessage(error);
           }).then(callback);
       },
 

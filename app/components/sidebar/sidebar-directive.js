@@ -43,6 +43,7 @@ angular.module('sf')
       // scope.notesHistory = caseService.getAllNotes($routeParams.caseId);
       scope.caze = caseService.getSelected($routeParams.caseId);
       scope.possibleSendTo = caseService.getPossibleSendTo($routeParams.caseId);
+      scope.possibleAssignees = caseService.getPossibleAssignees($routeParams.caseId);
       scope.uploadProgress = 0;
       scope.showExport = false;
       scope.exportSubmittedForms = false;
@@ -331,6 +332,7 @@ angular.module('sf')
       scope.$on('case-changed', function() {
         updateObject(scope.possibleCaseTypes);
         updateObject(scope.sendToRecipients);
+        updateObject(scope.assignToRecipients);
         sidebarService.caseType(scope);
       });
       scope.$on('case-unassigned', function(){

@@ -136,9 +136,9 @@
                         class="popup-select"
                         id="issue-assignee"
                         name="issue-assignee"
-                        data-ng-options="option.id as option.text group by option.title for option in sendToRecipients | orderBy: ['title', 'text']"
+                        data-ng-options="option.id as option.text for option in assignToRecipients | orderBy: ['title', 'text']"
                         data-ng-model="assignToId"
-                        data-ng-change='assignToIdChanged(sendToId)'>
+                        data-ng-change='assignToIdChanged(assignToId)'>
                 </select>
               </div>
             </div>

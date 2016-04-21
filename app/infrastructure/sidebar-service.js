@@ -258,8 +258,8 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
   };
 
   var _assignTo = function(scope) {
-    scope.possibleSendTo.promise.then(function (response) {
-      scope.sendToRecipients = response;
+    scope.possibleAssignees.promise.then(function (response) {
+      scope.assignToRecipients = response;
       if (response[0]) {
         scope.show = true;
         scope.assignToId = response[0] && response[0].id;

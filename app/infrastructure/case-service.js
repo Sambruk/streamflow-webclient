@@ -342,16 +342,17 @@ angular.module('sf')
           }).then(callback);
       },
 
-      assignToCase: function(caseId, callback) {
+      assignToCase: function(caseId, assignToId, callback) {
           return backendService.postNested(
               caseBase(caseId).concat([
                   {commands: 'assignto'}
               ]),
-              {}).then(function (result) {
+              {entity: assignToId}).then(_.debounce(callback)()).then(function (result) {
               caseBase.broadcastMessage(result.status);
-          }, function (error) {
-              caseBase.broadcastMessage(error);
-          }).then(callback);
+          }),
+              function (error) {
+                  caseBase.broadcastMessage(error);
+              };
       },
 
       unassignCase: function(caseId, callback) {

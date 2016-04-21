@@ -270,27 +270,12 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
 
   var _onAssignToButtonClicked = function(scope) {
     var assignToId = scope.assignToId;
+    caseService.assignToCase($routeParams.caseId, assignToId, function(){
+      $rootScope.$broadcast('case-assigned');
+      _updateToolbar(scope);
 
-    caseService.sendCaseTo($routeParams.caseId, sendToId, function(){
       var href = navigationService.caseListHrefFromCase(scope.caze);
-      var projectId = scope.caze[0].owner;
-      var projectType = scope.caze[0].listType;
-
-      scope.show = false;
-      scope.caze.invalidate();
-      scope.caze.resolve().then(function(){
-        $rootScope.$broadcast('case-changed');
-        $rootScope.$broadcast('case-owner-changed');
-
-        $rootScope.$broadcast('breadcrumb-updated', [{
-          title: projectId
-        }, {
-          title: projectType,
-          url: '#/projects/' + projectId + '/' + projectType
-        }]);
-
-        window.location.replace(href);
-      });
+      window.location.replace(href);
     });
   };
 

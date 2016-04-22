@@ -20,6 +20,7 @@
 angular.module('sf').controller('CaseEditCtrl', function($scope, $rootScope, $routeParams, caseService ) {
   $scope.sidebardata = {};
   $scope.caseId = $routeParams.caseId;
+  $scope.projectId = $routeParams.projectId;
   $scope.notesHistory = caseService.getAllNotes($routeParams.caseId);
 
   $scope.$watch('sidebardata.caze', function(newVal){

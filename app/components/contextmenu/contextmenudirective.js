@@ -56,11 +56,7 @@ angular.module('sf').directive('contextmenu', function (projectService, navigati
           return;
         }
         var projectId = navigationService.projectId();
-
-        //TODO Find out better way of getting projectId
-        if(!projectId){
-          projectId = 'f32e177c-86e8-4c7b-9abf-9f7267eb7769-76';
-        }
+       
         //Add cases possible only with that type
         var projectType = 'assignments';
 

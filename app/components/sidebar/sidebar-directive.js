@@ -139,7 +139,7 @@ angular.module('sf')
           },
           {
             title: scope.caze[0].caseId,
-            url: '#/cases/' + scope.caze[0].id
+            url: '#/cases/' + scope.caze[0].id +'/' + scope.caze[0].ownerId
           }
         ]);
 

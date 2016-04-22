@@ -23,7 +23,9 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
     priority: 1010,
     link: function(scope, element, attr, ctrl) {
 
-      scope.$root.$root.isValidForm=true;
+      if(scope.$root.$root.isValidForm === undefined){
+        scope.$root.$root.isValidForm=true;
+      }
       var validates = function () {
         // Validation
         if (element.hasClass('ng-invalid')) {

@@ -419,6 +419,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
       });
     }
 
+    scope.caseTypeSearchInput = null;
     scope.previousActiveLabels = labels;
   };
 

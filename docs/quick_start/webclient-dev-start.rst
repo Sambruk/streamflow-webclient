@@ -1,4 +1,4 @@
-Installation of Streamflow webclient(DRAFT)
+Installation of Streamflow webclient
 ============
 
 
@@ -18,8 +18,11 @@ Installation of Streamflow webclient(DRAFT)
         sudo apt-get install nodejs-legacy
         sudo npm install -g bower
         sudo npm install gulp -g
-    
-#. Change **AuthentificatorFilterService** class at **streamflow-core** project. 
+
+#. Dev start
+    #. Add following chrome extension *https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi*
+
+    #. Change **AuthentificatorFilterService** class at **streamflow-core** project.
 	* Comment lines at *130-139* and *249*
 		.. code-block:: java
 		     if (challengeResponse == null)
@@ -31,11 +34,11 @@ Installation of Streamflow webclient(DRAFT)
 		     {
 		        String username = challengeResponse.getIdentifier();
 		        String password = new String(challengeResponse.getSecret());
-	    
+
 	* Add folowing lines under line *139*
 		.. code-block:: java
 			String username = "administrator";
-			String password = "administrator";    
+			String password = "administrator";
 
 #. Change **http-service.js** at line *46* of **streamflow-webclient** project
 	* Change
@@ -58,7 +61,7 @@ Installation of Streamflow webclient(DRAFT)
 #. Add folowing chrome extension *https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi*
 
 #. Execute folowing commands from webclient folder:
-	
+
 	.. code-block:: terminal
 		npm install
 		bower install
@@ -71,13 +74,50 @@ Installation of Streamflow webclient(DRAFT)
 	.. note::
 	It will be runned at *localhost:9999* by default
 
-	*If you want to create war for further run 
+#. Prod start
+
+#. Execute folowing commands from webclient folder:
+	
+	.. code-block:: terminal
+		npm install
+		bower install
+
+    * Change following files
+    	*Change **http-service.js** at line *40* of **streamflow-webclient** project
+
+            .. code-block:: js
+                var prodUrl = urlPrefix + '://' + host +':'+ port + '/webclient/api/';
+
+        *To:
+
+            .. code-block:: js
+                var prodUrl = urlPrefix + '://' + host +':'+ port + '/streamflow/webclient/api/';
+
+        *Change **logindirective.js** at line *38* of **streamflow-webclient** project
+
+            .. code-block:: js
+                url= $location.$$protocol + '://username:password@' + $location.$$host + ':' + $location.$$port + '/webclient/api';
+
+        *To:
+
+            .. code-block:: js
+                url= $location.$$protocol + '://username:password@' + $location.$$host + ':' + $location.$$port + '/streamflow/webclient/api';
+
+	*Then you need to create war for further run
 		
 		.. code-block:: terminal
 			maven clean install
 		
 	.. note: 
-	Executing maven command will create **.war* file at */target/* folder of webclient 		folder. You can deploy it on web server
+	Executing maven command will create **.war* file at */target/* folder of webclient folder. You can deploy it on web server
+
+    .. important::
+        Entire project must be launched at one host and port or at least it must be seen as deployed in this way using apache for example to avoid CORS and other location exception.
+        Following root path must be used:
+        **streamflow-web** - */streamflow*
+        **streamflow-webclient** - */*
+
+    Now you are free to use streamflow web client
 
 .. important::
 That tutorial only for testing purposes, and will be appended further.

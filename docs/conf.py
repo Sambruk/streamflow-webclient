@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# streamflow-core documentation build configuration file, created by
-# sphinx-quickstart on Thu Aug 27 14:17:59 2015.
+# streamflow-webclient documentation build configuration file, created by
+# sphinx-quickstart on Thu Apr 28 16:41:59 2015.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -47,8 +47,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'streamflow-core'
-copyright = u'2015, Dmitry Sikorsky'
-author = u'Dmitry Sikorsky'
+copyright = u'2016, Dmytro Zemlianskiy'
+author = u'Dmytro Zemlianskiy'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -267,7 +267,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'platformus', u'streamflow-core Documentation',
+    (master_doc, 'streamflow-webclient', u'streamflow-webclient Documentation',
      [author], 1)
 ]
 
@@ -281,8 +281,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'streamflow-core', u'streamflow-core Documentation',
-   author, 'streamflow-core', 'One line description of project.',
+  (master_doc, 'streamflow-webclient', u'streamflow-webclient Documentation',
+   author, 'streamflow-webclient', 'One line description of project.',
    'Miscellaneous'),
 ]
 

@@ -12,7 +12,7 @@ Installation of Streamflow webclient
         git checkout develop
 
     .. tip::
-If you can't complete last step go to `streamflow-webclient-gui <https://github.com/jayway/streamflow-webclient-gui>`_ and check out to **app/design** folder
+	If you can't complete last step go to `streamflow-webclient-gui <https://github.com/jayway/streamflow-webclient-gui>`_ and check out to **app/design** folder
 
 #. Execute folowing commands in terminal
 
@@ -30,41 +30,41 @@ Dev start
 
 #. Change **AuthentificatorFilterService** class at **streamflow-core** project.
 
-	* Comment lines at *130-139* and *249*
+	* Comment lines at *130-138* and *249*
 
 		.. code-block:: java
 		     :linenos:
-    		     :lineno-start: 130
+	    		     :lineno-start: 130
 
 
-    		     if (challengeResponse == null)
-    		     {
-    		        response.setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
-    		        response.getChallengeRequests().add(new ChallengeRequest(ChallengeScheme.HTTP_BASIC, "Streamflow"));
-    		        return Filter.STOP;
-    		     } else
-    		     {
-    		        String username = challengeResponse.getIdentifier();
-    		        String password = new String(challengeResponse.getSecret());
+	    		     if (challengeResponse == null)
+	    		     {
+	    		        response.setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
+	    		        response.getChallengeRequests().add(new ChallengeRequest(ChallengeScheme.HTTP_BASIC, "Streamflow"));
+	    		        return Filter.STOP;
+	    		     } else
+	    		     {
+	    		        String username = challengeResponse.getIdentifier();
+	    		        String password = new String(challengeResponse.getSecret());
 
-    		.. code-block:: java
+	    		.. code-block:: java
 		     :linenos:
-    		     :lineno-start: 248
+	    		     :lineno-start: 248
 
-    		      			return Filter.CONTINUE;
-    					}
-          			}
+	    		      			return Filter.CONTINUE;
+	    					}
+	          			}
 
-    	* Add following lines under line *139*
+	    	* Add following lines under line *139*
 
 		.. code-block:: java
 		     :linenos:
-    		     :lineno-start: 140
+	    		     :lineno-start: 140
 
-    			String username = "administrator";
-    		       	String password = "administrator";
+	    			String username = "administrator";
+	    		       	String password = "administrator";
 
-    #. Change **http-service.js** at line *46* of **streamflow-webclient** project
+	    #. Change **http-service.js** at line *46* of **streamflow-webclient** project
 	* Change
 
 	.. code-block:: javascript
@@ -93,7 +93,7 @@ Dev start
 		gulp
 
 	.. note::
-	It will be runned at *localhost:9999* by default
+	It will be runned at *localhost:9999* в by default
 
 Prod start
 ------------------
@@ -105,46 +105,47 @@ Prod start
 		npm install
 		bower install
 
-    * Change following files
-    	*Change **http-service.js** at line *40* of **streamflow-webclient** project
+#. Change following files
+
+    	* Change **http-service.js** at line *40* of **streamflow-webclient** project
 
             .. code-block:: javascript
 		:linenos:
-    		:lineno-start: 40
+	    		:lineno-start: 40
 
-                    var prodUrl = urlPrefix + '://' + host +':'+ port + '/webclient/api/';
+	                    var prodUrl = urlPrefix + '://' + host +':'+ port + '/webclient/api/';
 
-            *To:
+	      	* To:
 
-                .. code-block:: javascript
+	            .. code-block:: javascript
 		:linenos:
-    		:lineno-start: 40
+	    		:lineno-start: 40
 
-                    var prodUrl = urlPrefix + '://' + host +':'+ port + '/streamflow/webclient/api/';
+	                    var prodUrl = urlPrefix + '://' + host +':'+ port + '/streamflow/webclient/api/';
 
-            *Change **logindirective.js** at line *38* of **streamflow-webclient** project
+	       	* Change **logindirective.js** at line *38* of **streamflow-webclient** project
 
-            .. code-block:: javascript
+	     .. code-block:: javascript
 		:linenos:
-    		:lineno-start: 38
+		    	:lineno-start: 38
 
-                    url= $location.$$protocol + '://username:password@' + $location.$$host + ':' + $location.$$port + '/webclient/api';
+	     	  		url= $location.$$protocol + '://username:password@' + $location.$$host + ':' + $location.$$port + '/webclient/api';
 
-            *To:
+	    	* To:
 
-                .. code-block:: javascript
+		    .. code-block:: javascript
 		:linenos:
-    		:lineno-start: 38
+	    		:lineno-start: 38
 
-                    url= $location.$$protocol + '://username:password@' + $location.$$host + ':' + $location.$$port + '/streamflow/webclient/api';
+	   	    		url= $location.$$protocol + '://username:password@' + $location.$$host + ':' + $location.$$port + '/streamflow/webclient/api';
 
-    	*Then you need to create war for further run
+	    	* Then you need to create war for further run
 
-    		.. code-block:: bash
+	    		.. code-block:: bash
 
 			maven clean install
 
-	.. note:
+	.. note::
 Executing maven command will create **.war* file at */target/* folder of webclient folder. You can deploy it on web server
 
     .. important::
@@ -154,7 +155,7 @@ Entire project must be launched at one host and port or at least it must be seen
         * **streamflow-web** - */streamflow*
         * **streamflow-webclient** - */*
 
-    Now you are free to use streamflow web client
+Now you are free to use streamflow web client
 
 .. important::
-That tutorial not final, and will be appended further.
+	That tutorial not final, and will be appended further.

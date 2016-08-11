@@ -383,9 +383,6 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
       return 'https://' + userPass + '@' ;
     });
 
-
-    console.log($routeParams.caseId);
-    console.log(attachment.href);
     var url = apiUrl + '/cases/' + $routeParams.caseId + '/attachments/' + attachment.href + 'download';
     window.location.replace(url);
   };

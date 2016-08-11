@@ -44,6 +44,11 @@ angular.module('sf', [
     $rootScope.isLoggedIn = $rootScope.hasToken();
     $rootScope.logout = tokenService.clear;
 
+      if (window.isFormWindow) {
+          $rootScope.isFormWindow = true;
+      } else {
+          $rootScope.isFormWindow = false;
+      }
 
     //Add current project type to rootScope to let toolbar update accordingly in index.html
     $rootScope.$on('$routeChangeSuccess', function(e, current, pre) {

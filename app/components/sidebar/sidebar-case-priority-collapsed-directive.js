@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('sf').directive('sidebarCaseOtherCollapsed', function (sidebarService) {
+angular.module('sf').directive('sidebarCasePriorityCollapsed', function (sidebarService) {
     return {
         restrict: 'A',
         scope: {
             canChange: '='
         },
-        templateUrl: 'components/sidebar/sidebar-case-other-collapsed.html',
+        templateUrl: 'components/sidebar/sidebar-case-priority-collapsed.html',
         link: function (scope, element) {
             scope.general = scope.$parent.general;
             scope.possiblePriorities = scope.$parent.possiblePriorities;

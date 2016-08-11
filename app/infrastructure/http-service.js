@@ -37,14 +37,17 @@ angular.module('sf').factory('httpService', function ($q, $cacheFactory, buildMo
     var host = $location.$$host;
     var port = $location.$$port;
     var urlPrefix = protocol;//+ '://dummyuser:dummypass@';
+    // var prodUrl = urlPrefix + '://' + host +':'+ port + '/streamflow/webclient/api/';
     var prodUrl = urlPrefix + '://' + host +':'+ port + '/webclient/api/';
 
     switch (buildMode) {
       case 'prod':
         return prodUrl;
       case 'dev':
-        return 'https://test-sf.jayway.com/streamflow/';
-        //return 'http://localhost:8082/streamflow/';
+        // return 'https://test-sf.jayway.com/streamflow/';
+        return 'http://administrator:administrator@82.115.149.67:8080/streamflow/';
+        // return 'http://adminishbdstrator:administrator@82.115.149.67:8080/streamflow/';
+        // return 'http://administrator:administrator@localhost:8082/streamflow/';
       default:
         return 'https://dummyuser:dummypass@test-sf.jayway.com/streamflow/';
         /*return baseUrl.replace(/(https?:\/\/)/, function (protocol) {

@@ -1,18 +1,13 @@
 <div class="collapsedCaseOther">
 
     <div class="main">
-        <b class="left left-sidebar">Prioritet:</b>
-        <div class="left right-sidebar">{{general[0].priority.text}}</div>
-        <span class="priority-color-collapsed" data-ng-style="activePriorityColor"></span>
+        <div class="left">
+            <b>Förfaller: </b>{{dueOn}}
+        </div>
+        <div class="left">
+            <b>Prioritet: </b>{{general[0].priority.text}}
+            <div class="priority-color-collapsed" data-ng-style="activePriorityColor"></div>
+        </div>
     </div>
     <div class="clear"></div>
-
-    <div>
-        <b class="left left-sidebar">Förfaller:</b>
-        <div class="left right-sidebar">{{dueOn}}</div>
-    </div>
-
-    <div class="clear"></div>
-
 </div>
-

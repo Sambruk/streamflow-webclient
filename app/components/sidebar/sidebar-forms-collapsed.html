@@ -1,12 +1,19 @@
-<div data-ng-repeat="form in possibleForms">
-    <a data-ng-show="!canCreate" href="#/cases/{{ caze[0].id }}/formhistory/{{ form.id }}" class="convCaseSidebar">
-        {{form.text}}
+<div data-ng-repeat="form in submittedFormList" class="main">
+    <a data-ng-show="!canCreate" href="#/cases/{{ caze[0].id }}/formhistory/{{ form.id }}"
+       class="convCaseSidebar left form-name">
+        {{form.form}}
     </a>
     <a data-ng-show="canCreate" href="#/cases/{{ caze[0].id  }}/formdrafts/{{ form.id }}"
        class="block-link convCaseSidebar">
-        {{form.text}}
+        {{form.form}}
         <span data-ng-repeat="submittedForm in submittedForms = (submittedFormList | filter: form.id: submittedForm.id)"></span>
     </a>
-    <a data-ng-click="openFormInNewWindow(form.id)" href=""><span class="action-btn icon-folder-open"
-                                                                  title="Open in new window"> <span class="struct">Open in new window</span></span></a>
+    <div class="form-icons convo-status">
+        <a href="#/cases/{{ caze[0].id }}/formhistory/{{ form.id }}"><span class="action-btn icon-history"
+                                                                           title="Formulär, historik">{{submittedForms.length}} <span
+                class="struct">Formulär, historik</span></span></a>
+        <a data-ng-click="openFormInNewWindow(form.id)" href=""><span class="action-btn icon-folder-open"
+                                                                      title="Open in new window"> <span class="struct">Open in new window</span></span></a>
+    </div>
+    <div class="clear"/>
 </div>

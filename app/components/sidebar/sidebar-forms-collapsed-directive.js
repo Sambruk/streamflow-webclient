@@ -8,7 +8,6 @@ angular.module('sf').directive('sidebarFormsCollapsed', function (sidebarService
         },
         templateUrl: 'components/sidebar/sidebar-forms-collapsed.html',
         link: function (scope) {
-            scope.possibleForms = scope.$parent.possibleForms;
             scope.submittedFormList = scope.$parent.submittedFormList;
             scope.caze = scope.$parent.caze;
 

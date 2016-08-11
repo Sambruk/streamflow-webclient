@@ -9,6 +9,7 @@ angular.module('sf').directive('sidebarDueDate', function (sidebarService) {
     templateUrl: 'components/sidebar/sidebar-due-date.html',
     link: function (scope) {
       scope.general = scope.$parent.general;
+      scope.caze = scope.$parent.caze;
 
       scope.general.promise.then(function (result) {
         scope.dueOn = result[0].dueOnShort;

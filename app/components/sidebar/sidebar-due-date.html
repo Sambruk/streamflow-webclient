@@ -6,5 +6,9 @@
         data-ng-model="dueOn" data-ng-change="changeDueOn(dueOn)" data-ng-disabled="!canChange">
     </div>
   </div>
+  <div>
+    <b class="left">Senast ändrad:</b>
+    <div class="left right-sidebar">{{caze[0].lastLogEntryTime | date : "yyyy-MM-dd 'kl' HH:mm"}}</div>
+  </div>
+  <div class="clear"></div>
 </div>
-

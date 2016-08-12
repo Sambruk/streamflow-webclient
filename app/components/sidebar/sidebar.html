@@ -216,6 +216,7 @@
   <!--</div>-->
   <!-- /Module: Ärendelogg -->
   <!-- /Module: Ärende -->
+  <div class="sidebar-group-divider"></div>
 
   <!-- Module: Status -->
   <div class="m m-status">
@@ -274,6 +275,8 @@
   </div>
   <!-- /Module: Status -->
 
+  <div class="sidebar-group-divider"></div>
+
   <!-- Module: Formulär -->
   <div class="m m-convos" can-create="canCreateFormDraft" data-ng-show="possibleForms.length > 0">
     <div class="m-h">
@@ -293,6 +296,8 @@
     <!--/Collapsed view-->
   </div>
   <!-- /Module: Formulär -->
+
+  <div class="sidebar-group-divider"></div>
 
   <!-- Module: Annat (Priority)-->
   <!--<div class="m m-convos">-->
@@ -327,7 +332,7 @@
   </div>
   <!-- /Module: Annat(Priority) -->
 
-
+  <div class="sidebar-group-divider"></div>
 
   <!-- Module: Konversationer -->
   <div sidebar-conversations class="m m-convos" can-create="canCreateConversation">
@@ -350,26 +355,6 @@
     </div>
   </div>
   <!-- /Module: Kontakter -->
-
-
-  <!--&lt;!&ndash; Module: Ärendelogg -->
-  <!--<div class="m m-convos">-->
-    <!--<a href="#/cases/{{ caze[0].id }}/caselog" class="block-link">-->
-      <!--<div class="m-h">-->
-        <!--<h2>Ärendelogg</h2>-->
-        <!--<span class="caselog-count-sidebar"> Visar de 3 senaste</span>-->
-      <!--</div>-->
-      <!--<div class="m-c">-->
-        <!--<ul>-->
-          <!--<li data-ng-repeat="entry in sideBarCaseLogs | orderBy:'-creationDate' | limitTo:3 track by $index" data-ng-class-even="'even'" class="convo-li">-->
-            <!--<h3>{{ entry.text }} av {{ entry.creator }}</h3>-->
-            <!--<span class="date">{{ entry.creationDate | dateTime}}</span>-->
-          <!--</li>-->
-        <!--</ul>-->
-      <!--</div>-->
-    <!--</a>-->
-  <!--</div>-->
-   <!--/Module: Ärendelogg &ndash;&gt;-->
 
   <!-- <pre><code>{{ form[0] | json }}</code></pre> -->
 </div>

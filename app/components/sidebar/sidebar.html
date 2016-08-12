@@ -18,344 +18,374 @@
 
 <div class="content-secondary" role="complementary">
 
-  <h2 class="struct">Verktyg och annan information</h2>
+    <h2 class="struct">Verktyg och annan information</h2>
 
-  <!-- Issue toolbar -->
-  <div class="toolbar" data-sf-fixed-toolbar>
-    <ul class="buttons cf" data-ng-show="commands[0]">
+    <!-- Issue toolbar -->
+    <div class="toolbar" data-sf-fixed-toolbar>
+        <ul class="buttons cf" data-ng-show="commands[0]">
 
-      <li data-ng-show="canAssign" class="left-sidebar"><a href="" data-ng-click="assign()" class="btn sidebar-top-button">Tilldela</a>
-      </li>
-      <li data-ng-show="canUnassign" class="left-sidebar"><a href="" data-ng-click="unassign()"
-                                                             class="btn sidebar-top-button">Återlämna</a></li>
-      <li data-ng-show="canAssign" class="left-sidebar"><a href="" data-ng-click="assignTo()" class="btn sidebar-top-button">Tilldela
-        till</a></li>
-      <li data-ng-show="canSendTo" class="left-sidebar"><a href="" data-ng-click="sendTo()" class="btn sidebar-top-button">Byt ägare</a>
-      </li>
-    </ul>
-    <p></p>
-    <ul class="buttons cf" data-ng-show="commands[0]">
-      <li data-ng-show="canResolve" class="left-sidebar "><a href="" data-ng-click="resolveCase()" class="btn sidebar-top-button">Stäng</a>
-      </li>
-      <li data-ng-show="canClose" class="left-sidebar"><a href="" data-ng-click="close()" class="btn sidebar-top-button">Stäng</a></li>
-      <li data-ng-show="caseRequireCaseType" class="left-sidebar"><a href="" data-ng-click="close()"
-                                                                     class="btn sidebar-top-button">Stäng</a></li>
-      <li data-ng-show="canCloseWithForm" class="left-sidebar"><a href="" class="btn sidebar-top-button" data-ng-click="closeWithForm()">Stäng</a>
-      </li>
-      <li data-ng-show="canExportCase" class="left-sidebar"><a data-ng-click="toggleExportPopup(true)" href=""
-                                                               class="btn sidebar-top-button">Exportera</a></li>
-
-      <li data-ng-show="canDelete || canMarkRead || canMarkUnread || canRestrict || canUnrestrict || canReopen "
-          class="left-sidebar">
-        <a href="" class="btn dropdown sidebar-top-button">Mer <i class="icon-direction downwards"></i></a>
-        <ul>
-          <li><a href="" data-ng-show="canDelete" data-ng-click="toggleDeletePopup(true)" class="btn">Radera</a></li>
-          <li><a data-ng-show="canMarkRead" data-ng-click="markReadUnread(true)" href="" class="btn">Markera läst</a>
-          </li>
-          <li><a data-ng-show="canMarkUnread" data-ng-click="markReadUnread(false)" href="" class="btn">Markera
-            oläst</a></li>
-          <li><a data-ng-show="canRestrict" data-ng-click="restrict()" href="" class="btn">Begränsa</a></li>
-          <li><a data-ng-show="canUnrestrict" data-ng-click="unrestrict()" href="" class="btn">Begränsa inte</a></li>
-          <li data-ng-show="canReopen"><a href="" data-ng-click="reopen()" class="btn">Återuppta</a></li>
-          </li>
+            <li data-ng-show="canAssign" class="left-sidebar"><a href="" data-ng-click="assign()"
+                                                                 class="btn sidebar-top-button">Tilldela</a>
+            </li>
+            <li data-ng-show="canUnassign" class="left-sidebar"><a href="" data-ng-click="unassign()"
+                                                                   class="btn sidebar-top-button">Återlämna</a></li>
+            <li data-ng-show="canAssign" class="left-sidebar"><a href="" data-ng-click="assignTo()"
+                                                                 class="btn sidebar-top-button">Tilldela
+                till</a></li>
+            <li data-ng-show="canSendTo" class="left-sidebar"><a href="" data-ng-click="sendTo()"
+                                                                 class="btn sidebar-top-button">Byt ägare</a>
+            </li>
         </ul>
-      </li>
-    </ul>
+        <p></p>
+        <ul class="buttons cf" data-ng-show="commands[0]">
+            <li data-ng-show="canResolve" class="left-sidebar "><a href="" data-ng-click="resolveCase()"
+                                                                   class="btn sidebar-top-button">Stäng</a>
+            </li>
+            <li data-ng-show="canClose" class="left-sidebar"><a href="" data-ng-click="close()"
+                                                                class="btn sidebar-top-button">Stäng</a></li>
+            <li data-ng-show="caseRequireCaseType" class="left-sidebar"><a href="" data-ng-click="close()"
+                                                                           class="btn sidebar-top-button">Stäng</a></li>
+            <li data-ng-show="canCloseWithForm" class="left-sidebar"><a href="" class="btn sidebar-top-button"
+                                                                        data-ng-click="closeWithForm()">Stäng</a>
+            </li>
+            <li data-ng-show="canExportCase" class="left-sidebar"><a data-ng-click="toggleExportPopup(true)" href=""
+                                                                     class="btn sidebar-top-button">Exportera</a></li>
 
-    <!-- Command view -->
-    <div class="toolbar-content" ng-show="commandView">
-      <div data-ng-switch on="commandView">
+            <li data-ng-show="canDelete || canMarkRead || canMarkUnread || canRestrict || canUnrestrict || canReopen "
+                class="left-sidebar">
+                <a href="" class="btn dropdown sidebar-top-button">Mer <i class="icon-direction downwards"></i></a>
+                <ul>
+                    <li><a href="" data-ng-show="canDelete" data-ng-click="toggleDeletePopup(true)"
+                           class="btn">Radera</a></li>
+                    <li><a data-ng-show="canMarkRead" data-ng-click="markReadUnread(true)" href="" class="btn">Markera
+                        läst</a>
+                    </li>
+                    <li><a data-ng-show="canMarkUnread" data-ng-click="markReadUnread(false)" href="" class="btn">Markera
+                        oläst</a></li>
+                    <li><a data-ng-show="canRestrict" data-ng-click="restrict()" href="" class="btn">Begränsa</a></li>
+                    <li><a data-ng-show="canUnrestrict" data-ng-click="unrestrict()" href="" class="btn">Begränsa
+                        inte</a></li>
+                    <li data-ng-show="canReopen"><a href="" data-ng-click="reopen()" class="btn">Återuppta</a></li>
+                    </li>
+                </ul>
+            </li>
+        </ul>
 
-        <div class="toolbar-content-style" data-ng-switch-when="close">
-          <button data-ng-click="onCloseButtonClicked($event)">Stäng</button>
+        <!-- Command view -->
+        <div class="toolbar-content" ng-show="commandView">
+            <div data-ng-switch on="commandView">
+
+                <div class="toolbar-content-style" data-ng-switch-when="close">
+                    <button data-ng-click="onCloseButtonClicked($event)">Stäng</button>
+                </div>
+
+                <div class="toolbar-content-popup" data-ng-switch-when="formonclose" ng-controller="FormCtrl">
+                    <modal dialog-title="Formulär" show="show">
+                        <data-ng-include src="'routes/cases/form/forms.html'"></data-ng-include>
+                    </modal>
+                </div>
+
+                <div class="toolbar-content-popup" data-ng-switch-when="resolve">
+                    <modal dialog-title="Stäng ärende" show="show">
+                        <div class="row cf">
+                            <div class="select">
+                                <select
+                                        class="popup-select"
+                                        data-ng-options="option.id as option.text for option in possibleResolutions"
+                                        data-ng-model="resolution">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="submit-area cf dialog-submit">
+                            <button data-ng-click="onResolveButtonClicked()">Avsluta</button>
+                            <button data-ng-click="onCancelResolveButtonClicked()">Avbryt</button>
+                        </div>
+                    </modal>
+                </div>
+
+                <!--Delete pop up-->
+                <modal dialog-title="Vill du verkligen radera ärendet" show="showDelete">
+                    <div class="submit-area cf dialog-submit">
+                        <button data-ng-click="deleteCase()">Ja</button>
+                        <button data-ng-click="onCancelResolveButtonClicked()">Nej</button>
+                    </div>
+                </modal>
+
+                <div class="toolbar-content-popup" data-ng-switch-when="requiredCaseType">
+                    <modal dialog-title="Ange ärendetyp" show="show">
+                        <p>Du behöver ange en ärendetyp innan du kan stänga ärendet.</p>
+                        <div class="row cf">
+                        </div>
+                        <div class="submit-area cf dialog-submit">
+                            <button data-ng-click="onCancelRequiredCaseTypeButtonClicked()">Avbryt</button>
+                        </div>
+                    </modal>
+                </div>
+
+                <div class="toolbar-content-popup" data-ng-switch-when="sendTo">
+                    <modal dialog-title="Byt ägare" show="show">
+                        <div class="row cf">
+                            <div class="select">
+                                <select
+                                        class="popup-select"
+                                        id="issue-owner"
+                                        name="issue-owner"
+                                        data-ng-options="option.id as option.text group by option.title for option in sendToRecipients | orderBy: ['title', 'text']"
+                                        data-ng-model="sendToId"
+                                        data-ng-change='sendToIdChanged(sendToId)'>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="submit-area cf dialog-submit">
+                            <button type="submit" name="save-issue-owner" data-ng-click="onSendToButtonClicked($event)">
+                                Spara
+                            </button>
+                        </div>
+                    </modal>
+                </div>
+
+                <div class="toolbar-content-popup" data-ng-switch-when="assignTo">
+                    <modal dialog-title="Tilldela till" show="show">
+                        <div class="row cf">
+                            <div class="select">
+                                <select
+                                        class="popup-select"
+                                        id="issue-assignee"
+                                        name="issue-assignee"
+                                        data-ng-options="option.id as option.text for option in assignToRecipients | orderBy: ['title', 'text']"
+                                        data-ng-model="assignToId"
+                                        data-ng-change='assignToIdChanged(assignToId)'>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="submit-area cf dialog-submit">
+                            <button type="submit" name="save-issue-assignee"
+                                    data-ng-click="onAssignToButtonClicked($event)">Spara
+                            </button>
+                        </div>
+                    </modal>
+                </div>
+
+
+                <div data-ng-switch-default></div>
+
+            </div>
         </div>
-
-        <div class="toolbar-content-popup" data-ng-switch-when="formonclose" ng-controller="FormCtrl">
-          <modal dialog-title="Formulär" show="show">
-            <data-ng-include src="'routes/cases/form/forms.html'"></data-ng-include>
-          </modal>
-        </div>
-
-        <div class="toolbar-content-popup" data-ng-switch-when="resolve">
-          <modal dialog-title="Stäng ärende" show="show">
-            <div class="row cf">
-              <div class="select">
-                <select
-                  class="popup-select"
-                  data-ng-options="option.id as option.text for option in possibleResolutions"
-                  data-ng-model="resolution">
-                </select>
-              </div>
-            </div>
-            <div class="submit-area cf dialog-submit">
-              <button data-ng-click="onResolveButtonClicked()">Avsluta</button>
-              <button data-ng-click="onCancelResolveButtonClicked()">Avbryt</button>
-            </div>
-          </modal>
-        </div>
-
-        <!--Delete pop up-->
-        <modal dialog-title="Vill du verkligen radera ärendet" show="showDelete">
-          <div class="submit-area cf dialog-submit">
-            <button data-ng-click="deleteCase()">Ja</button>
-            <button data-ng-click="onCancelResolveButtonClicked()">Nej</button>
-          </div>
-        </modal>
-
-        <div class="toolbar-content-popup" data-ng-switch-when="requiredCaseType">
-          <modal dialog-title="Ange ärendetyp" show="show">
-            <p>Du behöver ange en ärendetyp innan du kan stänga ärendet.</p>
-            <div class="row cf">
-            </div>
-            <div class="submit-area cf dialog-submit">
-              <button data-ng-click="onCancelRequiredCaseTypeButtonClicked()">Avbryt</button>
-            </div>
-          </modal>
-        </div>
-
-        <div class="toolbar-content-popup" data-ng-switch-when="sendTo">
-          <modal dialog-title="Byt ägare" show="show">
-            <div class="row cf">
-              <div class="select">
-                <select
-                  class="popup-select"
-                  id="issue-owner"
-                  name="issue-owner"
-                  data-ng-options="option.id as option.text group by option.title for option in sendToRecipients | orderBy: ['title', 'text']"
-                  data-ng-model="sendToId"
-                  data-ng-change='sendToIdChanged(sendToId)'>
-                </select>
-              </div>
-            </div>
-            <div class="submit-area cf dialog-submit">
-              <button type="submit" name="save-issue-owner" data-ng-click="onSendToButtonClicked($event)">Spara</button>
-            </div>
-          </modal>
-        </div>
-
-        <div class="toolbar-content-popup" data-ng-switch-when="assignTo">
-          <modal dialog-title="Tilldela till" show="show">
-            <div class="row cf">
-              <div class="select">
-                <select
-                        class="popup-select"
-                        id="issue-assignee"
-                        name="issue-assignee"
-                        data-ng-options="option.id as option.text for option in assignToRecipients | orderBy: ['title', 'text']"
-                        data-ng-model="assignToId"
-                        data-ng-change='assignToIdChanged(assignToId)'>
-                </select>
-              </div>
-            </div>
-            <div class="submit-area cf dialog-submit">
-              <button type="submit" name="save-issue-assignee" data-ng-click="onAssignToButtonClicked($event)">Spara</button>
-            </div>
-          </modal>
-        </div>
-
-
-
-        <div data-ng-switch-default></div>
-
-      </div>
+        <!-- /Command view -->
     </div>
-    <!-- /Command view -->
-  </div>
-  <!-- /Issue toolbar -->
+    <!-- /Issue toolbar -->
 
-  <!-- Pop up export to pdf -->
-  <modal dialog-title="Exportera till PDF" show="showExport">
-    <h4>Exporteringsalternativ</h4>
-    <ul class="dialog-list">
-      <li>
-        <input id="export-submitted-forms" type="checkbox" ng-model="exportSubmittedForms" name="export-submitted-forms">
-        <label for="export-submitted-forms">Skickade formulär</label>
-      </li>
-      <li>
-        <input id="export-attachments" type="checkbox" ng-model="exportAttachments" name="export-attachments">
-        <label for="export-attachments">Bifogade filer</label>
-      </li>
-      <li>
-        <input id="export-conversations" type="checkbox" ng-model="exportConversations" name="export-conversations">
-        <label for="export-conversations">Konversationer</label>
-      </li>
-      <li>
-        <input id="export-contacts" type="checkbox" ng-model="exportContacts" name="export-contacts">
-        <label for="export-contacts">Kontakter</label>
-      </li>
-      <li>
-        <input id="export-case-log" type="checkbox" ng-model="exportCaseLog" name="export-case-log">
-        <label for="export-case-log">Ärendelogg</label>
-      </li>
-    </ul>
-    <div class="submit-area cf dialog-submit">
-      <button type="submit" name="save-issue-owner" data-ng-click="onExportButtonClicked(exportSubmittedForms, exportAttachments, exportConversations, exportContacts, exportCaseLog)">Exportera</button>
+    <!-- Pop up export to pdf -->
+    <modal dialog-title="Exportera till PDF" show="showExport">
+        <h4>Exporteringsalternativ</h4>
+        <ul class="dialog-list">
+            <li>
+                <input id="export-submitted-forms" type="checkbox" ng-model="exportSubmittedForms"
+                       name="export-submitted-forms">
+                <label for="export-submitted-forms">Skickade formulär</label>
+            </li>
+            <li>
+                <input id="export-attachments" type="checkbox" ng-model="exportAttachments" name="export-attachments">
+                <label for="export-attachments">Bifogade filer</label>
+            </li>
+            <li>
+                <input id="export-conversations" type="checkbox" ng-model="exportConversations"
+                       name="export-conversations">
+                <label for="export-conversations">Konversationer</label>
+            </li>
+            <li>
+                <input id="export-contacts" type="checkbox" ng-model="exportContacts" name="export-contacts">
+                <label for="export-contacts">Kontakter</label>
+            </li>
+            <li>
+                <input id="export-case-log" type="checkbox" ng-model="exportCaseLog" name="export-case-log">
+                <label for="export-case-log">Ärendelogg</label>
+            </li>
+        </ul>
+        <div class="submit-area cf dialog-submit">
+            <button type="submit" name="save-issue-owner"
+                    data-ng-click="onExportButtonClicked(exportSubmittedForms, exportAttachments, exportConversations, exportContacts, exportCaseLog)">
+                Exportera
+            </button>
+        </div>
+    </modal>
+    <!-- / Pop up export to pdf -->
+
+    <!-- Module: Ärende -->
+    <div sidebar-case class="m m-convos">
     </div>
-  </modal>
-  <!-- / Pop up export to pdf -->
+    <div class="sidebar-group-divider"></div>
 
-  <!-- Module: Ärende -->
-  <div sidebar-case class="m m-convos">
-  </div>
-  <div class="sidebar-group-divider"></div>
-
-  <!-- Module: Ärendelogg -->
-  <!--<div class="m m-convos">-->
+    <!-- Module: Ärendelogg -->
+    <!--<div class="m m-convos">-->
     <!--<a href="#/cases/{{ caze[0].id }}/caselog" class="block-link">-->
-      <!--<div class="m-h">-->
-        <!--<h2>Ärendelogg</h2>-->
-        <!--<span class="caselog-count-sidebar"> Visar de 3 senaste</span>-->
-      <!--</div>-->
-      <!--<div class="m-c">-->
-        <!--<ul>-->
-          <!--<li data-ng-repeat="entry in sideBarCaseLogs | orderBy:'-creationDate' | limitTo:3 track by $index" data-ng-class-even="'even'" class="convo-li">-->
-            <!--<h3>{{ entry.text }} av {{ entry.creator }}</h3>-->
-            <!--<span class="date">{{ entry.creationDate | dateTime}}</span>-->
-          <!--</li>-->
-        <!--</ul>-->
-      <!--</div>-->
+    <!--<div class="m-h">-->
+    <!--<h2>Ärendelogg</h2>-->
+    <!--<span class="caselog-count-sidebar"> Visar de 3 senaste</span>-->
+    <!--</div>-->
+    <!--<div class="m-c">-->
+    <!--<ul>-->
+    <!--<li data-ng-repeat="entry in sideBarCaseLogs | orderBy:'-creationDate' | limitTo:3 track by $index" data-ng-class-even="'even'" class="convo-li">-->
+    <!--<h3>{{ entry.text }} av {{ entry.creator }}</h3>-->
+    <!--<span class="date">{{ entry.creationDate | dateTime}}</span>-->
+    <!--</li>-->
+    <!--</ul>-->
+    <!--</div>-->
     <!--</a>-->
-  <!--</div>-->
-  <!-- /Module: Ärendelogg -->
-  <!-- /Module: Ärende -->
+    <!--</div>-->
+    <!-- /Module: Ärendelogg -->
+    <!-- /Module: Ärende -->
 
-  <!-- Module: Status -->
-  <div class="m m-status">
-    <div class="m-h">
-      <h2>Status</h2>
-      <a data-ng-click="collapsedStatus = ! collapsedStatus" href="" ><span class="action-btn {{ collapsedStatus ? 'icon-arrow-up' : 'icon-pencil'}}" title="{{ collapsedStatus ? 'Collapse' : 'Edit'}}"></span></a>
+    <!-- Module: Status -->
+    <div class="m m-status">
+        <div class="m-h">
+            <h2>Status</h2>
+            <a data-ng-click="collapsedStatus = ! collapsedStatus" href=""><span
+                    class="action-btn {{ collapsedStatus ? 'icon-arrow-up' : 'icon-pencil'}}"
+                    title="{{ collapsedStatus ? 'Collapse' : 'Edit'}}"></span></a>
+        </div>
+        <!--Expanded view-->
+        <div class="m-c animate-hide" data-ng-show="collapsedStatus">
+            <form>
+                <!-- Ärendetyp -->
+                <div sidebar-case-type class="row full" can-change="canChangeCaseType">
+                </div>
+                <!-- /Ärendetyp -->
+
+                <!-- Ärendelabel -->
+                <div sidebar-case-labels class="row" can-change="canAddLabel">
+                </div>
+                <!-- /Ärendelabel -->
+
+                <!-- Module: Bifogade filer -->
+                <div class="m m-attachments">
+                    <div class="m-h">
+                        <h2>Bifogade filer</h2>
+                        <label data-ng-show="canCreateAttachment" class="file-input-label action-btn">
+                            <input type="file" name="file" ng-file-select="onFileSelect($files)" class="file-input"/>
+                            Lägg till fil <i class="icon-plus"></i>
+                        </label>
+                    </div>
+                    <div class="m-c">
+                        <ul class="zebra-list">
+                            <li data-ng-show="attachment.rel === 'attachment'"
+                                data-ng-repeat="attachment in attachments">
+                                <a data-ng-show="attachment.queries[0].id === 'download'"
+                                   data-ng-click="downloadAttachment(attachment)" href="">{{ attachment.text }}</a>
+                                <a data-ng-show="attachment.queries[0].id !== 'download'"
+                                   href="">{{attachment.text}}</a>
+                                <a data-ng-show="attachment.commands.length"
+                                   data-ng-click="deleteAttachment(attachment)" href="" class="delete"
+                                   title="Radera fil">
+                                    <i class="icon-cancel"></i>
+                                    <span class="struct">Radera fil</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /Module: Bifogade filer -->
+            </form>
+        </div>
+
+        <!--Collapsed view-->
+        <div class="m-c animate-hide" data-ng-hide="collapsedStatus">
+            <form>
+                <div sidebar-case-data-collapsed class="row full" can-change="false">
+                </div>
+            </form>
+        </div>
+        <!--/Collapsed view-->
+        <div class="sidebar-group-divider"></div>
+
     </div>
-    <!--Expanded view-->
-    <div class="m-c animate-hide" data-ng-show="collapsedStatus">
-      <form>
-        <!-- Ärendetyp -->
-        <div sidebar-case-type class="row full" can-change="canChangeCaseType">
-        </div>
-        <!-- /Ärendetyp -->
+    <!-- /Module: Status -->
 
-        <!-- Ärendelabel -->
-        <div sidebar-case-labels class="row" can-change="canAddLabel">
-        </div>
-        <!-- /Ärendelabel -->
 
-        <!-- Module: Bifogade filer -->
-        <div class="m m-attachments">
-          <div class="m-h">
-            <h2>Bifogade filer</h2>
-            <label data-ng-show="canCreateAttachment" class="file-input-label action-btn">
-              <input type="file" name="file" ng-file-select="onFileSelect($files)" class="file-input"/>
-              Lägg till fil <i class="icon-plus"></i>
-            </label>
-          </div>
-          <div class="m-c">
-            <ul class="zebra-list">
-              <li data-ng-show="attachment.rel === 'attachment'" data-ng-repeat="attachment in attachments">
-                <a data-ng-show="attachment.queries[0].id === 'download'" data-ng-click="downloadAttachment(attachment)" href="">{{ attachment.text }}</a>
-                <a data-ng-show="attachment.queries[0].id !== 'download'" href="">{{attachment.text}}</a>
-                <a data-ng-show="attachment.commands.length" data-ng-click="deleteAttachment(attachment)" href="" class="delete" title="Radera fil">
-                  <i class="icon-cancel"></i>
-                  <span class="struct">Radera fil</span>
+    <!-- Module: Formulär -->
+    <div class="m m-convos" can-create="canCreateFormDraft" data-ng-show="possibleForms.length > 0">
+        <div class="m-h">
+            <h2>Formulär</h2>
+            <a data-ng-click="collapsedForms = ! collapsedForms" href=""><span
+                    class="action-btn {{ collapsedForms ? 'icon-arrow-up' : 'icon-pencil'}}"
+                    title="{{ collapsedForms ? 'Collapse' : 'Edit'}}"></span></a>
+        </div>
+        <!--Expanded view-->
+        <!--<div sidebar-forms class="row" can-create="canCreateFormDraft">-->
+        <div sidebar-forms data-ng-show="collapsedForms">
+        </div>
+        <!--/Expanded view-->
+
+        <!--Collapsed view-->
+        <div sidebar-forms-collapsed data-ng-hide="collapsedForms">
+        </div>
+        <!--/Collapsed view-->
+        <div class="sidebar-group-divider"></div>
+
+    </div>
+    <!-- /Module: Formulär -->
+
+
+    <!-- Module: Annat (Priority)-->
+    <!--<div class="m m-convos">-->
+    <div class="m m-status">
+        <div class="m-h">
+            <h2>Other</h2>
+            <a data-ng-click="collapsedOther = ! collapsedOther" href=""><span
+                    class="action-btn {{ collapsedOther ? 'icon-arrow-up' : 'icon-pencil'}}"
+                    title="{{ collapsedOther ? 'Collapse' : 'Edit'}}"></span></a>
+        </div>
+        <!--Expanded view-->
+        <div class="m-c animate-hide" data-ng-show="collapsedOther">
+            <form>
+                <!-- Prioritet -->
+                <div sidebar-priority class="row" can-change="canChangePriority"
+                     data-ng-show="possiblePriorities.length !== 0">
+                </div>
+                <!-- /Prioritet -->
+                <!-- Due date -->
+                <div sidebar-due-date class="row" can-change="canChangeDueOn">
+                </div>
+                <!-- /Due date -->
+            </form>
+        </div>
+
+        <!--Collapsed view-->
+        <div class="m-c animate-hide" data-ng-hide="collapsedOther">
+            <form>
+                <div sidebar-case-priority-collapsed class="row full" can-change="false">
+                </div>
+            </form>
+        </div>
+        <!--/Collapsed view-->
+        <div class="sidebar-group-divider"></div>
+
+    </div>
+    <!-- /Module: Annat(Priority) -->
+
+
+    <!-- Module: Konversationer -->
+    <div sidebar-conversations class="m m-convos" can-create="canCreateConversation">
+    </div>
+    <!-- /Module: Konversationer -->
+
+    <!-- Module: Kontakter -->
+    <div class="m m-contacts">
+        <div class="m-h">
+            <h2>Kontakter</h2>
+            <a data-ng-show="canAddContact" href="" data-ng-click="submitContact(caze[0].id, contacts.length)"
+               class="action-btn">Ny kontakt <i class="icon-plus"></i></a>
+        </div>
+        <div class="m-c">
+            <div data-ng-repeat='contact in contacts track by $index'>
+                <a href="#/cases/{{ caze[0].id }}/contact/{{$index}}/" class="block-link">
+                    <span class="contact-no-name" data-ng-if="contact.name === ''">Namn saknas</span>
+                    {{contact.name}}
                 </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <!-- /Module: Bifogade filer -->
-      </form>
-    </div>
-
-    <!--Collapsed view-->
-    <div class="m-c animate-hide" data-ng-hide="collapsedStatus">
-      <form>
-        <div sidebar-case-data-collapsed class="row full" can-change="false">
-        </div>
-      </form>
-    </div>
-    <!--/Collapsed view-->
-    <div class="sidebar-group-divider"></div>
-
-  </div>
-  <!-- /Module: Status -->
-
-
-  <!-- Module: Formulär -->
-  <div class="m m-convos" can-create="canCreateFormDraft" data-ng-show="possibleForms.length > 0">
-    <div class="m-h">
-      <h2>Formulär</h2>
-      <a data-ng-click="collapsedForms = ! collapsedForms" href="" ><span class="action-btn {{ collapsedForms ? 'icon-arrow-up' : 'icon-pencil'}}" title="{{ collapsedForms ? 'Collapse' : 'Edit'}}"></span></a>
-    </div>
-    <!--Expanded view-->
-    <!--<div sidebar-forms class="row" can-create="canCreateFormDraft">-->
-    <div sidebar-forms data-ng-show="collapsedForms">
-    </div>
-    <!--/Expanded view-->
-
-    <!--Collapsed view-->
-    <div sidebar-forms-collapsed data-ng-hide="collapsedForms">
-    </div>
-    <!--/Collapsed view-->
-    <div class="sidebar-group-divider"></div>
-
-  </div>
-  <!-- /Module: Formulär -->
-
-
-  <!-- Module: Annat (Priority)-->
-  <!--<div class="m m-convos">-->
-  <div class="m m-status">
-    <div class="m-h">
-      <h2>Other</h2>
-      <a data-ng-click="collapsedOther = ! collapsedOther" href="" ><span class="action-btn {{ collapsedOther ? 'icon-arrow-up' : 'icon-pencil'}}" title="{{ collapsedOther ? 'Collapse' : 'Edit'}}"></span></a>
-    </div>
-    <!--Expanded view-->
-    <div class="m-c animate-hide" data-ng-show="collapsedOther">
-      <form>
-        <!-- Prioritet -->
-        <div sidebar-priority class="row" can-change="canChangePriority" data-ng-show="possiblePriorities.length !== 0">
-        </div>
-        <!-- /Prioritet -->
-        <!-- Due date -->
-        <div sidebar-due-date class="row" can-change="canChangeDueOn">
-        </div>
-        <!-- /Due date -->
-      </form>
-    </div>
-
-    <!--Collapsed view-->
-    <div class="m-c animate-hide" data-ng-hide="collapsedOther">
-      <form>
-        <div sidebar-case-priority-collapsed class="row full" can-change="false">
-        </div>
-      </form>
-    </div>
-    <!--/Collapsed view-->
-    <div class="sidebar-group-divider"></div>
-
-  </div>
-  <!-- /Module: Annat(Priority) -->
-
-
-  <!-- Module: Konversationer -->
-  <div sidebar-conversations class="m m-convos" can-create="canCreateConversation">
-  </div>
-  <!-- /Module: Konversationer -->
-
-  <!-- Module: Kontakter -->
-  <div class="m m-contacts">
-    <div class="m-h">
-      <h2>Kontakter</h2>
-      <a data-ng-show="canAddContact" href="" data-ng-click="submitContact(caze[0].id, contacts.length)" class="action-btn">Ny kontakt <i class="icon-plus"></i></a>
-    </div>
-    <div class="m-c">
-        <div data-ng-repeat='contact in contacts track by $index'>
-          <a href="#/cases/{{ caze[0].id }}/contact/{{$index}}/" class="block-link">
-            <span class="contact-no-name" data-ng-if="contact.name === ''">Namn saknas</span>
-            {{contact.name}}
-          </a>
+            </div>
         </div>
     </div>
-  </div>
-  <!-- /Module: Kontakter -->
+    <!-- /Module: Kontakter -->
 
-  <!-- <pre><code>{{ form[0] | json }}</code></pre> -->
+    <!-- <pre><code>{{ form[0] | json }}</code></pre> -->
 </div>

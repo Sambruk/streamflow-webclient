@@ -1,19 +1,35 @@
-<div class="m-h">
-  <a href="#/cases/{{ caze[0].id }}"><h2>Ärende</h2></a>
-  <a href="" class="action-btn" data-ng-click="showCaseInfoPopUp()"><i class="icon-info"></i></a>
-</div>
 <div class="m-c">
   <ul>
     <li>
       <a href="#/cases/{{ caze[0].id }}" class="block-link convCaseSidebar">
         <span class="contact-no-name" data-ng-if="caze[0].text.length === 0">Ärendebeskrivning saknas</span>
-        <h3 data-ng-hide="caze[0].text.length === 0">{{caze[0].text}}</h3>
+        <h3 data-ng-hide="caze[0].text.length === 0" class="left">{{caze[0].text}}</h3>
+        <a href="" class="action-btn" data-ng-click="showCaseInfoPopUp()"><i class="icon-info"></i></a>
+        <div class="clear"></div>
         <div>
           <span data-ng-hide="notes[0].length === 0" data-ng-bind-html="notes[0].note | limitTo: 250"></span>
         </div>
       </a>
     </li>
   </ul>
+  <div>
+    <div class="date left">
+      <b>Ändrad: </b>{{caze[0].lastLogEntryTime | date : "yyyy-MM-dd 'kl' HH:mm"}}
+    </div>
+    <a href="#/cases/{{ caze[0].id }}/caselog" class="right">Visar de 3 senaste</a>
+    <a href="#/cases/{{ caze[0].id }}/caselog" class="right">Visar de 3 senaste</a>
+
+    <!--<div class="m-c">-->
+      <ul>
+        <li data-ng-repeat="entry in sideBarCaseLogs | orderBy:'-creationDate' | limitTo:3 track by $index" data-ng-class-even="'even'" class="convo-li">
+          <h3>{{ entry.text }} av {{ entry.creator }}</h3>
+          <span class="date">{{ entry.creationDate | dateTime}}</span>
+        </li>
+      </ul>
+    <!--</div>-->
+
+  </div>
+  <div class="clear"></div>
 </div>
 
 <modal dialog-title="Ärendeinformation" show="showCaseInfo">

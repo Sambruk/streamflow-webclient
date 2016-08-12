@@ -194,6 +194,29 @@
   </modal>
   <!-- / Pop up export to pdf -->
 
+  <!-- Module: Ärende -->
+  <div sidebar-case class="m m-convos">
+  </div>
+  <!-- Module: Ärendelogg -->
+  <!--<div class="m m-convos">-->
+    <!--<a href="#/cases/{{ caze[0].id }}/caselog" class="block-link">-->
+      <!--<div class="m-h">-->
+        <!--<h2>Ärendelogg</h2>-->
+        <!--<span class="caselog-count-sidebar"> Visar de 3 senaste</span>-->
+      <!--</div>-->
+      <!--<div class="m-c">-->
+        <!--<ul>-->
+          <!--<li data-ng-repeat="entry in sideBarCaseLogs | orderBy:'-creationDate' | limitTo:3 track by $index" data-ng-class-even="'even'" class="convo-li">-->
+            <!--<h3>{{ entry.text }} av {{ entry.creator }}</h3>-->
+            <!--<span class="date">{{ entry.creationDate | dateTime}}</span>-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</a>-->
+  <!--</div>-->
+  <!-- /Module: Ärendelogg -->
+  <!-- /Module: Ärende -->
+
   <!-- Module: Status -->
   <div class="m m-status">
     <div class="m-h">
@@ -304,12 +327,6 @@
   </div>
   <!-- /Module: Annat(Priority) -->
 
-  <!-- Module: Ärende -->
-  <div sidebar-case class="m m-convos">
-  </div>
-  <!-- /Module: Ärende -->
-
-
 
 
   <!-- Module: Konversationer -->
@@ -335,24 +352,24 @@
   <!-- /Module: Kontakter -->
 
 
-  <!-- Module: Ärendelogg -->
-  <div class="m m-convos">
-    <a href="#/cases/{{ caze[0].id }}/caselog" class="block-link">
-      <div class="m-h">
-        <h2>Ärendelogg</h2>
-        <span class="caselog-count-sidebar"> Visar de 3 senaste</span>
-      </div>
-      <div class="m-c">
-        <ul>
-          <li data-ng-repeat="entry in sideBarCaseLogs | orderBy:'-creationDate' | limitTo:3 track by $index" data-ng-class-even="'even'" class="convo-li">
-            <h3>{{ entry.text }} av {{ entry.creator }}</h3>
-            <span class="date">{{ entry.creationDate | dateTime}}</span>
-          </li>
-        </ul>
-      </div>
-    </a>
-  </div>
-  <!-- /Module: Ärendelogg -->
+  <!--&lt;!&ndash; Module: Ärendelogg -->
+  <!--<div class="m m-convos">-->
+    <!--<a href="#/cases/{{ caze[0].id }}/caselog" class="block-link">-->
+      <!--<div class="m-h">-->
+        <!--<h2>Ärendelogg</h2>-->
+        <!--<span class="caselog-count-sidebar"> Visar de 3 senaste</span>-->
+      <!--</div>-->
+      <!--<div class="m-c">-->
+        <!--<ul>-->
+          <!--<li data-ng-repeat="entry in sideBarCaseLogs | orderBy:'-creationDate' | limitTo:3 track by $index" data-ng-class-even="'even'" class="convo-li">-->
+            <!--<h3>{{ entry.text }} av {{ entry.creator }}</h3>-->
+            <!--<span class="date">{{ entry.creationDate | dateTime}}</span>-->
+          <!--</li>-->
+        <!--</ul>-->
+      <!--</div>-->
+    <!--</a>-->
+  <!--</div>-->
+   <!--/Module: Ärendelogg &ndash;&gt;-->
 
   <!-- <pre><code>{{ form[0] | json }}</code></pre> -->
 </div>

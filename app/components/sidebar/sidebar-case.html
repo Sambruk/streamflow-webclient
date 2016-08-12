@@ -23,8 +23,8 @@
     <div data-ng-show="collapsedBasic">
       <ul>
         <li data-ng-repeat="entry in sideBarCaseLogs | orderBy:'-creationDate' | limitTo:3 track by $index" data-ng-class-even="'even'" class="convo-li">
-          <h3>{{ entry.text }} av {{ entry.creator }}</h3>
-          <span class="date">{{ entry.creationDate | dateTime}}</span>
+          <b class="text-small">{{ entry.text }} av {{ entry.creator }}</b>
+          <div class="date">{{ entry.creationDate | dateTime}}</div>
         </li>
       </ul>
     </div>

@@ -51,6 +51,7 @@ angular.module('sf')
       scope.exportConversations = false;
       scope.exportContacts = false;
       scope.exportCaseLog = false;
+      scope.status  = $routeParams.status;
 
       scope.caze.promise.then(function () {
         checkPermissionService.checkPermissions(

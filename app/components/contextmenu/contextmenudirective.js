@@ -62,7 +62,7 @@ angular.module('sf').directive('contextmenu', function (projectService, navigati
 
         projectService.createCase(projectId, projectType).then(function(response){
           var caseId = response.data.events[1].entity;
-          var href = navigationService.caseHrefSimple(caseId);
+          var href = navigationService.caseHrefSimple(caseId)+'/new';
           $rootScope.$broadcast('case-created');
           window.open(href);
         });

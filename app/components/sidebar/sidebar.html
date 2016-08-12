@@ -240,15 +240,15 @@
     <div class="m m-status">
         <div class="m-h">
             <h2>Status</h2>
-            <a data-ng-click="collapsedStatus = ! collapsedStatus" href=""><span
-                    class="action-btn {{ collapsedStatus ? 'icon-arrow-up' : 'icon-pencil'}}"
-                    title="{{ collapsedStatus ? 'Collapse' : 'Edit'}}"></span></a>
+            <a data-ng-click="collapsedStatus = ! collapsedStatus || status=='new'" href=""><span
+                    class="action-btn {{ collapsedStatus || status=='new'? 'icon-arrow-up' : 'icon-pencil'}}"
+                    title="{{ collapsedStatus  || status=='new'? 'Collapse' : 'Edit'}}"></span></a>
         </div>
         <!--Expanded view-->
-        <div class="m-c animate-hide" data-ng-show="collapsedStatus">
+        <div class="m-c animate-hide" data-ng-show="collapsedStatus || status=='new'">
             <form>
                 <!-- Ärendetyp -->
-                <div sidebar-case-type class="row full" can-change="canChangeCaseType">
+                <div sidebar-case-type class="row full" can-change="canChangeCaseType || status=='new'">
                 </div>
                 <!-- /Ärendetyp -->
 
@@ -289,7 +289,7 @@
         </div>
 
         <!--Collapsed view-->
-        <div class="m-c animate-hide" data-ng-hide="collapsedStatus">
+        <div class="m-c animate-hide" data-ng-hide="collapsedStatus || status=='new'">
             <form>
                 <div sidebar-case-data-collapsed class="row full" can-change="false">
                 </div>
@@ -306,18 +306,18 @@
     <div class="m m-convos" can-create="canCreateFormDraft" data-ng-show="possibleForms.length > 0">
         <div class="m-h">
             <h2>Formulär</h2>
-            <a data-ng-click="collapsedForms = ! collapsedForms" href=""><span
-                    class="action-btn {{ collapsedForms ? 'icon-arrow-up' : 'icon-pencil'}}"
-                    title="{{ collapsedForms ? 'Collapse' : 'Edit'}}"></span></a>
+            <a data-ng-click="collapsedForms = ! collapsedForms || status=='new'" href=""><span
+                    class="action-btn {{ collapsedForms || status=='new'? 'icon-arrow-up' : 'icon-pencil'}}"
+                    title="{{ collapsedForms || status=='new'? 'Collapse' : 'Edit'}}"></span></a>
         </div>
         <!--Expanded view-->
         <!--<div sidebar-forms class="row" can-create="canCreateFormDraft">-->
-        <div sidebar-forms data-ng-show="collapsedForms">
+        <div sidebar-forms data-ng-show="collapsedForms || status=='new'">
         </div>
         <!--/Expanded view-->
 
         <!--Collapsed view-->
-        <div sidebar-forms-collapsed data-ng-hide="collapsedForms">
+        <div sidebar-forms-collapsed data-ng-hide="collapsedForms || status=='new'">
         </div>
         <!--/Collapsed view-->
         <div class="sidebar-group-divider"></div>
@@ -331,12 +331,12 @@
     <div class="m m-status">
         <div class="m-h">
             <h2>Other</h2>
-            <a data-ng-click="collapsedOther = ! collapsedOther" href=""><span
-                    class="action-btn {{ collapsedOther ? 'icon-arrow-up' : 'icon-pencil'}}"
-                    title="{{ collapsedOther ? 'Collapse' : 'Edit'}}"></span></a>
+            <a data-ng-click="collapsedOther = ! collapsedOther || status=='new'" href=""><span
+                    class="action-btn {{ collapsedOther || status=='new'? 'icon-arrow-up' : 'icon-pencil'}}"
+                    title="{{ collapsedOther || status=='new'? 'Collapse' : 'Edit'}}"></span></a>
         </div>
         <!--Expanded view-->
-        <div class="m-c animate-hide" data-ng-show="collapsedOther">
+        <div class="m-c animate-hide" data-ng-show="collapsedOther || status=='new'">
             <form>
                 <!-- Prioritet -->
                 <div sidebar-priority class="row" can-change="canChangePriority"
@@ -351,7 +351,7 @@
         </div>
 
         <!--Collapsed view-->
-        <div class="m-c animate-hide" data-ng-hide="collapsedOther">
+        <div class="m-c animate-hide" data-ng-hide="collapsedOther || status=='new'">
             <form>
                 <div sidebar-case-priority-collapsed class="row full" can-change="false">
                 </div>

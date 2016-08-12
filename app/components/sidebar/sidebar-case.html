@@ -16,7 +16,7 @@
         <div class="date left">
             <b>Ändrad: </b>{{caze[0].lastLogEntryTime | date : "yyyy-MM-dd 'kl' HH:mm"}}
         </div>
-        <a data-ng-click="collapsedBasic = ! collapsedBasic" href=""><span class="action-btn"></span>{{ collapsedBasic ?
+        <a data-ng-click="collapsedBasic = ! collapsedBasic || status=='new'" href=""><span class="action-btn"></span>{{ collapsedBasic || status=='new'?
             'Fäll ihop' : 'Fäll de 3 senaste'}}</a>
 
         <a href="#/cases/{{ caze[0].id }}/caselog"><span class="action-btn icon-history"
@@ -25,7 +25,7 @@
         </span>
         </a>
         <div class="clear"></div>
-        <div data-ng-show="collapsedBasic">
+        <div data-ng-show="collapsedBasic || status=='new'">
             <ul>
                 <li data-ng-repeat="entry in sideBarCaseLogs | orderBy:'-creationDate' | limitTo:3 track by $index"
                     data-ng-class-even="'even'" class="convo-li">

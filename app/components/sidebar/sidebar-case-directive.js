@@ -8,6 +8,7 @@ angular.module('sf').directive('sidebarCase', function ($routeParams, httpServic
     link: function (scope) {
       scope.caze = scope.$parent.caze;
       scope.notes = scope.$parent.notes;
+      scope.status  = $routeParams.status;
 
       scope.showCaseInfo = false;
 

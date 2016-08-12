@@ -18,8 +18,9 @@
     </div>
     <a data-ng-click="collapsedBasic = !collapsedBasic" href="" class="right">Visar de 3 senaste</a>
 
+    <div class="clear"></div>
     <!--<div class="m-c">-->
-    <div data-ng-hide="collapsedBasic">
+    <div data-ng-show="collapsedBasic">
       <ul>
         <li data-ng-repeat="entry in sideBarCaseLogs | orderBy:'-creationDate' | limitTo:3 track by $index" data-ng-class-even="'even'" class="convo-li">
           <h3>{{ entry.text }} av {{ entry.creator }}</h3>

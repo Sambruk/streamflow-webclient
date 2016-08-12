@@ -223,7 +223,7 @@
   <div class="m m-status">
     <div class="m-h">
       <h2>Status</h2>
-      <a data-ng-click="collapsedStatus = ! collapsedStatus" href="" ><span class="action-btn icon-arrow-up" title="Collapse"></span></a>
+      <a data-ng-click="collapsedStatus = ! collapsedStatus" href="" ><span class="action-btn {{ collapsedStatus ? 'icon-arrow-up' : 'icon-pencil'}}" title="{{ collapsedStatus ? 'Collapse' : 'Edit'}}"></span></a>
     </div>
     <!--Expanded view-->
     <div class="m-c animate-hide" data-ng-show="collapsedStatus">
@@ -282,8 +282,7 @@
   <div class="m m-convos" can-create="canCreateFormDraft" data-ng-show="possibleForms.length > 0">
     <div class="m-h">
       <h2>Formulär</h2>
-      <a data-ng-click="collapsedForms = ! collapsedForms" href=""><span class="action-btn icon-arrow-up"
-                                                                         title="Collapse"></span></a>
+      <a data-ng-click="collapsedForms = ! collapsedForms" href="" ><span class="action-btn {{ collapsedForms ? 'icon-arrow-up' : 'icon-pencil'}}" title="{{ collapsedForms ? 'Collapse' : 'Edit'}}"></span></a>
     </div>
     <!--Expanded view-->
     <!--<div sidebar-forms class="row" can-create="canCreateFormDraft">-->
@@ -306,7 +305,7 @@
   <div class="m m-status">
     <div class="m-h">
       <h2>Other</h2>
-      <a data-ng-click="collapsedOther = ! collapsedOther" href="" ><span class="action-btn icon-arrow-up" title="Collapse"></span></a>
+      <a data-ng-click="collapsedOther = ! collapsedOther" href="" ><span class="action-btn {{ collapsedOther ? 'icon-arrow-up' : 'icon-pencil'}}" title="{{ collapsedOther ? 'Collapse' : 'Edit'}}"></span></a>
     </div>
     <!--Expanded view-->
     <div class="m-c animate-hide" data-ng-show="collapsedOther">

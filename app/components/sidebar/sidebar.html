@@ -225,7 +225,7 @@
       <a data-ng-click="collapsedStatus = ! collapsedStatus" href="" ><span class="action-btn icon-arrow-up" title="Collapse"></span></a>
     </div>
     <!--Expanded view-->
-    <div class="m-c animate-hide" data-ng-hide="collapsedStatus">
+    <div class="m-c animate-hide" data-ng-show="collapsedStatus">
       <form>
         <!-- Ärendetyp -->
         <div sidebar-case-type class="row full" can-change="canChangeCaseType">
@@ -264,7 +264,7 @@
     </div>
 
     <!--Collapsed view-->
-    <div class="m-c animate-hide" data-ng-show="collapsedStatus">
+    <div class="m-c animate-hide" data-ng-hide="collapsedStatus">
       <form>
         <div sidebar-case-data-collapsed class="row full" can-change="false">
         </div>
@@ -286,12 +286,12 @@
     </div>
     <!--Expanded view-->
     <!--<div sidebar-forms class="row" can-create="canCreateFormDraft">-->
-    <div sidebar-forms data-ng-hide="collapsedForms">
+    <div sidebar-forms data-ng-show="collapsedForms">
     </div>
     <!--/Expanded view-->
 
     <!--Collapsed view-->
-    <div sidebar-forms-collapsed data-ng-show="collapsedForms">
+    <div sidebar-forms-collapsed data-ng-hide="collapsedForms">
     </div>
     <!--/Collapsed view-->
   </div>
@@ -307,7 +307,7 @@
       <a data-ng-click="collapsedOther = ! collapsedOther" href="" ><span class="action-btn icon-arrow-up" title="Collapse"></span></a>
     </div>
     <!--Expanded view-->
-    <div class="m-c animate-hide" data-ng-hide="collapsedOther">
+    <div class="m-c animate-hide" data-ng-show="collapsedOther">
       <form>
         <!-- Prioritet -->
         <div sidebar-priority class="row" can-change="canChangePriority" data-ng-show="possiblePriorities.length !== 0">
@@ -321,7 +321,7 @@
     </div>
 
     <!--Collapsed view-->
-    <div class="m-c animate-hide" data-ng-show="collapsedOther">
+    <div class="m-c animate-hide" data-ng-hide="collapsedOther">
       <form>
         <div sidebar-case-priority-collapsed class="row full" can-change="false">
         </div>

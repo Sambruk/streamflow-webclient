@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sf').directive('sidebarPriority', function (sidebarService, $rootScope) {
+angular.module('sf').directive('sidebarPriority', function (sidebarService) {
   return {
     restrict: 'A',
     scope: {
@@ -19,7 +19,7 @@ angular.module('sf').directive('sidebarPriority', function (sidebarService, $roo
 
       scope.changePriorityLevel = function (priorityId) {
         sidebarService.changePriorityLevel(scope, priorityId);
-        $rootScope.$broadcast("priority-changed", priorityId);
+        scope.$root.$broadcast("priority-changed", priorityId);
       };
 
       scope.$on('case-type-changed', function(){

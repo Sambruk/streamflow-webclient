@@ -22,6 +22,12 @@
 
     <!-- Issue toolbar -->
     <div class="toolbar" data-sf-fixed-toolbar>
+
+        <div class="id left left-sidebar">{{ caze[0].caseId }}</div>
+        <div class="left">{{ caze[0].assignedTo}}</div>
+
+        <div class="clear"></div>
+
         <ul class="buttons cf" data-ng-show="commands[0]">
 
             <li data-ng-show="canAssign" class="left-sidebar"><a href="" data-ng-click="assign()"

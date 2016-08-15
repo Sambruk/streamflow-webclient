@@ -27,7 +27,6 @@ angular.module('sf').directive('sidebarCaseDataCollapsed', function (sidebarServ
 
             scope.$on('labels-changed', function (event, labels) {
                 scope.caseLabel = labels;
-                console.log('Collapsed', scope);
             });
 
             // Attachments

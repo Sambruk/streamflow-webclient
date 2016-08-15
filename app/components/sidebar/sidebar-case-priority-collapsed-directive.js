@@ -32,6 +32,10 @@ angular.module('sf').directive('sidebarCasePriorityCollapsed', function (sidebar
                     }
                 });
             });
+
+            scope.$on('due-to-changed', function (event, dueTo) {
+                scope.dueOn = dueTo;
+            });
         }
     };
 });

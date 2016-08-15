@@ -21,19 +21,19 @@ angular.module('sf').directive('sidebarCaseDataCollapsed', function (sidebarServ
             };
 
             scope.activeLabels = [];
-            //TODO Check if case labels will be updated, if yes add another update listeners
 
+            //TODO Check if case labels will be updated, if yes add another update listeners
             sidebarService.updateCaseLabels(scope);
 
-            scope.$on('case-type-changed', function(){
-                sidebarService.updateCaseLabels(scope);
+            scope.$on('labels-changed', function (event, labels) {
+                scope.caseLabel = labels;
+                console.log('Collapsed', scope);
             });
 
             // Attachments
             scope.downloadAttachment = function (attachment) {
                 sidebarService.downloadAttachment(scope.$parent, attachment);
             };
-
         }
     };
 });

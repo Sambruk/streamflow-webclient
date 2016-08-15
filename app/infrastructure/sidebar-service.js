@@ -179,6 +179,8 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
       })).sort(sortByText);
 
       scope.previousActiveLabels = scope.activeLabels;
+
+      scope.$root.$broadcast("labels-changed", results[0]);
     });
   };
 

@@ -130,6 +130,8 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
 
       _updateCaseLabels(scope);
       _updateToolbar(scope);
+
+      scope.$root.$broadcast("type-changed", scope.caseType);
     });
   };
 

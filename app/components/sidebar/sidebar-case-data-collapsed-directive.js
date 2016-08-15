@@ -29,6 +29,14 @@ angular.module('sf').directive('sidebarCaseDataCollapsed', function (sidebarServ
                 scope.caseLabel = labels;
             });
 
+            scope.$on('type-changed', function (event, typeId) {
+                scope.possibleCaseTypes.forEach(function (item) {
+                    if (item.id == typeId) {
+                        scope.caze[0].caseType.text = item.text;
+                    }
+                });
+            });
+
             // Attachments
             scope.downloadAttachment = function (attachment) {
                 sidebarService.downloadAttachment(scope.$parent, attachment);

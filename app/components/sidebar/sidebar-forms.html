@@ -10,7 +10,7 @@
     </a>
     <div class="convo-status form-icons"><a href="#/cases/{{ caze[0].id }}/formhistory/{{ form.id }}"><span
             class="icon-history" title="Formulär, historik">{{submittedForms.length}} <span class="struct">Formulär, historik</span></span></a>
-        <a data-ng-click="openFormInNewWindow(form.id)" href=""><span class="icon-folder-open"
+        <a data-ng-show="canCreate" data-ng-click="openFormInNewWindow(form.id)" href=""><span class="icon-folder-open"
                                                                       title="Open in new window"> <span class="struct">Open in new window</span></span></a>
     </div>
     <div class="clear"></div>

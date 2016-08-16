@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sf').directive('sidebarFormsCollapsed', function (sidebarService) {
+angular.module('sf').directive('sidebarFormsCollapsed', function ($routeParams, sidebarService, caseService) {
     return {
         restrict: 'A',
         scope: {
@@ -22,6 +22,10 @@ angular.module('sf').directive('sidebarFormsCollapsed', function (sidebarService
                 }
                 sidebarService.updateToolbar(scope);
             };
+
+            scope.$on('form-saved', function(event, formId){
+                scope.submittedFormList =  caseService.getSubmittedFormList($routeParams.caseId);
+            });
         }
     };
 });

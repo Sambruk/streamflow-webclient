@@ -1060,6 +1060,7 @@ angular.module('sf')
           ]),
           {}).then(function(result){
             caseBase.broadcastMessage(result.status);
+                $rootScope.$broadcast("form-saved", formId);
           },
           function(error){
             caseBase.broadcastMessage(error);

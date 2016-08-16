@@ -7,8 +7,7 @@
 
     <div>
         <b class="left left-sidebar">Etiketter:</b>
-        <!--TODO getting strange error here on changing case type-->
-        <!--<div class="left right-sidebar"><div ng-repeat="label in caseLabel">{{label.text}}{{$last ? '' : '; '}}</div></div>-->
+        <div class="left right-sidebar"><div ng-repeat="label in caseLabel | unique:'text'">{{label.text}}{{$last ? '' : '; '}}</div></div>
     </div>
     <div class="clear"/>
 

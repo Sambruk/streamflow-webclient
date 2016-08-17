@@ -49,15 +49,16 @@ angular.module('sf')
       controller: 'CaseListCtrl'
     })
     //TODO: This should probably not be in a route but maybe
-    .when('/cases/:caseId/conversation/create', {
+    //TODO: Check conversations routes for projectId param
+    .when('/cases/:caseId/:projectId?/conversation/create', {
       templateUrl:'routes/cases/conversation/conversationcreate.html',
       controller: 'ConversationCreateCtrl'
     })
-    .when('/cases/:caseId/conversation/:conversationId/participants/create', {
+    .when('/cases/:caseId/:projectId?/conversation/:conversationId/participants/create', {
       templateUrl:'routes/cases/conversation/conversationparticipantcreate.html',
       controller: 'ConversationParticipantCreateCtrl'
     })
-    .when('/cases/:caseId/conversation/:conversationId', {
+    .when('/cases/:caseId/:projectId?/conversation/:conversationId/:projectId?', {
       templateUrl:'routes/cases/conversation/conversationdetail.html',
       controller: 'ConversationDetailCtrl'
     })

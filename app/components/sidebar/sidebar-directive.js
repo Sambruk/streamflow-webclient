@@ -18,7 +18,7 @@
 'use strict';
 
 angular.module('sf')
-.directive('sidebar', function($location, growl, contactService, sidebarService, fileService, $cacheFactory, $rootScope, $routeParams, projectService, caseService, httpService, navigationService, $q, tokenService, checkPermissionService){
+.directive('sidebar', function($location, growl, contactService, sidebarService, fileService, $cacheFactory, $rootScope, $routeParams, projectService, caseService, httpService, navigationService, $q, tokenService, checkPermissionService, $window){
   return {
     restrict: 'E',
     templateUrl: 'components/sidebar/sidebar.html',
@@ -361,6 +361,13 @@ angular.module('sf')
         updateObject(scope.submittedFormList);
         checkFilterCaseLog('form');
       });
+      $window.addEventListener('storage', function (event) {
+        if ( event.key === 'submittedFormId' && event.newValue != null) {
+          $rootScope.$broadcast('form-submitted');
+          $window.localStorage.removeItem("submittedFormId");
+        }
+      }, false);
+
       scope.$on('conversation-created', function(){
         updateObject(scope.conversations);
         checkFilterCaseLog('conversation');

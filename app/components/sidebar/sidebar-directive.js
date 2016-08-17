@@ -373,7 +373,7 @@ angular.module('sf')
         checkFilterCaseLog('conversation');
       });
       scope.$on('conversation-message-created', function(){
-        // updateObject(scope.conversations);
+        updateObject(scope.conversations);
         checkFilterCaseLog('conversation');
       });
       scope.$on('participant-removed', function(){

@@ -110,11 +110,12 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
 
             });
 
-            var addPromises = finalCaseLabels.map(function (label) {
-              return caseService.addCaseLabel($routeParams.caseId, label.id);
-            });
 
-            $q.all(addPromises).then(function(){
+            finalCaseLabels.reduce(function (p, val) {
+              return p.then(function () {
+                return caseService.addCaseLabel($routeParams.caseId, val.id);
+              });
+            }, $q.when(true)).then(function (finalResult) {
               $rootScope.$broadcast('case-type-changed');
             });
 

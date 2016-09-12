@@ -17,6 +17,15 @@
 'use strict';
 
 angular.module('sf')
+.filter('trustAsHTML', ['$sce', function($sce){
+  return function (text) {
+    var tmpText = text.replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    return $sce.trustAsHtml(tmpText);
+  };
+}])
 .filter('attachmentJson', function () {
   return function (attachment) {
     var jsonParse = JSON.parse(attachment);

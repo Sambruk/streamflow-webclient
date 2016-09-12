@@ -4,7 +4,7 @@
         data-ng-change="changeCaseLabels($parent.activeLabels)" name="label-select" id="label-select" style="width: 100%;">
     <ui-select-match placeholder="Välj etiketter...">{{$item.text}}</ui-select-match>
     <ui-select-choices repeat="label in possibleCaseLabels | filter: $select.search">
-      <div ng-bind-html="label.text"></div>
+      <div ng-bind-html="label.text | trustAsHTML"></div>
     </ui-select-choices>
   </ui-select>
 

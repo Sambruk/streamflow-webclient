@@ -24,6 +24,19 @@ angular.module('sf').directive('sidebarCaseType', function (sidebarService) {
                 sidebarService.changeCaseType(scope, caseType);
             };
 
+            scope.escapeHTMLChars = function (value) {
+                var map = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#039;'
+                };
+                return value.replace(/[&<>"']/g, function (m) {
+                    return map[m];
+                });
+            };
+
             //Getting search input
             element.on("input", function () {
                 scope.caseTypeSearchInput = null;

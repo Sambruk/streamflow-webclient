@@ -17,18 +17,6 @@
 'use strict';
 
 angular.module('sf')
-.filter('trustAsHTML', ['$sce', function($sce){
-  return function (text) {
-      var map = {
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
-          "'": '&#039;'
-      };
-    return $sce.trustAsHtml(text.replace(/[&<>"']/g, function(m) { return map[m]; }));
-  };
-}])
 .filter('attachmentJson', function () {
   return function (attachment) {
     var jsonParse = JSON.parse(attachment);
@@ -183,5 +171,19 @@ angular.module('sf')
       return input;
     }
   };
-});
+})
+.filter('trustAsHTML', ['$sce', function($sce){
+  return function (text) {
+    var map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+    return $sce.trustAsHtml(text.replace(/[&<>"']/g, function (m) {
+      return map[m];
+    }));
+  };
+}]);
 

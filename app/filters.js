@@ -19,11 +19,14 @@
 angular.module('sf')
 .filter('trustAsHTML', ['$sce', function($sce){
   return function (text) {
-    var tmpText = text.replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    return $sce.trustAsHtml(tmpText);
+      var map = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+      };
+    return $sce.trustAsHtml(text.replace(/[&<>"']/g, function(m) { return map[m]; }));
   };
 }])
 .filter('attachmentJson', function () {

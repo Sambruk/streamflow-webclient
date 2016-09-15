@@ -4,9 +4,11 @@
     <ui-select data-ng-model="$parent.caseType" theme="select2" data-ng-change="changeCaseType($select.selected.id)"
                name="name-select" id="type-select" style="width: 100%;">
         <ui-select-match placeholder="Ärendetyp">{{$select.selected.text}}{{$select.selected.labels}}</ui-select-match>
-        <ui-select-choices repeat="type.id as type in possibleCaseTypes | filter: $select.search" group-by="'title'"
-                           value="{{type.id}}">
-            <div data-ng-bind-html="escapeHTMLChars(type.text + type.labels) | highlight: escapeHTMLChars($select.search)"></div>
+        <ui-select-choices
+                repeat="type.id as type in possibleCaseTypes | filter: ($select.search)"
+                group-by="'title'"
+                value="{{type.id}}">
+            <div data-ng-bind-html="highlight((type.text + type.labels), $select.search)"></div>
         </ui-select-choices>
     </ui-select>
 </div>

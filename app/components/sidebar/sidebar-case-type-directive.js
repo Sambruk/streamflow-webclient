@@ -36,6 +36,41 @@ angular.module('sf').directive('sidebarCaseType', function (sidebarService) {
                     return map[m];
                 });
             };
+            scope.escapeReverseHTMLChars = function (value) {
+                value = value.replace(/&lt;/g, "<")
+                    .replace(/&gt;/g, ">")
+                    .replace(/&quot;/g, '"')
+                    .replace(/&#039;/g, "'");
+                return value;
+            };
+
+            //TODO: Bug: Entering 'g' can show empty element at select
+            scope.highlight = function (text, search) {
+                if (!search) {
+                    return scope.escapeHTMLChars(text);
+                }
+
+                var htmlChars = ['&', '<', '>', '"', "'"];
+
+                if (htmlChars.some(function (v) {
+                        return search.indexOf(v) >= 0;
+                    })) {
+                    var tmpSearchStr = scope.escapeHTMLChars(search);
+                    return ((text).replace(new RegExp((search), 'gi'), scope.escapeHTMLChars(search)).replace(new RegExp((tmpSearchStr), 'gi'), '<span class="ui-select-highlight">$&</span>'));
+                } else {
+
+                    //Possible html chars
+                    var escapedHtmlChars = ['l', 't', 'g', 'q', 'u', 'o', 't'];
+                    if (search.length == 1 && escapedHtmlChars.some(function (v) {
+                            return search.indexOf(v) >= 0;
+                        })) {
+                        return scope.escapeReverseHTMLChars((text).replace(new RegExp((search), 'gi'), '&lt;span class="ui-select-highlight"&gt;$&&lt;/span&gt;'));
+                    }
+                    else {
+                        return (scope.escapeHTMLChars(text).replace(new RegExp((search), 'gi'), '<span class="ui-select-highlight">$&</span>'));
+                    }
+                }
+            };
 
             //Getting search input
             element.on("input", function () {

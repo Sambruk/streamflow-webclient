@@ -37,10 +37,10 @@ angular.module('sf').directive('sidebarCaseType', function (sidebarService) {
                 });
             };
             scope.escapeReverseHTMLChars = function (value) {
-                value = value.replace(/&lt;/g, "<")
-                    .replace(/&gt;/g, ">")
-                    .replace(/&quot;/g, '"')
-                    .replace(/&#039;/g, "'");
+                value = value.replace(new RegExp('&lt;','g'), "<")
+                    .replace(new RegExp('&gt;','g'), ">")
+                    .replace(new RegExp('&quot;','g'), '"')
+                    .replace(new RegExp('&#039;','g'), "'");
                 return value;
             };
 
@@ -56,11 +56,11 @@ angular.module('sf').directive('sidebarCaseType', function (sidebarService) {
                         return search.indexOf(v) >= 0;
                     })) {
                     var tmpSearchStr = scope.escapeHTMLChars(search);
-                    return ((text).replace(new RegExp((search), 'gi'), scope.escapeHTMLChars(search)).replace(new RegExp((tmpSearchStr), 'gi'), '<span class="ui-select-highlight">$&</span>'));
+                    return (scope.escapeHTMLChars(text).replace(new RegExp((search), 'gi'), scope.escapeHTMLChars(search)).replace(new RegExp((tmpSearchStr), 'gi'), '<span class="ui-select-highlight">$&</span>'));
                 } else {
 
                     //Possible html chars
-                    var escapedHtmlChars = ['l', 't', 'g', 'q', 'u', 'o', 't'];
+                    var escapedHtmlChars = ['l', 't', 'g', 'q', 'u', 'o', 't', '"', "'"];
                     if (search.length == 1 && escapedHtmlChars.some(function (v) {
                             return search.indexOf(v) >= 0;
                         })) {

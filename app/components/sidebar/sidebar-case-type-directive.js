@@ -65,7 +65,6 @@ angular.module('sf').directive('sidebarCaseType', function (sidebarService) {
                 });*/
 
                 value = value
-
                     .replace(new RegExp('<','g'), '&1lt;')
                     .replace(new RegExp('>','g'), '&1gt;')
                     .replace(new RegExp('";','g'), '&1quot')
@@ -100,36 +99,9 @@ angular.module('sf').directive('sidebarCaseType', function (sidebarService) {
                         return search.indexOf(v) >= 0;
                     })) {
                     var tmpSearchStr = scope.escapeHTMLChars(search);
-                    return (scope.escapeHTMLChars(text).replace(new RegExp((search), 'gi'), scope.escapeHTMLChars(search)).replace(new RegExp((tmpSearchStr), 'gi'), openHighlightTag  +'$&' + closeHighlightTag));
+                    return (scope.escapeHTMLChars(text).replace(new RegExp((search), 'gi'), (search)).replace(new RegExp((tmpSearchStr), 'gi'), openHighlightTag  +'$&' + closeHighlightTag));
                 } else {
-
-                    //Possible html chars
-                    var escapedHtmlChars = ['l', 't', 'g', 'q', 'u', 'o', '"', "'"];
-                    if (search.length == 1 && escapedHtmlChars.some(function (v) {
-                            return search.indexOf(v) >= 0;
-                        })) {
-
-                        return  scope.swapHTMLChars((text).replace(new RegExp((search), 'gi'), scope.escapeHTMLChars(openHighlightTag) + '$&' + scope.escapeHTMLChars(closeHighlightTag )));
-
-
-                        //TODO: Remove after full implementationSome tmp regex ant testing stuff
-                        //(?!&.*)t(?!.*;)
-                        //(?![&])t(?![.*";])
-                        //&[^;]+;
-
-                        // return  (scope.escapeHTMLChars(text).replace(new RegExp(scope.escapeHTMLChars(search), 'gi'), (part1) + '$&' + (part2)));
-
-                        // return  ((text).replace(new RegExp((search), 'gi'), scope.escapeHTMLChars("$`") +(part1) + '$&' + (part2) ));
-
-                        // return  ((text).replace(new RegExp((search), 'gi'), scope.escapeHTMLChars(part1) + '$&' + scope.escapeHTMLChars(part2) ));
-                        // console.log( scope.escapeHTMLChars(text));
-                        // return  (scope.escapeHTMLChars(text).replace(new RegExp('(?!.*;)' + search +'(?![.*;])', 'gi'), (part1) + '$&' + (part2) ));
-                        // return  (scope.escapeHTMLChars(text).replace(new RegExp('(?!&+)' + search +'(?!.+;)', 'gi'), (part1) + '$&' + (part2) ));
-                        // return  (scope.escapeHTMLChars(text).replace(new RegExp('(?![&])' + search +'(?![.*";])', 'gi'), (part1) + '$&' + (part2) ));
-                    }
-                    else {
-                        return (scope.escapeHTMLChars(text).replace(new RegExp((search), 'gi'), openHighlightTag  +'$&' + closeHighlightTag));
-                    }
+                    return  scope.swapHTMLChars((text).replace(new RegExp((search), 'gi'), scope.escapeHTMLChars(openHighlightTag) + '$&' + scope.escapeHTMLChars(closeHighlightTag )));
                 }
             };
 

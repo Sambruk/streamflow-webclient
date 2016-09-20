@@ -30,7 +30,7 @@ angular.module('sf').directive('sidebarCaseType', function (sidebarService) {
                     '<': '&lt;',
                     '>': '&gt;',
                     '"': '&quot;',
-                    "'": '&#039;'
+                    '\'': '&#039;'
                 };
                 return value.replace(/[&<>"']/g, function (m) {
                     return map[m];
@@ -42,7 +42,7 @@ angular.module('sf').directive('sidebarCaseType', function (sidebarService) {
                 if (!search) {
                     return scope.escapeHTMLChars(text);
                 }
-                var htmlChars = ['&', '<', '>', '"', "'"];
+                var htmlChars = ['&', '<', '>', '"', '\''];
 
                 var openHighlightTag = '<span class="ui-select-highlight">';
                 var closeHighlightTag = '</span>';

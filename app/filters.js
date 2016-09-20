@@ -179,7 +179,7 @@ angular.module('sf')
       '<': '&lt;',
       '>': '&gt;',
       '"': '&quot;',
-      "'": '&#039;'
+      '\'': '&#039;'
     };
     return $sce.trustAsHtml(text.replace(/[&<>"']/g, function (m) {
       return map[m];

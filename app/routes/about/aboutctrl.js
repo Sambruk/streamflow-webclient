@@ -21,7 +21,7 @@ angular.module('sf').controller('AboutCtrl', function ($scope, profileService, $
     title: 'Om Streamflow'
   }]);
 
-  httpService.getRequest("static/version.html", false)
+  httpService.getRequest('static/version.html', false)
     .then(function(result){
       var versionMatch = /(Version: )[a-z,A-Z,\d,.,-]+/.exec(result.data);
       if(versionMatch && versionMatch.length > 0 && versionMatch[0].length > 9) {

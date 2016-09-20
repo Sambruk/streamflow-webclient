@@ -65,7 +65,7 @@ angular.module('sf').directive('sidebarCaseType', function (sidebarService) {
             };
 
             //Getting search input
-            element.on("input", function () {
+            element.on('input', function () {
                 scope.caseTypeSearchInput = null;
                 scope.caseTypeSearchInput = $(element.find('input')[0]).val();
             });

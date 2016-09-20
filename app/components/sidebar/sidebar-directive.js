@@ -364,7 +364,7 @@ angular.module('sf')
       $window.addEventListener('storage', function (event) {
         if ( event.key === 'submittedFormId' && event.newValue != null) {
           $rootScope.$broadcast('form-submitted');
-          $window.localStorage.removeItem("submittedFormId");
+          $window.localStorage.removeItem('submittedFormId');
         }
       }, false);
 

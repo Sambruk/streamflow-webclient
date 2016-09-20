@@ -42,9 +42,9 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
         scope.showSearchFilter = false;
         scope.possibleLabels = [];
         scope.group = {};
-        scope.group.order = "asc";
+        scope.group.order = 'asc';
         scope.sort = {};
-        scope.sort.order = "asc";
+        scope.sort.order = 'asc';
 
         scope.groupingOptions = groupByService.getGroupingOptions();
 
@@ -134,7 +134,7 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
             if (match.index === regExp.lastIndex) {
               regExp.lastIndex++;
             }
-            callback(match)
+            callback(match);
           }
         };
         initFromQueryParams();
@@ -221,12 +221,12 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
 
         scope.clearGrouping = function () {
           scope.group.value = undefined;
-          scope.group.order = "asc";
+          scope.group.order = 'asc';
         };
 
         scope.clearSorting = function () {
           scope.sort.value = undefined;
-          scope.sort.order = "asc";
+          scope.sort.order = 'asc';
         };
 
         var buildSearchFilter = function () {

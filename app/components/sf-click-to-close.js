@@ -16,23 +16,23 @@
  */
 'use strict';
 angular.module('sf')
-.directive('sfClickToClose', ['$rootScope', function($rootScope) {
-  return {
-    restrict: 'A',
-    link: function(scope, elem, attrs) {
-      var toClose = attrs.ngShow;
-      $(document).on('mouseup touchstart', function (e) {
-        var container = $(elem);
+    .directive('sfClickToClose', ['$rootScope', function ($rootScope) {
+        return {
+            restrict: 'A',
+            link: function (scope, elem, attrs) {
+                var toClose = attrs.ngShow;
+                $(document).on('mouseup touchstart', function (e) {
+                    var container = $(elem);
 
-        if (!container.is(e.target) // if the target of the click isn't the container...
-          && container.has(e.target).length === 0) // ... nor a descendant of the container
-        {
-          e.stopPropagation();
-          $rootScope.$broadcast('dialogCloseEvent', {
-            dialog: toClose
-          });
-        }
-      });
-    }
-  };
-}]);
+                    if (!container.is(e.target) // if the target of the click isn't the container...
+                        && container.has(e.target).length === 0) // ... nor a descendant of the container
+                    {
+                        e.stopPropagation();
+                        $rootScope.$broadcast('dialogCloseEvent', {
+                            dialog: toClose
+                        });
+                    }
+                });
+            }
+        };
+    }]);

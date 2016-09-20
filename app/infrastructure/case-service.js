@@ -1060,9 +1060,9 @@ angular.module('sf')
           ]),
           {}).then(function(result){
             caseBase.broadcastMessage(result.status);
-            $rootScope.$broadcast("form-saved", formId);
+            $rootScope.$broadcast('form-saved', formId);
             if($rootScope.isFormWindow) {
-                localStorage.setItem("submittedFormId", formId);
+                localStorage.setItem('submittedFormId', formId);
             }
           },
           function(error){

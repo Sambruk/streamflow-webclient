@@ -19,7 +19,7 @@ angular.module('sf').directive('sidebarPriority', function (sidebarService) {
 
       scope.changePriorityLevel = function (priorityId) {
         sidebarService.changePriorityLevel(scope, priorityId);
-        scope.$root.$broadcast("priority-changed", priorityId);
+        scope.$root.$broadcast('priority-changed', priorityId);
       };
 
       scope.$on('case-type-changed', function(){

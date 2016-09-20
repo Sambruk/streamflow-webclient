@@ -99,7 +99,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
             });
 
             //Removing square braces
-            var caseLabels = currentCase[0].labels.slice(2,-2).split(" ");
+            var caseLabels = currentCase[0].labels.slice(2,-2).split(' ');
 
             var finalCaseLabels = $.grep(caseLabels, function (e) {
               return e.toLowerCase().indexOf(scope.caseTypeSearchInput.toLowerCase()) != -1;
@@ -132,7 +132,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
       _updateCaseLabels(scope);
       _updateToolbar(scope);
 
-      scope.$root.$broadcast("type-changed", scope.caseType);
+      scope.$root.$broadcast('type-changed', scope.caseType);
     });
   };
 
@@ -183,7 +183,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
 
       scope.previousActiveLabels = scope.activeLabels;
 
-      scope.$root.$broadcast("labels-changed", results[0]);
+      scope.$root.$broadcast('labels-changed', results[0]);
     });
   };
 

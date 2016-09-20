@@ -17,12 +17,12 @@
 'use strict';
 angular.module('sf').directive('googleMap', function () {
   return {
-    restrict: "E",
+    restrict: 'E',
     templateUrl: 'components/googlemaps/googlemaps.html',
     scope: {
-      ngModel: "=",
-      locationSettings: "=",
-      fieldSettings: "="
+      ngModel: '=',
+      locationSettings: '=',
+      fieldSettings: '='
     },
     controller: function ($scope, uiGmapGoogleMapApi, uiGmapIsReady) {
       var geocoder = null;
@@ -107,7 +107,7 @@ angular.module('sf').directive('googleMap', function () {
               clearCurrentMarkersAndLines();
               $scope.marker = args[0];
 
-              var position = $scope.marker.position.lat() + ", " + $scope.marker.position.lng();
+              var position = $scope.marker.position.lat() + ', ' + $scope.marker.position.lng();
               $scope.mapValue.updateLocation(position);
               reverseGeocode($scope.marker.position, function () {
                 changeModel();
@@ -202,7 +202,7 @@ angular.module('sf').directive('googleMap', function () {
           $scope.searchResults = result;
           $scope.$apply();
         }, function() {
-          $scope.searchError = "Ingen adressträff på angiven sökning";
+          $scope.searchError = 'Ingen adressträff på angiven sökning';
           $scope.$apply();
         });
       };
@@ -220,7 +220,7 @@ angular.module('sf').directive('googleMap', function () {
           position: location,
           map: map
         });
-        var position = location.lat() + ", " + location.lng();
+        var position = location.lat() + ', ' + location.lng();
         $scope.mapValue.updateLocation(position);
         map.setCenter($scope.marker.position);
         map.setZoom($scope.locationSettings.zoomLevel);
@@ -238,7 +238,7 @@ angular.module('sf').directive('googleMap', function () {
             position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
             map: map
           });
-          var location = position.coords.latitude + ", " + position.coords.longitude;
+          var location = position.coords.latitude + ', ' + position.coords.longitude;
           $scope.mapValue.updateLocation(location);
           map.setCenter($scope.marker.position);
           map.setZoom( $scope.locationSettings.zoomLevel );
@@ -285,28 +285,28 @@ angular.module('sf').directive('googleMap', function () {
             if (results[1]) {
               $scope.mapValue.clearAddress();
               $.each(results[0].address_components, function () {
-                if (this.types[0] == "street_number") {
+                if (this.types[0] == 'street_number') {
                   if ($scope.mapValue.value.street && $scope.mapValue.value.street.length > 0) {
-                    $scope.mapValue.value.street = $scope.mapValue.value.street + " " + this.short_name;
+                    $scope.mapValue.value.street = $scope.mapValue.value.street + ' ' + this.short_name;
                   } else {
                     $scope.mapValue.value.street = this.short_name;
                   }
                   $scope.addressLabel = results[0].formatted_address;
                 }
-                if (this.types[0] == "route") {
+                if (this.types[0] == 'route') {
                   if ($scope.mapValue.value.street && $scope.mapValue.value.street.length > 0) {
-                    $scope.mapValue.value.street = this.short_name + " " + $scope.mapValue.value.street;
+                    $scope.mapValue.value.street = this.short_name + ' ' + $scope.mapValue.value.street;
                   } else {
                     $scope.mapValue.value.street = this.short_name;
                   }
                 }
-                if (this.types[0] == "postal_code") {
+                if (this.types[0] == 'postal_code') {
                   $scope.mapValue.value.zipcode = this.short_name;
                 }
-                if (this.types[0] == "postal_town") {
+                if (this.types[0] == 'postal_town') {
                   $scope.mapValue.value.city = this.short_name;
                 }
-                if (this.types[0] == "country") {
+                if (this.types[0] == 'country') {
                   $scope.mapValue.value.country = this.short_name;
                 }
               });
@@ -341,17 +341,17 @@ angular.module('sf').directive('googleMap', function () {
       };
 
       function cleanUpPosition(position) {
-        if (position.indexOf("(") == 0) {
+        if (position.indexOf('(') == 0) {
           position = position.substring(1);
         }
-        if (position.indexOf(")") != -1) {
-          position = position.substring(0, position.indexOf(")"));
+        if (position.indexOf(')') != -1) {
+          position = position.substring(0, position.indexOf(')'));
         }
         return $.trim(position);
       }
 
       function SearchResultItem(result) {
-        var address = "";
+        var address = '';
         var location = null;
 
         this.address = result.formatted_address;
@@ -364,7 +364,7 @@ angular.module('sf').directive('googleMap', function () {
         if (value && !value.location) {
           value = JSON.parse(value);
         } else {
-          value = {location: "", street: "", zipcode: "", city: "", country: ""};
+          value = {location: '', street: '', zipcode: '', city: '', country: ''};
         }
         var mapValue = new MapValue(value);
         mapValue.updateLocation(value.location);
@@ -380,10 +380,10 @@ angular.module('sf').directive('googleMap', function () {
 
       MapValue.prototype.clearAddress = function () {
         var self = this;
-        self.value.street = "";
-        self.value.zipcode = "";
-        self.value.city = "";
-        self.value.country = "";
+        self.value.street = '';
+        self.value.zipcode = '';
+        self.value.city = '';
+        self.value.country = '';
       };
 
       MapValue.prototype.updateLocation = function (newLocation) {
@@ -395,7 +395,7 @@ angular.module('sf').directive('googleMap', function () {
         self.isPolygon = false;
 
         if (newLocation) {
-          if (newLocation.indexOf("(") == -1) {
+          if (newLocation.indexOf('(') == -1) {
             self.isPoint = true;
             self.path.push(new LatLong(newLocation));
 

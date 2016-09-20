@@ -206,6 +206,11 @@ angular.module('sf')
       };
       updateToolbar(); // End commands (toolbar)
 
+      var updateObject = function(itemToUpdate){
+        itemToUpdate.invalidate();
+        itemToUpdate.resolve();
+      };
+
       // Send to
       scope.sendTo = function () {
         sidebarService.sendTo(scope);
@@ -323,11 +328,6 @@ angular.module('sf')
         scope.defaultFilters = result.data;
         scope.sideBarCaseLogs = caseService.getSelectedFilteredCaseLog($routeParams.caseId, scope.defaultFilters);
       }); // End Filter for caselog
-
-      var updateObject = function(itemToUpdate){
-        itemToUpdate.invalidate();
-        itemToUpdate.resolve();
-      };
 
       var checkFilterCaseLog = function(filter){
         if(scope.defaultFilters[filter] === false){

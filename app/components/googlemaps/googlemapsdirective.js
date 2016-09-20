@@ -14,6 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/*global google */
 'use strict';
 angular.module('sf').directive('googleMap', function () {
   return {
@@ -129,6 +131,11 @@ angular.module('sf').directive('googleMap', function () {
         return this;
       }
 
+      function changeModel() {
+        $scope.ngModel = JSON.stringify($scope.mapValue.value);
+        $scope.$apply();
+      }
+
       var createMapValue = function (value) {
         if (value && !value.location) {
           value = JSON.parse(value);
@@ -140,6 +147,17 @@ angular.module('sf').directive('googleMap', function () {
         return mapValue;
       };
 
+      var clearCurrentMarkersAndLines = function () {
+        if ($scope.marker) {
+          $scope.marker.setMap(null);
+        }
+        if ($scope.polyline) {
+          $scope.polyline.setMap(null);
+        }
+        if ($scope.polygon) {
+          $scope.polygon.setMap(null);
+        }
+      };
 
       var initMap = function () {
         $scope.mapValue = createMapValue($scope.ngModel);
@@ -200,23 +218,6 @@ angular.module('sf').directive('googleMap', function () {
             initialDrawingMode = google.maps.drawing.OverlayType.POLYGON;
           }
         }
-
-        function changeModel() {
-          $scope.ngModel = JSON.stringify($scope.mapValue.value);
-          $scope.$apply();
-        }
-
-        var clearCurrentMarkersAndLines = function () {
-          if ($scope.marker) {
-            $scope.marker.setMap(null);
-          }
-          if ($scope.polyline) {
-            $scope.polyline.setMap(null);
-          }
-          if ($scope.polygon) {
-            $scope.polygon.setMap(null);
-          }
-        };
 
         $scope.drawingManagerOptions = {
           drawingMode: initialDrawingMode,

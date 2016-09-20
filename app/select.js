@@ -627,6 +627,34 @@ uis.controller('uiSelectCtrl',
     return processed;
   }
 
+  // See https://github.com/ivaynberg/select2/blob/3.4.6/select2.js#L1431
+  function _ensureHighlightVisible() {
+    var container = $element.querySelectorAll('.ui-select-choices-content');
+    var choices = container.querySelectorAll('.ui-select-choices-row');
+    if (choices.length < 1) {
+      throw uiSelectMinErr('choices', 'Expected multiple .ui-select-choices-row but got \'{0}\'.', choices.length);
+    }
+
+    if (ctrl.activeIndex < 0) {
+      return;
+    }
+
+    var highlighted = choices[ctrl.activeIndex];
+    var posY = highlighted.offsetTop + highlighted.clientHeight - container[0].scrollTop;
+    var height = container[0].offsetHeight;
+
+    if (posY > height) {
+      container[0].scrollTop += posY - height;
+    } else if (posY < highlighted.clientHeight) {
+      if (ctrl.isGrouped && ctrl.activeIndex === 0) {
+        container[0].scrollTop = 0;
+      }//To make group header visible when going all the way up
+      else {
+        container[0].scrollTop -= highlighted.clientHeight - posY;
+      }
+    }
+  }
+
   // Bind to keyboard shortcuts
   ctrl.searchInput.on('keydown', function(e) {
 
@@ -696,34 +724,6 @@ uis.controller('uiSelectCtrl',
       _resetSearchInput();
     });
   });
-
-  // See https://github.com/ivaynberg/select2/blob/3.4.6/select2.js#L1431
-  function _ensureHighlightVisible() {
-    var container = $element.querySelectorAll('.ui-select-choices-content');
-    var choices = container.querySelectorAll('.ui-select-choices-row');
-    if (choices.length < 1) {
-      throw uiSelectMinErr('choices', 'Expected multiple .ui-select-choices-row but got \'{0}\'.', choices.length);
-    }
-
-    if (ctrl.activeIndex < 0) {
-      return;
-    }
-
-    var highlighted = choices[ctrl.activeIndex];
-    var posY = highlighted.offsetTop + highlighted.clientHeight - container[0].scrollTop;
-    var height = container[0].offsetHeight;
-
-    if (posY > height) {
-      container[0].scrollTop += posY - height;
-    } else if (posY < highlighted.clientHeight) {
-      if (ctrl.isGrouped && ctrl.activeIndex === 0) {
-        container[0].scrollTop = 0;
-      }//To make group header visible when going all the way up
-      else {
-        container[0].scrollTop -= highlighted.clientHeight - posY;
-      }
-    }
-  }
 
   $scope.$on('$destroy', function() {
     ctrl.searchInput.off('keyup keydown tagged blur paste');
@@ -890,6 +890,45 @@ uis.directive('uiSelect',
           $select.clickTriggeredSelect = false;
         }
 
+        function positionDropdown() {
+          // Remember the absolute position of the element
+          var offset = uisOffset(element);
+
+          // Clone the element into a placeholder element to take its original place in the DOM
+          placeholder = angular.element('<div class="ui-select-placeholder"></div>');
+          placeholder[0].style.width = offset.width + 'px';
+          placeholder[0].style.height = offset.height + 'px';
+          element.after(placeholder);
+
+          // Remember the original value of the element width inline style, so it can be restored
+          // when the dropdown is closed
+          originalWidth = element[0].style.width;
+
+          // Now move the actual dropdown element to the end of the body
+          $document.find('body').append(element);
+
+          element[0].style.position = 'absolute';
+          element[0].style.left = offset.left + 'px';
+          element[0].style.top = offset.top + 'px';
+          element[0].style.width = offset.width + 'px';
+        }
+
+        function resetDropdown() {
+          if (placeholder === null) {
+            // The dropdown has not actually been display yet, so there's nothing to reset
+            return;
+          }
+
+          // Move the dropdown element back to its original location in the DOM
+          placeholder.replaceWith(element);
+          placeholder = null;
+
+          element[0].style.position = '';
+          element[0].style.left = '';
+          element[0].style.top = '';
+          element[0].style.width = originalWidth;
+        }
+
         // See Click everywhere but here event http://stackoverflow.com/questions/12931369
         $document.on('click', onDocumentClick);
 
@@ -944,45 +983,6 @@ uis.directive('uiSelect',
         // Hold on to a reference to the .ui-select-container element for appendToBody support
         var placeholder = null,
             originalWidth = '';
-
-        function positionDropdown() {
-          // Remember the absolute position of the element
-          var offset = uisOffset(element);
-
-          // Clone the element into a placeholder element to take its original place in the DOM
-          placeholder = angular.element('<div class="ui-select-placeholder"></div>');
-          placeholder[0].style.width = offset.width + 'px';
-          placeholder[0].style.height = offset.height + 'px';
-          element.after(placeholder);
-
-          // Remember the original value of the element width inline style, so it can be restored
-          // when the dropdown is closed
-          originalWidth = element[0].style.width;
-
-          // Now move the actual dropdown element to the end of the body
-          $document.find('body').append(element);
-
-          element[0].style.position = 'absolute';
-          element[0].style.left = offset.left + 'px';
-          element[0].style.top = offset.top + 'px';
-          element[0].style.width = offset.width + 'px';
-        }
-
-        function resetDropdown() {
-          if (placeholder === null) {
-            // The dropdown has not actually been display yet, so there's nothing to reset
-            return;
-          }
-
-          // Move the dropdown element back to its original location in the DOM
-          placeholder.replaceWith(element);
-          placeholder = null;
-
-          element[0].style.position = '';
-          element[0].style.left = '';
-          element[0].style.top = '';
-          element[0].style.width = originalWidth;
-        }
       };
     }
   };
@@ -1191,22 +1191,6 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
         if (oldValue && !newValue) { $select.sizeSearchInput(); }
       });
 
-      $select.searchInput.on('keydown', function(e) {
-        var key = e.which;
-        scope.$apply(function() {
-          var processed = false;
-          // var tagged = false; //Checkme
-          if(KEY.isHorizontalMovement(key)){
-            processed = _handleMatchSelection(key);
-          }
-          if (processed  && key != KEY.TAB) {
-            //TODO Check si el tab selecciona aun correctamente
-            //Crear test
-            e.preventDefault();
-            e.stopPropagation();
-          }
-        });
-      });
       function _getCaretPosition(el) {
         if(angular.isNumber(el.selectionStart)) { return el.selectionStart; }
         // selectionStart is not supported in IE8 and we don't want hacky workarounds so we compromise
@@ -1271,6 +1255,61 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
 
         return true;
       }
+
+      function _findCaseInsensitiveDupe(arr) {
+        if ( arr === undefined || $select.search === undefined ) {
+          return false;
+        }
+        var hasDupe = arr.filter( function (origItem) {
+              if ( $select.search.toUpperCase() === undefined || origItem === undefined ) {
+                return false;
+              }
+              return origItem.toUpperCase() === $select.search.toUpperCase();
+            }).length > 0;
+
+        return hasDupe;
+      }
+
+      function _findApproxDupe(haystack, needle) {
+        var dupeIndex = -1;
+        if(angular.isArray(haystack)) {
+          var tempArr = angular.copy(haystack);
+          for (var i = 0; i <tempArr.length; i++) {
+            // handle the simple string version of tagging
+            if ( $select.tagging.fct === undefined ) {
+              // search the array for the match
+              if ( tempArr[i]+' '+$select.taggingLabel === needle ) {
+                dupeIndex = i;
+              }
+              // handle the object tagging implementation
+            } else {
+              var mockObj = tempArr[i];
+              mockObj.isTag = true;
+              if ( angular.equals(mockObj, needle) ) {
+                dupeIndex = i;
+              }
+            }
+          }
+        }
+        return dupeIndex;
+      }
+
+      $select.searchInput.on('keydown', function(e) {
+        var key = e.which;
+        scope.$apply(function() {
+          var processed = false;
+          // var tagged = false; //Checkme
+          if(KEY.isHorizontalMovement(key)){
+            processed = _handleMatchSelection(key);
+          }
+          if (processed  && key != KEY.TAB) {
+            //TODO Check si el tab selecciona aun correctamente
+            //Crear test
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        });
+      });
 
       $select.searchInput.on('keyup', function(e) {
 
@@ -1376,42 +1415,6 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
           });
         }
       });
-      function _findCaseInsensitiveDupe(arr) {
-        if ( arr === undefined || $select.search === undefined ) {
-          return false;
-        }
-        var hasDupe = arr.filter( function (origItem) {
-          if ( $select.search.toUpperCase() === undefined || origItem === undefined ) {
-            return false;
-          }
-          return origItem.toUpperCase() === $select.search.toUpperCase();
-        }).length > 0;
-
-        return hasDupe;
-      }
-      function _findApproxDupe(haystack, needle) {
-        var dupeIndex = -1;
-        if(angular.isArray(haystack)) {
-          var tempArr = angular.copy(haystack);
-          for (var i = 0; i <tempArr.length; i++) {
-            // handle the simple string version of tagging
-            if ( $select.tagging.fct === undefined ) {
-              // search the array for the match
-              if ( tempArr[i]+' '+$select.taggingLabel === needle ) {
-              dupeIndex = i;
-              }
-            // handle the object tagging implementation
-            } else {
-              var mockObj = tempArr[i];
-              mockObj.isTag = true;
-              if ( angular.equals(mockObj, needle) ) {
-              dupeIndex = i;
-              }
-            }
-          }
-        }
-        return dupeIndex;
-      }
 
       $select.searchInput.on('blur', function() {
         $timeout(function() {
@@ -1622,8 +1625,8 @@ uis.directive('uiSelectSort', ['$timeout', 'uiSelectConfig', 'uiSelectMinErr', f
 
       var _dropHandler = function(droppedItemIndex) {
         var theList = scope.$eval(attrs.uiSelectSort),
-          itemToMove = theList[droppedItemIndex],
-          newIndex = null;
+            itemToMove = theList[droppedItemIndex],
+            newIndex = null;
 
         if (element.hasClass(droppingBeforeClassName)) {
           if (droppedItemIndex < scope.$index) {

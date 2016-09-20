@@ -55,7 +55,7 @@ angular.module('sf')
 
       var query = '+limit+' + pageSize + '+offset+' + $scope.currentCases.length;
       projectService.getSelected($routeParams.projectId, $routeParams.projectType, query).promise.then(function (result) {
-        if($scope.currentCases.length == 0) {
+        if($scope.currentCases.length === 0) {
             $scope.currentCases = result;
             $scope.currentCases.invalidateFunctions = [result.invalidate];
         } else {

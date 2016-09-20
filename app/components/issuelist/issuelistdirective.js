@@ -17,7 +17,7 @@
 'use strict';
 
 angular.module('sf')
-.directive('issuelist', function(){
+.directive('issuelist', function($scope){
   return {
     restrict: 'E',
     templateUrl: 'components/issuelist/issuelist.html',

@@ -35,6 +35,95 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
     itemToUpdate.resolve();
   };
 
+  var _updateCaseLabels = function (scope) {
+      if (!scope.caseLabel) {
+          scope.caseLabel = caseService.getCaseLabel($routeParams.caseId);
+
+      } else {
+          _updateObject(scope.caseLabel);
+      }
+
+      if (!scope.possibleCaseLabels) {
+          scope.possibleCaseLabels = caseService.getPossibleCaseLabels($routeParams.caseId);
+      } else {
+          _updateObject(scope.possibleCaseLabels);
+      }
+
+      $q.all([
+          scope.caseLabel.promise,
+          scope.possibleCaseLabels.promise
+      ]).then(function (results) {
+          checkPermissionService.checkPermissions(scope, scope.caseLabel.commands, ['addlabel'], ['canAddLabel']);
+          scope.activeLabels = results[0].map(function (i) {
+              i.selected = true;
+              return i;
+          });
+
+          scope.allCaseLabels = scope.activeLabels.concat(results[1].map(function (i) {
+              i.selected = false;
+              return i;
+          })).sort(sortByText);
+
+          scope.previousActiveLabels = scope.activeLabels;
+
+          scope.$root.$broadcast('labels-changed', results[0]);
+      });
+  };
+
+  var _updateToolbar = function(scope) {
+      if (scope.commands) {
+          _updateObject(scope.commands);
+      } else {
+          scope.commands = caseService.getSelectedCommands($routeParams.caseId);
+      }
+
+      scope.commands.promise.then(function (response) {
+          var commandMap = {
+              'sendto': 'canSendTo',
+              'resolve': 'canResolve',
+              'close': 'canClose',
+              'reopen': 'canReopen',
+              'delete': 'canDelete',
+              'assign': 'canAssign',
+              'unassign': 'canUnassign',
+              'restrict': 'canRestrict',
+              'requirecasetype': 'caseRequireCaseType',
+              'unrestrict': 'canUnrestrict',
+              'markunread': 'canMarkUnread',
+              'markread': 'canMarkRead',
+              'formonclose': 'canCloseWithForm'
+          };
+
+          var hasCommand = function (commandName) {
+              return !!_.find(response, function (command) {
+                  return command.rel === commandName;
+              });
+          };
+
+          for (var commandName in commandMap) {
+              if (commandMap.hasOwnProperty(commandName)) {
+                  scope[commandMap[commandName]] = hasCommand(commandName);
+              }
+          }
+      });
+  };
+
+  var _checkPossibleForms = function (scope){
+      if (!scope.possibleForms) {
+          return;
+      }
+      if (scope.possibleForms.length > 0) {
+          scope.possibleForms.forEach(function (form) {
+              caseService.getPossibleForm($routeParams.caseId, form.id).promise.then(function (response) {
+                  // Making the assumption that the user is 'read-only' if he hasn't access to queries or commands
+                  if (response[0].commands.length || response[0].queries.length) {
+                      scope.canCreateFormDraft = true;
+                  }
+              });
+          });
+      }
+  };
+
   var _changePriorityLevel = function (scope, priorityId) {
     if (priorityId === '-1') {
       priorityId = '';
@@ -136,94 +225,6 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
     });
   };
 
-  var _checkPossibleForms = function (scope){
-    if(!scope.possibleForms){
-      return;
-    }
-    if(scope.possibleForms.length > 0){
-      scope.possibleForms.forEach(function(form){
-        caseService.getPossibleForm($routeParams.caseId, form.id).promise.then(function(response){
-          // Making the assumption that the user is 'read-only' if he hasn't access to queries or commands
-          if(response[0].commands.length || response[0].queries.length){
-            scope.canCreateFormDraft = true;
-          }
-        });
-      });
-    }
-  };
-
-  var _updateCaseLabels = function (scope) {
-    if (!scope.caseLabel) {
-      scope.caseLabel = caseService.getCaseLabel($routeParams.caseId);
-
-    } else {
-      _updateObject(scope.caseLabel);
-    }
-
-    if (!scope.possibleCaseLabels) {
-      scope.possibleCaseLabels = caseService.getPossibleCaseLabels($routeParams.caseId);
-    } else {
-      _updateObject(scope.possibleCaseLabels);
-    }
-
-    $q.all([
-      scope.caseLabel.promise,
-      scope.possibleCaseLabels.promise
-    ]).then(function (results) {
-      checkPermissionService.checkPermissions(scope, scope.caseLabel.commands, ['addlabel'], ['canAddLabel']);
-      scope.activeLabels = results[0].map(function (i) {
-        i.selected = true;
-        return i;
-      });
-
-      scope.allCaseLabels = scope.activeLabels.concat(results[1].map(function (i) {
-        i.selected = false;
-        return i;
-      })).sort(sortByText);
-
-      scope.previousActiveLabels = scope.activeLabels;
-
-      scope.$root.$broadcast('labels-changed', results[0]);
-    });
-  };
-
-  var _updateToolbar = function(scope) {
-    if (scope.commands) {
-      _updateObject(scope.commands);
-    } else {
-      scope.commands = caseService.getSelectedCommands($routeParams.caseId);
-    }
-
-    scope.commands.promise.then(function (response) {
-      var commandMap = {
-        'sendto': 'canSendTo',
-        'resolve': 'canResolve',
-        'close': 'canClose',
-        'reopen': 'canReopen',
-        'delete': 'canDelete',
-        'assign': 'canAssign',
-        'unassign': 'canUnassign',
-        'restrict': 'canRestrict',
-        'requirecasetype': 'caseRequireCaseType',
-        'unrestrict': 'canUnrestrict',
-        'markunread': 'canMarkUnread',
-        'markread': 'canMarkRead',
-        'formonclose': 'canCloseWithForm'
-      };
-
-      var hasCommand = function (commandName) {
-        return !!_.find(response, function (command) {
-          return command.rel === commandName;
-        });
-      };
-
-      for (var commandName in commandMap) {
-        if (commandMap.hasOwnProperty(commandName)) {
-          scope[commandMap[commandName]] = hasCommand(commandName);
-        }
-      }
-    });
-  };
 
   var _sendTo = function(scope) {
     scope.possibleSendTo.promise.then(function (response) {
@@ -318,6 +319,14 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
   // End Mark Read / Unread
 
   // Close
+  var _caseClosed = function(scope){
+    $rootScope.$broadcast('case-closed');
+    var href = navigationService.caseListHrefFromCase(scope.caze);
+    // To do this or do invalidate/resolve on everything in case.
+    window.location.reload();
+    window.location.replace(href);
+  };
+
   var _close = function (scope) {
     if(scope.caseType === null){
       scope.commandView = 'requiredCaseType';
@@ -331,14 +340,6 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
         _caseClosed(scope);
       }
     }
-  };
-
-  var _caseClosed = function(scope){
-    $rootScope.$broadcast('case-closed');
-    var href = navigationService.caseListHrefFromCase(scope.caze);
-    // To do this or do invalidate/resolve on everything in case.
-    window.location.reload();
-    window.location.replace(href);
   };
   // End Close
 

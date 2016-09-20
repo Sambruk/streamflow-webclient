@@ -27,9 +27,119 @@ angular.module('sf').directive('googleMap', function () {
     controller: function ($scope, uiGmapGoogleMapApi, uiGmapIsReady) {
       var geocoder = null;
 
-      uiGmapGoogleMapApi.then(function (maps) {
-        initMap();
-      });
+      function SearchResultItem(result) {
+        var address = '';
+        var location = null;
+
+        this.address = result.formatted_address;
+        this.location = result.geometry.location;
+
+        return this;
+      }
+
+      function getGeocoder() {
+        if (!geocoder) {
+          geocoder = new google.maps.Geocoder();
+        }
+        return geocoder;
+      }
+
+      function geocode(searchTerm, map, successCallback, errorCallback) {
+        var request = {
+          'address': searchTerm,
+          'bounds': map.getBounds()
+        };
+        getGeocoder().geocode(request, function (results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                var searchResultItems = [];
+                $.each(results, function (index, result) {
+                  searchResultItems.push(new SearchResultItem(result));
+                });
+                successCallback(searchResultItems);
+              } else {
+                errorCallback();
+              }
+            }
+        );
+      }
+
+      function reverseGeocode(position, successFunction) {
+        getGeocoder().geocode({'latLng': position}, function (results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            if (results[1]) {
+              $scope.mapValue.clearAddress();
+              $.each(results[0].address_components, function () {
+                if (this.types[0] == 'street_number') {
+                  if ($scope.mapValue.value.street && $scope.mapValue.value.street.length > 0) {
+                    $scope.mapValue.value.street = $scope.mapValue.value.street + ' ' + this.short_name;
+                  } else {
+                    $scope.mapValue.value.street = this.short_name;
+                  }
+                  $scope.addressLabel = results[0].formatted_address;
+                }
+                if (this.types[0] == 'route') {
+                  if ($scope.mapValue.value.street && $scope.mapValue.value.street.length > 0) {
+                    $scope.mapValue.value.street = this.short_name + ' ' + $scope.mapValue.value.street;
+                  } else {
+                    $scope.mapValue.value.street = this.short_name;
+                  }
+                }
+                if (this.types[0] == 'postal_code') {
+                  $scope.mapValue.value.zipcode = this.short_name;
+                }
+                if (this.types[0] == 'postal_town') {
+                  $scope.mapValue.value.city = this.short_name;
+                }
+                if (this.types[0] == 'country') {
+                  $scope.mapValue.value.country = this.short_name;
+                }
+              });
+            } else {
+              $scope.addressLabel = 'Map address location not found';
+            }
+            successFunction();
+          }
+        });
+      }
+
+      function cleanUpPosition(position) {
+        if (position.indexOf('(') == 0) {
+          position = position.substring(1);
+        }
+        if (position.indexOf(')') != -1) {
+          position = position.substring(0, position.indexOf(')'));
+        }
+        return $.trim(position);
+      }
+
+      function LatLong(fieldValueString) {
+        var latLong = fieldValueString.split(',');
+        this.latitude = cleanUpPosition(latLong[0]);
+        this.longitude = cleanUpPosition(latLong[1]);
+      }
+
+      LatLong.prototype.equals = function (second) {
+        return this.latitude === second.latitude && this.longitude === second.longitude;
+      };
+
+      function MapValue(mapFieldValue) {
+        this.path = new Array();
+        this.value = mapFieldValue;
+
+        return this;
+      }
+
+      var createMapValue = function (value) {
+        if (value && !value.location) {
+          value = JSON.parse(value);
+        } else {
+          value = {location: '', street: '', zipcode: '', city: '', country: ''};
+        }
+        var mapValue = new MapValue(value);
+        mapValue.updateLocation(value.location);
+        return mapValue;
+      };
+
 
       var initMap = function () {
         $scope.mapValue = createMapValue($scope.ngModel);
@@ -91,6 +201,23 @@ angular.module('sf').directive('googleMap', function () {
           }
         }
 
+        function changeModel() {
+          $scope.ngModel = JSON.stringify($scope.mapValue.value);
+          $scope.$apply();
+        }
+
+        var clearCurrentMarkersAndLines = function () {
+          if ($scope.marker) {
+            $scope.marker.setMap(null);
+          }
+          if ($scope.polyline) {
+            $scope.polyline.setMap(null);
+          }
+          if ($scope.polygon) {
+            $scope.polygon.setMap(null);
+          }
+        };
+
         $scope.drawingManagerOptions = {
           drawingMode: initialDrawingMode,
           drawingControl: true,
@@ -138,8 +265,8 @@ angular.module('sf').directive('googleMap', function () {
         };
       };
 
-      uiGmapIsReady.promise().then(function () {
-        init();
+      uiGmapGoogleMapApi.then(function (maps) {
+        initMap();
       });
 
       var init = function () {
@@ -190,6 +317,10 @@ angular.module('sf').directive('googleMap', function () {
           }
         }
       };
+
+      uiGmapIsReady.promise().then(function () {
+        init();
+      });
 
       $scope.search = function (event) {
         event.preventDefault();
@@ -248,135 +379,6 @@ angular.module('sf').directive('googleMap', function () {
           });
         });
       };
-
-      function changeModel() {
-        $scope.ngModel = JSON.stringify($scope.mapValue.value);
-        $scope.$apply();
-      }
-
-      function getGeocoder() {
-        if (!geocoder)
-          geocoder = new google.maps.Geocoder();
-        return geocoder;
-      }
-
-      function geocode(searchTerm, map, successCallback, errorCallback) {
-        var request = {
-          'address': searchTerm,
-          'bounds': map.getBounds()
-        };
-        getGeocoder().geocode(request, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-              var searchResultItems = [];
-              $.each(results, function (index, result) {
-                searchResultItems.push(new SearchResultItem(result));
-              });
-              successCallback(searchResultItems);
-            } else {
-              errorCallback();
-            }
-          }
-        );
-      }
-
-      function reverseGeocode(position, successFunction) {
-        getGeocoder().geocode({'latLng': position}, function (results, status) {
-          if (status == google.maps.GeocoderStatus.OK) {
-            if (results[1]) {
-              $scope.mapValue.clearAddress();
-              $.each(results[0].address_components, function () {
-                if (this.types[0] == 'street_number') {
-                  if ($scope.mapValue.value.street && $scope.mapValue.value.street.length > 0) {
-                    $scope.mapValue.value.street = $scope.mapValue.value.street + ' ' + this.short_name;
-                  } else {
-                    $scope.mapValue.value.street = this.short_name;
-                  }
-                  $scope.addressLabel = results[0].formatted_address;
-                }
-                if (this.types[0] == 'route') {
-                  if ($scope.mapValue.value.street && $scope.mapValue.value.street.length > 0) {
-                    $scope.mapValue.value.street = this.short_name + ' ' + $scope.mapValue.value.street;
-                  } else {
-                    $scope.mapValue.value.street = this.short_name;
-                  }
-                }
-                if (this.types[0] == 'postal_code') {
-                  $scope.mapValue.value.zipcode = this.short_name;
-                }
-                if (this.types[0] == 'postal_town') {
-                  $scope.mapValue.value.city = this.short_name;
-                }
-                if (this.types[0] == 'country') {
-                  $scope.mapValue.value.country = this.short_name;
-                }
-              });
-            } else {
-              $scope.addressLabel = 'Map address location not found'
-            }
-            successFunction();
-          }
-        });
-      }
-
-      var clearCurrentMarkersAndLines = function () {
-        if ($scope.marker) {
-          $scope.marker.setMap(null);
-        }
-        if ($scope.polyline) {
-          $scope.polyline.setMap(null);
-        }
-        if ($scope.polygon) {
-          $scope.polygon.setMap(null);
-        }
-      };
-
-      function LatLong(fieldValueString) {
-        var latLong = fieldValueString.split(',');
-        this.latitude = cleanUpPosition(latLong[0]);
-        this.longitude = cleanUpPosition(latLong[1]);
-      }
-
-      LatLong.prototype.equals = function (second) {
-        return this.latitude === second.latitude && this.longitude === second.longitude;
-      };
-
-      function cleanUpPosition(position) {
-        if (position.indexOf('(') == 0) {
-          position = position.substring(1);
-        }
-        if (position.indexOf(')') != -1) {
-          position = position.substring(0, position.indexOf(')'));
-        }
-        return $.trim(position);
-      }
-
-      function SearchResultItem(result) {
-        var address = '';
-        var location = null;
-
-        this.address = result.formatted_address;
-        this.location = result.geometry.location;
-
-        return this;
-      }
-
-      var createMapValue = function (value) {
-        if (value && !value.location) {
-          value = JSON.parse(value);
-        } else {
-          value = {location: '', street: '', zipcode: '', city: '', country: ''};
-        }
-        var mapValue = new MapValue(value);
-        mapValue.updateLocation(value.location);
-        return mapValue;
-      };
-
-      function MapValue(mapFieldValue) {
-        this.path = new Array();
-        this.value = mapFieldValue;
-
-        return this;
-      }
 
       MapValue.prototype.clearAddress = function () {
         var self = this;

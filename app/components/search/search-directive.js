@@ -62,12 +62,14 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
           'skapadav': 'createdBy'
         };
 
-        var initFromQueryParams = function () {
-          var query = $location.search().query;
-          retrieveQuery(query);
-          retrieveFilter(query);
-          retrieveGroup(query);
-          retrieveSort(query);
+        var matchRegExp = function (query, regExp, callback) {
+          var match;
+          while ((match = regExp.exec(query)) !== null) {
+            if (match.index === regExp.lastIndex) {
+              regExp.lastIndex++;
+            }
+            callback(match);
+          }
         };
 
         var retrieveQuery = function (query) {
@@ -128,14 +130,12 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
           });
         };
 
-        var matchRegExp = function (query, regExp, callback) {
-          var match;
-          while ((match = regExp.exec(query)) !== null) {
-            if (match.index === regExp.lastIndex) {
-              regExp.lastIndex++;
-            }
-            callback(match);
-          }
+        var initFromQueryParams = function () {
+          var query = $location.search().query;
+          retrieveQuery(query);
+          retrieveFilter(query);
+          retrieveGroup(query);
+          retrieveSort(query);
         };
         initFromQueryParams();
 
@@ -175,40 +175,6 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
           }
         });
 
-        scope.$watch('filter', function () {
-          toggleFilterIndicator();
-          buildSearchFilter();
-        }, true);
-
-        scope.$watch('group', function () {
-          toggleFilterIndicator();
-          buildSearchGroupingSorting();
-        }, true);
-
-        scope.$watch('sort', function () {
-          toggleFilterIndicator();
-          buildSearchGroupingSorting();
-        }, true);
-
-        scope.labelsChanged = function (labels) {
-          scope.filter = scope.filter || {};
-          scope.filter.label = labels;
-        };
-
-        var toggleFilterIndicator = function () {
-          if (isSet(scope.filter) || isSet(scope.group.value) || isSet(scope.sort.value)) {
-            $('.main-search .filter-dropdown').addClass('set');
-          } else {
-            $('.main-search .filter-dropdown').removeClass('set');
-          }
-        };
-
-        scope.resetSearchFilter = function () {
-          scope.clearGrouping();
-          scope.clearSorting();
-          scope.filter = undefined;
-        };
-
         var isSet = function (values) {
           var set = false;
           _.each(values, function (value) {
@@ -219,14 +185,28 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
           return set;
         };
 
-        scope.clearGrouping = function () {
-          scope.group.value = undefined;
-          scope.group.order = 'asc';
+        var toggleFilterIndicator = function () {
+          if (isSet(scope.filter) || isSet(scope.group.value) || isSet(scope.sort.value)) {
+            $('.main-search .filter-dropdown').addClass('set');
+          } else {
+            $('.main-search .filter-dropdown').removeClass('set');
+          }
         };
 
-        scope.clearSorting = function () {
-          scope.sort.value = undefined;
-          scope.sort.order = 'asc';
+        var formatDateField = function (dateValue) {
+          return moment(dateValue).format('YYYYMMDD');
+        };
+
+        var prepareCreatedOn = function () {
+          if (scope.filter && (scope.filter.createdOnFrom || scope.filter.createdOnTo)) {
+            scope.filter.createdOn = formatDateField(scope.filter.createdOnFrom) + '-' + formatDateField(scope.filter.createdOnTo);
+          }
+        };
+
+        var prepareDueOn = function () {
+          if (scope.filter && (scope.filter.dueOnFrom || scope.filter.dueOnTo)) {
+            scope.filter.dueOn = formatDateField(scope.filter.dueOnFrom) + '-' + formatDateField(scope.filter.dueOnTo);
+          }
         };
 
         var buildSearchFilter = function () {
@@ -248,22 +228,6 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
           });
         };
 
-        var prepareCreatedOn = function () {
-          if (scope.filter && (scope.filter.createdOnFrom || scope.filter.createdOnTo)) {
-            scope.filter.createdOn = formatDateField(scope.filter.createdOnFrom) + '-' + formatDateField(scope.filter.createdOnTo);
-          }
-        };
-
-        var prepareDueOn = function () {
-          if (scope.filter && (scope.filter.dueOnFrom || scope.filter.dueOnTo)) {
-            scope.filter.dueOn = formatDateField(scope.filter.dueOnFrom) + '-' + formatDateField(scope.filter.dueOnTo);
-          }
-        };
-
-        var formatDateField = function (dateValue) {
-          return moment(dateValue).format('YYYYMMDD');
-        };
-
         var buildSearchGroupingSorting = function () {
           scope.queryGroupSorting = '';
           if (scope.group.value && scope.sort.value) {
@@ -274,6 +238,42 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
             scope.queryGroupSorting = ' sort by ' + scope.sort.value + ' ' + scope.sort.order;
           }
 
+        };
+
+        scope.$watch('filter', function () {
+          toggleFilterIndicator();
+          buildSearchFilter();
+        }, true);
+
+        scope.$watch('group', function () {
+          toggleFilterIndicator();
+          buildSearchGroupingSorting();
+        }, true);
+
+        scope.$watch('sort', function () {
+          toggleFilterIndicator();
+          buildSearchGroupingSorting();
+        }, true);
+
+        scope.labelsChanged = function (labels) {
+          scope.filter = scope.filter || {};
+          scope.filter.label = labels;
+        };
+
+        scope.resetSearchFilter = function () {
+          scope.clearGrouping();
+          scope.clearSorting();
+          scope.filter = undefined;
+        };
+
+        scope.clearGrouping = function () {
+          scope.group.value = undefined;
+          scope.group.order = 'asc';
+        };
+
+        scope.clearSorting = function () {
+          scope.sort.value = undefined;
+          scope.sort.order = 'asc';
         };
 
         scope.toggleSearchFilter = function (bool) {

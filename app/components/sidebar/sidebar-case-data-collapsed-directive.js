@@ -31,7 +31,7 @@ angular.module('sf').directive('sidebarCaseDataCollapsed', function (sidebarServ
 
             scope.$on('type-changed', function (event, typeId) {
                 scope.possibleCaseTypes.forEach(function (item) {
-                    if (item.id == typeId) {
+                    if (item.id === typeId) {
                         scope.caze[0].caseType.text = item.text;
                     }
                 });

@@ -27,7 +27,7 @@ angular.module('sf').directive('sidebarCasePriorityCollapsed', function (sidebar
                 };
 
                 scope.possiblePriorities.forEach(function (item) {
-                    if (item.id == priorityId) {
+                    if (item.id === priorityId) {
                         scope.general[0].priority.text = item.text;
                     }
                 });

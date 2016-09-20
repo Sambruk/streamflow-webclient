@@ -66,24 +66,33 @@ angular.module('sf').factory('webformRulesService', function(){
     }
   };
 
-  //Init function
-  var _applyRules = function(obj){
-  	var rootObj = obj;
-  	_applyRulesToElements(obj, rootObj);
+  //Recursive function that traverses down the object tree until it finds an object with
+  // value that matches the ruleVal
+  var _ruleValuePresent = function(obj, ruleVal){
+    return _findDeep(obj, {'value': ruleVal});
   };
 
-  //Recursive function that traverses down the object tree and executes
-  // displayFieldIfRuleValuePresent for each object/array in the tree
-  var _applyRulesToElements = function(obj, rootObj){
-    _.each(obj, function(objItem){
-    	if(objItem === null){
-    		return;
-    	}
-      if(typeof objItem === 'object' && objItem !== null){
-        _displayFieldIfRuleValuePresent(objItem, rootObj);
-        _applyRulesToElements(objItem, rootObj);
-      }
-    });
+  //Display field (remove ng-hide class if present)
+  var _displayField = function(fieldId){
+    var element = $('#' + fieldId);
+    if(element.hasClass('ng-hide')){
+      element.removeClass('ng-hide');
+    }
+    element.addClass('ng-show');
+  };
+
+  //Hide field (remove ng-show class if present)
+  var _hideField = function(fieldId){
+    //console.log(fld);
+    //fld.css('display', 'hidden');
+    //  debugger;
+
+    //console.log('hiding field: ' + fieldId);
+    var element = $('#' + fieldId);
+    if(element.hasClass('ng-show')){
+      element.removeClass('ng-show');
+    }
+    element.addClass('ng-hide');
   };
 
   //Checks if the object has any parents with value that matches the objects rule value
@@ -113,7 +122,7 @@ angular.module('sf').factory('webformRulesService', function(){
         _hideField(fieldId);
       }
     } else {
-    	if(obj.field){
+      if(obj.field){
         _displayField(obj.field);
       }
       if(obj.page){
@@ -122,33 +131,24 @@ angular.module('sf').factory('webformRulesService', function(){
     }
   };
 
-  //Recursive function that traverses down the object tree until it finds an object with
-  // value that matches the ruleVal
-  var _ruleValuePresent = function(obj, ruleVal){
-    return _findDeep(obj, {'value': ruleVal});
+  //Recursive function that traverses down the object tree and executes
+  // displayFieldIfRuleValuePresent for each object/array in the tree
+  var _applyRulesToElements = function(obj, rootObj){
+    _.each(obj, function(objItem){
+      if(objItem === null){
+        return;
+      }
+      if(typeof objItem === 'object' && objItem !== null){
+        _displayFieldIfRuleValuePresent(objItem, rootObj);
+        _applyRulesToElements(objItem, rootObj);
+      }
+    });
   };
 
-  //Display field (remove ng-hide class if present)
-  var _displayField = function(fieldId){
-    var element = $('#' + fieldId);
-    if(element.hasClass('ng-hide')){
-      element.removeClass('ng-hide');
-    }
-    element.addClass('ng-show');
-  };
-
-  //Hide field (remove ng-show class if present)
-  var _hideField = function(fieldId){
-   //console.log(fld);
-    //fld.css('display', 'hidden');
-   //  debugger;
-
-    //console.log('hiding field: ' + fieldId);
-    var element = $('#' + fieldId);
-    if(element.hasClass('ng-show')){
-      element.removeClass('ng-show');
-    }
-    element.addClass('ng-hide');
+  //Init function
+  var _applyRules = function(obj){
+  	var rootObj = obj;
+  	_applyRulesToElements(obj, rootObj);
   };
 
   return {

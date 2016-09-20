@@ -22,6 +22,17 @@ angular.module('sf').directive('sfUpdateOnBlur', ['$parse', function($parse) {
     var fn = $parse(attr.sfUpdateOnBlur);
     var form = scope[element.closest('form').attr('name')];
 
+    var setPristine = function(form, element){
+      if (form.$setPristine){//only supported from v1.1.x
+        form.$setPristine();
+      } else {
+        form.$dirty = false;
+        form.$pristine = true;
+        element.$dirty = false;
+        element.$pristine = true;
+      }
+    };
+
     var successCallback = function (element){
 
       if(element.parent().hasClass('error')){
@@ -82,17 +93,6 @@ angular.module('sf').directive('sfUpdateOnBlur', ['$parse', function($parse) {
         });
       }
     });
-
-    var setPristine = function(form, element){
-      if (form.$setPristine){//only supported from v1.1.x
-        form.$setPristine();
-      } else {
-        form.$dirty = false;
-        form.$pristine = true;
-        element.$dirty = false;
-        element.$pristine = true;
-      }
-    };
 
     $('select').change(function () {
         $(this).parent().removeClass('saved');

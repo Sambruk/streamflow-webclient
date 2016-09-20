@@ -17,7 +17,7 @@
 
 'use strict';
 
-angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $rootScope, searchService, groupByService, paginationService, caseService) {
+angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $rootScope, searchService, groupByService, paginationService) {
   $scope.currentCases = [];
   $scope.scroll = 0;
   $scope.busyLoadingData = false;

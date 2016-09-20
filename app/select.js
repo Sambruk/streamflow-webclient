@@ -7,7 +7,7 @@
 
 
 (function () {
-'use strict';
+"use strict";
 
 var KEY = {
     TAB: 9,
@@ -42,7 +42,7 @@ var KEY = {
             return true;
         }
 
-        if (e.metaKey) return true;
+        if (e.metaKey) { return true; }
 
         return false;
     },
@@ -184,7 +184,7 @@ uis.directive('uiSelectChoices',
 
     compile: function(tElement, tAttrs) {
 
-      if (!tAttrs.repeat) throw uiSelectMinErr('repeat', "Expected 'repeat' expression.");
+      if (!tAttrs.repeat) { throw uiSelectMinErr('repeat', 'Expected \'repeat\' expression.'); }
 
       return function link(scope, element, attrs, $select, transcludeFn) {
 
@@ -198,13 +198,13 @@ uis.directive('uiSelectChoices',
 
         if(groupByExp) {
           var groups = element.querySelectorAll('.ui-select-choices-group');
-          if (groups.length !== 1) throw uiSelectMinErr('rows', "Expected 1 .ui-select-choices-group but got '{0}'.", groups.length);
+          if (groups.length !== 1) { throw uiSelectMinErr('rows', 'Expected 1 .ui-select-choices-group but got \'{0}\'.', groups.length); }
           groups.attr('ng-repeat', RepeatParser.getGroupNgRepeatExpression());
         }
 
         var choices = element.querySelectorAll('.ui-select-choices-row');
         if (choices.length !== 1) {
-          throw uiSelectMinErr('rows', "Expected 1 .ui-select-choices-row but got '{0}'.", choices.length);
+          throw uiSelectMinErr('rows', 'Expected 1 .ui-select-choices-row but got \'{0}\'.', choices.length);
         }
 
         choices.attr('ng-repeat', RepeatParser.getNgRepeatExpression($select.parserResult.itemName, '$select.items', $select.parserResult.trackByExp, groupByExp))
@@ -213,13 +213,13 @@ uis.directive('uiSelectChoices',
             .attr('ng-click', '$select.select(' + $select.parserResult.itemName + ',false,$event)');
 
         var rowsInner = element.querySelectorAll('.ui-select-choices-row-inner');
-        if (rowsInner.length !== 1) throw uiSelectMinErr('rows', "Expected 1 .ui-select-choices-row-inner but got '{0}'.", rowsInner.length);
+        if (rowsInner.length !== 1) {throw uiSelectMinErr('rows', 'Expected 1 .ui-select-choices-row-inner but got \'{0}\'.', rowsInner.length);}
         rowsInner.attr('uis-transclude-append', ''); //Adding uisTranscludeAppend directive to row element after choices element has ngRepeat
 
         $compile(element, transcludeFn)(scope); //Passing current transcludeFn to be able to append elements correctly from uisTranscludeAppend
 
         scope.$watch('$select.search', function(newValue) {
-          if(newValue && !$select.open && $select.multiple) $select.activate(false, true);
+          if(newValue && !$select.open && $select.multiple) { $select.activate(false, true); }
           $select.activeIndex = $select.tagging.isActivated ? -1 : 0;
           $select.refresh(attrs.refresh);
         });
@@ -277,7 +277,7 @@ uis.controller('uiSelectCtrl',
 
   ctrl.searchInput = $element.querySelectorAll('input.ui-select-search');
   if (ctrl.searchInput.length !== 1) {
-    throw uiSelectMinErr('searchInput', "Expected 1 input.ui-select-search but got '{0}'.", ctrl.searchInput.length);
+    throw uiSelectMinErr('searchInput', 'Expected 1 input.ui-select-search but got \'{0}\'.', ctrl.searchInput.length);
   }
 
   ctrl.isEmpty = function() {
@@ -298,7 +298,7 @@ uis.controller('uiSelectCtrl',
   // When the user clicks on ui-select, displays the dropdown list
   ctrl.activate = function(initSearchValue, avoidReset) {
     if (!ctrl.disabled  && !ctrl.open) {
-      if(!avoidReset) _resetSearchInput();
+      if(!avoidReset) { _resetSearchInput(); }
 
       $scope.$broadcast('uis:activate');
 
@@ -380,7 +380,7 @@ uis.controller('uiSelectCtrl',
         ctrl.items = [];
       } else {
         if (!angular.isArray(items)) {
-          throw uiSelectMinErr('items', "Expected an array but got '{0}'.", items);
+          throw uiSelectMinErr('items', 'Expected an array but got \'{0}\'.', items);
         } else {
           //Remove already selected items (ex: while searching)
           //TODO Should add a test
@@ -438,7 +438,7 @@ uis.controller('uiSelectCtrl',
 
   ctrl.isDisabled = function(itemScope) {
 
-    if (!ctrl.open) return;
+    if (!ctrl.open) { return; }
 
     var itemIndex = ctrl.items.indexOf(itemScope[ctrl.itemProperty]);
     var isDisabled = false;
@@ -458,7 +458,7 @@ uis.controller('uiSelectCtrl',
   ctrl.select = function(item, skipFocusser, $event) {
     if (item === undefined || !item._uiSelectChoiceDisabled) {
 
-      if ( ! ctrl.items && ! ctrl.search ) return;
+      if ( ! ctrl.items && ! ctrl.search ) { return; }
 
       if (!item || !item._uiSelectChoiceDisabled) {
         if(ctrl.tagging.isActivated) {
@@ -479,13 +479,13 @@ uis.controller('uiSelectCtrl',
             if ( ctrl.activeIndex === 0 ) {
               // ctrl.tagging pushes items to ctrl.items, so we only have empty val
               // for `item` if it is a detected duplicate
-              if ( item === undefined ) return;
+              if ( item === undefined ) { return; }
 
               // create new item on the fly if we don't already have one;
               // use tagging function if we have one
               if ( ctrl.tagging.fct !== undefined && typeof item === 'string' ) {
                 item = ctrl.tagging.fct(ctrl.search);
-                if (!item) return;
+                if (!item) { return; }
               // if item type is 'string', apply the tagging label
               } else if ( typeof item === 'string' ) {
                 // trim the trailing space
@@ -524,8 +524,8 @@ uis.controller('uiSelectCtrl',
 
   // Closes the dropdown
   ctrl.close = function(skipFocusser) {
-    if (!ctrl.open) return;
-    if (ctrl.ngModel && ctrl.ngModel.$setTouched) ctrl.ngModel.$setTouched();
+    if (!ctrl.open) { return; }
+    if (ctrl.ngModel && ctrl.ngModel.$setTouched) { ctrl.ngModel.$setTouched(); }
     _resetSearchInput();
     ctrl.open = false;
 
@@ -534,7 +534,7 @@ uis.controller('uiSelectCtrl',
   };
 
   ctrl.setFocus = function(){
-    if (!ctrl.focus) ctrl.focusInput[0].focus();
+    if (!ctrl.focus) { ctrl.focusInput[0].focus(); }
   };
 
   ctrl.clear = function($event) {
@@ -579,7 +579,7 @@ uis.controller('uiSelectCtrl',
             return false;
           }
           var inputWidth = containerWidth - input.offsetLeft - 10;
-          if (inputWidth < 50) inputWidth = containerWidth;
+          if (inputWidth < 50) { inputWidth = containerWidth; }
           ctrl.searchInput.css('width', inputWidth+'px');
           return true;
         };
@@ -601,15 +601,15 @@ uis.controller('uiSelectCtrl',
     var processed = true;
     switch (key) {
       case KEY.DOWN:
-        if (!ctrl.open && ctrl.multiple) ctrl.activate(false, true); //In case its the search input in 'multiple' mode
+        if (!ctrl.open && ctrl.multiple) { ctrl.activate(false, true); } //In case its the search input in 'multiple' mode
         else if (ctrl.activeIndex < ctrl.items.length - 1) { ctrl.activeIndex++; }
         break;
       case KEY.UP:
-        if (!ctrl.open && ctrl.multiple) ctrl.activate(false, true); //In case its the search input in 'multiple' mode
+        if (!ctrl.open && ctrl.multiple) { ctrl.activate(false, true);} //In case its the search input in 'multiple' mode
         else if (ctrl.activeIndex > 0 || (ctrl.search.length === 0 && ctrl.tagging.isActivated && ctrl.activeIndex > -1)) { ctrl.activeIndex--; }
         break;
       case KEY.TAB:
-        if (!ctrl.multiple || ctrl.open) ctrl.select(ctrl.items[ctrl.activeIndex], true);
+        if (!ctrl.multiple || ctrl.open) { ctrl.select(ctrl.items[ctrl.activeIndex], true); }
         break;
       case KEY.ENTER:
         if(ctrl.open && ctrl.activeIndex >= 0){
@@ -659,7 +659,7 @@ uis.controller('uiSelectCtrl',
               if ( ctrl.tagging.fct ) {
                 newItem = ctrl.tagging.fct( newItem );
               }
-              if (newItem) ctrl.select(newItem, true);
+              if (newItem) { ctrl.select(newItem, true); }
             });
           }
         }
@@ -702,7 +702,7 @@ uis.controller('uiSelectCtrl',
     var container = $element.querySelectorAll('.ui-select-choices-content');
     var choices = container.querySelectorAll('.ui-select-choices-row');
     if (choices.length < 1) {
-      throw uiSelectMinErr('choices', "Expected multiple .ui-select-choices-row but got '{0}'.", choices.length);
+      throw uiSelectMinErr('choices', 'Expected multiple .ui-select-choices-row but got \'{0}\'.', choices.length);
     }
 
     if (ctrl.activeIndex < 0) {
@@ -716,10 +716,12 @@ uis.controller('uiSelectCtrl',
     if (posY > height) {
       container[0].scrollTop += posY - height;
     } else if (posY < highlighted.clientHeight) {
-      if (ctrl.isGrouped && ctrl.activeIndex === 0)
-        container[0].scrollTop = 0; //To make group header visible when going all the way up
-      else
+      if (ctrl.isGrouped && ctrl.activeIndex === 0) {
+        container[0].scrollTop = 0;
+      }//To make group header visible when going all the way up
+      else {
         container[0].scrollTop -= highlighted.clientHeight - posY;
+      }
     }
   }
 
@@ -749,10 +751,12 @@ uis.directive('uiSelect',
     compile: function(tElement, tAttrs) {
 
       //Multiple or Single depending if multiple attribute presence
-      if (angular.isDefined(tAttrs.multiple))
-        tElement.append("<ui-select-multiple/>").removeAttr('multiple');
-      else
-        tElement.append("<ui-select-single/>");
+      if (angular.isDefined(tAttrs.multiple)) {
+        tElement.append('<ui-select-multiple/>').removeAttr('multiple');
+      }
+      else {
+        tElement.append('<ui-select-single/>');
+      }
 
       return function(scope, element, attrs, ctrls, transcludeFn) {
 
@@ -784,8 +788,8 @@ uis.directive('uiSelect',
 
         if(attrs.tabindex){
           attrs.$observe('tabindex', function(value) {
-            $select.focusInput.attr("tabindex", value);
-            element.removeAttr("tabindex");
+            $select.focusInput.attr('tabindex', value);
+            element.removeAttr('tabindex');
           });
         }
 
@@ -862,7 +866,7 @@ uis.directive('uiSelect',
         }
 
         function onDocumentClick(e) {
-          if (!$select.open) return; //Skip it if dropdown is close
+          if (!$select.open) { return; } //Skip it if dropdown is close
 
           var contains = false;
 
@@ -879,7 +883,7 @@ uis.directive('uiSelect',
             var focusableControls = ['input','button','textarea'];
             var targetScope = angular.element(e.target).scope(); //To check if target is other ui-select
             var skipFocusser = targetScope && targetScope.$select && targetScope.$select !== $select; //To check if target is other ui-select
-            if (!skipFocusser) skipFocusser =  ~focusableControls.indexOf(e.target.tagName.toLowerCase()); //Check if target is input, button or textarea
+            if (!skipFocusser) { skipFocusser =  ~focusableControls.indexOf(e.target.tagName.toLowerCase()); } //Check if target is input, button or textarea
             $select.close(skipFocusser);
             scope.$digest();
           }
@@ -906,7 +910,7 @@ uis.directive('uiSelect',
           transcludedMatch.removeAttr('ui-select-match'); //To avoid loop in case directive as attr
           transcludedMatch.removeAttr('data-ui-select-match'); // Properly handle HTML5 data-attributes
           if (transcludedMatch.length !== 1) {
-            throw uiSelectMinErr('transcluded', "Expected 1 .ui-select-match but got '{0}'.", transcludedMatch.length);
+            throw uiSelectMinErr('transcluded', 'Expected 1 .ui-select-match but got \'{0}\'.', transcludedMatch.length);
           }
           element.querySelectorAll('.ui-select-match').replaceWith(transcludedMatch);
 
@@ -914,7 +918,7 @@ uis.directive('uiSelect',
           transcludedChoices.removeAttr('ui-select-choices'); //To avoid loop in case directive as attr
           transcludedChoices.removeAttr('data-ui-select-choices'); // Properly handle HTML5 data-attributes
           if (transcludedChoices.length !== 1) {
-            throw uiSelectMinErr('transcluded', "Expected 1 .ui-select-choices but got '{0}'.", transcludedChoices.length);
+            throw uiSelectMinErr('transcluded', 'Expected 1 .ui-select-choices but got \'{0}\'.', transcludedChoices.length);
           }
           element.querySelectorAll('.ui-select-choices').replaceWith(transcludedChoices);
         });
@@ -1052,7 +1056,7 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
         var removedChoice = $select.selected[index];
 
         // if the choice is locked, can't remove it
-        if(removedChoice._uiSelectChoiceLocked) return;
+        if(removedChoice._uiSelectChoiceLocked) { return; }
 
         var locals = {};
         locals[$select.parserResult.itemName] = removedChoice;
@@ -1075,7 +1079,7 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
 
       ctrl.getPlaceholder = function(){
         //Refactor single?
-        if($select.selected.length) return;
+        if($select.selected.length) { return; }
         return $select.placeholder;
       };
 
@@ -1116,10 +1120,10 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
         var data = $select.parserResult.source (scope, { $select : {search:''}}), //Overwrite $search
             locals = {},
             result;
-        if (!data) return inputValue;
+        if (!data) { return inputValue; }
         var resultMultiple = [];
         var checkFnMultiple = function(list, value){
-          if (!list || !list.length) return;
+          if (!list || !list.length) { return; }
           for (var p = list.length - 1; p >= 0; p--) {
             locals[$select.parserResult.itemName] = list[p];
             result = $select.parserResult.modelMapper(scope, locals);
@@ -1137,7 +1141,7 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
           }
           return false;
         };
-        if (!inputValue) return resultMultiple; //If ngModel was undefined
+        if (!inputValue) { return resultMultiple; } //If ngModel was undefined
         for (var k = inputValue.length - 1; k >= 0; k--) {
           //Check model array of currently selected items
           if (!checkFnMultiple($select.selected, inputValue[k])){
@@ -1166,7 +1170,7 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
           if(angular.isUndefined(ngModel.$viewValue) || ngModel.$viewValue === null){
             $select.selected = [];
           } else {
-            throw uiSelectMinErr('multiarr', "Expected model value to be array but got '{0}'", ngModel.$viewValue);
+            throw uiSelectMinErr('multiarr', 'Expected model value to be array but got \'{0}\'', ngModel.$viewValue);
           }
         }
         $select.selected = ngModel.$viewValue;
@@ -1184,7 +1188,7 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
 
       scope.$watch('$select.disabled', function(newValue, oldValue) {
         // As the search input field may now become visible, it may be necessary to recompute its size
-        if (oldValue && !newValue) $select.sizeSearchInput();
+        if (oldValue && !newValue) { $select.sizeSearchInput(); }
       });
 
       $select.searchInput.on('keydown', function(e) {
@@ -1204,9 +1208,9 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
         });
       });
       function _getCaretPosition(el) {
-        if(angular.isNumber(el.selectionStart)) return el.selectionStart;
+        if(angular.isNumber(el.selectionStart)) { return el.selectionStart; }
         // selectionStart is not supported in IE8 and we don't want hacky workarounds so we compromise
-        else return el.value.length;
+        else { return el.value.length; }
       }
       // Handles selected options in "multiple" mode
       function _handleMatchSelection(key){
@@ -1220,7 +1224,7 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
             prev  = $selectMultiple.activeMatchIndex-1,
             newIndex = curr;
 
-        if(caretPosition > 0 || ($select.search.length && key == KEY.RIGHT)) return false;
+        if(caretPosition > 0 || ($select.search.length && key == KEY.RIGHT)) { return false; }
 
         $select.close();
 
@@ -1228,9 +1232,9 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
           switch(key){
             case KEY.LEFT:
               // Select previous/first item
-              if(~$selectMultiple.activeMatchIndex) return prev;
+              if(~$selectMultiple.activeMatchIndex) { return prev; }
               // Select last item
-              else return last;
+              else { return last; }
               break;
             case KEY.RIGHT:
               // Open drop-down
@@ -1239,7 +1243,7 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
                 return false;
               }
               // Select next/last item
-              else return next;
+              else { return next; }
               break;
             case KEY.BACKSPACE:
               // Remove selected item and select previous/first
@@ -1248,7 +1252,7 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
                 return prev;
               }
               // Select last item
-              else return last;
+              else { return last; }
               break;
             case KEY.DELETE:
               // Remove selected item and select next item
@@ -1256,14 +1260,14 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
                 $selectMultiple.removeChoice($selectMultiple.activeMatchIndex);
                 return curr;
               }
-              else return false;
+              else { return false; }
           }
         }
 
         newIndex = getNewActiveMatchIndex();
 
-        if(!$select.selected.length || newIndex === false) $selectMultiple.activeMatchIndex = -1;
-        else $selectMultiple.activeMatchIndex = Math.min(last,Math.max(first,newIndex));
+        if(!$select.selected.length || newIndex === false) { $selectMultiple.activeMatchIndex = -1; }
+        else { $selectMultiple.activeMatchIndex = Math.min(last,Math.max(first,newIndex)); }
 
         return true;
       }
@@ -1285,7 +1289,7 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
           // always reset the activeIndex to the first item when tagging
           $select.activeIndex = $select.taggingLabel === false ? -1 : 0;
           // taggingLabel === false bypasses all of this
-          if ($select.taggingLabel === false) return;
+          if ($select.taggingLabel === false) { return; }
 
           var items = angular.copy( $select.items );
           var stashArr = angular.copy( $select.items );
@@ -1357,7 +1361,7 @@ uis.directive('uiSelectMultiple', ['uiSelectMinErr','$timeout', function(uiSelec
               return;
             }
           }
-          if ( hasTag ) dupeIndex = _findApproxDupe($select.selected, newItem);
+          if ( hasTag ) { dupeIndex = _findApproxDupe($select.selected, newItem); }
           // dupe found, shave the first item
           if ( dupeIndex > -1 ) {
             items = items.slice(dupeIndex+1,items.length-1);
@@ -1452,7 +1456,7 @@ uis.directive('uiSelectSingle', ['$timeout','$compile', function($timeout, $comp
             return $select.selected;
           }
           for (var i = data.length - 1; i >= 0; i--) {
-            if (checkFnSingle(data[i])) return data[i];
+            if (checkFnSingle(data[i])) { return data[i]; }
           }
         }
         return inputValue;
@@ -1476,7 +1480,7 @@ uis.directive('uiSelectSingle', ['$timeout','$compile', function($timeout, $comp
       scope.$on('uis:close', function (event, skipFocusser) {
         $timeout(function(){
           $select.focusser.prop('disabled', false);
-          if (!skipFocusser) $select.focusser[0].focus();
+          if (!skipFocusser) { $select.focusser[0].focus(); }
         },0,false);
       });
 
@@ -1493,17 +1497,17 @@ uis.directive('uiSelectSingle', ['$timeout','$compile', function($timeout, $comp
       $select.focusInput = focusser;
 
       element.parent().append(focusser);
-      focusser.bind("focus", function(){
+      focusser.bind('focus', function(){
         scope.$evalAsync(function(){
           $select.focus = true;
         });
       });
-      focusser.bind("blur", function(){
+      focusser.bind('blur', function(){
         scope.$evalAsync(function(){
           $select.focus = false;
         });
       });
-      focusser.bind("keydown", function(e){
+      focusser.bind('keydown', function(e){
 
         if (e.which === KEY.BACKSPACE) {
           e.preventDefault();
@@ -1526,7 +1530,7 @@ uis.directive('uiSelectSingle', ['$timeout','$compile', function($timeout, $comp
         scope.$digest();
       });
 
-      focusser.bind("keyup input", function(e){
+      focusser.bind('keyup input', function(e){
 
         if (e.which === KEY.TAB || KEY.isControl(e) || KEY.isFunctionKey(e) || e.which === KEY.ESC || e.which == KEY.ENTER || e.which === KEY.BACKSPACE) {
           return;
@@ -1548,7 +1552,7 @@ uis.directive('uiSelectSort', ['$timeout', 'uiSelectConfig', 'uiSelectMinErr', f
     require: '^uiSelect',
     link: function(scope, element, attrs, $select) {
       if (scope[attrs.uiSelectSort] === null) {
-        throw uiSelectMinErr('sort', "Expected a list to sort");
+        throw uiSelectMinErr('sort', 'Expected a list to sort');
       }
 
       var options = angular.extend({

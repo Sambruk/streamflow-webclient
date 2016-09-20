@@ -40,6 +40,11 @@ angular.module('sf')
       });
     });
 
+    var updateObject = function(itemToUpdate){
+        itemToUpdate.invalidate();
+        itemToUpdate.resolve();
+    };
+
     $scope.$on('caselog-message-created', function(){
       $scope.showSpinner.caseLogs = true;
       updateObject($scope.caseLogs);
@@ -48,9 +53,4 @@ angular.module('sf')
         $scope.showSpinner.caseLogs = false;
       });
     });
-
-    var updateObject = function(itemToUpdate){
-      itemToUpdate.invalidate();
-      itemToUpdate.resolve();
-    };
   });

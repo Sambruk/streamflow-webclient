@@ -329,6 +329,13 @@ angular.module('sf')
         itemToUpdate.resolve();
       };
 
+      var checkFilterCaseLog = function(filter){
+        if(scope.defaultFilters[filter] === false){
+          return;
+        }
+        updateObject(scope.sideBarCaseLogs);
+      };
+
       //Event-listeners
       scope.$on('case-changed', function() {
         updateObject(scope.possibleCaseTypes);
@@ -392,13 +399,6 @@ angular.module('sf')
         checkFilterCaseLog('custom');
       });
       //End Event-listeners
-
-      var checkFilterCaseLog = function(filter){
-        if(scope.defaultFilters[filter] === false){
-          return;
-        }
-        updateObject(scope.sideBarCaseLogs);
-      };
     }
   };
 });

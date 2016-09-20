@@ -58,6 +58,10 @@ angular.module('sf').controller('CaseEditCtrl', function($scope, $rootScope, $ro
     $scope.caseNote = newVal;
   });
 
+  var updateObject = function(itemToUpdate){
+    itemToUpdate.invalidate();
+    itemToUpdate.resolve();
+  };
 
   $scope.addNote = function($event, $success, $error){
     $event.preventDefault();
@@ -99,11 +103,5 @@ angular.module('sf').controller('CaseEditCtrl', function($scope, $rootScope, $ro
   $scope.notesHistory.promise.then(function(){
     $scope.showSpinner.notesHistory = false;
   });
-
-  var updateObject = function(itemToUpdate){
-    itemToUpdate.invalidate();
-    itemToUpdate.resolve();
-  };
-
 });
 

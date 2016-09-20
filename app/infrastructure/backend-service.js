@@ -17,21 +17,22 @@
 'use strict';
 
  angular.module('sf').factory('backendService', function ($window, $http, $q, httpService) {
-    function SfResource(href, response) {
+
+   function getBaseUrl(str) {
+     if (str[str.length - 1] === '/') {
+       return str;
+     }
+     // remove last part of the url to get the base
+     // this is needed since all URLs returned by the server are relative
+     var lastIndex = str.lastIndexOf('/');
+     return str.substring(0, lastIndex + 1);
+   }
+
+   function SfResource(href, response) {
       if (response) {
         this.response = response.data;
       }
       this.basehref = getBaseUrl(href);
-    }
-
-    function getBaseUrl(str) {
-      if (str[str.length - 1] === '/') {
-        return str;
-      }
-      // remove last part of the url to get the base
-      // this is needed since all URLs returned by the server are relative
-      var lastIndex = str.lastIndexOf('/');
-      return str.substring(0, lastIndex + 1);
     }
 
     var isId = function(href){

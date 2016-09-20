@@ -176,6 +176,27 @@ angular.module('sf')
       $scope.currentFormPage = page;
     };
 
+    var updateFieldsOnPages = function(form) {
+        var p = Promise.resolve();
+        form.enhancedPages.forEach(function (pages) {
+            pages.fields.forEach(function (field) {
+                p = p.then(function () {
+                    caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, field.value);
+                });
+            });
+        });
+        return p;
+    };
+
+    var formSubmitted = function () {
+        if (!$scope.closeWithForm) {
+            $rootScope.$broadcast('form-submitted');
+        }
+        $scope.formMessage = 'Skickat!';
+        $scope.form = [];
+        $scope.currentFormPage = null;
+    };
+
     $scope.submitForm = function () {
         updateFieldsOnPages($scope.form[0]).then(function(){
           caseService.submitForm($routeParams.caseId, $scope.form[0].draftId).then(function () {
@@ -191,27 +212,6 @@ angular.module('sf')
             }
           });
       });
-    };
-
-    var updateFieldsOnPages = function(form) {
-        var p = Promise.resolve();
-        form.enhancedPages.forEach(function (pages) {
-            pages.fields.forEach(function (field) {
-                p = p.then(function() {
-                    caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, field.value)
-                });
-            });
-        });
-        return p;
-    };
-
-    var formSubmitted = function () {
-      if (!$scope.closeWithForm) {
-        $rootScope.$broadcast('form-submitted');
-      }
-      $scope.formMessage = 'Skickat!';
-      $scope.form = [];
-      $scope.currentFormPage = null;
     };
 
     $scope.deleteFormDraftAttachment = function (fieldId) {

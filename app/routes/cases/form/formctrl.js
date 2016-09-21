@@ -114,7 +114,7 @@ angular.module('sf')
                         $scope.showSpinner.form = false;
                         $scope.possibleForm.invalidate();
                         $scope.possibleForm.resolve();
-                        var settings = caseService.getFormDraftLocationSettings($routeParams.caseId, $scope.formDraftId);
+                        var settings = caseService.getFormDraftLocationSettings($routeParams.caseId, draftId);
                         settings.promise.then(function (response) {
                             $scope.locationSettings = response[0];
                         });

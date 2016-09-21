@@ -125,7 +125,7 @@ angular.module('sf').directive('googleMap', function () {
             };
 
             function MapValue(mapFieldValue) {
-                this.path = new Array();
+                this.path = [];
                 this.value = mapFieldValue;
 
                 return this;
@@ -187,7 +187,7 @@ angular.module('sf').directive('googleMap', function () {
                     markersControl: {}
                 };
 
-                var availableDrawingModes = new Array();
+                var availableDrawingModes = [];
                 var initialDrawingMode = null;
 
                 if ($scope.mapValue) {
@@ -289,7 +289,7 @@ angular.module('sf').directive('googleMap', function () {
                             changeModel();
                         });
                     } else {
-                        var path = new Array();
+                        var path = [];
                         $.each($scope.mapValue.path, function (index, position) {
                             path.push(new google.maps.LatLng(position.latitude, position.longitude));
                         });
@@ -391,7 +391,7 @@ angular.module('sf').directive('googleMap', function () {
 
             MapValue.prototype.updateLocation = function (newLocation) {
                 var self = this;
-                self.path = new Array();
+                self.path = [];
                 self.value.location = newLocation;
                 self.isPoint = false;
                 self.isPolyline = false;

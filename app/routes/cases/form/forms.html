@@ -219,6 +219,8 @@
         </div>
 
         <div data-ng-show="currentFormPage" class="row button-group">
+          <a data-ng-show="!isFormWindow" href="#/cases/{{caze[0].id}}/{{caze[0].ownerId}}" class="btn inline"
+             data-ng-disabled="!issueForm.$valid || !isValidForm">Annullera</a>
           <a data-ng-hide="isFirstPage()" href="" class="btn inline"
              data-ng-class="{inactive: isFirstPage()}"
              data-ng-click="!isFirstPage() && previousFormPage()">Tillbaka</a>

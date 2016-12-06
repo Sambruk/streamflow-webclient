@@ -26,6 +26,7 @@ angular.module('sf')
         $scope.selectedItems = {};
         $scope.applyRules = webformRulesService.applyRules;
         $scope.possibleForm = '';
+        $scope.caze = caseService.getSelected($routeParams.caseId);
 
         $scope.showSpinner = {
             form: true

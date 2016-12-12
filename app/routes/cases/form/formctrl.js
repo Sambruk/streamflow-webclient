@@ -16,7 +16,7 @@
  */
 'use strict';
 angular.module('sf')
-    .controller('FormCtrl', function ($q, $scope, caseService, $routeParams, $rootScope, webformRulesService, $sce, navigationService, fileService, httpService, sidebarService, $timeout) {
+    .controller('FormCtrl', function ($q, $scope, caseService, $routeParams, $rootScope, webformRulesService, $sce, navigationService, fileService, httpService, sidebarService, $timeout, formMapperService) {
         $scope.sidebardata = {};
 
         $scope.caseId = $routeParams.caseId;
@@ -182,7 +182,8 @@ angular.module('sf')
             form.enhancedPages.forEach(function (pages) {
                 pages.fields.forEach(function (field) {
                     p = p.then(function () {
-                        caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, field.value);
+                        var value = formMapperService.getValue(field.value, field.field.field);
+                        caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, value);
                     });
                 });
             });
@@ -202,7 +203,8 @@ angular.module('sf')
             (updateFieldsOnPages($scope.form[0])).then(function () {
                 (caseService.submitForm($routeParams.caseId, $scope.form[0].draftId)).then(function () {
                     if (!$scope.closeWithForm) {
-                        formSubmitted();
+                        // Use this if to 100% to be sure that we get form submitted(at least during tests)
+                        // $timeout(formSubmitted, 10000);
                     } else {
                         caseService.closeFormOnClose($routeParams.caseId).then(function () {
                             formSubmitted();
@@ -279,4 +281,12 @@ angular.module('sf')
             index -= 1;
             $scope.currentFormPage = $scope.form[0].enhancedPages[index];
         };
+
+        //Used for send submit message only after correct form data sending to server
+        //TODO: Maybe it would be good to rewrite that to promises somehow?
+        $scope.$on('form-saved', function (event, formId) {
+            if (!$scope.closeWithForm) {
+                formSubmitted();
+            }
+        });
     });

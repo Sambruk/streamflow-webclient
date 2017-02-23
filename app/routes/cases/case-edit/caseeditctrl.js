@@ -22,6 +22,7 @@ angular.module('sf').controller('CaseEditCtrl', function ($scope, $rootScope, $r
     $scope.caseId = $routeParams.caseId;
     $scope.projectId = $routeParams.projectId;
     $scope.notesHistory = caseService.getAllNotes($routeParams.caseId);
+    $scope.caze = caseService.getSelected($routeParams.caseId);
 
     $scope.$watch('sidebardata.caze', function (newVal) {
         if (!newVal) {
@@ -102,6 +103,10 @@ angular.module('sf').controller('CaseEditCtrl', function ($scope, $rootScope, $r
 
     $scope.notesHistory.promise.then(function () {
         $scope.showSpinner.notesHistory = false;
+    });
+
+    $scope.caze.promise.then(function () {
+        document.title = 'Streamflow ' + $scope.caze[0].caseId;
     });
 });
 

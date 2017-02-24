@@ -43,7 +43,7 @@
             </span>
             <div class="issue-item {{case.overdueStatus()}} caselistItem">
               <a href="{{case.href}}" class="block-link">
-                <div class="due-date">
+                <div class="due-date" data-ng-class="{'issue-closed-color-dim': case.closed()}">
                   <span>{{case.overdueDays() | positive}}</span>
                   <data-ng-pluralize
                           count="case.overdueDays()"
@@ -60,7 +60,7 @@
                   </div>
                   <div class="issue-actions">
                     <div>
-                      <span class="action-status updated">Ändrad {{case.modificationDate() | googleDate}}</span>
+                      <span class="action-status updated" data-ng-class="{'issue-closed-color-dim': case.closed()}">Ändrad {{case.modificationDate() | googleDate}}</span>
                       <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
                       <span class="priority" data-ng-if="case.priority.text">Prioritet: {{ case.priority.text }}</span>
                     </div>
@@ -76,7 +76,7 @@
 
             <a href="{{case.href}}" class="block-link">
 
-              <div class="due-date">
+              <div class="due-date" data-ng-class="{'issue-closed-color-dim': case.closed()}">
                 <span>{{case.overdueDays() | positive}}</span>
                 <data-ng-pluralize
                         count="case.overdueDays()"
@@ -94,7 +94,7 @@
 
                 <div class="issue-actions">
                   <div>
-                    <span class="action-status updated">Ändrad {{case.modificationDate() | googleDate}}</span>
+                    <span class="action-status updated" data-ng-class="{'issue-closed-color-dim': case.closed()}">Ändrad {{case.modificationDate() | googleDate}} </span>
                     <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
                     <span class="priority" data-ng-if="case.priority.text">Prioritet: {{ case.priority.text }}</span>
                   </div>

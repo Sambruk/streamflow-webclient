@@ -4,7 +4,7 @@
            class="{{!$parent.activeLabels.length ?'empty-select':''}}"
            style="width: 100%;">
     <ui-select-match placeholder="Välj etiketter...">{{$item.text}}</ui-select-match>
-    <ui-select-choices repeat="label in possibleCaseLabels | filter: $select.search">
+    <ui-select-choices repeat="label in possibleCaseLabels | filter: $select.search | orderBy:'text'">
         <div ng-bind-html="label.text | trustAsHTML"></div>
     </ui-select-choices>
 </ui-select>

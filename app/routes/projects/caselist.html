@@ -57,6 +57,12 @@
                     <span class="creator">{{case.createdBy}}</span>
                     <span ng-if="case.assignedTo!=null" class="assigned">tilldelad {{case.assignedTo}}</span>
                     <span ng-if="case.unread"><span class="issue-unread"></span></span>
+                    <span ng-if="case.hasAttachments"><span class="issue-has-attachments"></span></span>
+                    <span ng-if="case.hasContacts"><span class="issue-has-contacts"></span></span>
+                    <span ng-if="case.hasUnreadConversation"><span class="issue-has-conversation"></span></span>
+                    <span ng-if="case.hasConversations"><span class="issue-has-conversation"></span></span>
+                    <span ng-if="case.hasUnreadForm"><span class="issue-has-unread-forms -forms"></span></span>
+                    <span ng-if="case.hasSubmittedForms"><span class="issue-has-submitted-forms"></span></span>
                   </div>
                   <div class="issue-actions">
                     <div>
@@ -90,6 +96,12 @@
                   <span class="creator">{{case.createdBy}}</span>
                   <span ng-if="case.assignedTo!=null" class="assigned">tilldelad {{case.assignedTo}}</span>
                   <span ng-if="case.unread"><span class="issue-unread"></span></span>
+                  <span ng-if="case.hasAttachments"><span class="issue-has-attachments"></span></span>
+                  <span ng-if="case.hasContacts"><span class="issue-has-contacts"></span></span>
+                  <span ng-if="case.hasUnreadConversation"><span class="issue-has-conversation"></span></span>
+                  <span ng-if="case.hasConversations"><span class="issue-has-conversation"></span></span>
+                  <span ng-if="case.hasUnreadForm"><span class="issue-has-unread-forms -forms"></span></span>
+                  <span ng-if="case.hasSubmittedForms"><span class="issue-has-submitted-forms"></span></span>
                 </div>
 
                 <div class="issue-actions">

@@ -35,7 +35,7 @@ angular.module('sf').directive('login', function($rootScope, buildMode, $locatio
         if (buildMode === 'dev') {
           url= 'https://username:password@test-sf.jayway.com/streamflow/';
         } else {
-          url= $location.$$protocol + '://username:password@' + $location.$$host + ':' + $location.$$port + '/webclient/api';
+          url= $location.$$protocol + '://' + $location.$$host + ':' + $location.$$port + '/webclient/api';
         }
         return url;
       }

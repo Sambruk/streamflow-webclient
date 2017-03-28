@@ -105,9 +105,9 @@
   <div class="title-divider"><span>Gruppera & sortera</span></div>
     <label for="group">Gruppera</label>
     <div class="select group">
-      <div class="">
-        <select class="hasCustomSelect" name="group" id="group" ng-options="option.name for option in groupingOptions"
-                ng-model="group.value">
+      <div class="select">
+        <select chosen class="hasCustomSelect" name="group" id="group" data-ng-options="option.name for option in groupingOptions" data-ng-model="group.value">
+          <option></option>
         </select>
         <a href="" id="" data-ng-click="clearGrouping()" data-ng-show="group.value">
           <i class="icon-cancel"></i></a>
@@ -115,17 +115,17 @@
 
       <div class="group-container">
         <div class="group-asc">
-          <input type="radio" value="asc" name="group-asc" id="group-asc" data-ng-model="group.order"><label for="group-asc">Stigande</label>
+          <label><input type="radio" value="asc" name="group-asc" id="group-asc" data-ng-model="group.order"><span></span></label><label for="group-asc">Stigande</label>
         </div>
         <div class="group-desc">
-          <input type="radio" value="desc" name="group-desc" id="group-desc" data-ng-model="group.order"><label for="group-desc">Fallande</label>
+          <label><input type="radio" value="desc" name="group-desc" id="group-desc" data-ng-model="group.order"><span></span></label><label for="group-desc">Fallande</label>
         </div>
       </div>
     </div>
     <label for="sort">Sortera</label>
     <div class="select sort">
-      <div class="">
-        <select class="hasCustomSelect" allow-single-deselect="true" data-ng-model="sort.value" id="sort" name="sort">
+      <div class="select">
+        <select chosen class="hasCustomSelect" allow-single-deselect="true" data-ng-model="sort.value" id="sort" name="sort">
           <option value="createdOn">Skapad</option>
           <option value="dueOn">Förfallodatum</option>
           <option value="description">Beskrivning</option>
@@ -137,10 +137,10 @@
 
       <div class="sort-container">
         <div class="sort-asc">
-          <input type="radio" value="asc" id="sort-asc" name="sort-asc" data-ng-model="sort.order"><label for="sort-asc">Stigande</label>
+          <label><input type="radio" value="asc" id="sort-asc" name="sort-asc" data-ng-model="sort.order"><span></span></label><label for="sort-asc">Stigande</label>
         </div>
         <div class="sort-desc">
-          <input type="radio" value="desc" id="sort-desc" name="sort-desc" data-ng-model="sort.order"><label for="sort-desc">Fallande</label>
+          <label><input type="radio" value="desc" id="sort-desc" name="sort-desc" data-ng-model="sort.order"><span></span></label><label for="sort-desc">Fallande</label>
         </div>
       </div>
     </div>
@@ -150,3 +150,8 @@
     </div>
   </div>
 </div>
+
+
+
+
+

@@ -1,5 +1,7 @@
 <div class="navigation" role='navigation'>
-  <a href="" ng-show="canCreateCase()" data-ng-click="createCase()" class="add-new-issue"><i class="icon-plus"></i><span class="struct">Lägg till nytt ärende</span></a>
+  <a href="" ng-show="canCreateCase()" data-ng-click="createCase()" class="add-new-issue"><i class="icon-plus"></i>
+    <span class="struct">Lägg till nytt ärende</span>
+  </a>
   <div class="functions-menu" data-ng-class="{open: showSidebar}">
     <div class="functions-header cf">
       <!--h2><a href="#/perspectives">Funktioner</a></h2-->
@@ -9,7 +11,11 @@
         </div>
       </h2>
 
-      <a href="" class="icon-menu open-toolbar" data-ng-click="toggleSidebar($event)">
+      <a href="" class="open-toolbar" data-ng-click="toggleSidebar($event)">
+        <span class="open-toolbar__item"></span>
+        <span class="open-toolbar__item"></span>
+        <span class="open-toolbar__item"></span>
+        <!------------------------------------------------------>
         <span class="struct">Visa/dölj funktionsmeny</span>
       </a>
     </div>

@@ -95,12 +95,13 @@
                 <data-ng-include class="m-c" src="'routes/cases/form/form-label.html'"></data-ng-include>
                 <!--<select data-ng-model="field.value"
                         class="sidebar-chosen-drop-down ng-pristine ng-valid"-->
-                <select data-ng-model="field.value"
+                <select chosen data-ng-model="field.value"
                         class="sidebar-chosen-drop-down ng-pristine ng-valid ng-touched"
                         name="{{ field.field.field }}" id="field-{{ field.field.field }}"
                         data-ng-options="option.value as option.name for option in field.field.fieldValue.options"
                         ng-change="reapplyRules()" sf-generic-auto-send
                         data-field-type="{{ field.field.fieldValue._type }}">
+                  <option></option>
                 </select>
               </div>
             </div>
@@ -177,6 +178,7 @@
 	              <div class="m m-attachments form-attachments" id="form-attachment-{{field.field.field}}" style="float:left" ng-show="attachment.id && attachment.fieldId === field.field.field">
 	                <ul class="zebra-list">
 	                  <li>
+                        <i class="icon-attach"></i>
 	                    <a href="">{{ attachment.name }}</a>
 	                    <a data-ng-click="deleteFormDraftAttachment(field.field.field)" href="" class="delete" title="Radera fil">
                         <i class="icon-cancel"></i>

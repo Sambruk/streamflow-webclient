@@ -32,7 +32,8 @@
           </a>
         </span>
         <a ng-show="canAddParticipant || canAddExternalParticipant" href="#/cases/{{ caseId }}/conversation/{{ conversationId }}/participants/create" class="add-participant" title="Lägg till deltagare">
-          <i class="icon-user-plus"></i>
+          <!--<i class="icon-user-plus"></i>-->
+          <span class="add-participant__item-add">+add</span>
           <span class="struct">Lägg till deltagare</span>
         </a>
       </div>
@@ -46,8 +47,8 @@
 
         <div class="m-attachments m-draft-attachments">
           <ul class="zebra-list">
-            <li ng-repeat="attachment in conversationMessageDraftAttachments">
-              <a data-ng-click="downloadDraftAttachment(attachment)" href="">{{ attachment.text }}</a>
+            <li ng-repeat="attachment in conversationMessageDraftAttachments" class="icon-attach">
+              <a  data-ng-click="downloadDraftAttachment(attachment)" href="">{{ attachment.text }}</a>
               <a data-ng-click="deleteDraftAttachment(attachment)" href="" class="delete" title="Radera fil">
                 <i class="icon-cancel"></i>
                 <span class="struct">Radera fil</span>

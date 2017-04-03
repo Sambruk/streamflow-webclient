@@ -14,16 +14,16 @@
     </ul>
     <div>
         <div class="date left">
-            <b>Ändrad:</b> {{caze[0].lastLogEntryTime | date : "yyyy-MM-dd 'kl' HH:mm"}}
+            Ändrad: {{caze[0].lastLogEntryTime | date : "yyyy-MM-dd 'kl' HH:mm"}}
         </div>
-        <a data-ng-click="collapsedBasic = ! collapsedBasic || status=='new'" href=""><span class="action-btn"></span>{{ collapsedBasic || status=='new'?
-            'Fäll ihop' : 'Fäll ut de 3 senaste'}}</a>
-
         <a href="#/cases/{{ caze[0].id }}/caselog"><span class="action-btn icon-history"
                                                          title="Ärendelogg, historik">{{submittedForms.length}}
             <span class="struct">Ärendelogg, historik</span>
         </span>
         </a>
+        <a class="collapsedBasic" data-ng-click="collapsedBasic = ! collapsedBasic || status=='new'" href=""><span class="action-btn"></span>{{ collapsedBasic || status=='new'?
+            'Fäll ihop' : 'Fäll ut de 3 senaste'}}</a>
+
         <div class="clear"></div>
         <div data-ng-show="collapsedBasic || status=='new'">
             <ul>

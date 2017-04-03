@@ -33,6 +33,16 @@ angular.module('sf')
     return $filter('date')(input, 'd MMM');
   };
 }])
+.filter('day', ['$filter', function ($filter) {
+  return function (input) {
+    return $filter('date')(input, 'd');
+  };
+}])
+.filter('month', ['$filter', function ($filter) {
+  return function (input) {
+    return $filter('date')(input, 'MMM');
+  };
+}])
 .filter('longDate', ['$filter', function ($filter) {
   return function (input) {
     return $filter('date')(input, 'yyyy-MM-dd');

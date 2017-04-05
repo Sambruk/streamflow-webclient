@@ -71,7 +71,7 @@
             <div class="text col medium-small col-3">
               <label for="contact-pref">Kontaktpreferens</label>
               <div class="select">
-                <select class="hasCustomSelect" data-ng-model="contact[0].contactPreference" id="contact-pref" name="contactpreference" data-sf-update-on-blur="updateField($event, $success, $error)" data-ng-disabled="!canUpdateContact">
+                <select chosen class="hasCustomSelect" data-ng-model="contact[0].contactPreference" id="contact-pref" name="contactpreference" data-sf-update-on-blur="updateField($event, $success, $error)" data-ng-disabled="!canUpdateContact">
                   <option value="letter">Brev</option>
                   <option value="email" selected>E-post</option>
                   <option value="sms">SMS</option>

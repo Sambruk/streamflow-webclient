@@ -24,8 +24,11 @@
 
   <span>Välj ett datum:</span>
   <span>
-    <select data-ng-options="form.index as form.submissionDate for form in submittedForms" id="selectedSubmittedForm" data-ng-model="selectedSubmittedForm"></select>
-  </span>
+    <div class="select">
+      <select chosen data-ng-options="form.index as form.submissionDate for form in submittedForms" id="selectedSubmittedForm" data-ng-model="selectedSubmittedForm"></select>
+      <option></option>
+    </div>
+    </span>
   <br />
   <!-- Signature -->
   <div class="form-history" ng-if="submittedForm[0].signatures.length > 0">

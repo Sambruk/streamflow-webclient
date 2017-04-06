@@ -141,6 +141,7 @@ angular.module('sf')
             $scope.showSpinner.form = false;
 
             $scope.form[0].enhancedPages.forEach(function (pages) {
+                console.log(pages.fields);
                 pages.fields.forEach(function (field) {
 
                     if (field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue') {

@@ -341,6 +341,7 @@ angular.module('sf')
                     updateObject(scope.possibleCaseTypes);
                     updateObject(scope.sendToRecipients);
                     updateObject(scope.assignToRecipients);
+                    updateObject(scope.possibleSendTo);
                     sidebarService.caseType(scope);
                 });
                 scope.$on('case-unassigned', function () {
@@ -356,6 +357,7 @@ angular.module('sf')
                     checkFilterCaseLog('system');
                 });
                 scope.$on('case-type-changed', function () {
+                    updateObject(scope.possibleSendTo);
                     checkFilterCaseLog('system');
                 });
                 scope.$on('casedescription-changed', function () {

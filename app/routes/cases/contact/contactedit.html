@@ -93,7 +93,7 @@
           <div class="row cols-1 cf">
             <div class="text col full">
               <label for="contact-note">Anteckningar</label>
-              <textarea data-ng-model="contact[0].note" id="contact-note" name="note" cols="30" rows="2" placeholder="" data-sf-update-on-blur="updateField($event, $success, $error)" data-ng-disabled="!canUpdateContact" data-ng-class="{'disabled': !canUpdateContact}"></textarea>
+              <textarea autogrow data-ng-model="contact[0].note" id="contact-note" name="note" cols="30" rows="2" placeholder="" data-sf-update-on-blur="updateField($event, $success, $error)" data-ng-disabled="!canUpdateContact" data-ng-class="{'disabled': !canUpdateContact}"></textarea>
             </div>
           </div>
         </form>

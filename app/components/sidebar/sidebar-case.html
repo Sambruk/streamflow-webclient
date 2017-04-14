@@ -21,20 +21,6 @@
             <span class="struct">Ärendelogg, historik</span>
         </span>
         </a>
-        <a class="collapsedBasic" data-ng-click="collapsedBasic = ! collapsedBasic || status=='new'" href=""><span class="action-btn"></span>{{ collapsedBasic || status=='new'?
-            'Fäll ihop' : 'Fäll ut de 3 senaste'}}</a>
-
-        <div class="clear"></div>
-        <div data-ng-show="collapsedBasic || status=='new'">
-            <ul>
-                <li data-ng-repeat="entry in sideBarCaseLogs | orderBy:'-creationDate' | limitTo:3 track by $index"
-                    data-ng-class-even="'even'" class="convo-li">
-                    <b class="text-small">{{ entry.text }} av {{ entry.creator }}</b>
-                    <div class="date">{{ entry.creationDate | dateTime}}</div>
-                </li>
-            </ul>
-        </div>
-
     </div>
     <div class="clear"></div>
 </div>

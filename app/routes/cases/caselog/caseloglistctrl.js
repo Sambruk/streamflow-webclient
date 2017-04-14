@@ -32,9 +32,14 @@ angular.module('sf')
                 for (var prop in filterObj) {
                     filterArray.push({'filterName': prop, 'filterValue': filterObj[prop]});
                 }
+                filterArray.push({'filterName': 'note', 'filterValue': false});
                 $scope.caseLogFilters = filterArray;
                 $scope.caseLogs = caseService.getSelectedCaseLog($routeParams.caseId);
+                console.log('filterObj ',filterObj);
+                console.log('filterArr ',filterArray);
 
+                console.log('caseLogs ',$scope.caseLogs);
+                console.log('scope', $scope);
                 $scope.caseLogs.promise.then(function () {
                     $scope.showSpinner.caseLogs = false;
                 });

@@ -94,6 +94,7 @@ angular.module('sf')
       conversation: 'Konversation',
       custom: 'Ärende',
       form: 'Formulär',
+      note: 'Sammanfattning',
       system: 'System',
       systemTrace: 'System Trace',
       successMessage: 'Hämtning lyckades',

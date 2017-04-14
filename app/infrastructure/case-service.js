@@ -17,7 +17,7 @@
 'use strict';
 
 angular.module('sf')
-.factory('caseService', function ($rootScope, httpService, backendService, navigationService, SfCase, $http, debounce, formMapperService) {
+.factory('caseService', function ($rootScope, $routeParams, httpService, backendService, navigationService, SfCase, $http, debounce, formMapperService) {
 
     var workspaceId = 'workspacev2';
 
@@ -602,7 +602,7 @@ angular.module('sf')
         });
       },
       getSelectedCaseLog: function(caseId) {
-
+          var self = this;
           //TODO: Look at why this is getting called twice on the caselog list page and if no way around it, maybe make sure the results are cached
           return backendService.get({
               specs:caseBase(caseId).concat([
@@ -613,6 +613,16 @@ angular.module('sf')
                   resource.response.links.forEach(function(link){
                       result.push(link);
                   });
+
+                  //adding notes to log
+                  self.getAllNotes(caseId).promise
+                      .then(function(notes) {
+                          notes.forEach(function(note){
+                              console.log('note1', note);
+                              result.push(note);
+                          });
+                      });
+
                   caseBase.broadcastMessage(result.status);
               },
               onFailure:function(err){
@@ -621,6 +631,7 @@ angular.module('sf')
           });
       },
       getSelectedFilteredCaseLog: function(caseId, queryfilter) {
+          var self = this;
         //console.log(queryfilter);
         //TODO: Look at why this is getting called twice on the caslog list page and if no way around it, maybe make sure the results are cached
         return backendService.get({
@@ -638,6 +649,16 @@ angular.module('sf')
             resource.response.links.reverse().forEach(function(link){
               result.push(link);
             });
+              // if(queryfilter.note)
+              //adding notes to log
+                  self.getAllNotes($routeParams.caseId).promise
+                      .then(function(note) {
+                          note.forEach(function(item){
+                              console.log('item', item);
+                              result.push(item);
+                          });
+                      });
+                console.log('result',result);
             caseBase.broadcastMessage(result.status);
           },
           onFailure:function(err){

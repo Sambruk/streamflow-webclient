@@ -618,11 +618,12 @@ angular.module('sf')
                   self.getAllNotes(caseId).promise
                       .then(function(notes) {
                           notes.forEach(function(note){
+                              note.caseLogType = 'note';
+                              note.creationDate = note.createdOn;
                               console.log('note1', note);
                               result.push(note);
                           });
                       });
-
                   caseBase.broadcastMessage(result.status);
               },
               onFailure:function(err){
@@ -649,16 +650,16 @@ angular.module('sf')
             resource.response.links.reverse().forEach(function(link){
               result.push(link);
             });
-              // if(queryfilter.note)
               //adding notes to log
-                  self.getAllNotes($routeParams.caseId).promise
-                      .then(function(note) {
-                          note.forEach(function(item){
-                              console.log('item', item);
-                              result.push(item);
-                          });
+              self.getAllNotes(caseId).promise
+                  .then(function(notes) {
+                      notes.forEach(function(note){
+                          note.caseLogType = 'note';
+                          note.creationDate = note.createdOn;
+                          console.log('note1', note);
+                          result.push(note);
                       });
-                console.log('result',result);
+                  });
             caseBase.broadcastMessage(result.status);
           },
           onFailure:function(err){

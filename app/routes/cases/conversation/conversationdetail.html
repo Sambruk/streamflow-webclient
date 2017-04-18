@@ -42,7 +42,7 @@
       <form action="#" method="get" class="cf">
         <div class="text">
           <label for="convo-text" class="struct">Meddelande</label>
-          <textarea name="convo-text" id="convo-text" cols="30" rows="5" placeholder="Skriv ditt meddelande här" data-ng-blur="changeMessageDraft($event)" ng-model="conversationMessageDraft[0]"></textarea>
+          <textarea name="convo-text" id="convo-text" cols="30" rows="5" placeholder="Skriv ditt meddelanden här" data-ng-blur="changeMessageDraft($event)" ng-model="conversationMessageDraft[0]"></textarea>
         </div>
 
         <div class="m-attachments m-draft-attachments">
@@ -70,7 +70,7 @@
     <div data-ng-show="showSpinner.conversation" class="spinner"></div>
     <div class="issue-notes cf" data-ng-show="!showSpinner.conversation">
       <div class="posted-notes">
-        <p data-ng-show="!conversationMessages.length">Inga meddelande i konversationen</p>
+        <p data-ng-show="!conversationMessages.length">Inga meddelanden i konversationen</p>
         <div class="note-item cf" data-ng-repeat="message in conversationMessages | orderBy:'-createdOn'">
           <div class="note-posted-by">
             <span class="struct">Postad av: </span>{{ message.sender }}

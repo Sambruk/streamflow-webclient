@@ -620,7 +620,6 @@ angular.module('sf')
                           notes.forEach(function(note){
                               note.caseLogType = 'note';
                               note.creationDate = note.createdOn;
-                              console.log('note1', note);
                               result.push(note);
                           });
                       });
@@ -656,7 +655,6 @@ angular.module('sf')
                       notes.forEach(function(note){
                           note.caseLogType = 'note';
                           note.creationDate = note.createdOn;
-                          console.log('note1', note);
                           result.push(note);
                       });
                   });

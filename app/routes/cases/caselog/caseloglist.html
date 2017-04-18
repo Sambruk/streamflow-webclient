@@ -38,28 +38,15 @@
     <div ng-show="showSpinner.caseLogs" class="spinner"></div>
     <div class="issue-notes cf" ng-show="!showSpinner.caseLogs && filteredCaseLogs.length > 0">
       <div class="posted-notes">
-
-        <!--Standard log items-->
         <div class="note-item cf" data-ng-repeat="entry in filteredCaseLogs = (caseLogs | caseLogFilter:caseLogFilters | orderBy:'-creationDate') track by $index">
           <div class="note-posted-by">
             <span class="struct">Postad av: </span>{{ entry.creator }} <span> - {{ entry.caseLogType | translate }}</span>
             <span class="note-timestamp">{{ entry.creationDate | dateTime }}</span>
           </div>
           <div class="note-body">
-            <p>{{ entry.text }}</p>
+            <p>{{ entry.text || entry.note }}</p>
           </div>
         </div>
-
-        <!--Notes items-->
-      <!--  <div class="note-item cf" data-ng-repeat="entry in filteredCaseLogs = (caseLogs | caseLogFilter:caseLogFilters | orderBy:'-creationDate') track by $index">
-          <div class="note-posted-by">
-            <span class="struct">Postad av: </span>{{ entry.creator }} <span> - {{ entry.caseLogType | translate }}</span>
-            <span class="note-timestamp">{{ entry.creationDate | dateTime }}</span>
-          </div>
-          <div class="note-body">
-            <p>{{ entry.text }}</p>
-          </div>
-        </div>-->
       </div>
     </div>
   </div>

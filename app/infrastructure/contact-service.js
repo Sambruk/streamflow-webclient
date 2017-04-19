@@ -31,7 +31,7 @@ angular.module('sf')
     var _submitContact = function(caseId, contactIndex) {
       caseService.addContact(caseId, contact).then(function(){
         $rootScope.$broadcast('contact-created');
-        var href = navigationService.caseHrefSimple(caseId);
+        var href = navigationService.caseHrefSimple(caseId) + '/view/current';
         var hrefWithoutHash = href.slice(1);
         $location.path(hrefWithoutHash + '/contact/' + contactIndex + '/');
       });

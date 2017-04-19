@@ -73,7 +73,7 @@ angular.module('sf')
       },
 
       sfCaseFactory: function(model) {
-        var href = navigationService.caseHrefSimple(model.id);
+        var href = navigationService.caseHrefSimple(model.id) +'/view/current';
         var o = new SfCase(model, href);
         return o;
       },

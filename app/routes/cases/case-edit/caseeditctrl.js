@@ -23,7 +23,7 @@ angular.module('sf').controller('CaseEditCtrl', function ($scope, $rootScope, $r
     $scope.projectId = $routeParams.projectId;
     $scope.notesHistory = caseService.getAllNotes($routeParams.caseId);
     $scope.caze = caseService.getSelected($routeParams.caseId);
-    $scope.autoSave = false;
+    $scope.autoSave = true;
 
     $scope.$watch('sidebardata.caze', function (newVal) {
         if (!newVal) {

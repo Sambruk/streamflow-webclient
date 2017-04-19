@@ -29,24 +29,28 @@
                 </div>
             </div>
             <caselogentry caseid="caseId"></caselogentry>
-            <div class="m" ng-hide="notesHistory.length === 0">
-                <h2>Tidigare inlägg</h2>
-                <div ng-hide="showSpinner.notesHistory">
+            <div class="m single-issue">
+                <div class="m-h">
+                    <h2>Ärendelogg</h2>
+                </div>
+                <div ng-show="showSpinner.caseLogs" class="spinner"></div>
+                <div class="issue-notes cf" ng-show="!showSpinner.caseLogs && filteredCaseLogs.length > 0">
                     <div class="posted-notes">
-                        <div data-ng-repeat="note in notesHistory">
-                            <div class="note-item cf">
-                                <div class="note-posted-by">
-                                    <span class="struct">Postad av: </span>{{ note.creator }}
-                                    <span class="note-timestamp">{{ note.createdOn | dateTime }}</span>
-                                </div>
-                                <div class="note-body">
-                                    <p>{{ note.note }}</p>
-                                </div>
+                        <div class="note-item cf"
+                             data-ng-repeat="entry in filteredCaseLogs = (caseLogs | orderBy:'-creationDate') track by $index">
+                            <div class="note-posted-by">
+                                <span class="struct">Postad av: </span>{{ entry.creator }} <span> - {{ entry.caseLogType | translate }}</span>
+                                <span class="note-timestamp">{{ entry.creationDate | dateTime }}</span>
+                            </div>
+                            <div class="note-body">
+                                <p>{{ entry.text }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div ng-show="showSpinner.notesHistory" class="spinner"></div>
+            </div>
+            <div ng-hide="showSpinner.caseLogs">
+                <p ng-hide="filteredCaseLogs.length">Inga loggposter att visa med det angivna filtret.</p>
             </div>
         </div>
     </div>

@@ -30,6 +30,7 @@
               <input placeholder="Skriv rubrik här" type="text" name="description" id="case-description" data-sf-update-on-blur="autoSave?changeCaseDescription($event, $success, $error):''" data-ng-model="caseDescription" maxlength="50" data-ng-disabled="!sidebardata.canChangeDescription">
             </div>
             <div class="text">
+              <h2>Ändra sammanfattning</h2>
               <label for="issue-notes" class="struct">Notering</label>
               <textarea placeholder="Skriv din ärendebeskriving här - spara genom knappen eller genom att klicka utanför rutan" id="issue-notes" cols="30" rows="5" data-sf-update-on-blur="autoSave?addNote($event, $success, $error):''" data-ng-model="caseNote" data-ng-disabled="!sidebardata.canAddNote"></textarea>
             </div>

@@ -33,7 +33,7 @@
             <div class="text" data-ng-show="status=='empty'">
               <h2>Ändra sammanfattning</h2>
               <label for="issue-notes" class="struct">Notering</label>
-              <textarea placeholder="Skriv din ärendebeskriving här - spara genom knappen eller genom att klicka utanför rutan" id="issue-notes" cols="30" rows="5" data-sf-update-on-blur="autoSave && caseNote ?addNote($event, $success, $error):''" data-ng-model="caseNote" data-ng-disabled="!sidebardata.canAddNote"></textarea>
+              <textarea placeholder="Skriv din ärendebeskriving här" id="issue-notes" cols="30" rows="5" data-sf-update-on-blur="autoSave && caseNote ?addNote($event, $success, $error):''" data-ng-model="caseNote" data-ng-disabled="!sidebardata.canAddNote"></textarea>
             </div>
             <div class="custom-checkbox" data-ng-show="status =='new' || status=='empty'">
               <label class="caselog-filter caselog-filter-label">
@@ -80,7 +80,7 @@
       <caselogentry  data-ng-show="status === undefined || status=='notes' || status=='new'" caseid="caseId"></caselogentry>
       <div data-ng-show="status === undefined || status=='notes' || status=='new'" class="m single-issue">
         <div class="m-h">
-          <h2>Ärendelogg</h2>
+          <h2>Tidigare kommentarer</h2>
         </div>
         <div ng-show="showSpinner.caseLogs" class="spinner"></div>
         <div class="issue-notes cf" ng-show="!showSpinner.caseLogs && filteredCaseLogs.length > 0">

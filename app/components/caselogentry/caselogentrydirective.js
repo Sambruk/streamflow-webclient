@@ -44,6 +44,10 @@ angular.module('sf')
       scope.submitCaseLogEntry = function($event){
         $event.preventDefault();
           if (scope.caseLogEntryToCreate) {
+            if(scope.$parent.status =='new' && scope.$parent.caseLogs.length == 0){
+                scope.$parent.notes[0].note = scope.caseLogEntryToCreate;
+              caseService.addNote(scope.caseId, scope.$parent.notes[0]);
+            }
               caseService.createCaseLogEntry(scope.caseId, scope.caseLogEntryToCreate)
                   .then(function (response) {
                       $rootScope.$broadcast('caselog-message-created');

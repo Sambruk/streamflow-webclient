@@ -9,9 +9,11 @@
                 <div class="clear"></div>
                 <div>
                     <a href="#/cases/{{ caze[0].id }}/{{ caze[0].ownerId }}/notes" target="_self" class="block-link" data-ng-hide="notes[0].length === 0" data-ng-bind-html="(notes[0].note || emptyNoteMessage)| limitTo: 200"></a>
-                    <a href="#/cases/{{ caze[0].id }}/{{ caze[0].ownerId }}/empty"  target="_self" class="action-btn icon-pencil" title="Edit case"><i class="icon-info"></i></a>
                 </div>
             </a>
+            <div class="clear"></div>
+            <a href="#/cases/{{ caze[0].id }}/{{ caze[0].ownerId }}/empty"  target="_self" class="case-note-edit icon-pencil" title="Edit case"></a>
+            <a href="#/cases/{{ caze[0].id }}/{{ caze[0].ownerId }}/notes" target="_self" class="btn case-note">Visa ärende</a>
         </li>
     </ul>
     <div class="clear"></div>

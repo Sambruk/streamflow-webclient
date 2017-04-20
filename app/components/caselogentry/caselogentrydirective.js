@@ -17,7 +17,7 @@
 'use strict';
 
 angular.module('sf')
-.directive('caselogentry', function($rootScope, $location, $routeParams, $q, caseService, navigationService, checkPermissionService){
+.directive('caselogentry', function($rootScope, $location, $routeParams, $q, $window, caseService, navigationService, checkPermissionService){
   return {
     restrict: 'E',
     templateUrl: 'components/caselogentry/caselogentry.html',
@@ -47,6 +47,7 @@ angular.module('sf')
             if(scope.$parent.status =='new' && scope.$parent.caseLogs.length == 0){
                 scope.$parent.notes[0].note = scope.caseLogEntryToCreate;
               caseService.addNote(scope.caseId, scope.$parent.notes[0]);
+                $window.location.href = '#/cases/'+scope.$parent.caze[0].id+'/'+scope.$parent.caze[0].ownerId+'/notes';
             }
               caseService.createCaseLogEntry(scope.caseId, scope.caseLogEntryToCreate)
                   .then(function (response) {

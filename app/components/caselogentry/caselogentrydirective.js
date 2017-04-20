@@ -43,11 +43,13 @@ angular.module('sf')
 
       scope.submitCaseLogEntry = function($event){
         $event.preventDefault();
-        caseService.createCaseLogEntry(scope.caseId, scope.caseLogEntryToCreate)
-        .then(function(response){
-          $rootScope.$broadcast('caselog-message-created');
-          scope.caseLogEntryToCreate = '';
-        });
+          if (scope.caseLogEntryToCreate) {
+              caseService.createCaseLogEntry(scope.caseId, scope.caseLogEntryToCreate)
+                  .then(function (response) {
+                      $rootScope.$broadcast('caselog-message-created');
+                      scope.caseLogEntryToCreate = '';
+                  });
+          }
       };
     }
   };

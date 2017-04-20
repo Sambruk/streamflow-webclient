@@ -99,7 +99,7 @@
                                 <span class="note-timestamp">{{ entry.creationDate | dateTime }}</span>
                             </div>
                             <div class="note-body">
-                                <p>{{ entry.text }}</p>
+                                <p>{{ entry.text || entry.note}}</p>
                             </div>
                         </div>
                     </div>

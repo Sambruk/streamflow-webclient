@@ -163,7 +163,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
                     // Check if the current route contains formdraft to redirect to "case main page"
                     var checkRoute = new RegExp('formdrafts').test($location.path());
                     if (checkRoute === true) {
-                        var href = navigationService.caseHrefSimple($routeParams.caseId) + '/view/current';
+                        var href = navigationService.caseHrefSimple($routeParams.caseId);
                         window.location.replace(href);
                     }
                 }

@@ -90,10 +90,6 @@ angular.module('sf')
       templateUrl: 'routes/cases/case-edit/caseedit.html',
       controller: 'CaseEditCtrl'
     })
-    .when('/cases/:caseId/:projectId/view/:status?', {
-      templateUrl: 'routes/cases/caseview/caseview.html',
-      controller: 'CaseViewCtrl'
-    })
     .otherwise({
       redirectTo: '/'
     });

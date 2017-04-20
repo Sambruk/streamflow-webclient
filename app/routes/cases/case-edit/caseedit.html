@@ -21,7 +21,8 @@
     <div class="m-h cf">
       <h2 class="id">Ärende: {{caze[0].caseId}} {{caze[0].text.length === 0 ? '' : '- ' + caze[0].text}}</h2>
     </div>
-    <div class="m-c">
+    <!--Empty or new case-->
+    <div class="m-c" data-ng-show="status =='new' || status=='empty'">
       <div class="issue-body">
         <form action="#" method="get" class="form-general cf" name="editCaseForm" onsubmit='return false;'>
           <div class="row">
@@ -62,6 +63,43 @@
           </div>
         </div>
         <div ng-show="showSpinner.notesHistory" class="spinner"></div>
+      </div>
+    </div>
+
+    <!--Not new-->
+    <div class="m-c" data-ng-show="status === undefined">
+      <h2>Sammanfattning</h2>
+                <span  data-ng-click="status = 'empty'" class="action-btn icon-pencil" title="Edit case">
+                    <span class="struct">Edit case</span>
+                </span>
+      <div class="issue-body">
+        <div class="text">
+          {{sidebardata.notes[0].note}}
+        </div>
+      </div>
+      <caselogentry caseid="caseId"></caselogentry>
+      <div class="m single-issue">
+        <div class="m-h">
+          <h2>Ärendelogg</h2>
+        </div>
+        <div ng-show="showSpinner.caseLogs" class="spinner"></div>
+        <div class="issue-notes cf" ng-show="!showSpinner.caseLogs && filteredCaseLogs.length > 0">
+          <div class="posted-notes">
+            <div class="note-item cf"
+                 data-ng-repeat="entry in filteredCaseLogs = (caseLogs | orderBy:'-creationDate') track by $index">
+              <div class="note-posted-by">
+                <span class="struct">Postad av: </span>{{ entry.creator }} <span> - {{ entry.caseLogType | translate }}</span>
+                <span class="note-timestamp">{{ entry.creationDate | dateTime }}</span>
+              </div>
+              <div class="note-body">
+                <p>{{ entry.text }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-hide="showSpinner.caseLogs">
+        <p ng-hide="filteredCaseLogs.length">Inga loggposter att visa med det angivna filtret.</p>
       </div>
     </div>
   </div>

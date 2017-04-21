@@ -51,6 +51,7 @@ angular.module('sf')
                 scope.exportConversations = false;
                 scope.exportContacts = false;
                 scope.exportCaseLog = false;
+                scope.exportCaseNotes = false;
                 scope.status = $routeParams.status;
 
                 scope.caze.promise.then(function () {
@@ -256,8 +257,8 @@ angular.module('sf')
                     scope.commandView = true;
                 }; // End Show Export Pdf
 
-                scope.onExportButtonClicked = function (submittedForms, attachments, conversations, contacts, caseLog) {
-                    caseService.getCasePdf($routeParams.caseId, submittedForms, attachments, conversations, contacts, caseLog);
+                scope.onExportButtonClicked = function (submittedForms, attachments, conversations, contacts, caseLog, notes) {
+                    caseService.getCasePdf($routeParams.caseId, submittedForms, attachments, conversations, contacts, caseLog, notes);
                     scope.toggleExportPopup(false);
                     console.log('Hide');
                 };// End Send to

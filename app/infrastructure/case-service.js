@@ -234,7 +234,7 @@ angular.module('sf')
                     };
             },
 
-            getCasePdf: function (caseId, submittedForms, attachments, conversations, contacts, caseLog) {
+            getCasePdf: function (caseId, submittedForms, attachments, conversations, contacts, caseLog, notes) {
                 var downloadURL = function downloadURL(url) {
                     var hiddenIFrameID = 'hiddenDownloader',
                         iframe = document.getElementById(hiddenIFrameID);
@@ -247,7 +247,7 @@ angular.module('sf')
                     iframe.src = url;
                 };
 
-                var url = httpService.apiUrl + 'workspacev2/cases/' + caseId + '/exportpdf?submittedForms=' + submittedForms + '&attachments=' + attachments + '&conversations=' + conversations + '&contacts=' + contacts + '&caselog=' + caseLog;
+                var url = httpService.apiUrl + 'workspacev2/cases/' + caseId + '/exportpdf?submittedForms=' + submittedForms + '&attachments=' + attachments + '&conversations=' + conversations + '&contacts=' + contacts + '&caselog=' + caseLog + '&notes=' + notes;
                 downloadURL(url);
             },
 

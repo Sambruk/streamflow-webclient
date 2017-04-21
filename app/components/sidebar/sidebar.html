@@ -215,10 +215,16 @@
                     <span></span>
                 Ärendelogg</label>
             </li>
+          <li>
+                <label for="export-case-notes" class="custom-checkbox">
+                    <input id="export-case-notes" type="checkbox" ng-model="exportCaseNotes" name="export-case-note">
+                    <span></span>
+                Ärendeposter</label>
+            </li>
         </ul>
         <div class="submit-area cf dialog-submit">
             <button type="submit" name="save-issue-owner"
-                    data-ng-click="onExportButtonClicked(exportSubmittedForms, exportAttachments, exportConversations, exportContacts, exportCaseLog)">
+                    data-ng-click="onExportButtonClicked(exportSubmittedForms, exportAttachments, exportConversations, exportContacts, exportCaseLog, exportCaseNotes)">
                 Exportera
             </button>
         </div>

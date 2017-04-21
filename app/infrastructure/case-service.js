@@ -650,14 +650,16 @@ angular.module('sf')
               result.push(link);
             });
               //adding notes to log
-              self.getAllNotes(caseId).promise
-                  .then(function(notes) {
-                      notes.forEach(function(note){
-                          note.caseLogType = 'note';
-                          note.creationDate = note.createdOn;
-                          result.push(note);
+              if (queryfilter.note) {
+                  self.getAllNotes(caseId).promise
+                      .then(function (notes) {
+                          notes.forEach(function (note) {
+                              note.caseLogType = 'note';
+                              note.creationDate = note.createdOn;
+                              result.push(note);
+                          });
                       });
-                  });
+              }
             caseBase.broadcastMessage(result.status);
           },
           onFailure:function(err){

@@ -179,10 +179,12 @@ angular.module('sf')
         };
 
         var updateFieldsOnPages = function (form) {
-            var p = Promise.resolve();
+            var deferred = $q.defer();
+            deferred.resolve();
+            var p = deferred.promise;
             form.enhancedPages.forEach(function (pages) {
                 pages.fields.forEach(function (field) {
-                    p = p.then(function () {
+                   p = p.then(function () {
                         var value = formMapperService.getValue(field.value, field.field.field);
                         caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, value);
                     });

@@ -29,7 +29,7 @@
                         <div class="text" data-ng-show="status =='new' || status=='empty'">
                             <label for="case-description" class="struct">Ärende</label>
                             <input placeholder="Skriv rubrik här" type="text" name="description" id="case-description"
-                                   data-sf-update-on-blur="autoSave && caseDescription?changeCaseDescription($event, $success, $error):''"
+                                   data-sf-update-on-blur="caseDescription ? changeCaseDescription($event, $success, $error) : ''"
                                    data-ng-model="caseDescription" maxlength="50"
                                    data-ng-disabled="!sidebardata.canChangeDescription">
                         </div>
@@ -37,16 +37,8 @@
                             <h2>Ändra sammanfattning</h2>
                             <label for="issue-notes" class="struct">Notering</label>
                             <textarea placeholder="Skriv din ärendebeskriving här" id="issue-notes" cols="30" rows="5"
-                                      data-sf-update-on-blur="autoSave && caseNote ?addNote($event, $success, $error):''"
+                                      data-sf-update-on-blur="caseNote ? addNote($event, $success, $error) : ''"
                                       data-ng-model="caseNote" data-ng-disabled="!sidebardata.canAddNote"></textarea>
-                        </div>
-                        <div class="custom-checkbox" data-ng-show="status =='new' || status=='empty'">
-                            <label class="caselog-filter caselog-filter-label">
-                                <input class="caselog-filter-checkbox" type="checkbox" data-ng-model="autoSave"
-                                       name="edit-mode"
-                                       id="edit-mode"/>
-                                <span></span> Autosave mode
-                            </label>
                         </div>
                     </div>
                 </form>

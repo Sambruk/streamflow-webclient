@@ -23,7 +23,6 @@ angular.module('sf').controller('CaseEditCtrl', function ($scope, $rootScope, $r
     $scope.projectId = $routeParams.projectId;
     $scope.notesHistory = caseService.getAllNotes($routeParams.caseId);
     $scope.caze = caseService.getSelected($routeParams.caseId);
-    $scope.autoSave = true;
     $scope.status = $routeParams.status;
 
     $scope.caseLogs = caseService.getSelectedFilteredCaseLog($routeParams.caseId, {

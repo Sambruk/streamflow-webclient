@@ -92,7 +92,7 @@ angular.module('sf')
       attachment: 'Bifogade filer',
       contact: 'Kontakt',
       conversation: 'Konversation',
-      custom: 'Ärende',
+      custom: 'Ärendekommentarer',
       form: 'Formulär',
       note: 'Sammanfattning',
       system: 'System',

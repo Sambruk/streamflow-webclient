@@ -53,6 +53,7 @@ angular.module('sf').directive('contextmenu', function (projectService, navigati
 
       scope.createCase = function(){
         if(!scope.canCreateCase()){
+          alert("You have to select one of the boxes below");
           return;
         }
         var projectId = navigationService.projectId();

@@ -271,9 +271,9 @@
                             <li data-ng-show="attachment.rel === 'attachment'"
                                 data-ng-repeat="attachment in attachments">
                                 <a data-ng-show="attachment.queries[0].id === 'download'"
-                                   data-ng-click="downloadAttachment(attachment)" href="">{{ attachment.text }}</a>
+                                   data-ng-click="downloadAttachment(attachment)" href="" download>{{ attachment.text }}</a>
                                 <a data-ng-show="attachment.queries[0].id !== 'download'"
-                                   href="">{{attachment.text}}</a>
+                                   href="" download>{{attachment.text}}</a>
                                 <a data-ng-show="attachment.commands.length"
                                    data-ng-click="deleteAttachment(attachment)" href="" class="delete"
                                    title="Radera fil">

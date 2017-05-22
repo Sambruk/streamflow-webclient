@@ -395,9 +395,8 @@ angular.module('sf')
                     updateObject(scope.contacts);
                     checkFilterCaseLog('contact');
                 });
-                scope.$on('caselog-message-created', function () {
-                    // updateObject(scope.sideBarCaseLogs);
-                    checkFilterCaseLog('custom');
+                $rootScope.$on('caselog-message-created', function () {
+
                 });
                 //End Event-listeners
             }

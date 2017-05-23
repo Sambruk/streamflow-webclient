@@ -103,7 +103,7 @@
 
     <div>
       <div class="select">
-
+        <label for="filter-status">Status</label>
         <!--TODO: replace hardcoded vales with value from server like below-->
         <!--<select chosen no-results-text="'Inga användare funna'" data-placeholder="Skapad av"-->
                 <!--data-ng-options="status.id as status.text for status in possibleStatus"-->
@@ -112,7 +112,7 @@
           <!--<option></option>-->
         <!--</select>-->
 
-        <select chosen class="hasCustomSelect" allow-single-deselect="true" data-ng-model="filter.status" id="sort" name="sort">
+        <select chosen allow-single-deselect="true" data-ng-model="filter.status" id="filter-status" name="filter-status">
           <option value="OPEN">Open</option>
           <option value="ON_HOLD">On hold</option>
           <option value="CLOSED">Closed</option>

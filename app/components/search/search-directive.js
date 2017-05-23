@@ -179,6 +179,15 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                     }
                 });
 
+                scope.$watch('filter.status', function () {
+                    if (!scope.filter || !scope.filter.status) {
+                        return;
+                    } else if (!scope.filter.status) {
+                        scope.filter.status = scope.filter.status;
+                        return;
+                    }
+                });
+
                 var isSet = function (values) {
                     var set = false;
                     _.each(values, function (value) {

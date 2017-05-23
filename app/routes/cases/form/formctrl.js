@@ -202,7 +202,6 @@ angular.module('sf')
         };
 
         $scope.submitForm = function () {
-            (updateFieldsOnPages($scope.form[0])).then(function () {
                 (caseService.submitForm($routeParams.caseId, $scope.form[0].draftId)).then(function () {
                     if (!$scope.closeWithForm) {
                         // Use this if to 100% to be sure that we get form submitted(at least during tests)
@@ -216,7 +215,6 @@ angular.module('sf')
                         });
                     }
                 });
-            });
         };
 
         $scope.deleteFormDraftAttachment = function (fieldId) {

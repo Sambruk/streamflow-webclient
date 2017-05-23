@@ -179,18 +179,17 @@ angular.module('sf')
         };
 
         var updateFieldsOnPages = function (form) {
-            var deferred = $q.defer();
-            deferred.resolve();
-            var p = deferred.promise;
+            //Creating empty promise
+            var promise = $q.when("");
             form.enhancedPages.forEach(function (pages) {
                 pages.fields.forEach(function (field) {
-                   p = p.then(function () {
+                   promise = promise.then(function () {
                         var value = formMapperService.getValue(field.value, field.field.field);
                         caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, value);
                     });
                 });
             });
-            return p;
+            return promise;
         };
 
         var formSubmitted = function () {

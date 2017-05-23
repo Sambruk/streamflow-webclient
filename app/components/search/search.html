@@ -100,6 +100,28 @@
         </select>
       </div>
     </div>
+
+    <div>
+      <div class="select">
+
+        <!--TODO: replace hardcoded vales with value from server like below-->
+        <!--<select chosen no-results-text="'Inga användare funna'" data-placeholder="Skapad av"-->
+                <!--data-ng-options="status.id as status.text for status in possibleStatus"-->
+                <!--data-ng-model="filter.createdBy"-->
+                <!--allow-single-deselect="true" search-contains="true" name="status-select" id="status-select">-->
+          <!--<option></option>-->
+        <!--</select>-->
+
+        <select chosen class="hasCustomSelect" allow-single-deselect="true" data-ng-model="filter.status" id="sort" name="sort">
+          <option value="OPEN">Open</option>
+          <option value="ON_HOLD">On hold</option>
+          <option value="CLOSED">Closed</option>
+          <option></option>
+        </select>
+
+
+      </div>
+    </div>
   </div>
   <div class="select-wrapp">
   <div class="title-divider"><span>Gruppera & sortera</span></div>

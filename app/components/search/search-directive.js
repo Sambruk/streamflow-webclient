@@ -45,6 +45,7 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                 scope.group.order = 'asc';
                 scope.sort = {};
                 scope.sort.order = 'asc';
+                scope.status = '';
 
                 scope.groupingOptions = groupByService.getGroupingOptions();
 
@@ -100,6 +101,9 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                         } else if (result[0] === 'label') {
                             scope.filter.label = scope.filter.label || [];
                             scope.filter.label.push(result[1]);
+                        } else if (result[0] === 'status') {
+                            scope.filter.status = scope.filter.status || [];
+                            scope.filter.status.push(result[1]);
                         } else {
                             scope.filter[result[0]] = result[1];
                         }

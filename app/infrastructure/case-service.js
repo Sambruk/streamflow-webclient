@@ -1112,7 +1112,6 @@ angular.module('sf')
                             return form.id === formId;
                         });
                         forms.reverse().forEach(function (item) {
-                            item.submissionDate = item.submissionDate.split('T')[0];
                             result.push(item);
                         });
                         caseBase.broadcastMessage(result.status);

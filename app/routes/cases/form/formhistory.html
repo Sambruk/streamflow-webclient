@@ -25,7 +25,7 @@
   <span>Välj ett datum:</span>
   <span>
     <div class="select">
-      <select chosen data-ng-options="form.index as form.submissionDate for form in submittedForms" id="selectedSubmittedForm" data-ng-model="selectedSubmittedForm"></select>
+      <select chosen data-ng-options="form.index as (form.submissionDate | dateTime) for form in submittedForms" id="selectedSubmittedForm" data-ng-model="selectedSubmittedForm"></select>
       <option></option>
     </div>
     </span>

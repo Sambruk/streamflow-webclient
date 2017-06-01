@@ -16,7 +16,7 @@
  */
 'use strict';
 
-angular.module('sf').directive('login', function($rootScope, buildMode, $location, $http, $window, $route, tokenService, httpService) {
+angular.module('sf').directive('login', function ($rootScope, buildMode, $location, $timeout, $http, $window, $route, tokenService, httpService) {
   return {
     restrict: 'E',
     templateUrl: 'components/login/login.html',
@@ -35,7 +35,9 @@ angular.module('sf').directive('login', function($rootScope, buildMode, $locatio
         if (buildMode === 'dev') {
           url= 'https://username:password@test-sf.jayway.com/streamflow/';
         } else {
-          url= $location.$$protocol + '://username:password@' + $location.$$host + ':' + $location.$$port + '/webclient/api';
+            // var userCredentials = getInternetExplorerVersion()>0?'':'username:password@';
+            var userCredentials = '';
+            url = $location.$$protocol + '://' + userCredentials + $location.$$host + ':' + $location.$$port + '/streamflow/webclient/api';
         }
         return url;
       }
@@ -57,12 +59,24 @@ angular.module('sf').directive('login', function($rootScope, buildMode, $locatio
 
       $rootScope.$on('logout', function (event, logout) {
         if (logout) {
-          var logoutUrl = getLogoutUrl();
-          $http.get(logoutUrl).error(function (response) {
-            // An error should mean we successfully logged out. This is handled
-            // by the response interceptor, so just show the error message.
-            console.error(response);
-          });
+            var basicAuthBase64 = btoa('username:password');
+            $http.defaults.headers.common.Authorization = 'Basic ' + basicAuthBase64;
+            $http({
+                method: 'GET',
+                headers: {'Content-Type': 'text/html; charset=UTF-8'},
+                url: httpService.absApiUrl(''),
+                cache: 'false'
+            }).then(function () {
+            }, function () {
+                scope.errorMessage = 'Användarnamn / lösenord ej giltigt!';
+            });
+
+            $timeout(function () {
+                tokenService.clear();
+                $location.path('/');
+                $http.defaults.headers.common.Authorization = '';
+                $window.location.reload();
+            }, 2000);
         }
       });
 

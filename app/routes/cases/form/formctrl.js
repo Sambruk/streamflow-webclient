@@ -180,16 +180,60 @@ angular.module('sf')
 
         var updateFieldsOnPages = function (form) {
             //Creating empty promise
+            var allSended = false;
+            var i = 0;
+
+            var promises = new Array();
+            promises.push($q.when(""));
+
             var promise = $q.when("");
+
+            console.log('pages', form.enhancedPages);
+
             form.enhancedPages.forEach(function (pages) {
                 pages.fields.forEach(function (field) {
-                   promise = promise.then(function () {
+                    // $timeout(function () {
+
+                    console.log(promises);
+                    // $timeout( function(){
+                    //     promises[promises.length-1].then(function () {
+                    promise.then(function () {
+                        // $timeout(function () {
+
+                        console.log('field', field.field);
+
                         var value = formMapperService.getValue(field.value, field.field.field);
-                        caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, value);
+                        console.log('sended data', $routeParams.caseId, form.draftId, field.field.field, value);
+
+
+                        if (field.field.fieldValue._type !== 'se.streamsource.streamflow.api.administration.form.ListBoxFieldValue') {
+
+                            promise = caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, value).then(function () {
+                                // promise =                                 caseService.updateField($routeParams.caseId, form.draftId, field.field.field, value).then(function () {
+
+
+                                // caseService.updateField($params.caseId, scope.$parent.form[0].draftId, attr.name, value);
+
+
+                                i++;
+                                console.log(promise);
+                            });
+                        }
+                        // },10000);
+
+                        promises.push(promise);
+                        console.log('updated promises', promises);
                     });
+                    // }, 1000 );
+                    // promise = promise.then(function () {
+                    //      var value = formMapperService.getValue(field.value, field.field.field);
+                    //      caseService.updateField($routeParams.caseId, form.draftId, field.field.field, value);
+                    //  });
                 });
             });
-            return promise;
+
+            return $q.all(promises);
+            // return promise;
         };
 
         var formSubmitted = function () {
@@ -202,19 +246,29 @@ angular.module('sf')
         };
 
         $scope.submitForm = function () {
-                (caseService.submitForm($routeParams.caseId, $scope.form[0].draftId)).then(function () {
-                    if (!$scope.closeWithForm) {
-                        // Use this if to 100% to be sure that we get form submitted(at least during tests)
-                        // $timeout(formSubmitted, 10000);
-                    } else {
-                        caseService.closeFormOnClose($routeParams.caseId).then(function () {
-                            formSubmitted();
-                            $timeout(function () {
-                                sidebarService.close($scope);
-                            }, 1000);
-                        });
-                    }
-                });
+            (updateFieldsOnPages($scope.form[0])).then(function () {
+                $timeout(function () {
+
+                    (caseService.submitForm($routeParams.caseId, $scope.form[0].draftId)).then(function () {
+                        if (!$scope.closeWithForm) {
+                            // Use this if to 100% to be sure that we get form submitted(at least during tests)
+                            console.log('submIF');
+
+                            $timeout(formSubmitted, 40000);
+                        } else {
+                            caseService.closeFormOnClose($routeParams.caseId).then(function () {
+                                $timeout(formSubmitted, 20000);
+
+                                console.log('submElse');
+                                // formSubmitted();
+                                $timeout(function () {
+                                    sidebarService.close($scope);
+                                }, 60000);
+                            });
+                        }
+                    });
+                }, 20000);
+            });
         };
 
         $scope.deleteFormDraftAttachment = function (fieldId) {

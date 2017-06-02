@@ -51,10 +51,14 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
             return;
           }
 
+                    var newValue = event.target.value;
+
           // Valid input, clear error warnings
           $('[class^=error]', element.parent()).hide();
 
           if (validates()) {
+                        console.log('HERE1');
+                        // updateField(newValue);
             scope.$root.$root.isValidForm=true;
           } else{
             scope.$root.$root.isValidForm=false;
@@ -65,11 +69,14 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
           if (!ctrl.$dirty) {
             return;
           }
+                    var newValue = value;
 
           // Valid input, clear error warnings
           $('[class^=error]', element.parent()).hide();
 
           if (validates()) {
+                        console.log('HERE2');
+                        // updateField(newValue);
             scope.$root.$root.isValidForm=true;
           } else {
             scope.$root.$root.isValidForm=false;

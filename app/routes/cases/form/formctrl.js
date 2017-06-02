@@ -16,7 +16,7 @@
  */
 'use strict';
 angular.module('sf')
-    .controller('FormCtrl', function ($q, $scope, caseService, $routeParams, $rootScope, webformRulesService, $sce, navigationService, fileService, httpService, sidebarService, $timeout, formMapperService) {
+    .controller('FormCtrl', function ($q, $scope, $parse, caseService, $routeParams, $rootScope, webformRulesService, $sce, navigationService, fileService, httpService, sidebarService, $timeout, formMapperService) {
         $scope.sidebardata = {};
 
         $scope.caseId = $routeParams.caseId;
@@ -178,62 +178,97 @@ angular.module('sf')
             $scope.currentFormPage = page;
         };
 
-        var updateFieldsOnPages = function (form) {
-            //Creating empty promise
-            var allSended = false;
-            var i = 0;
+        $scope.submitForm = function () {
+            updateFieldsOnPages($scope.form[0]).then(function(){
+                caseService.submitForm($routeParams.caseId, $scope.form[0].draftId).then(function () {
 
-            var promises = new Array();
-            promises.push($q.when(""));
-
-            var promise = $q.when("");
-
-            console.log('pages', form.enhancedPages);
-
-            form.enhancedPages.forEach(function (pages) {
-                pages.fields.forEach(function (field) {
-                    // $timeout(function () {
-
-                    console.log(promises);
-                    // $timeout( function(){
-                    //     promises[promises.length-1].then(function () {
-                    promise.then(function () {
-                        // $timeout(function () {
-
-                        console.log('field', field.field);
-
-                        var value = formMapperService.getValue(field.value, field.field.field);
-                        console.log('sended data', $routeParams.caseId, form.draftId, field.field.field, value);
-
-
-                        if (field.field.fieldValue._type !== 'se.streamsource.streamflow.api.administration.form.ListBoxFieldValue') {
-
-                            promise = caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, value).then(function () {
-                                // promise =                                 caseService.updateField($routeParams.caseId, form.draftId, field.field.field, value).then(function () {
-
-
-                                // caseService.updateField($params.caseId, scope.$parent.form[0].draftId, attr.name, value);
-
-
-                                i++;
-                                console.log(promise);
-                            });
-                        }
-                        // },10000);
-
-                        promises.push(promise);
-                        console.log('updated promises', promises);
-                    });
-                    // }, 1000 );
-                    // promise = promise.then(function () {
-                    //      var value = formMapperService.getValue(field.value, field.field.field);
-                    //      caseService.updateField($routeParams.caseId, form.draftId, field.field.field, value);
-                    //  });
+                    if (!$scope.closeWithForm) {
+                        formSubmitted();
+                    } else {
+                        caseService.closeFormOnClose($routeParams.caseId).then(function () {
+                            formSubmitted();
+                            $timeout(function () {
+                                sidebarService.close($scope);
+                            }, 1000);
+                        });
+                    }
                 });
             });
+        };
 
-            return $q.all(promises);
-            // return promise;
+        var updateFieldsOnPages = function(form) {
+            var p = Promise.resolve();
+            form.enhancedPages.forEach(function (pages) {
+                pages.fields.forEach(function (field) {
+                    p = p.then(function() {
+                        console.log('field',field.field.field, field);
+
+                        //
+                        // if (_.indexOf(['se.streamsource.streamflow.api.administration.form.TextFieldValue',
+                        //         'se.streamsource.streamflow.api.administration.form.NumberFieldValue',
+                        //         'se.streamsource.streamflow.api.administration.form.TextAreaFieldValue'], field.field.fieldValue._type) >= 0) {
+                        //
+                        //
+                        //     // var value = formMapper.getValue(newValue, attr);
+                        //     var value = formMapperService.getValue(field.value, field.field);
+                        //     // var value = formMapper.getValue(newValue, attr);
+                        //     // caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
+                        //     caseService.updateFieldWithoutDelay($routeParams.caseId,  form.draftId, field.field.field, value);
+                        //
+                        // } else {
+
+                            if (field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.CheckboxesFieldValue') {
+                                var checked = field.field.fieldValue.checkings
+                                    .filter(function(input){
+                                        return input.checked;
+                                    }).map(function(input){
+                                        return input.name;
+                                    });
+
+                                var valueToSend = checked.join(', ');
+                                caseService.updateFieldWithoutDelay($routeParams.caseId,  form.draftId, field.field.field, valueToSend);
+                            } else
+                            if (field.field.fieldValue._type ==="se.streamsource.streamflow.api.administration.form.AttachmentFieldValue"){
+                                console.log("FORM", form);
+                                //Skip value
+                            } else
+
+                            if (field.field.fieldValue._type !== 'se.streamsource.streamflow.api.administration.form.ListBoxFieldValue') {
+
+                                //
+                                // var updateField = function (newValue) {
+                                //     var value = formMapper.getValue(newValue, attr);
+                                //     caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
+                                // };
+                                // var value = formMapper.getValue(newValue, attr);
+                                var value = formMapperService.getValue(field.value, field.field);
+                                // var value = formMapper.getValue(newValue, attr);
+                                // caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
+                                caseService.updateFieldWithoutDelay($routeParams.caseId,  form.draftId, field.field.field, value);
+                                // caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, field.value)
+                            }
+
+                        // }
+
+
+                        // if (field.field.fieldValue._type !== 'se.streamsource.streamflow.api.administration.form.ListBoxFieldValue') {
+                        //
+                        //     //
+                        //     // var updateField = function (newValue) {
+                        //     //     var value = formMapper.getValue(newValue, attr);
+                        //     //     caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
+                        //     // };
+                        //     // var value = formMapper.getValue(newValue, attr);
+                        //     var value = formMapperService.getValue(field.value, field.field);
+                        //     // var value = formMapper.getValue(newValue, attr);
+                        //     // caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
+                        //     caseService.updateFieldWithoutDelay($routeParams.caseId,  form.draftId, field.field.field, value);
+                        //     // caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, field.value)
+                        // }
+                    });
+                });
+            });
+            return p;
         };
 
         var formSubmitted = function () {
@@ -245,31 +280,31 @@ angular.module('sf')
             $scope.currentFormPage = null;
         };
 
-        $scope.submitForm = function () {
-            (updateFieldsOnPages($scope.form[0])).then(function () {
-                $timeout(function () {
-
-                    (caseService.submitForm($routeParams.caseId, $scope.form[0].draftId)).then(function () {
-                        if (!$scope.closeWithForm) {
-                            // Use this if to 100% to be sure that we get form submitted(at least during tests)
-                            console.log('submIF');
-
-                            $timeout(formSubmitted, 40000);
-                        } else {
-                            caseService.closeFormOnClose($routeParams.caseId).then(function () {
-                                $timeout(formSubmitted, 20000);
-
-                                console.log('submElse');
-                                // formSubmitted();
-                                $timeout(function () {
-                                    sidebarService.close($scope);
-                                }, 60000);
-                            });
-                        }
-                    });
-                }, 20000);
-            });
-        };
+        // $scope.submitForm = function () {
+        //     (updateFieldsOnPages($scope.form[0])).then(function () {
+        //         $timeout(function () {
+        //
+        //             (caseService.submitForm($routeParams.caseId, $scope.form[0].draftId)).then(function () {
+        //                 if (!$scope.closeWithForm) {
+        //                     // Use this if to 100% to be sure that we get form submitted(at least during tests)
+        //                     console.log('submIF');
+        //
+        //                     $timeout(formSubmitted, 40000);
+        //                 } else {
+        //                     caseService.closeFormOnClose($routeParams.caseId).then(function () {
+        //                         $timeout(formSubmitted, 20000);
+        //
+        //                         console.log('submElse');
+        //                         // formSubmitted();
+        //                         $timeout(function () {
+        //                             sidebarService.close($scope);
+        //                         }, 60000);
+        //                     });
+        //                 }
+        //             });
+        //         }, 20000);
+        //     });
+        // };
 
         $scope.deleteFormDraftAttachment = function (fieldId) {
             var attachment = _.find($scope.formAttachments, function (attachment) {
@@ -336,11 +371,11 @@ angular.module('sf')
             $scope.currentFormPage = $scope.form[0].enhancedPages[index];
         };
 
-        //Used for send submit message only after correct form data sending to server
+     /*   //Used for send submit message only after correct form data sending to server
         //TODO: Maybe it would be good to rewrite that to promises somehow?
         $scope.$on('form-saved', function (event, formId) {
             if (!$scope.closeWithForm) {
                 formSubmitted();
             }
-        });
+        });*/
     });

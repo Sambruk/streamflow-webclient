@@ -196,79 +196,35 @@ angular.module('sf')
             });
         };
 
-        var updateFieldsOnPages = function(form) {
-            var p = Promise.resolve();
-            form.enhancedPages.forEach(function (pages) {
-                pages.fields.forEach(function (field) {
-                    p = p.then(function() {
-                        console.log('field',field.field.field, field);
-
-                        //
-                        // if (_.indexOf(['se.streamsource.streamflow.api.administration.form.TextFieldValue',
-                        //         'se.streamsource.streamflow.api.administration.form.NumberFieldValue',
-                        //         'se.streamsource.streamflow.api.administration.form.TextAreaFieldValue'], field.field.fieldValue._type) >= 0) {
-                        //
-                        //
-                        //     // var value = formMapper.getValue(newValue, attr);
-                        //     var value = formMapperService.getValue(field.value, field.field);
-                        //     // var value = formMapper.getValue(newValue, attr);
-                        //     // caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
-                        //     caseService.updateFieldWithoutDelay($routeParams.caseId,  form.draftId, field.field.field, value);
-                        //
-                        // } else {
-
+        var updateFieldsOnPages = function (form) {
+            return Promise
+                .resolve()
+                .then(function () {
+                    var fields = form.enhancedPages
+                        .reduce(function (fields, page) {
+                            return fields.concat(page.fields);
+                        }, [])
+                        .filter(function (field) {
+                            return !(field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.AttachmentFieldValue" || field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.ListBoxFieldValue');
+                        })
+                        .map(function (field) {
                             if (field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.CheckboxesFieldValue') {
                                 var checked = field.field.fieldValue.checkings
-                                    .filter(function(input){
+                                    .filter(function (input) {
                                         return input.checked;
-                                    }).map(function(input){
+                                    }).map(function (input) {
                                         return input.name;
                                     });
-
                                 var valueToSend = checked.join(', ');
-                                caseService.updateFieldWithoutDelay($routeParams.caseId,  form.draftId, field.field.field, valueToSend);
-                            } else
-                            if (field.field.fieldValue._type ==="se.streamsource.streamflow.api.administration.form.AttachmentFieldValue"){
-                                console.log("FORM", form);
-                                //Skip value
-                            } else
-
-                            if (field.field.fieldValue._type !== 'se.streamsource.streamflow.api.administration.form.ListBoxFieldValue') {
-
-                                //
-                                // var updateField = function (newValue) {
-                                //     var value = formMapper.getValue(newValue, attr);
-                                //     caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
-                                // };
-                                // var value = formMapper.getValue(newValue, attr);
+                                return {field: field.field.field, value: valueToSend};
+                            } else {
                                 var value = formMapperService.getValue(field.value, field.field);
-                                // var value = formMapper.getValue(newValue, attr);
-                                // caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
-                                caseService.updateFieldWithoutDelay($routeParams.caseId,  form.draftId, field.field.field, value);
-                                // caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, field.value)
+                                return {field: field.field.field, value: value};
                             }
+                        });
 
-                        // }
-
-
-                        // if (field.field.fieldValue._type !== 'se.streamsource.streamflow.api.administration.form.ListBoxFieldValue') {
-                        //
-                        //     //
-                        //     // var updateField = function (newValue) {
-                        //     //     var value = formMapper.getValue(newValue, attr);
-                        //     //     caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
-                        //     // };
-                        //     // var value = formMapper.getValue(newValue, attr);
-                        //     var value = formMapperService.getValue(field.value, field.field);
-                        //     // var value = formMapper.getValue(newValue, attr);
-                        //     // caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
-                        //     caseService.updateFieldWithoutDelay($routeParams.caseId,  form.draftId, field.field.field, value);
-                        //     // caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, field.value)
-                        // }
-                    });
+                        return caseService.updateFields($routeParams.caseId, $scope.formDraftId, fields);
                 });
-            });
-            return p;
         };
 
         var formSubmitted = function () {

@@ -113,15 +113,21 @@ angular.module('sf').factory('httpService', function ($q, $cacheFactory, buildMo
       }
     },
 
-    postRequest: function (href, data) {
-      var params = $.param(data);
+    postRequest: function (href, data, options) {
+      var params;
+      var isJson = options && options.json;
+      if (isJson) {
+        params = JSON.stringify(data);
+      } else {
+        params = $.param(data);
+      }
       var url = this.prepareUrl(href);
       return $http({
         method: 'POST',
         url: url,
         timeout: this.timeout,
         data: params,
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        headers: {'Content-Type': isJson  ? 'application/json' : 'application/x-www-form-urlencoded'}
       });
     }
 

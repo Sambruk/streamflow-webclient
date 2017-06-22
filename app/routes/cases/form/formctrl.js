@@ -218,7 +218,8 @@ angular.module('sf')
                                 var valueToSend = checked.join(', ');
                                 return {field: field.field.field, value: valueToSend};
                             } else {
-                                var value = formMapperService.getValue(field.value, field.field);
+                                //Delete this checking, because it brakes validation.
+                                var value = formMapperService.getValue(field.value, field.field) || '';
                                 return {field: field.field.field, value: value};
                             }
                         });

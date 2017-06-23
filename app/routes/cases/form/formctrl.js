@@ -18,7 +18,6 @@
 angular.module('sf')
     .controller('FormCtrl', function ($q, $scope, $parse, caseService, $routeParams, $rootScope, webformRulesService, $sce, navigationService, fileService, httpService, sidebarService, $timeout, formMapperService) {
         $scope.sidebardata = {};
-
         $scope.caseId = $routeParams.caseId;
         $scope.currentFormId = $routeParams.formId;
         $scope.currentFormDescription = '';
@@ -247,32 +246,6 @@ angular.module('sf')
             $scope.form = [];
             $scope.currentFormPage = null;
         };
-
-        // $scope.submitForm = function () {
-        //     (updateFieldsOnPages($scope.form[0])).then(function () {
-        //         $timeout(function () {
-        //
-        //             (caseService.submitForm($routeParams.caseId, $scope.form[0].draftId)).then(function () {
-        //                 if (!$scope.closeWithForm) {
-        //                     // Use this if to 100% to be sure that we get form submitted(at least during tests)
-        //                     console.log('submIF');
-        //
-        //                     $timeout(formSubmitted, 40000);
-        //                 } else {
-        //                     caseService.closeFormOnClose($routeParams.caseId).then(function () {
-        //                         $timeout(formSubmitted, 20000);
-        //
-        //                         console.log('submElse');
-        //                         // formSubmitted();
-        //                         $timeout(function () {
-        //                             sidebarService.close($scope);
-        //                         }, 60000);
-        //                     });
-        //                 }
-        //             });
-        //         }, 20000);
-        //     });
-        // };
 
         $scope.deleteFormDraftAttachment = function (fieldId) {
             var attachment = _.find($scope.formAttachments, function (attachment) {

@@ -205,26 +205,35 @@ angular.module('sf')
                             return fields.concat(page.fields);
                         }, [])
                         .filter(function (field) {
-                            return !(field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.AttachmentFieldValue" || field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.ListBoxFieldValue');
+                            //Ignoring fields which shouldn't be sent
+                            //TODO Check for file attachment
+                            return !(field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.AttachmentFieldValue" || field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.CommentFieldValue");
                         })
                         .map(function (field) {
-                            if (field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.CheckboxesFieldValue') {
-                                var checked = field.field.fieldValue.checkings
-                                    .filter(function (input) {
-                                        return input.checked;
-                                    }).map(function (input) {
-                                        return input.name;
-                                    });
-                                var valueToSend = checked.join(', ');
-                                return {field: field.field.field, value: valueToSend};
-                            } else {
-                                //Delete this checking, because it brakes validation.
-                                var value = formMapperService.getValue(field.value, field.field) || '';
-                                return {field: field.field.field, value: value};
+                            var value = '';
+                            switch (field.field.fieldValue._type) {
+                                case 'se.streamsource.streamflow.api.administration.form.CheckboxesFieldValue':
+                                    var checked = field.field.fieldValue.checkings
+                                        .filter(function (input) {
+                                            return input.checked;
+                                        }).map(function (input) {
+                                            return input.name;
+                                        });
+                                    value = checked.join(', ');
+                                    break;
+                                case 'se.streamsource.streamflow.api.administration.form.ListBoxFieldValue':
+                                    value = formMapperService.getValue(field.value, field.field).join(', ');
+                                    break;
+                                case 'se.streamsource.streamflow.api.administration.form.DateFieldValue':
+                                    //Formatting date top understandable for server format
+                                    value = new Date(formMapperService.getValue(field.value, field.field)).toISOString();
+                                    break;
+                                default:
+                                    value = formMapperService.getValue(field.value, field.field);
                             }
+                            return {field: field.field.field, value: value};
                         });
-
-                        return caseService.updateFields($routeParams.caseId, $scope.formDraftId, fields);
+                    return caseService.updateFields($routeParams.caseId, $scope.formDraftId, fields);
                 });
         };
 

@@ -124,7 +124,7 @@ angular.module('sf').factory('backendService', function ($window, $http, $q, htt
             });
         },
 
-        postNested: function (specs, data) {
+        postNested: function (specs, data, options) {
             // remove last specs
             var postLink = specs.pop();
             var key = Object.keys(postLink)[0];
@@ -134,7 +134,7 @@ angular.module('sf').factory('backendService', function ($window, $http, $q, htt
                 var w = _.find(resource.response[key], function (item) {
                     return item.id === id;
                 });
-                return httpService.postRequest(resource.basehref + w.href, data);
+                return httpService.postRequest(resource.basehref + w.href, data, options);
             });
         }
     };
@@ -214,7 +214,7 @@ angular.module('sf').factory('backendService', function ($window, $http, $q, htt
 
 
         // Works in a similar way to get, but does a post instead
-        postNested: function (specs, data, responseSelector) {
+        postNested: function (specs, data, responseSelector, options) {
 
             function findInJson(spec, json) {
                 var key = Object.keys(spec)[0];
@@ -232,7 +232,7 @@ angular.module('sf').factory('backendService', function ($window, $http, $q, htt
             return httpService.getRequest('')
                 .then(function (response) {
                     var resource = new SfResource('', response);
-                    return resource.postNested(specs, data);
+                    return resource.postNested(specs, data, options);
                 })
                 .then(function (response) {
                     return responseSelector ? findInJson(responseSelector, response.data) : response;

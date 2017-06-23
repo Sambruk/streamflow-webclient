@@ -207,7 +207,9 @@ angular.module('sf')
                         .filter(function (field) {
                             //Ignoring fields which shouldn't be sent
                             //TODO Check for file attachment
-                            return !(field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.AttachmentFieldValue" || field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.CommentFieldValue");
+                            return !(field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.AttachmentFieldValue"
+                            || field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.CommentFieldValue"
+                            || field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.FieldGroupFieldValue");
                         })
                         .map(function (field) {
                             var value = '';

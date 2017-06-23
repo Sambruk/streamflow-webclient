@@ -77,6 +77,11 @@ angular.module('sf')
     return $filter('date')(input, format);
   };
 }])
+.filter('dateField', ['$filter', function ($filter) {
+  return function (input) {
+    return $filter('date')(input, 'yyyy-MM-dd');
+  };
+}])
 .filter('dateTime', ['$filter', function ($filter) {
   return function (input) {
     return $filter('date')(input, 'yyyy-MM-dd, HH:mm');

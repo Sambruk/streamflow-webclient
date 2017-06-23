@@ -86,7 +86,7 @@
           </div>
         </div>
         <div ng-if="field.fieldType === 'se.streamsource.streamflow.api.administration.form.DateFieldValue'"
-             class="form-field"><em>{{ field.field }}</em>: {{ field.value  | dateTime}}</div>
+             class="form-field"><em>{{ field.field }}</em>: {{ field.value  | dateField}}</div>
         <div ng-hide="field.fieldType === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue' || field.fieldType === 'se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue' || field.fieldType === 'se.streamsource.streamflow.api.administration.form.DateFieldValue'"
              class="form-field"><em>{{ field.field }}</em>: {{ field.value }}</div>
       </div>

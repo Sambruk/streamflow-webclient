@@ -127,7 +127,7 @@ angular.module('sf').factory('httpService', function ($q, $cacheFactory, buildMo
         url: url,
         timeout: this.timeout,
         data: params,
-        headers: {'Content-Type': isJson  ? 'application/json' : 'application/x-www-form-urlencoded'}
+        headers: {'Content-Type': isJson  ? 'application/json; charset=UTF-8' : 'application/x-www-form-urlencoded'}
       });
     }
 

@@ -2,7 +2,7 @@
     <a href="#/cases/{{ caze[0].id  }}/formdrafts/{{ form.id }}"
        class="left form-name convCaseSidebar">
         {{form.text}}
-        <span data-ng-repeat="submittedForm in submittedForms = (submittedFormList | filter: form.id: submittedForm.id)"></span>
+        <span data-ng-repeat="submittedForm in submittedForms = (submittedFormList | filter: form.id: submittedForm.id) track by $index"></span>
     </a>
     <div class="convo-status form-icons"><a href="#/cases/{{ caze[0].id }}/formhistory/{{ form.id }}"><span
             class="icon-history" title="Formulär, historik">{{submittedForms.length}} <span class="struct">Formulär, historik</span></span></a>

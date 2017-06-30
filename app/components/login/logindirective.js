@@ -16,7 +16,7 @@
  */
 'use strict';
 
-angular.module('sf').directive('login', function ($rootScope, buildMode, $location, $timeout, $http, $window, $route, tokenService, httpService) {
+angular.module('sf').directive('login', function ($rootScope, buildMode, $location, $timeout, $http, $window, tokenService, httpService) {
   return {
     restrict: 'E',
     templateUrl: 'components/login/login.html',

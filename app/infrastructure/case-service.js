@@ -17,7 +17,7 @@
 'use strict';
 
 angular.module('sf')
-    .factory('caseService', function ($rootScope, $routeParams, httpService, backendService, navigationService, SfCase, $http, debounce, formMapperService) {
+    .factory('caseService', function ($rootScope, httpService, backendService, navigationService, SfCase, $http, debounce, formMapperService) {
 
         var workspaceId = 'workspacev2';
 

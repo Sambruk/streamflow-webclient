@@ -16,7 +16,7 @@
  */
 'use strict';
 
-angular.module('sf').factory('sidebarService', function ($routeParams, caseService, $q, $rootScope, $location, navigationService, tokenService, checkPermissionService) {
+angular.module('sf').factory('sidebarService', function ($routeParams, $route, caseService, $q, $rootScope, $location, navigationService, tokenService, checkPermissionService) {
 
     var sortByText = function (x, y) {
         var xS = x.text && x.text.toUpperCase() || '',
@@ -500,6 +500,23 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
         });
     };
 
+    var _openForm = function (scope, formId, isNewWindow) {
+        if (isNewWindow) {
+            var height = $(window).height();
+            var width = $(window).width();
+            var popupWindow = window.open('#/cases/' + scope.caze[0].id + '/formdrafts/' + formId, 'FormWindow_' + Math.random(), 'height=' + height * 0.7 + ', width=' + width / 2.17 + ', left=' + width * 0.33 + ', scrollbars=yes');
+            popupWindow.isFormWindow = true;
+            if (window.focus) {
+                popupWindow.focus();
+            }
+            _updateToolbar(scope);
+        } else {
+            //Ugly bu the only way when second opening same form to send data
+            $location.path('/cases/' + scope.caze[0].id + '/formdrafts/' + formId);
+            location.reload();
+        }
+    };
+
     return {
         changePriorityLevel: _changePriorityLevel,
         changeCaseType: _changeCaseType,
@@ -525,7 +542,8 @@ angular.module('sf').factory('sidebarService', function ($routeParams, caseServi
         resolveCase: _resolveCase,
         caseType: _caseType,
         priority: _priority,
-        checkPossibleForms: _checkPossibleForms
+        checkPossibleForms: _checkPossibleForms,
+        openForm: _openForm
     };
 });
 

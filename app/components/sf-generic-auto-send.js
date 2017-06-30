@@ -57,7 +57,6 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
           $('[class^=error]', element.parent()).hide();
 
           if (validates()) {
-                        console.log('HERE1');
                         // updateField(newValue);
             scope.$root.$root.isValidForm=true;
           } else{
@@ -75,7 +74,6 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
           $('[class^=error]', element.parent()).hide();
 
           if (validates()) {
-                        console.log('HERE2');
                         // updateField(newValue);
             scope.$root.$root.isValidForm=true;
           } else {

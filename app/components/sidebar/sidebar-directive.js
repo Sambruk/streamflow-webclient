@@ -252,7 +252,6 @@ angular.module('sf')
 
                 // Show Export Pdf
                 scope.toggleExportPopup = function (visible) {
-                    console.log('Show:', visible);
                     scope.showExport = visible;
                     scope.commandView = true;
                 }; // End Show Export Pdf
@@ -260,7 +259,6 @@ angular.module('sf')
                 scope.onExportButtonClicked = function (submittedForms, attachments, conversations, contacts, caseLog, notes) {
                     caseService.getCasePdf($routeParams.caseId, submittedForms, attachments, conversations, contacts, caseLog, notes);
                     scope.toggleExportPopup(false);
-                    console.log('Hide');
                 };// End Send to
 
                 scope.toggleDeletePopup = function (visible) {

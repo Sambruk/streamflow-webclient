@@ -632,7 +632,6 @@ angular.module('sf')
             },
             getSelectedFilteredCaseLog: function (caseId, queryfilter) {
                 var self = this;
-                //console.log(queryfilter);
                 //TODO: Look at why this is getting called twice on the caslog list page and if no way around it, maybe make sure the results are cached
                 return backendService.get({
                     specs: caseBase(caseId).concat([

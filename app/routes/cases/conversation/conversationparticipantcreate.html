@@ -44,9 +44,12 @@
             </select>
           </div>
         </div>
-        <div class="form-row">
+        <div class="form-row participants">
           <div class="submit-area">
             <button class="right" data-ng-click="addParticipant($event)" name="convo-submit">Lägg till</button>
+            <a href="#/cases/{{ caseId }}/conversation/{{ conversationId }}" role="button" class="btn left inline add-participant__item-cancel" title="Avbryt">
+              Avbryt
+            </a>
           </div>
         </div>
       </form>

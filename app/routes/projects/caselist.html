@@ -52,11 +52,16 @@
                 </div>
                 <div data-ng-class="{'issue-closed': case.closed()}" class="issue-s">
                   <div class="issue-description">
-                    <span class="meta">{{case.caseId}} - {{case.owner}} - {{case.caseType.text}}</span>
-                      <h4 data-ng-class="{'issue-closed': case.closed()}">{{case.text}} <span class="label-list">{{case.labelList() | parenthesis}}</span></h4>
-                    <span class="creator">{{case.createdBy}}</span>
-                    <span ng-if="case.assignedTo!=null" class="assigned">tilldelad {{case.assignedTo}}</span>
-                      <div class="icon-wrapp">
+                    <div class="issue-description__left-part">
+                      <h4 data-ng-class="{'issue-closed': case.closed()}" class="issue-description__headline">{{case.text}}</h4>
+                      <div class="issue-description__label-list label-list">{{case.labelList() | parenthesis}}</div>
+                      <div class="issue-description__creator creator">{{case.createdBy}}</div>
+                    </div>
+                    <div class="issue-description__right-part">
+                      <div class="issue-description__meta meta">{{case.caseId}} - {{case.owner}}</div>
+                      <div class="issue-description__type">{{case.caseType.text}}</div>
+                      <div ng-if="case.assignedTo!=null" class="issue-description__assigned assigned">tilldelad {{case.assignedTo}}</div>
+                      <div class="issue-description__icon-wrapp icon-wrapp">
                         <span ng-if="case.unread"><span class="issue-unread"></span></span>
                         <span ng-if="case.hasAttachments"><span class="issue-has-attachments"></span></span>
                         <span ng-if="case.hasContacts"><span class="issue-has-contacts"></span></span>
@@ -65,6 +70,7 @@
                         <span ng-if="case.hasUnreadForm"><span class="issue-has-unread-forms -forms"></span></span>
                         <span ng-if="case.hasSubmittedForms"><span class="issue-has-submitted-forms"></span></span>
                       </div>
+                    </div>
                   </div>
                   <div class="issue-actions">
                     <div>
@@ -93,11 +99,16 @@
               </div>
               <div data-ng-class="{'issue-closed': case.closed()}" class="issue-s">
                 <div class="issue-description">
-                  <span class="meta">{{case.caseId}} - {{case.owner}} - {{case.caseType.text}}</span>
-                    <h4 data-ng-class="{'issue-closed': case.closed()}">{{case.text}} <span class="label-list">{{case.labelList() | parenthesis}}</span></h4>
-                  <span class="creator">{{case.createdBy}}</span>
-                  <span ng-if="case.assignedTo!=null" class="assigned">tilldelad {{case.assignedTo}}</span>
-                    <div class="icon-wrapp">
+                  <div class="issue-description__left-part">
+                    <h4 data-ng-class="{'issue-closed': case.closed()}" class="issue-description-left-part__item issue-description__headline">{{case.text}}</h4>
+                    <div class="issue-description-left-part__item issue-description__label-list label-list">{{case.labelList() | parenthesis}}</div>
+                    <div class="issue-description-left-part__item issue-description__creator creator">{{case.createdBy}}</div>
+                  </div>
+                  <div class="issue-description__right-part">
+                    <div class="issue-description-right-part__item issue-description__meta meta">{{case.caseId}} - {{case.owner}}</div>
+                    <div class="issue-description-right-part__item issue-description__type">{{case.caseType.text}}</div>
+                    <div ng-if="case.assignedTo!=null" class="issue-description-right-part__item issue-description__assigned assigned">tilldelad {{case.assignedTo}}</div>
+                    <div class="issue-description-right-part__item issue-description__icon-wrapp icon-wrapp">
                       <span ng-if="case.unread"><span class="issue-unread"></span></span>
                       <span ng-if="case.hasAttachments"><span class="issue-has-attachments"></span></span>
                       <span ng-if="case.hasContacts"><span class="issue-has-contacts"></span></span>
@@ -106,7 +117,7 @@
                       <span ng-if="case.hasUnreadForm"><span class="issue-has-unread-forms -forms"></span></span>
                       <span ng-if="case.hasSubmittedForms"><span class="issue-has-submitted-forms"></span></span>
                     </div>
-
+                  </div>
                 </div>
 
                 <div class="issue-actions">

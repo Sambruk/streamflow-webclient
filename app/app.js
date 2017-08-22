@@ -45,7 +45,7 @@ angular.module('sf', [
     $rootScope.isLoggedIn = $rootScope.hasToken();
     $rootScope.logout = tokenService.clear;
 
-      if (window.isFormWindow) {
+      if ($location.$$search.isFormWindow) {
           $rootScope.isFormWindow = true;
       } else {
           $rootScope.isFormWindow = false;

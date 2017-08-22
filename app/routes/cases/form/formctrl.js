@@ -284,7 +284,7 @@ angular.module('sf')
         };
 
         $scope.isLastPage = function () {
-            if ($scope.form && $scope.form[0]) {
+            if ($scope.form && $scope.form[0] && $scope.form[0].enhancedPages) {
                 return $scope.currentFormPage && $scope.form[0].enhancedPages.indexOf($scope.currentFormPage) === ($scope.form[0].enhancedPages.length - 1);
             }
             return false;

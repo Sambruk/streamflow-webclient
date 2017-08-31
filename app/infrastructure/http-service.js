@@ -19,8 +19,7 @@
 
 angular.module('sf').factory('httpService', function ($q, $cacheFactory, buildMode, $location, $http, $window, errorHandlerService, tokenService) {
   var token = tokenService.getToken();
-
-  if (token) {
+  if (token && !tokenService.isDefaultToken) {
     $http.defaults.headers.common.Authorization = 'Basic ' + token;
   }
 
@@ -75,8 +74,6 @@ angular.module('sf').factory('httpService', function ($q, $cacheFactory, buildMo
 
     invalidate: function(hrefs) {
       hrefs.forEach(function(href) {
-        // console.log('invalidate: ' + href);
-        //console.log(href);
         cache.remove(href);
       });
     },

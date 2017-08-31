@@ -28,10 +28,12 @@ angular.module('sf').directive('contextmenu', function (projectService, navigati
 
       scope.projects = projectService.getAll();
 
-      scope.navigateTo = function (href, $event){
+      scope.navigateTo = function (href, projectName, caseCount, $event){
         $event.preventDefault();
         scope.toggleSidebar($event);
         navigationService.linkTo(href);
+        $rootScope.projectName = projectName;
+        $rootScope.caseCount = caseCount;
       };
 
       scope.toggleSidebar = function ($event) {
@@ -43,10 +45,7 @@ angular.module('sf').directive('contextmenu', function (projectService, navigati
         if(!scope.params){
           return false;
         }
-        if (scope.params.projectType === 'inbox') {
-          return false;
-        }
-        if (!scope.params.projectType) {
+        if (!scope.params.projectType && $rootScope.location.$$path.indexOf('cases') < 0) {
           return false;
         }
         return true;
@@ -56,15 +55,16 @@ angular.module('sf').directive('contextmenu', function (projectService, navigati
         if(!scope.canCreateCase()){
           return;
         }
+        var projectId = navigationService.projectId();
+       
+        //Add cases possible only with that type
+        var projectType = 'assignments';
 
-        projectService.createCase(scope.params.projectId, scope.params.projectType).then(function(response){
-          //NOTE: Why is caseId defined here?
+        projectService.createCase(projectId, projectType).then(function(response){
           var caseId = response.data.events[1].entity;
-          var href = navigationService.caseHrefSimple(caseId);
-
+          var href = navigationService.caseHrefSimple(caseId)+'/new';
           $rootScope.$broadcast('case-created');
-
-          window.location.replace(href + '/edit');
+          window.open(href);
         });
       };
 

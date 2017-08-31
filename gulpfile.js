@@ -49,14 +49,16 @@ var buildMode = (function () {
 var paths = {
   scripts: [
     'app/**/*.js',
-    '!app/design/**/*.js'
+    '!app/design/**/*.js',
+    'bower_components/ui-select/dist/select.js'
   ],
   css: [
     'app/design/gui/css/**/*.css',
     'bower_components/angular-growl-v2/build/angular-growl.css',
     'bower_components/pickadate/lib/themes/default.*',
     'bower_components/chosen/chosen.css',
-    'bower_components/angular-chosen-localytics/chosen-spinner.css'
+    'bower_components/angular-chosen-localytics/chosen-spinner.css',
+    'bower_components/ui-select/dist/select.css'
   ],
   templates: [
     'app/**/*.html'
@@ -116,11 +118,11 @@ gulp.task('lint', function () {
 
 gulp.task('build-scripts', ['lint', 'unit-test'], function () {
   return gulp.src(paths.scripts)
-    .pipe(sourcemaps.init())
-      .pipe(concat('streamflow.js'))
-      .pipe(ngAnnotate())
-      .pipe(uglify())
-    .pipe(sourcemaps.write())
+    //.pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(ngAnnotate())
+    .pipe(concat('streamflow.js'))
+    //.pipe(uglify())
+    //.pipe(sourcemaps.write())
     .pipe(gulp.dest('build/app'))
     .pipe(connect.reload());
 });

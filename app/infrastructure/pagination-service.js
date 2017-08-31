@@ -31,6 +31,7 @@ angular.module('sf')
     };
 
   return {
+    pageSize: pageSize,
     itemsLimit: itemsLimit,
     hasMoreItemsToShow: hasMoreItemsToShow,
     showMoreItems: showMoreItems

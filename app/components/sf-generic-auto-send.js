@@ -20,32 +20,62 @@
 angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', 'caseService', 'formMapperService', function($parse, $routeParams, caseService, formMapper) {
   return {
     require: 'ngModel',
-    link: function(scope, element, attr) {
+    priority: 1010,
+    link: function(scope, element, attr, ctrl) {
 
-      var hasRunAtLeastOnce = false;
-      scope.$watch(attr.ngModel, function (newValue) {
+      if(scope.$root.$root.isValidForm === undefined){
+        scope.$root.$root.isValidForm=true;
+      }
+      var validates = function () {
+        // Validation
+        if (element.hasClass('ng-invalid')) {
+          _.each(element.attr('class').split(' '), function (klass) {
+            var errorClass = '.error-' + klass;
+            $(errorClass, element.parent()).show();
+          });
+          return false;
+        }
+        return true;
+      };
 
-        if (hasRunAtLeastOnce) {
+      var updateField = function (newValue) {
+        var value = formMapper.getValue(newValue, attr);
+        caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
+      };
 
-          // Validation
-          if (element.hasClass('ng-invalid')) {
-            _.each(element.attr('class').split(' '), function (klass) {
-              var errorClass = '.error-' + klass;
-              $(errorClass, element.parent()).show();
-            });
-
+      if (_.indexOf(['se.streamsource.streamflow.api.administration.form.TextFieldValue',
+          'se.streamsource.streamflow.api.administration.form.NumberFieldValue',
+          'se.streamsource.streamflow.api.administration.form.TextAreaFieldValue'], attr.fieldType) >= 0) {
+        element.on('blur', function (event) {
+          if (!ctrl.$dirty) {
             return;
           }
 
           // Valid input, clear error warnings
           $('[class^=error]', element.parent()).hide();
 
-          var value = formMapper.getValue(newValue, attr);
-          caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
-        }
+          if (validates()) {
+            scope.$root.$root.isValidForm=true;
+          } else{
+            scope.$root.$root.isValidForm=false;
+          }
+        });
+      } else {
+        scope.$watch(attr.ngModel, function (value) {
+          if (!ctrl.$dirty) {
+            return;
+          }
 
-        hasRunAtLeastOnce = true;
-      });
+          // Valid input, clear error warnings
+          $('[class^=error]', element.parent()).hide();
+
+          if (validates()) {
+            scope.$root.$root.isValidForm=true;
+          } else {
+            scope.$root.$root.isValidForm=false;
+          }
+        });
+      }
     }
   };
 }]);

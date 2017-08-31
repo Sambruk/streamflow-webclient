@@ -18,92 +18,105 @@
 -->
 <div class="content-primary" role="main">
   <div ng-show="showSpinner.currentCases" class="spinner"></div>
-  <div class="issues-overview" data-ng-hide="currentCases.length === 0">
-    <div class="filter cf">
-      <input type="text" ng-model="filterSearch" id="search" placeholder="Filtrera sökning">
-      <div class="options">
-        <div class="sort">
-          <label for="sortDropdown">Sortera</label>
-          <select
-            id="sortDropdown"
-            ng-model="sortExpression">
-            <option value="">Ingen</option>
-            <option value="text">Beskrivning</option>
-            <option value="-creationDate">Skapad</option>
-            <option value="dueOn">Förfallodatum</option>
-            <option value="priority.priority">Prioritet</option>
-          </select>
-        </div>
-        <div class="group">
-          <label for="groupOptions">Gruppera</label>
-          <select
-            ng-options="option.name for option in groupingOptions"
-            ng-model="selectedItem"
-            ng-change="groupBy(selectedItem)">
-            <option value="">Ingen</option>
-          </select>
-        </div>
-      </div>
-    </div>
+  <div class="issues-overview" ng-hide="showSpinner.currentCases">
 
-    <h3>{{getHeader()}} <span class="results">{{currentCases.length}} ärenden</span></h3>
-    <div class="due-date-divider"><span>Förfallodatum</span></div>
+    <div class="cases-header sticky" sf-scroll data-ng-class="{'fixed': scroll > 260}">
+      <h3>
+        <span class="header">{{getHeader()}}</span> <span class="results">Läst in {{currentCases.length}} av {{caseCount}} ärenden</span>
+      </h3>
+
+      <div class="due-date-divider"><span>Förfallodatum</span></div>
+    </div>
+    <div class="empty-placeholder">&nbsp;</div>
     <div ng-hide="showSpinner.currentCases">
-      <ul class="issue-list" ng-init="defaultSortExpression = '-creationDate'">
-        <li ng-show="currentCases['grouped'] && selectedItem.value !== 'caseId'" ng-repeat="(key, value) in currentCases | filter: filterSearch | groupBy: selectedItem.value track by $index">
-        	<h3 ng-show="selectedItem.value === 'checkPriority'" id="priorityHeader">{{key}}</h3>
-	        <h3 ng-show="selectedItem.value !== 'checkPriority'" id="groupingHeader">{{key | translate}}</h3>
+      <ul class="issue-list">
+        <div infinite-scroll="showMoreItems()" infinite-scroll-disabled='busyLoadingData' infinite-scroll-distance="1">
+          <li ng-show="currentCases['grouped'] && groupByValue.value !== 'caseId'"
+              ng-repeat="case in currentCases track by $index">
+            <span ng-if="groupByValue.value !== 'checkPriority'">
+              <h3 ng-show="case[groupByValue.value] !== currentCases[$index-1][groupByValue.value]"
+                  id="groupingHeader">{{case[groupByValue.value] | translate}}</h3>
+            </span>
+            <span ng-if="groupByValue.value === 'checkPriority'">
+              <h3 ng-show="case[groupByValue.value] !== currentCases[$index-1][groupByValue.value]"
+                  id="groupingHeader">{{case[groupByValue.value] | slice: 1}}</h3>
+            </span>
+            <div class="issue-item {{case.overdueStatus()}} caselistItem">
+              <a href="{{case.href}}" class="block-link">
+                <div class="due-date" data-ng-class="{'issue-closed-color-dim': case.closed()}">
+                  <span>{{case.overdueDays() | positive}}{{case.dueOn | day}}</span>
+                  <data-ng-pluralize
+                          count="case.overdueDays()"
+                          when="{'0': '{{case.dueOn | month}}', '1': 'dag', 'other': 'dagar '}">
+                  </data-ng-pluralize>
+                </div>
+                <div data-ng-class="{'issue-closed': case.closed()}">
+                  <div class="issue-description">
+                    <span class="meta">{{case.caseId}} - {{case.owner}} - {{case.caseType.text}}</span>
+                      <h4 data-ng-class="{'issue-closed': case.closed()}">{{case.text}} <span class="label-list">{{case.labelList() | parenthesis}}</span></h4>
+                    <span class="creator">{{case.createdBy}}</span>
+                    <span ng-if="case.assignedTo!=null" class="assigned">tilldelad {{case.assignedTo}}</span>
+                    <span ng-if="case.unread"><span class="issue-unread"></span></span>
+                    <span ng-if="case.hasAttachments"><span class="issue-has-attachments"></span></span>
+                    <span ng-if="case.hasContacts"><span class="issue-has-contacts"></span></span>
+                    <span ng-if="case.hasUnreadConversation"><span class="issue-has-conversation"></span></span>
+                    <span ng-if="case.hasConversations"><span class="issue-has-conversation"></span></span>
+                    <span ng-if="case.hasUnreadForm"><span class="issue-has-unread-forms -forms"></span></span>
+                    <span ng-if="case.hasSubmittedForms"><span class="issue-has-submitted-forms"></span></span>
+                  </div>
+                  <div class="issue-actions">
+                    <div>
+                      <span class="action-status updated" data-ng-class="{'issue-closed-color-dim': case.closed()}">Ändrad {{case.modificationDate() | googleDate}}</span>
+                      <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
+                      <span class="priority" data-ng-if="case.priority.text">Prioritet: {{ case.priority.text }}</span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </li>
 
-	        <div class="issue-item {{case.overdueStatus()}} caselistItem" ng-repeat="case in value | filter: filterSearch | orderBy: [sortExpression, specificGroupByDefaultSortExpression, defaultSortExpression]">
-		        <a href="{{case.href}}" class="block-link">
-		          <div class="due-date">
-		            <span>{{case.overdueDays() | positive}}</span>
-		            <data-ng-pluralize
-                  count="case.overdueDays()"
-                  when="{'0': '{{case.dueOn | shortDate}}', '1': 'dag', 'other': 'dagar '}">
-		            </data-ng-pluralize>
-		          </div>
-		          <div class="issue-description">
-		            <span class="meta">{{case.caseId}} - {{case.owner}}</span>
-		            <h4>{{case.text}}</h4>
-		            <span class="creator">{{case.createdBy}}</span>
-		          </div>
-		          <div class="issue-actions">
-		            <div>
-		              <span class="action-status updated">Ändrad {{case.modificationDate() | googleDate}}</span>
-		              <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
-		            </div>
-		          </div>
-		        </a>
-		      </div>
-        </li>
+          <li ng-show="!currentCases['grouped'] || selectedItem.value === 'caseId'"
+              class="issue-item {{case.overdueStatus()}} caselistItem"
+              ng-repeat="case in currentCases track by $index">
 
-      	<li ng-show="!currentCases['grouped'] || selectedItem.value === 'caseId'" class="issue-item {{case.overdueStatus()}} caselistItem" ng-repeat="case in currentCases | filter: filterSearch | orderBy: [sortExpression, defaultSortExpression]  | limitTo: itemsLimit track by $index">
-	        <a href="{{case.href}}" class="block-link">
-	          <div class="due-date">
-	            <span>{{case.overdueDays() | positive}}</span>
-	            <data-ng-pluralize
-                count="case.overdueDays()"
-                when="{'0': '{{case.dueOn | shortDate}}', '1': 'dag', 'other': 'dagar '}">
-	            </data-ng-pluralize>
-	          </div>
-	          <div class="issue-description">
-	            <span class="meta">{{case.caseId}} - {{case.owner}}</span>
-	            <h4>{{case.text}}</h4>
-	            <span class="creator">{{case.createdBy}}</span>
-	          </div>
-	          <div class="issue-actions">
-	            <div>
-	              <span class="action-status updated">Ändrad {{case.modificationDate() | googleDate}}</span>
-	              <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
-	            </div>
-	          </div>
-	        </a>
-        </li>
-      </ul> <!-- issue-list -->
-      <div class="show-more">
-      	<button ng-show="hasMoreItemsToShow && !currentCases['grouped']" ng-click="showMoreItems()">Visa fler</button>
-      </div>
+            <a href="{{case.href}}" class="block-link">
+
+              <div class="due-date" data-ng-class="{'issue-closed-color-dim': case.closed()}">
+                <span>{{case.overdueDays() | positive}}{{case.dueOn | day}}</span>
+                <data-ng-pluralize
+                        count="case.overdueDays()"
+                        when="{'0': '{{case.dueOn | month}}', '1': 'dag', 'other': 'dagar '}">
+                </data-ng-pluralize>
+              </div>
+              <div data-ng-class="{'issue-closed': case.closed()}">
+                <div class="issue-description">
+                  <span class="meta">{{case.caseId}} - {{case.owner}} - {{case.caseType.text}}</span>
+                    <h4 data-ng-class="{'issue-closed': case.closed()}">{{case.text}} <span class="label-list">{{case.labelList() | parenthesis}}</span></h4>
+                  <span class="creator">{{case.createdBy}}</span>
+                  <span ng-if="case.assignedTo!=null" class="assigned">tilldelad {{case.assignedTo}}</span>
+                  <span ng-if="case.unread"><span class="issue-unread"></span></span>
+                  <span ng-if="case.hasAttachments"><span class="issue-has-attachments"></span></span>
+                  <span ng-if="case.hasContacts"><span class="issue-has-contacts"></span></span>
+                  <span ng-if="case.hasUnreadConversation"><span class="issue-has-conversation"></span></span>
+                  <span ng-if="case.hasConversations"><span class="issue-has-conversation"></span></span>
+                  <span ng-if="case.hasUnreadForm"><span class="issue-has-unread-forms -forms"></span></span>
+                  <span ng-if="case.hasSubmittedForms"><span class="issue-has-submitted-forms"></span></span>
+                </div>
+
+                <div class="issue-actions">
+                  <div>
+                    <span class="action-status updated" data-ng-class="{'issue-closed-color-dim': case.closed()}">Ändrad {{case.modificationDate() | googleDate}} </span>
+                    <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
+                    <span class="priority" data-ng-if="case.priority.text">Prioritet: {{ case.priority.text }}</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </li>
+        </div>
+      </ul>
     </div>
+    <div ng-show="showSpinner.infiniteScroll" class="spinner"></div>
   </div>
 </div> <!-- content-primary -->

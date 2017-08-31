@@ -28,7 +28,6 @@ angular.module('sf')
             //{resources: 'projects'}
           ],
           onSuccess:function (resource, result) {
-
             var projects = _.chain(resource.response.index.links)
               .filter(function(item){
                 return item.rel === 'inbox' || item.rel === 'assignments';
@@ -44,12 +43,14 @@ angular.module('sf')
 
               result.push({text: key, types: types});
             });
+            result.unlimitedResultCount = resource.response.unlimitedResultCount;
           }
         });
       },
       //http://localhost:3501/b35873ba-4007-40ac-9936-975eab38395a-3f/inbox/f9d9a7f7-b8ef-4c56-99a8-3b9b5f2e7159-0
-      getSelected: function(projectId, projectType, callback) {
+      getSelected: function(projectId, projectType, query, callback) {
         var self = this;
+        query = query || '';
 
         return backendService.get({
           specs:[
@@ -57,7 +58,7 @@ angular.module('sf')
             {resources: 'projects'},
             {'index.links': projectId},
             {resources: projectType},
-            {queries: 'cases?tq=select+*'}
+            {queries: 'cases?tq=select+*' + query}
           ],
           onSuccess:function (resource, result) {
             resource.response.links.forEach(function(item){

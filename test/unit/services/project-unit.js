@@ -134,15 +134,15 @@ describe("sf.services.project", function () {
     });
 
     describe('modificationDate', function() {
-      it('is lastModifiedDate if it exists', function() {
-        var object = new SfCaseClass({lastModifiedDate: 'lmd', creationDate: 'cd'});
+      it('is lastLogEntryTime if it exists', function() {
+        var object = new SfCaseClass({lastLogEntryTime: 'llet', creationDate: 'cd'});
         //object.lastModifiedDate = 'lmd';
         //object.creationDate = 'cd';
-        expect(object.modificationDate()).toEqual('lmd');
+        expect(object.modificationDate()).toEqual('llet');
       });
 
-      it('is creationDate if lastModifiedDate is missing', function() {
-        var object = new SfCaseClass({lastModifiedDate: null, creationDate: 'cd'});
+      it('is creationDate if lastLogEntryTime is missing', function() {
+        var object = new SfCaseClass({lastLogEntryTime: null, creationDate: 'cd'});
         //object.lastModifiedDate = null;
         //object.creationDate = 'cd';
         expect(object.modificationDate()).toEqual('cd');

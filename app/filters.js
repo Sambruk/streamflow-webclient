@@ -33,6 +33,16 @@ angular.module('sf')
     return $filter('date')(input, 'd MMM');
   };
 }])
+.filter('day', ['$filter', function ($filter) {
+  return function (input) {
+    return $filter('date')(input, 'd');
+  };
+}])
+.filter('month', ['$filter', function ($filter) {
+  return function (input) {
+    return $filter('date')(input, 'MMM');
+  };
+}])
 .filter('longDate', ['$filter', function ($filter) {
   return function (input) {
     return $filter('date')(input, 'yyyy-MM-dd');
@@ -82,10 +92,10 @@ angular.module('sf')
       attachment: 'Bifogande',
       contact: 'Kontakt',
       conversation: 'Konversation',
-      custom: 'custom',
+      custom: 'Manuelt tillagd',
       form: 'Formulär',
       system: 'System',
-      systemTrace: 'systemTrace',
+      systemTrace: 'System Trace',
       successMessage: 'Hämtning lyckades',
       errorMessage: 'Hämtning misslyckades',
       'read: All': 'Läsa: Alla',
@@ -101,7 +111,7 @@ angular.module('sf')
       '2 Förfaller imorgon': 'Förfaller imorgon',
       '3 Förfaller inom en vecka': 'Förfaller inom en vecka',
       '4 Förfaller inom en månad': 'Förfaller inom en månad',
-      '5 Förfaller inom en månad': 'Förfaller om mer än en månad'
+      '5 Förfaller om mer än en månad': 'Förfaller om mer än en månad'
     };
 
     return translation[input] || input;
@@ -151,5 +161,39 @@ angular.module('sf')
     }
 
   };
-});
+})
+.filter('parenthesis', function() {
+  return function(input) {
+    if(input) {
+      return '(' + input + ')';
+    }
+  };
+})
+.filter('slice', function() {
+  return function(input, start, end) {
+    if(input.slice) {
+      if(end){
+        return input.slice(start, end);
+      } else {
+        return input.slice(start);
+      }
+    } else {
+      return input;
+    }
+  };
+})
+.filter('trustAsHTML', ['$sce', function($sce){
+  return function (text) {
+    var map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      '\'': '&#039;'
+    };
+    return $sce.trustAsHtml(text.replace(/[&<>"']/g, function (m) {
+      return map[m];
+    }));
+  };
+}]);
 

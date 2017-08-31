@@ -40,28 +40,25 @@ angular.module('sf')
       templateUrl: 'routes/profile/profile-edit.html',
       controller: 'ProfileEditCtrl'
     })
+    .when('/about', {
+      templateUrl: 'routes/about/about.html',
+      controller: 'AboutCtrl'
+    })
     .when('/projects/:projectId/:projectType', {
       templateUrl: 'routes/projects/caselist.html',
       controller: 'CaseListCtrl'
     })
-    .when('/cases/:caseId/edit', {
-      templateUrl:'routes/cases/case-edit/caseedit.html',
-      controller: 'CaseEditCtrl'
-    })
-    .when('/cases/:caseId', {
-      templateUrl:'routes/cases/case-details/casedetail.html',
-      controller: 'CaseDetailCtrl'
-    })
     //TODO: This should probably not be in a route but maybe
-    .when('/cases/:caseId/conversation/create', {
+    //TODO: Check conversations routes for projectId param
+    .when('/cases/:caseId/:projectId?/conversation/create', {
       templateUrl:'routes/cases/conversation/conversationcreate.html',
       controller: 'ConversationCreateCtrl'
     })
-    .when('/cases/:caseId/conversation/:conversationId/participants/create', {
+    .when('/cases/:caseId/:projectId?/conversation/:conversationId/participants/create', {
       templateUrl:'routes/cases/conversation/conversationparticipantcreate.html',
       controller: 'ConversationParticipantCreateCtrl'
     })
-    .when('/cases/:caseId/conversation/:conversationId', {
+    .when('/cases/:caseId/:projectId?/conversation/:conversationId/:projectId?', {
       templateUrl:'routes/cases/conversation/conversationdetail.html',
       controller: 'ConversationDetailCtrl'
     })
@@ -69,7 +66,7 @@ angular.module('sf')
       templateUrl:'routes/cases/caselog/caseloglist.html',
       controller: 'CaselogListCtrl'
     })
-    .when('/cases/:caseId/contact/:contactIndex/', {
+    .when('/cases/:caseId/:projectId?/contact/:contactIndex/', {
       templateUrl:'routes/cases/contact/contactedit.html',
       controller: 'ContactEditCtrl'
     })
@@ -88,6 +85,10 @@ angular.module('sf')
     .when('/cases/:caseId/print', {
       templateUrl:'routes/cases/print/print.html',
       controller: 'PrintCtrl'
+    })
+    .when('/cases/:caseId/:projectId/:status?', {
+      templateUrl: 'routes/cases/case-edit/caseedit.html',
+      controller: 'CaseEditCtrl'
     })
     .otherwise({
       redirectTo: '/'

@@ -1,0 +1,25 @@
+<div class="maps">
+  <div class="row">
+    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" control="map.control" options="map.options">
+      <ui-gmap-drawing-manager options="drawingManagerOptions" control="drawingManagerControl"
+                               events="drawingManagerOptions.events"></ui-gmap-drawing-manager>
+
+      <ui-gmap-marker idkey="marker.id" coords="marker.coords" options="marker.options"
+                      events="marker.events" control="map.markersControl"></ui-gmap-marker>
+    </ui-gmap-google-map>
+  </div>
+
+  <div class="row">
+    <label>{{addressLabel}}</label>
+  </div>
+
+  <div class="lookup">
+    <input type="text" id="map-search-input" class="" data-ng-model="searchValue">
+    <button class="btn" type="button" data-ng-click="search($event)">Sök</button>
+    <button class="btn" type="button" data-ng-click="findMe($event)"><i class="icon-target"></i>&nbsp;Min position</button>
+    <div id="mapErrorMsg">{{searchError}}</div>
+    <ul class="search-results">
+      <li data-ng-repeat="result in searchResults"><a href="" data-ng-click="selectAddress($event, result.location)">{{result.address}}</a></li>
+    </ul>
+  </div>
+</div>

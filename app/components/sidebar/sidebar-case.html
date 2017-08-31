@@ -1,50 +1,70 @@
-<div class="m-h">
-  <a href="#/cases/{{ caze[0].id }}/edit" data-ng-show="!caze[0].text"><h2>Ärende</h2></a>
-  <a href="#/cases/{{ caze[0].id }}" data-ng-show="caze[0].text"><h2>Ärende</h2></a>
-  <a href="" class="action-btn" data-ng-click="showCaseInfoPopUp()"><i class="icon-info"></i></a>
-</div>
 <div class="m-c">
-  <ul>
-    <li>
-      <a href="#/cases/{{ caze[0].id }}" class="block-link case-sidebar-info">
-        <h3>{{caze[0].text}}</h3>
-        <p data-ng-hide="notes.length === 0" data-ng-bind-html="notes[0].note | limitTo: 250"></p>
-      </a>
-      <div class="convo-status">
-        <a href="#/cases/{{ caze[0].id }}/noteshistory" class="icon-history-file icon-case-history" title="Ärendebeskrivning, historik">
-          <span class="struct">Ärendebeskrivning, historik</span>
+    <ul>
+        <li>
+            <a href="#/cases/{{ caze[0].id }}/{{ caze[0].ownerId }}" class="block-link convCaseSidebar">
+                <span class="contact-no-name" data-ng-if="caze[0].text.length === 0">Ärendebeskrivning saknas</span>
+                <h3 data-ng-hide="caze[0].text.length === 0" class="left">{{caze[0].text}}</h3>
+                <a href="" class="action-btn" data-ng-click="showCaseInfoPopUp()"><i class="icon-info"></i></a>
+                <div class="clear"></div>
+                <div>
+                    <a href="#/cases/{{ caze[0].id }}/{{ caze[0].ownerId }}" class="block-link" data-ng-hide="notes[0].length === 0" data-ng-bind-html="notes[0].note | limitTo: 250"></a>
+                </div>
+            </a>
+        </li>
+    </ul>
+    <div>
+        <div class="date left">
+            <b>Ändrad:</b> {{caze[0].lastLogEntryTime | date : "yyyy-MM-dd 'kl' HH:mm"}}
+        </div>
+        <a data-ng-click="collapsedBasic = ! collapsedBasic || status=='new'" href=""><span class="action-btn"></span>{{ collapsedBasic || status=='new'?
+            'Fäll ihop' : 'Fäll ut de 3 senaste'}}</a>
+
+        <a href="#/cases/{{ caze[0].id }}/caselog"><span class="action-btn icon-history"
+                                                         title="Ärendelogg, historik">{{submittedForms.length}}
+            <span class="struct">Ärendelogg, historik</span>
+        </span>
         </a>
-      </div>
-    </li>
-  </ul>
+        <div class="clear"></div>
+        <div data-ng-show="collapsedBasic || status=='new'">
+            <ul>
+                <li data-ng-repeat="entry in sideBarCaseLogs | orderBy:'-creationDate' | limitTo:3 track by $index"
+                    data-ng-class-even="'even'" class="convo-li">
+                    <b class="text-small">{{ entry.text }} av {{ entry.creator }}</b>
+                    <div class="date">{{ entry.creationDate | dateTime}}</div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="clear"></div>
 </div>
 
 <modal dialog-title="Ärendeinformation" show="showCaseInfo">
-  <table class="log-table">
-    <caption>Allmänt</caption>
-    <tr>
-      <th>Ansvarig</th>
-      <td>{{ caze[0].owner }}</td>
-    </tr>
-    <tr>
-      <th>Skapad av</th>
-      <td>{{ caze[0].createdBy }}</td>
-    </tr>
-    <tr>
-      <th>Handläggare</th>
-      <td>{{ caze[0].assignedTo }}</td>
-    </tr>
-  </table>
-  <table class="log-table">
-    <caption>Åtkomst</caption>
-    <tr>
-      <th>Läsa</th>
-      <td>{{ permissions[0].readAccess }}</td>
-    </tr>
-    <tr>
-      <th>Skriva</th>
-      <td>{{ permissions[0].writeAccess }}</td>
-    </tr>
-  </table>
+    <table class="log-table">
+        <caption>Allmänt</caption>
+        <tr>
+            <th>Ansvarig</th>
+            <td>{{ caze[0].owner }}</td>
+        </tr>
+        <tr>
+            <th>Skapad av</th>
+            <td>{{ caze[0].createdBy }}</td>
+        </tr>
+        <tr>
+            <th>Handläggare</th>
+            <td>{{ caze[0].assignedTo }}</td>
+        </tr>
+    </table>
+    <table class="log-table">
+        <caption>Åtkomst</caption>
+        <tr>
+            <th>Läsa</th>
+            <td>{{ permissions[0].readAccess }}</td>
+        </tr>
+        <tr>
+            <th>Skriva</th>
+            <td>{{ permissions[0].writeAccess }}</td>
+        </tr>
+    </table>
 </modal>
 

@@ -21,18 +21,34 @@ angular.module('sf', [
     'ngResource',
     'ngAnimate',
     'angular-growl',
+    'ui.select',
     'ngSanitize',
     'angularFileUpload',
     'sf.config',
     'angular.filter',
-    'localytics.directives'
+    'localytics.directives',
+    'uiGmapgoogle-maps',
+    'infinite-scroll'
   ])
+  .config(function(uiGmapGoogleMapApiProvider) {
+    uiGmapGoogleMapApiProvider.configure({
+      key: 'AIzaSyCqH4sFJMZXvVTaBm4JYk2v089WlarlBtw',
+      v: '3.17',
+      libraries: 'places,drawing',
+      language: 'sv'
+    });
+  })
   .run(function ($rootScope, $http, httpService, $location, $routeParams, tokenService) {
 
     $rootScope.hasToken = tokenService.hasToken;
     $rootScope.isLoggedIn = $rootScope.hasToken();
     $rootScope.logout = tokenService.clear;
 
+      if (window.isFormWindow) {
+          $rootScope.isFormWindow = true;
+      } else {
+          $rootScope.isFormWindow = false;
+      }
 
     //Add current project type to rootScope to let toolbar update accordingly in index.html
     $rootScope.$on('$routeChangeSuccess', function(e, current, pre) {

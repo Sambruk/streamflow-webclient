@@ -22,6 +22,7 @@ module.exports = function(config){
 
     files : [
       'bower_components/ng-file-upload/angular-file-upload-shim.js',
+      'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
       'bower_components/angular-resource/angular-resource.js',
       'bower_components/angular-growl-v2/build/angular-growl.js',
@@ -33,6 +34,9 @@ module.exports = function(config){
       'bower_components/underscore/underscore-min.js',
       'bower_components/angular-filter/dist/angular-filter.js',
       'bower_components/angular-chosen-localytics/chosen.js',
+      'bower_components/angular-google-maps/dist/angular-google-maps.js',
+      'bower_components/momentjs/moment.js',
+      'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
       'app/config/config.js',
       'app/*.js',
       'app/components/**/*js',
@@ -40,7 +44,8 @@ module.exports = function(config){
       'app/infrastructure/**/*.js',
       'app/routes/**/*.js',
       'test/fixture/backend.js',
-      'test/unit/**/*.js'
+      'test/unit/**/*.js',
+      'bower_components/ui-select/dist/select.js'
     ],
 
     exclude: ['test/e2e/**/*.js'],

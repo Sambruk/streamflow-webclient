@@ -202,6 +202,25 @@ angular.module('sf')
         });
       },
 
+      getPossibleAssignees: function(caseId) {
+          return backendService.get({
+              specs: caseBase(caseId).concat([
+                  {queries: 'possibleassignees'}
+              ]),
+              onSuccess: function (resource, result) {
+                  //NOTE: pushing resource.response.links to result if no links.
+                  // this might be wrong approach
+                  if (resource.response.links.length === 0) {
+                      result.push(resource.response.links);
+                  } else {
+                      resource.response.links.forEach(function (item) {
+                          result.push(item);
+                      });
+                  }
+              }
+          });
+      },
+
       sendCaseTo: function(caseId, sendToId, callback) {
         return backendService.postNested(
           caseBase(caseId).concat([
@@ -323,6 +342,19 @@ angular.module('sf')
           }).then(callback);
       },
 
+      assignToCase: function(caseId, assignToId, callback) {
+          return backendService.postNested(
+              caseBase(caseId).concat([
+                  {commands: 'assignto'}
+              ]),
+              {entity: assignToId}).then(_.debounce(callback)()).then(function (result) {
+              caseBase.broadcastMessage(result.status);
+          }),
+              function (error) {
+                  caseBase.broadcastMessage(error);
+              };
+      },
+
       unassignCase: function(caseId, callback) {
         return backendService.postNested(
           caseBase(caseId).concat([
@@ -387,7 +419,12 @@ angular.module('sf')
             {resources: 'note'},
             {commands: 'addnote'}
           ]),
-          value);
+          value).then(function(result){
+            caseBase.broadcastMessage(result.status);
+          },
+          function(error){
+            caseBase.broadcastMessage(error);
+          });
       },
 
       getAllNotes: function(caseId) {
@@ -399,8 +436,8 @@ angular.module('sf')
           onSuccess:function (resource, result) {
             resource.response.links.forEach(function(item){
               result.push(item);
+              caseBase.broadcastMessage(result.status);
             });
-            caseBase.broadcastMessage(result.status);
           },
           onFailure:function(err){
             caseBase.broadcastMessage(err);
@@ -609,7 +646,6 @@ angular.module('sf')
         });
       },
       createCaseLogEntry: function(caseId, value) {
-        //debugger;
         var specs = caseBase(caseId).concat([{resources: 'caselog'}, {commands: 'addmessage'}]),
             data = {string: value};
 
@@ -924,6 +960,22 @@ angular.module('sf')
         });
       },
 
+      getFormDraftLocationSettings: function(caseId, formDraftId){
+        return backendService.get({
+          specs:caseBase(caseId).concat([
+            {resources: 'formdrafts/' + formDraftId, unsafe: true},
+            {queries: 'settings'}
+          ]),
+          onSuccess:function(resource, result){
+            result.push(resource.response);
+            caseBase.broadcastMessage(result.status);
+          },
+          onFailure:function(err){
+            caseBase.broadcastMessage(err);
+          }
+        });
+      },
+
       getFormDraftAttachment: function(caseId, formDraftId){
         return backendService.get({
           specs:caseBase(caseId).concat([
@@ -986,6 +1038,20 @@ angular.module('sf')
           });
           }, 1000),
 
+       updateFieldWithoutDelay: function(caseId, formId, fieldId, value) {
+            return backendService.postNested(
+                caseBase(caseId).concat([
+                    {resources: 'formdrafts/' + formId, unsafe: true},
+                    {commands: 'updatefield'}
+                ]),
+                {field: fieldId, value: value}).then(function(result){
+                    caseBase.broadcastMessage(result.status);
+                },
+                function(error){
+                    caseBase.broadcastMessage(error);
+                });
+        },
+
       submitForm: function(caseId, formId) {
         return backendService.postNested(
           caseBase(caseId).concat([
@@ -994,6 +1060,10 @@ angular.module('sf')
           ]),
           {}).then(function(result){
             caseBase.broadcastMessage(result.status);
+            $rootScope.$broadcast('form-saved', formId);
+            if($rootScope.isFormWindow) {
+                localStorage.setItem('submittedFormId', formId);
+            }
           },
           function(error){
             caseBase.broadcastMessage(error);
@@ -1268,6 +1338,19 @@ angular.module('sf')
             {commands: 'delete'}
             ]),
           {}).then(function(result){
+            caseBase.broadcastMessage(result.status);
+          },
+          function(error){
+            caseBase.broadcastMessage(error);
+          });
+      },
+      sendSignatureReminder: function(caseId, taskRef) {
+        return backendService.postNested(
+          caseBase(caseId).concat([
+            {resources: 'submittedforms'},
+            {commands: 'resenddoublesignemail'}
+          ]),
+          {secondsigntaskref: taskRef}).then(function(result){
             caseBase.broadcastMessage(result.status);
           },
           function(error){

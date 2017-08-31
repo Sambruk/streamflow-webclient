@@ -16,243 +16,277 @@
  */
 'use strict';
 angular.module('sf')
-  .controller('FormCtrl', function($scope, caseService, $routeParams, $rootScope, webformRulesService, $sce, navigationService, fileService, httpService, sidebarService, $timeout) {
-    $scope.sidebardata = {};
+    .controller('FormCtrl', function ($q, $scope, caseService, $routeParams, $rootScope, webformRulesService, $sce, navigationService, fileService, httpService, sidebarService, $timeout, formMapperService) {
+        $scope.sidebardata = {};
 
-    $scope.caseId = $routeParams.caseId;
-    $scope.currentFormId = $routeParams.formId;
-    $scope.currentFormDescription = '';
-    $scope.possibleForms = caseService.getSelectedPossibleForms($routeParams.caseId);
-    $scope.selectedItems = {};
-    $scope.applyRules = webformRulesService.applyRules;
-    $scope.possibleForm  = '';
+        $scope.caseId = $routeParams.caseId;
+        $scope.currentFormId = $routeParams.formId;
+        $scope.currentFormDescription = '';
+        $scope.possibleForms = caseService.getSelectedPossibleForms($routeParams.caseId);
+        $scope.selectedItems = {};
+        $scope.applyRules = webformRulesService.applyRules;
+        $scope.possibleForm = '';
+        $scope.caze = caseService.getSelected($routeParams.caseId);
 
-    $scope.showSpinner = {
-      form: true
-    };
+        $scope.showSpinner = {
+            form: true
+        };
 
-    $scope.$watch('currentFormPage', function(newVal){
-      if(!newVal){
-        return;
-      }
-      $scope.reapplyRules();
-    });
+        $scope.trustAsHtml = function (text) {
+            return $sce.trustAsHtml(text);
+        };
 
-    $scope.$watch('closeWithForm', function(newVal){
-      if(!newVal){
-        return;
-      }
-      caseService.createFormOnCloseDraft($routeParams.caseId).then(function(){
-        caseService.getFormOnCloseDraft($routeParams.caseId).promise.then(function(response){
-          caseService.getFormDraft($routeParams.caseId, response[0].id).promise.then(function(response){
-            $scope.closeWithFormId = response[0].draftId;
-          })
-          .then(function(){
+        $scope.$watch('currentFormPage', function (newVal) {
+            if (!newVal) {
+                return;
+            }
+            $scope.reapplyRules();
+        });
+
+        $scope.$watch('closeWithForm', function (newVal) {
+            if (!newVal) {
+                return;
+            }
+            caseService.createFormOnCloseDraft($routeParams.caseId).then(function () {
+                caseService.getFormOnCloseDraft($routeParams.caseId).promise.then(function (response) {
+                    caseService.getFormDraft($routeParams.caseId, response[0].id).promise.then(function (response) {
+                        $scope.closeWithFormId = response[0].draftId;
+                    })
+                        .then(function () {
+                            $scope.formMessage = '';
+
+                            var form = caseService.getFormDraft($routeParams.caseId, $scope.closeWithFormId);
+                            form.promise.then(function (response) {
+                                $scope.getFormData(response);
+                                $scope.closeWithForm = true;
+                            });
+                        });
+                });
+            });
+        });
+
+        $scope.selectForm = function (formId) {
+            // TODO Is there a better way than this?
+            $scope.$watch('form', function () {
+                setTimeout(function () {
+                    $scope.$apply(function () {
+                        if ($scope.form && $scope.form[0]) {
+                            $scope.currentFormDescription = $scope.form[0].description;
+                            $scope.currentFormPage = $scope.form[0].enhancedPages[0];
+                            $scope.displayField($scope.form[0].enhancedPages);
+                        }
+                    });
+                }, 1000);
+            });
+
             $scope.formMessage = '';
 
-            var form = caseService.getFormDraft($routeParams.caseId, $scope.closeWithFormId);
-            form.promise.then(function(response){
-              $scope.getFormData(response);
-              $scope.closeWithForm = true;
-            });
-          });
-        });
-      });
-    });
-
-    $scope.selectForm = function(formId){
-      // TODO Is there a better way than this?
-      $scope.$watch('form', function(){
-        setTimeout(function(){
-          $scope.$apply(function () {
-            if ($scope.form && $scope.form[0]) {
-              $scope.currentFormDescription = $scope.form[0].description;
-              $scope.currentFormPage = $scope.form[0].enhancedPages[0];
-              $scope.displayField($scope.form[0].enhancedPages);
+            if (formId) {
+                $scope.possibleForm = caseService.getPossibleForm($routeParams.caseId, formId);
             }
-          });
-        }, 1000);
-      });
 
-      $scope.formMessage = '';
-
-      if(formId){
-        $scope.possibleForm = caseService.getPossibleForm($routeParams.caseId, formId);
-      }
-
-      $scope.$watch('possibleForm[0]', function (){
-        if (!$scope.possibleForm[0]){
-          return;
-        }
-        if ($scope.possibleForm[0].queries.length !== 0) {
-          caseService.getFormDraftId($routeParams.caseId, formId).promise.then(function(response){
-            $scope.formDraftId = response[0].id;
-          }).then(function(){
-            var form = caseService.getFormDraftFromForm($routeParams.caseId, $scope.formDraftId);
-            form.promise.then(function(response){
-
-              $scope.getFormData(response);
-
-            })
-            .then(function(){
-              if($scope.isLastPage()){
-                $scope.form.invalidate();
-                $scope.form.resolve();
-              }
+            $scope.$watch('possibleForm[0]', function () {
+                if (!$scope.possibleForm[0]) {
+                    return;
+                }
+                if ($scope.possibleForm[0].queries.length !== 0) {
+                    caseService.getFormDraftId($routeParams.caseId, formId).promise.then(function (response) {
+                        $scope.formDraftId = response[0].id;
+                    }).then(function () {
+                        var settings = caseService.getFormDraftLocationSettings($routeParams.caseId, $scope.formDraftId);
+                        settings.promise.then(function (response) {
+                            $scope.locationSettings = response[0];
+                        });
+                        var form = caseService.getFormDraftFromForm($routeParams.caseId, $scope.formDraftId);
+                        form.promise.then(function (response) {
+                            $scope.getFormData(response);
+                        })
+                            .then(function () {
+                                if ($scope.isLastPage()) {
+                                    $scope.form.invalidate();
+                                    $scope.form.resolve();
+                                }
+                            });
+                    });
+                }
+                else {
+                    caseService.createSelectedForm($routeParams.caseId, formId).then(function (response) {
+                        var draftId = JSON.parse(response.data.events[0].parameters).param1;
+                        $scope.showSpinner.form = false;
+                        $scope.possibleForm.invalidate();
+                        $scope.possibleForm.resolve();
+                        var settings = caseService.getFormDraftLocationSettings($routeParams.caseId, draftId);
+                        settings.promise.then(function (response) {
+                            $scope.locationSettings = response[0];
+                        });
+                        var form = caseService.getFormDraft($routeParams.caseId, draftId);
+                        form.promise.then(function (response) {
+                            $scope.form = response;
+                            $scope.showSpinner.form = false;
+                        })
+                            .then(function () {
+                                $scope.isLastPage = function () {
+                                    return $scope.currentFormPage && $scope.form[0].enhancedPages.indexOf($scope.currentFormPage) === ($scope.form[0].enhancedPages.length - 1); //|| $scope.form[0].enhancedPages.indexOf($scope.currentFormPage) === visiblePages.length;
+                                };
+                            });
+                    });
+                }
+                $scope.currentFormPage = null;
             });
-          });
-        }
-        else {
-          caseService.createSelectedForm($routeParams.caseId, formId).then(function(response){
-            var draftId = JSON.parse(response.data.events[0].parameters).param1;
+        };
+
+        $scope.getFormData = function (data) {
+            $scope.form = data;
+            $scope.formAttachments = [];
             $scope.showSpinner.form = false;
-            $scope.possibleForm.invalidate();
-            $scope.possibleForm.resolve();
-            var form = caseService.getFormDraft($routeParams.caseId, draftId);
-            form.promise.then(function(response){
-              $scope.form = response;
-              $scope.showSpinner.form = false;
-            })
-            .then(function(){
-              $scope.isLastPage = function(){
-                return $scope.currentFormPage && $scope.form[0].enhancedPages.indexOf($scope.currentFormPage) === ($scope.form[0].enhancedPages.length - 1); //|| $scope.form[0].enhancedPages.indexOf($scope.currentFormPage) === visiblePages.length;
-              };
+
+            $scope.form[0].enhancedPages.forEach(function (pages) {
+                pages.fields.forEach(function (field) {
+
+                    if (field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue') {
+                        var name = null;
+                        var id = null;
+
+                        if (field.value) {
+                            var jsonParse = JSON.parse(field.value);
+                            name = jsonParse.name;
+                            id = jsonParse.attachment;
+                        }
+
+                        var attachment = {
+                            name: name,
+                            id: id,
+                            fieldId: field.field.field
+                        };
+
+                        $scope.formAttachments.push(attachment);
+                    }
+                });
             });
-          });
-        }
-        $scope.currentFormPage = null;
-      });
-    };
+        };
 
-    $scope.getFormData = function(data){
-      $scope.form = data;
-      $scope.formAttachments = [];
-      $scope.showSpinner.form = false;
+        $scope.displayField = function (formPage) {
+            $scope.applyRules(formPage);
+        };
 
-      $scope.form[0].enhancedPages.forEach(function(pages){
-        pages.fields.forEach(function(field){
+        $scope.reapplyRules = function () {
+            $scope.applyRules($scope.form[0].enhancedPages);
+        };
 
-          if(field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue'){
-            var name = null;
-            var id = null;
+        $scope.selectFormPage = function (page) {
+            $scope.currentFormPage = page;
+        };
 
-            if(field.value){
-              var jsonParse = JSON.parse(field.value);
-              name = jsonParse.name;
-              id = jsonParse.attachment;
+        var updateFieldsOnPages = function (form) {
+            var p = Promise.resolve();
+            form.enhancedPages.forEach(function (pages) {
+                pages.fields.forEach(function (field) {
+                    p = p.then(function () {
+                        var value = formMapperService.getValue(field.value, field.field.field);
+                        caseService.updateFieldWithoutDelay($routeParams.caseId, form.draftId, field.field.field, value);
+                    });
+                });
+            });
+            return p;
+        };
+
+        var formSubmitted = function () {
+            if (!$scope.closeWithForm) {
+                $rootScope.$broadcast('form-submitted');
             }
+            $scope.formMessage = 'Skickat!';
+            $scope.form = [];
+            $scope.currentFormPage = null;
+        };
 
-            var attachment = {
-              name: name,
-              id: id,
-              fieldId: field.field.field
-            };
+        $scope.submitForm = function () {
+            (updateFieldsOnPages($scope.form[0])).then(function () {
+                (caseService.submitForm($routeParams.caseId, $scope.form[0].draftId)).then(function () {
+                    if (!$scope.closeWithForm) {
+                        // Use this if to 100% to be sure that we get form submitted(at least during tests)
+                        // $timeout(formSubmitted, 10000);
+                    } else {
+                        caseService.closeFormOnClose($routeParams.caseId).then(function () {
+                            formSubmitted();
+                            $timeout(function () {
+                                sidebarService.close($scope);
+                            }, 1000);
+                        });
+                    }
+                });
+            });
+        };
 
-            $scope.formAttachments.push(attachment);
-          }
+        $scope.deleteFormDraftAttachment = function (fieldId) {
+            var attachment = _.find($scope.formAttachments, function (attachment) {
+                return attachment.fieldId === fieldId;
+            });
+
+            caseService.deleteFormDraftAttachment($routeParams.caseId, $scope.formDraftId, attachment.id).then(function () {
+                $scope.formAttachments.forEach(function (attachment, index) {
+                    if ($scope.formAttachments[index].fieldId === fieldId) {
+                        $scope.formAttachments[index].name = null;
+                        $scope.formAttachments[index].id = null;
+                    }
+                });
+                caseService.updateField($routeParams.caseId, $scope.formDraftId, fieldId, null);
+            });
+        };
+
+        $scope.onFormDraftFileSelect = function ($files, fieldId) {
+            var url = httpService.apiUrl + 'workspacev2/cases/' + $routeParams.caseId + '/formdrafts/' + $scope.formDraftId + '/formattachments/createformattachment';
+
+            fileService.uploadFile($files[0], url).then(function (data) {
+                return JSON.parse(data.data.events[0].parameters).param1;
+            }).then(function (attachmentId) {
+                caseService.updateFormDraftAttachmentField($routeParams.caseId, $scope.formDraftId, $files[0].name, attachmentId, fieldId).then(function () {
+
+                    $scope.formAttachments.forEach(function (attachment, index) {
+                        if ($scope.formAttachments[index].fieldId === fieldId) {
+                            $scope.formAttachments[index].name = $files[0].name;
+                            $scope.formAttachments[index].id = attachmentId;
+                        }
+                    });
+                });
+            });
+        };
+
+        $scope.toggleLastPageTrue = function (val) {
+            $scope.forcedLastPage = val;
+        };
+
+        $scope.isLastPage = function () {
+            if ($scope.form && $scope.form[0]) {
+                return $scope.currentFormPage && $scope.form[0].enhancedPages.indexOf($scope.currentFormPage) === ($scope.form[0].enhancedPages.length - 1);
+            }
+            return false;
+        };
+
+
+        $scope.isFirstPage = function () {
+            if ($scope.form && $scope.form[0]) {
+                return $scope.currentFormPage && $scope.form[0].enhancedPages.indexOf($scope.currentFormPage) === 0;
+            }
+            return false;
+        };
+
+        $scope.nextFormPage = function () {
+            var index = $scope.form[0].enhancedPages.indexOf($scope.currentFormPage);
+            index += 1;
+            $scope.currentFormPage = $scope.form[0].enhancedPages[index];
+        };
+
+        $scope.previousFormPage = function () {
+            var index = $scope.form[0].enhancedPages.indexOf($scope.currentFormPage);
+            index -= 1;
+            $scope.currentFormPage = $scope.form[0].enhancedPages[index];
+        };
+
+        //Used for send submit message only after correct form data sending to server
+        //TODO: Maybe it would be good to rewrite that to promises somehow?
+        $scope.$on('form-saved', function (event, formId) {
+            if (!$scope.closeWithForm) {
+                formSubmitted();
+            }
         });
-      });
-    };
-
-    $scope.displayField = function(formPage){
-      $scope.applyRules(formPage);
-    };
-
-    $scope.reapplyRules = function(){
-      $scope.applyRules($scope.form[0].enhancedPages);
-    };
-
-    $scope.selectFormPage = function(page){
-      $scope.currentFormPage = page;
-    };
-
-    $scope.submitForm = function(){
-      caseService.submitForm($routeParams.caseId, $scope.form[0].draftId).then(function(){
-        if(!$scope.closeWithForm){
-          formSubmitted();
-        }else{
-          caseService.closeFormOnClose($routeParams.caseId).then(function(){
-          	formSubmitted();
-	          $timeout(function(){
-	            sidebarService.close($scope);
-	      		}, 1000);
-					});
-        }
-      });
-    };
-
-    var formSubmitted = function(){
-      if(!$scope.closeWithForm){
-        $rootScope.$broadcast('form-submitted');
-      }
-      $scope.formMessage = 'Skickat!';
-      $scope.form = [];
-      $scope.currentFormPage = null;
-    };
-
-    $scope.deleteFormDraftAttachment = function(fieldId){
-			var attachment = _.find($scope.formAttachments, function(attachment) {
-        return attachment.fieldId === fieldId;
-      });
-
-      caseService.deleteFormDraftAttachment($routeParams.caseId, $scope.formDraftId, attachment.id).then(function(){
-      	$scope.formAttachments.forEach(function(attachment, index){
-	       	if($scope.formAttachments[index].fieldId === fieldId){
-	       		$scope.formAttachments[index].name = null;
-	       		$scope.formAttachments[index].id = null;
-	       	}
-  			});
-        caseService.updateField($routeParams.caseId, $scope.formDraftId, fieldId, null);
-      });
-    };
-
-    $scope.onFormDraftFileSelect = function($files, fieldId){
-      var url = httpService.apiUrl + 'workspacev2/cases/'+$routeParams.caseId+'/formdrafts/'+$scope.formDraftId +'/formattachments/createformattachment';
-
-      fileService.uploadFile($files[0], url).then(function(data){
-        return JSON.parse(data.data.events[0].parameters).param1;
-      }).then(function(attachmentId){
-        caseService.updateFormDraftAttachmentField($routeParams.caseId, $scope.formDraftId, $files[0].name, attachmentId, fieldId).then(function(){
-
-  	    	$scope.formAttachments.forEach(function(attachment, index){
-  	    		if($scope.formAttachments[index].fieldId === fieldId){
-  	    			$scope.formAttachments[index].name = $files[0].name;
-  	    			$scope.formAttachments[index].id = attachmentId;
-  	    		}
-		    	});
-        });
-      });
-    };
-
-    $scope.toggleLastPageTrue = function(val){
-      $scope.forcedLastPage = val;
-    };
-
-    $scope.isLastPage = function(){
-      if($scope.form && $scope.form[0]){
-        return $scope.currentFormPage && $scope.form[0].enhancedPages.indexOf($scope.currentFormPage) === ($scope.form[0].enhancedPages.length - 1);
-      }
-      return false;
-    };
-
-
-
-    $scope.isFirstPage = function(){
-      if($scope.form && $scope.form[0]){
-        return $scope.currentFormPage && $scope.form[0].enhancedPages.indexOf($scope.currentFormPage) === 0;
-     }
-     return false;
-    };
-
-    $scope.nextFormPage = function(){
-      var index = $scope.form[0].enhancedPages.indexOf($scope.currentFormPage);
-      index += 1;
-      $scope.currentFormPage = $scope.form[0].enhancedPages[index];
-    };
-
-    $scope.previousFormPage = function(){
-      var index = $scope.form[0].enhancedPages.indexOf($scope.currentFormPage);
-      index -= 1;
-      $scope.currentFormPage = $scope.form[0].enhancedPages[index];
-    };
-  });
+    });

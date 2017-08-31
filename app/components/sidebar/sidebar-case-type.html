@@ -1,16 +1,16 @@
 <div class="select">
-  <label for="type-select">Ärendetyp</label>
-  <select
-    chosen
-    no-results-text="'Inga ärendetyper funna'"
-    data-placeholder="Ärendetyp"
-    data-ng-options="caseType.id as caseType.text group by caseType.title for caseType in possibleCaseTypes"
-    data-ng-model="caseType"
-    data-ng-change="changeCaseType(caseType)"
-    data-ng-disabled="!canChange"
-    name="name-select"
-    id="type-select"
-  >
-  </select>
+    <label for="type-select">Ärendetyp</label>
+
+    <ui-select data-ng-model="$parent.caseType" theme="select2" data-ng-change="changeCaseType($select.selected.id)"
+               name="name-select" id="type-select" style="width: 100%;">
+        <ui-select-match placeholder="Ärendetyp">{{$select.selected.text}}{{$select.selected.labels}}</ui-select-match>
+        <ui-select-choices
+                repeat="type.id as type in possibleCaseTypes | filter: ($select.search)"
+                group-by="'title'"
+                value="{{type.id}}">
+            <div data-ng-bind-html="highlight((type.text + type.labels), $select.search)"></div>
+        </ui-select-choices>
+    </ui-select>
+</div>
 </div>
 

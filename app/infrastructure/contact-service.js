@@ -17,7 +17,7 @@
 'use strict';
 
 angular.module('sf')
-.factory('contactService', function(caseService, navigationService, $rootScope){
+.factory('contactService', function(caseService, navigationService, $rootScope, $location){
     var contact = {
       name: '',
       contactId: '',
@@ -32,7 +32,8 @@ angular.module('sf')
       caseService.addContact(caseId, contact).then(function(){
         $rootScope.$broadcast('contact-created');
         var href = navigationService.caseHrefSimple(caseId);
-        window.location.assign(href + '/contact/' + contactIndex + '/');
+        var hrefWithoutHash = href.slice(1);
+        $location.path(hrefWithoutHash + '/contact/' + contactIndex + '/');
       });
     };
 

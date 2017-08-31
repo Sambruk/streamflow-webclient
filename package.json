@@ -1,6 +1,6 @@
 {
   "name": "webclient",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "main": "app.js",
   "repository": {
     "type": "git",

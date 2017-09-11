@@ -2,16 +2,13 @@
   <div class="text">
     <label for="issue-due-date">Förfaller</label>
     <div class="set-due-date">
-      <input sf-date-picker-fancy
-        type="text"
-        id="issue-due-date"
-        name="issue-due-date"
-        placeholder="Förfallodatum"
-        data-ng-model="dueOn"
-        data-ng-change="changeDueOn(dueOn)"
-        data-ng-disabled="!canChange"
-      >
+      <input sf-date-picker-fancy type="text" id="issue-due-date" name="issue-due-date" placeholder="Förfallodatum"
+        data-ng-model="dueOn" data-ng-change="changeDueOn(dueOn)" data-ng-disabled="!canChange">
     </div>
   </div>
+  <div>
+    <b class="left">Senast ändrad:</b>
+    <div class="left right-sidebar">{{caze[0].lastLogEntryTime | date : "yyyy-MM-dd 'kl' HH:mm"}}</div>
+  </div>
+  <div class="clear"></div>
 </div>
-

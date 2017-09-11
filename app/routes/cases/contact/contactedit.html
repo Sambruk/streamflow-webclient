@@ -38,11 +38,11 @@
               <label for="contact-name">Gatuadress</label>
               <input type="text" data-ng-model="contact[0].addresses[0].address" id="contact-address" name="address" data-sf-update-on-blur="updateField($event, $success, $error)" data-ng-disabled="!canUpdateContact" data-ng-class="{'disabled': !canUpdateContact}">
             </div>
-            <div class="text col medium-small col-2">
+            <div class="text col custom-col-size-small">
               <label for="contact-zipcode">Postnummer</label>
-              <input type="text" data-ng-model="contact[0].addresses[0].zipCode" id="contact-zipcode" name="zipCode" data-sf-update-on-blur="updateField($event, $success, $error)" data-ng-disabled="!canUpdateContact" data-ng-class="{'disabled': !canUpdateContact}">
+              <input type="text" data-ng-model="contact[0].addresses[0].zipCode" id="contact-zipcode" name="zipCode" data-sf-update-on-blur="updateField($event, $success, $error)" data-ng-disabled="!canUpdateContact" data-ng-class="{'disabled': !canUpdateContact}" maxlength="6">
             </div>
-            <div class="text col medium-small col-3">
+            <div class="text col custom-col-size-medium">
               <label for="contact-city">Postort</label>
               <input type="text" data-ng-model="contact[0].addresses[0].city" id="contact-city" name="city" data-sf-update-on-blur="updateField($event, $success, $error)" data-ng-disabled="!canUpdateContact" data-ng-class="{'disabled': !canUpdateContact}">
             </div>
@@ -71,7 +71,7 @@
             <div class="text col medium-small col-3">
               <label for="contact-pref">Kontaktpreferens</label>
               <div class="select">
-                <select class="hasCustomSelect" data-ng-model="contact[0].contactPreference" id="contact-pref" name="contactpreference" data-sf-update-on-blur="updateField($event, $success, $error)" data-ng-disabled="!canUpdateContact">
+                <select chosen class="hasCustomSelect" data-placeholder="Välj" data-ng-model="contact[0].contactPreference" id="contact-pref" name="contactpreference" data-sf-update-on-blur="updateField($event, $success, $error)" data-ng-disabled="!canUpdateContact">
                   <option value="letter">Brev</option>
                   <option value="email" selected>E-post</option>
                   <option value="sms">SMS</option>
@@ -93,7 +93,7 @@
           <div class="row cols-1 cf">
             <div class="text col full">
               <label for="contact-note">Anteckningar</label>
-              <textarea data-ng-model="contact[0].note" id="contact-note" name="note" cols="30" rows="2" placeholder="" data-sf-update-on-blur="updateField($event, $success, $error)" data-ng-disabled="!canUpdateContact" data-ng-class="{'disabled': !canUpdateContact}"></textarea>
+              <textarea autogrow data-ng-model="contact[0].note" id="contact-note" name="note" cols="30" rows="2" placeholder="" data-sf-update-on-blur="updateField($event, $success, $error)" data-ng-disabled="!canUpdateContact" data-ng-class="{'disabled': !canUpdateContact}"></textarea>
             </div>
           </div>
         </form>

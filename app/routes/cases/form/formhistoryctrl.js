@@ -34,6 +34,13 @@ angular.module('sf')
       window.location.replace(url);
     };
 
+    $scope.sendSignatureReminder = function (taskRef) {
+      caseService.sendSignatureReminder($scope.caseId, taskRef).then(function() {
+        $scope.submittedForm.invalidate();
+        $scope.submittedForm.resolve();
+      });
+    };
+
     $scope.$watch('selectedSubmittedForm', function(){
       var index = $scope.selectedSubmittedForm;
       if (_.isNumber(index)){

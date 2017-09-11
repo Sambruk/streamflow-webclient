@@ -33,15 +33,22 @@
 
     <link href="app/css/streamflow.css" rel="stylesheet">
     <link href="http://fonts.googleapis.com/css?family=Roboto:400,400italic,700" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Roboto&subset=cyrillic');
+    </style>
+
   </head>
   <body data-ng-app="sf" sf-layout-style>
     <div class="body">
-      <banner data-ng-show="isLoggedIn"></banner>
+      <a id="top"></a>
+      <banner data-ng-show="isLoggedIn && !isFormWindow"></banner>
       <login data-ng-show="!isLoggedIn"></login>
       <div class="main">
-        <contextmenu params="contextmenuParams" data-ng-show="isLoggedIn"></contextmenu>
-        <div class="main-body cf" data-ng-view="">
-        </div>
+        <div class="main-body cf" data-ng-view="" autoscroll="true"></div>
+        <contextmenu params="contextmenuParams" data-ng-show="isLoggedIn && !isFormWindow"></contextmenu>
       </div>
     </div>
     <script src="app/vendor.js"></script>

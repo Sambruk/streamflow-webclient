@@ -1,6 +1,6 @@
 /*
  *
- * Copyright 2009-2014 Jayway Products AB
+ * Copyright 2009-2015 Jayway Products AB
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,25 +15,17 @@
  * limitations under the License.
  */
 'use strict';
-angular.module('sf')
-.controller('CaseDetailCtrl', function ($scope) {
+angular.module('sf').controller('AboutCtrl', function ($scope, profileService, $rootScope, httpService) {
+  $rootScope.$broadcast('breadcrumb-updated', [
+  {
+    title: 'Om Streamflow'
+  }]);
 
-  $scope.sidebardata = {};
-
-  $scope.$watch('sidebardata.caze', function (newVal) {
-    if (!newVal) {
-      return;
-    }
-    if ($scope.sidebardata) {
-      $scope.caze = $scope.sidebardata.caze;
-    }
+  httpService.getRequest('static/version.html', false)
+    .then(function(result){
+      var versionMatch = /(Version: )[a-z,A-Z,\d,.,-]+/.exec(result.data);
+      if(versionMatch && versionMatch.length > 0 && versionMatch[0].length > 9) {
+        $scope.serverVersion = versionMatch[0].substr(9);
+      }
   });
-
-  $scope.$watch('sidebardata.notes', function (newVal) {
-    if (!newVal) {
-      return;
-    }
-    $scope.notes = $scope.sidebardata.notes;
-  });
-
 });

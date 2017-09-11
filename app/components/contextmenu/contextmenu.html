@@ -1,21 +1,37 @@
 <div class="navigation" role='navigation'>
-  <a href="" ng-show="canCreateCase()" data-ng-click="createCase()" class="add-new-issue"><i class="icon-plus"></i><span class="struct">Lägg till nytt ärende</span></a>
+  <a href="" ng-show="canCreateCase()" data-ng-click="createCase()" class="add-new-issue" >
+    <span class="add-new-issue__item"></span>
+    <span class="add-new-issue__item"></span>
+    <span class="struct">Lägg till nytt ärende</span>
+  </a>
+  <a href="" class="open-toolbar" data-ng-click="toggleSidebar($event)">
+    <span class="open-toolbar__item"></span>
+    <span class="open-toolbar__item"></span>
+    <span class="open-toolbar__item"></span>
+    <!------------------------------------------------------>
+    <span class="struct">Visa/dölj funktionsmeny</span>
+  </a>
   <div class="functions-menu" data-ng-class="{open: showSidebar}">
     <div class="functions-header cf">
-      <h2><a href="#/perspectives">Funktioner</a></h2>
-      <a href="" class="icon-menu open-toolbar" data-ng-click="toggleSidebar($event)">
-        <span class="struct">Visa/dölj funktionsmeny</span>
-      </a>
+      <!--h2><a href="#/perspectives">Funktioner</a></h2-->
+      <h2><a href="#/perspectives">Funktioner</a>
+        <div class="container">
+          <input type="text" class="filter" placeholder="Filtrera" data-ng-model="functionSearch.$">
+        </div>
+      </h2>
+
     </div>
-    <div class="sub-category" data-ng-repeat="project in projects">
-      <h3>{{project.text}}</h3>
-      <ul>
-        <li data-ng-repeat="type in project.types">
-          <a ng-href="#/{{type.href}}" sf-active-link data-ng-click="navigateTo(type.href, $event)">
-            <span>{{type.caseCount}}</span><span class="struct">meddelanden i </span> {{type.name | translate }}
-          </a>
-        </li>
-      </ul>
+    <div class="sub-categories">
+      <div class="sub-category" data-ng-repeat="project in projects | filter: functionSearch">
+        <h3>{{project.text}}</h3>
+        <ul>
+          <li data-ng-repeat="type in project.types">
+            <a ng-href="#/{{type.href}}" sf-active-link data-ng-click="navigateTo(type.href, project.text, type.caseCount, $event)">
+              <span>{{type.caseCount}}</span><span class="struct">meddelanden i </span> {{type.name | translate }}
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div> <!-- navigation -->

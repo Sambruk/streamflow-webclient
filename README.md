@@ -63,41 +63,6 @@ mvn clean install
 
 The build process should start and will create a `.war` file in the `target/` directory.
 
-### Glassfish
-
-Glassfish is the web server hosting Streamflow, located
-[here](https://test-sfwc.jayway.com:4848). Account details can be found
-[here](https://confluence.jayway.com/display/streamsource/Windows+server+tips+and+tricks).
-
-Do the following to finish deployment:
-
-* Click **Applications** in the sidebar.
-
-* Select the checkbox next to the existing deployed application and then click
-  **Undeploy**.
-
-* Click **Deploy** and select the new application `.war` file.
-
-* Remote desktop to:
-
-  ```bash
-  test-sfwc.jayway.com
-  ```
-
-* Edit `WEB-INF/web.xml`. Comment out:
-
-  ```bash
-  <param-value>http://localhost/streamflow</param-value>`
-  ```
-
-* and then uncomment:
-
-  ```bash
-  <param-value>http://test-sf.jayway.com/streamflow</param-value>`
-  ```
-
-* Go back to Glassfish and **Reload** the deployed application.
-
 ## Coding Conventions
 
 Good looking code is important. Keep `jshint` happy, and try to follow these

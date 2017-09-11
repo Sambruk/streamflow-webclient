@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 'use strict';
-angular.module('sf').controller('CaseOverviewCtrl', function ($scope, $routeParams, perspectiveService) {
+angular.module('sf').controller('CaseOverviewCtrl', function ($scope, perspectiveService) {
   $scope.perspectives = perspectiveService.getPerspectives();
 });
 

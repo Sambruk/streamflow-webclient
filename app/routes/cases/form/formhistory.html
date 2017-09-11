@@ -24,9 +24,43 @@
 
   <span>Välj ett datum:</span>
   <span>
-    <select data-ng-options="form.index as form.submissionDate for form in submittedForms" id="selectedSubmittedForm" data-ng-model="selectedSubmittedForm"></select>
-  </span>
+    <div class="select">
+      <select chosen data-ng-options="form.index as (form.submissionDate | dateTime) for form in submittedForms" id="selectedSubmittedForm" data-ng-model="selectedSubmittedForm"></select>
+      <option></option>
+    </div>
+    </span>
   <br />
+  <!-- Signature -->
+  <div class="form-history" ng-if="submittedForm[0].signatures.length > 0">
+    <div class="form-history-sections cf row">
+      <div class="section-history-item">Signatur</div>
+    </div>
+    <div class="form-history-field">
+      <div data-ng-repeat="signature in submittedForm[0].signatures">
+        <div class="form-field"><em>{{signature.name}}</em>: {{signature.signerName}} ({{signature.signerId}})</div>
+      </div>
+    </div>
+  </div>
+  <!-- Second signer -->
+  <div class="form-history" ng-if="submittedForm[0].secondSignee">
+    <div class="form-history-sections cf row">
+      <div class="section-history-item">Information om nästa signatur</div>
+    </div>
+    <div class="form-history-field" ng-if="!submittedForm[0].secondSignee.singlesignature">
+      <div class="form-field"><em>Namn</em>: {{submittedForm[0].secondSignee.name}}</div>
+      <div class="form-field"><em>Telefon</em>: {{submittedForm[0].secondSignee.phonenumber}}</div>
+      <div class="form-field"><em>Personnummer</em>: {{submittedForm[0].secondSignee.socialsecuritynumber}}</div>
+      <div class="form-field"><em>E-post</em>: {{submittedForm[0].secondSignee.email}}</div>
+      <div class="form-field"><em>Länk till följdformulär</em>: <a href="{{submittedForm[0].secondSignee.secondDraftUrl}}" target="_blank">{{submittedForm[0].secondSignee.secondDraftUrl}}</a></div>
+     </div>
+    <div class="form-history-field" ng-if="!submittedForm[0].secondSignee.singlesignature">
+      <div class="form-field" ng-if="submittedForm[0].secondSignee.secondsigneetaskref"><button ng-click="sendSignatureReminder(submittedForm[0].secondSignee.secondsigneetaskref)">Skicka påminnelse</button> Senaste påminnelse skickad: {{submittedForm[0].secondSignee.lastReminderSent | googleDate}}</div>
+    </div>
+    <div class="form-history-field" ng-if="submittedForm[0].secondSignee.singlesignature">
+      <div class="form-field">Alternativet att endast ha en signatur är valt.</div>
+    </div>
+  </div>
+  <!-- Pages -->
   <div class="form-history" data-ng-repeat="page in submittedForm[0].pages">
     <div class="form-history-sections cf row">
       <div class="section-history-item">{{page.name}}</div>
@@ -34,11 +68,29 @@
 
     <div class="form-history-field">
       <div data-ng-repeat="field in page.fields">
-        <div ng-if="field.fieldType === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue'" class="form-field"><em>{{ field.field }}</em>: {{ field.value | attachmentJson }}
-          <button ng-click="downloadFormAttachment(field)">Ladda ner</button>
+        <div ng-if="field.fieldType === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue'" class="form-field"> 
+          <div data-ng-if="field.value">
+            <em>{{ field.field }}</em>: {{ field.value | attachmentJson }}
+            <button ng-click="downloadFormAttachment(field)">Ladda ner</button>
+          </div>
+          <div data-ng-if="!field.value">
+            <em>{{ field.field }}</em>:
+          </div>
         </div>
-        <div ng-hide="field.fieldType === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue'" class="form-field"><em>{{ field.field }}</em>: {{ field.value  | dateTime}}</div>
+        <div ng-if="field.fieldType === 'se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue'" class="form-field">
+          <div data-ng-if="field.value">
+            <em>{{ field.field }}</em>: <i class="map-point"></i>Plats är angiven på kartan
+          </div>
+          <div data-ng-if="!field.value">
+            <em>{{ field.field }}</em>: <i class="map-point"></i>Ingen plats angiven på kartan
+          </div>
+        </div>
+        <div ng-if="field.fieldType === 'se.streamsource.streamflow.api.administration.form.DateFieldValue'"
+             class="form-field"><em>{{ field.field }}</em>: {{ field.value  | dateField}}</div>
+        <div ng-hide="field.fieldType === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue' || field.fieldType === 'se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue' || field.fieldType === 'se.streamsource.streamflow.api.administration.form.DateFieldValue'"
+             class="form-field"><em>{{ field.field }}</em>: {{ field.value }}</div>
       </div>
+      
     </div>
     <div ng-show="$last === true">
       <div class="form-history-submitted" style="float:left;">Submitted: {{ submittedForm[0].submissionDate | dateTime}}</div>

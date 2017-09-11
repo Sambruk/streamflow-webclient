@@ -18,352 +18,386 @@
 'use strict';
 
 angular.module('sf')
-.directive('sidebar', function($location, growl, contactService, sidebarService, fileService, $cacheFactory, $rootScope, $routeParams, projectService, caseService, httpService, navigationService, $q, tokenService, checkPermissionService){
-  return {
-    restrict: 'E',
-    templateUrl: 'components/sidebar/sidebar.html',
-    scope: {
-      sidebardata: '='
-    },
-    link: function(scope){
-      //Declare scope objects
-      scope.projectId = $routeParams.projectId;
-      scope.projectType = $routeParams.projectType;
-      scope.general = caseService.getSelectedGeneral($routeParams.caseId);
-      scope.contacts = caseService.getSelectedContacts($routeParams.caseId);
-      scope.conversations = caseService.getSelectedConversations($routeParams.caseId);
-      scope.attachments = caseService.getSelectedAttachments($routeParams.caseId);
-      scope.apiUrl = httpService.apiUrl + caseService.getWorkspace();
-      scope.possiblePriorities = caseService.getPossiblePriorities($routeParams.caseId);
-      scope.possibleCaseTypes = caseService.getPossibleCaseTypes($routeParams.caseId);
-      scope.possibleResolutions = caseService.getPossibleResolutions($routeParams.caseId);
-      scope.possibleForms = caseService.getSelectedPossibleForms($routeParams.caseId);
-      scope.submittedFormList = caseService.getSubmittedFormList($routeParams.caseId);
-      scope.notes = caseService.getSelectedNote($routeParams.caseId);
-      // scope.notesHistory = caseService.getAllNotes($routeParams.caseId);
-      scope.caze = caseService.getSelected($routeParams.caseId);
-      scope.possibleSendTo = caseService.getPossibleSendTo($routeParams.caseId);
-      scope.uploadProgress = 0;
-      scope.showExport = false;
-      scope.exportSubmittedForms = false;
-      scope.exportAttachments = false;
-      scope.exportConversations = false;
-      scope.exportContacts = false;
-      scope.exportCaseLog = false;
+    .directive('sidebar', function ($location, growl, contactService, sidebarService, fileService, $cacheFactory, $rootScope, $routeParams, projectService, caseService, httpService, navigationService, $q, tokenService, checkPermissionService, $window) {
+        return {
+            restrict: 'E',
+            templateUrl: 'components/sidebar/sidebar.html',
+            scope: {
+                sidebardata: '='
+            },
+            link: function (scope) {
+                //Declare scope objects
+                scope.projectId = $routeParams.projectId;
+                scope.projectType = $routeParams.projectType;
+                scope.general = caseService.getSelectedGeneral($routeParams.caseId);
+                scope.contacts = caseService.getSelectedContacts($routeParams.caseId);
+                scope.conversations = caseService.getSelectedConversations($routeParams.caseId);
+                scope.attachments = caseService.getSelectedAttachments($routeParams.caseId);
+                scope.apiUrl = httpService.apiUrl + caseService.getWorkspace();
+                scope.possiblePriorities = caseService.getPossiblePriorities($routeParams.caseId);
+                scope.possibleCaseTypes = caseService.getPossibleCaseTypes($routeParams.caseId);
+                scope.possibleResolutions = caseService.getPossibleResolutions($routeParams.caseId);
+                scope.possibleForms = caseService.getSelectedPossibleForms($routeParams.caseId);
+                scope.submittedFormList = caseService.getSubmittedFormList($routeParams.caseId);
+                scope.notes = caseService.getSelectedNote($routeParams.caseId);
+                // scope.notesHistory = caseService.getAllNotes($routeParams.caseId);
+                scope.caze = caseService.getSelected($routeParams.caseId);
+                scope.possibleSendTo = caseService.getPossibleSendTo($routeParams.caseId);
+                scope.possibleAssignees = caseService.getPossibleAssignees($routeParams.caseId);
+                scope.uploadProgress = 0;
+                scope.showExport = false;
+                scope.exportSubmittedForms = false;
+                scope.exportAttachments = false;
+                scope.exportConversations = false;
+                scope.exportContacts = false;
+                scope.exportCaseLog = false;
+                scope.exportCaseNotes = false;
+                scope.status = $routeParams.status;
 
-      scope.caze.promise.then(function () {
-        checkPermissionService.checkPermissions(
-          scope,
-          scope.caze.queries,
-          ['exportpdf'],
-          ['canExportCase']
-        );
-      });
+                scope.caze.promise.then(function () {
+                    checkPermissionService.checkPermissions(
+                        scope,
+                        scope.caze.queries,
+                        ['exportpdf'],
+                        ['canExportCase']
+                    );
+                });
 
-      scope.general.promise.then(function () {
-        checkPermissionService.checkPermissions(
-          scope,
-          scope.general.commands,
-          ['casetype', 'changedueon', 'changedescription', 'changepriority'],
-          ['canChangeCaseType', 'canChangeDueOn', 'canChangeDescription', 'canChangePriority']
-        );
+                scope.general.promise.then(function () {
+                    checkPermissionService.checkPermissions(
+                        scope,
+                        scope.general.commands,
+                        ['casetype', 'changedueon', 'changedescription', 'changepriority'],
+                        ['canChangeCaseType', 'canChangeDueOn', 'canChangeDescription', 'canChangePriority']
+                    );
 
-        if (scope.sidebardata && scope.canChangeDescription) {
-          scope.sidebardata.canChangeDescription = true;
-        }
-      });
+                    if (scope.sidebardata && scope.canChangeDescription) {
+                        scope.sidebardata.canChangeDescription = true;
+                    }
+                });
 
-      scope.notes.promise.then(function () {
-        checkPermissionService.checkPermissions(
-          scope,
-          scope.notes.commands,
-          ['addnote'],
-          ['canAddNote']
-        );
+                scope.notes.promise.then(function () {
+                    checkPermissionService.checkPermissions(
+                        scope,
+                        scope.notes.commands,
+                        ['addnote'],
+                        ['canAddNote']
+                    );
 
-        if (scope.sidebardata && scope.canAddNote) {
-          scope.sidebardata.canAddNote = true;
-        }
-      });
+                    if (scope.sidebardata && scope.canAddNote) {
+                        scope.sidebardata.canAddNote = true;
+                    }
+                });
 
-      scope.contacts.promise.then(function () {
-        checkPermissionService.checkPermissions(
-          scope,
-          scope.contacts.commands,
-          ['add'],
-          ['canAddContact']
-        );
-      });
+                scope.contacts.promise.then(function () {
+                    checkPermissionService.checkPermissions(
+                        scope,
+                        scope.contacts.commands,
+                        ['add'],
+                        ['canAddContact']
+                    );
+                });
 
-      scope.conversations.promise.then(function () {
-        checkPermissionService.checkPermissions(
-          scope,
-          scope.conversations.commands,
-          ['create'],
-          ['canCreateConversation']
-        );
-      });
+                scope.conversations.promise.then(function () {
+                    checkPermissionService.checkPermissions(
+                        scope,
+                        scope.conversations.commands,
+                        ['create'],
+                        ['canCreateConversation']
+                    );
+                });
 
-      scope.attachments.promise.then(function () {
-        checkPermissionService.checkPermissions(
-          scope,
-          scope.attachments.queries,
-          ['createattachment'],
-          ['canCreateAttachment']
-        );
-      });
+                scope.attachments.promise.then(function () {
+                    checkPermissionService.checkPermissions(
+                        scope,
+                        scope.attachments.queries,
+                        ['createattachment'],
+                        ['canCreateAttachment']
+                    );
+                });
 
-      scope.possibleForms.promise.then(function () {
-        sidebarService.checkPossibleForms(
-          scope,
-          scope.possibleForms
-        );
-      });
+                scope.possibleForms.promise.then(function () {
+                    sidebarService.checkPossibleForms(
+                        scope,
+                        scope.possibleForms
+                    );
+                });
 
-      if ($routeParams.formId && $routeParams.caseId) {
-        scope.submittedForms = caseService.getSubmittedForms($routeParams.caseId, $routeParams.formId);
-      }
+                if ($routeParams.formId && $routeParams.caseId) {
+                    scope.submittedForms = caseService.getSubmittedForms($routeParams.caseId, $routeParams.formId);
+                }
 
-      scope.$watch('caze[0]', function (newVal) {
-        if (!newVal) {
-          return;
-        }
-        $rootScope.$broadcast('breadcrumb-updated',
-          [{projectId: scope.caze[0].owner},
-          {projectType: scope.caze[0].listType},
-          {caseId: scope.caze[0].caseId}]);
+                scope.$watch('caze[0]', function (newVal) {
+                    if (!newVal) {
+                        return;
+                    }
+                    $rootScope.$broadcast('breadcrumb-updated', [
+                        {
+                            title: scope.caze[0].owner
+                        },
+                        {
+                            title: scope.caze[0].listType,
+                            url: '#/projects/' + scope.caze[0].ownerId + '/' + scope.caze[0].listType
+                        },
+                        {
+                            title: scope.caze[0].caseId,
+                            url: '#/cases/' + scope.caze[0].id + '/' + scope.caze[0].ownerId
+                        }
+                    ]);
 
-        if (scope.sidebardata) {
-          scope.sidebardata.caze = scope.caze;
-        }
-      });
+                    if (scope.sidebardata) {
+                        scope.sidebardata.caze = scope.caze;
+                    }
+                });
 
-      scope.$watch('notes', function (newVal) {
-        if(!newVal){
-          return;
-        }
-        if (scope.sidebardata) {
-          scope.sidebardata.notes = scope.notes;
-        }
-      });
+                scope.$watch('notes', function (newVal) {
+                    if (!newVal) {
+                        return;
+                    }
+                    if (scope.sidebardata) {
+                        scope.sidebardata.notes = scope.notes;
+                    }
+                });
 
-      scope.$watch('conversations', function (newVal) {
-        if (!newVal) {
-          return;
-        }
-        if (scope.sidebardata) {
-          scope.sidebardata.conversations = scope.conversations;
-        }
-      });
+                scope.$watch('conversations', function (newVal) {
+                    if (!newVal) {
+                        return;
+                    }
+                    if (scope.sidebardata) {
+                        scope.sidebardata.conversations = scope.conversations;
+                    }
+                });
 
-      scope.$watch('caze', function (newVal) {
-        if (!newVal) {
-          return;
-        }
-        scope.caze = newVal;
-      });
+                scope.$watch('caze', function (newVal) {
+                    if (!newVal) {
+                        return;
+                    }
+                    scope.caze = newVal;
+                });
 
-      /* HTTP NOTIFICATIONS */
-      scope.errorHandler = function () {
-        var bcMessage = caseService.getMessage();
-        if (bcMessage !== 200) {
-          growl.warning('errorMessage');
-        }
-      };
-      //error-handler
-      scope.$on('httpRequestInitiated', scope.errorHandler);
-      // End HTTP NOTIFICATIONS
+                /* HTTP NOTIFICATIONS */
+                scope.errorHandler = function () {
+                    var bcMessage = caseService.getMessage();
+                    if (bcMessage !== 200) {
+                        growl.warning('errorMessage');
+                    }
+                };
+                //error-handler
+                scope.$on('httpRequestInitiated', scope.errorHandler);
+                // End HTTP NOTIFICATIONS
 
-      //Contact
-      scope.submitContact = contactService.submitContact; //End Contact
+                //Contact
+                scope.submitContact = contactService.submitContact; //End Contact
 
-      //Resolve
-      scope.resolveCase = function() {
-        sidebarService.resolveCase(scope);
-      };
-      scope.onResolveButtonClicked = function(){
-        sidebarService.onResolveButtonClicked(scope);
-      };
-      scope.onCancelResolveButtonClicked = function () {
-        scope.commandView = '';
-      }; //End Resolve
+                //Resolve
+                scope.resolveCase = function () {
+                    sidebarService.resolveCase(scope);
+                };
+                scope.onResolveButtonClicked = function () {
+                    sidebarService.onResolveButtonClicked(scope);
+                };
+                scope.onCancelResolveButtonClicked = function () {
+                    scope.commandView = '';
+                }; //End Resolve
 
 
-      // Commands (toolbar)
-      var updateToolbar = function () {
-        sidebarService.updateToolbar(scope);
-      };
-      updateToolbar(); // End commands (toolbar)
+                // Commands (toolbar)
+                var updateToolbar = function () {
+                    sidebarService.updateToolbar(scope);
+                };
+                updateToolbar(); // End commands (toolbar)
 
-      // Send to
-      scope.sendTo = function () {
-        sidebarService.sendTo(scope);
-      };
-      scope.sendToIdChanged = function (id) {
-        scope.sendToId = id;
-      };
-      scope.onSendToButtonClicked = function () {
-        sidebarService.onSendToButtonClicked(scope);
-      };// End Send to
+                var updateObject = function (itemToUpdate) {
+                    itemToUpdate.invalidate();
+                    itemToUpdate.resolve();
+                };
 
-      // Restrict / Unrestrict
-      scope.permissions = caseService.getPermissions($routeParams.caseId);
+                // Send to
+                scope.sendTo = function () {
+                    sidebarService.sendTo(scope);
+                };
+                scope.sendToIdChanged = function (id) {
+                    scope.sendToId = id;
+                };
+                scope.onSendToButtonClicked = function () {
+                    sidebarService.onSendToButtonClicked(scope);
+                };// End Send to
 
-      scope.unrestrict = function () {
-        sidebarService.unrestrict(scope);
-      };
-      scope.restrict = function () {
-        sidebarService.restrict(scope);
-      }; // End Restrict / Unrestrict
+                //TODO change method to assign to
+                // Assign to
+                scope.assignTo = function () {
+                    sidebarService.assignTo(scope);
+                };
+                scope.assignToIdChanged = function (id) {
+                    scope.assignToId = id;
+                };
+                scope.onAssignToButtonClicked = function () {
+                    sidebarService.onAssignToButtonClicked(scope);
+                };// End assign to
 
-      // Mark Read / Unread
-      scope.markReadUnread = function (read) {
-        sidebarService.markReadUnread(scope, read);
-      }; // End Mark Read / Unread
+                // Restrict / Unrestrict
+                scope.permissions = caseService.getPermissions($routeParams.caseId);
 
-      // Show Export Pdf
-      scope.toggleExportPopup = function (visible) {
-        console.log('Show:', visible);
-        scope.showExport = visible;
-        scope.commandView = true;
-      }; // End Show Export Pdf
+                scope.unrestrict = function () {
+                    sidebarService.unrestrict(scope);
+                };
+                scope.restrict = function () {
+                    sidebarService.restrict(scope);
+                }; // End Restrict / Unrestrict
 
-      scope.onExportButtonClicked = function () {
-        caseService.getCasePdf($routeParams.caseId, scope.exportSubmittedForms, scope.exportAttachments, scope.exportConversations, scope.exportContacts, scope.exportCaseLog);
-        scope.toggleExportPopup(false);
-        console.log('Hide');
-      };// End Send to
+                // Mark Read / Unread
+                scope.markReadUnread = function (read) {
+                    sidebarService.markReadUnread(scope, read);
+                }; // End Mark Read / Unread
 
-      // Close
-      scope.close = function () {
-        sidebarService.close(scope);
-      };
-      scope.onCancelRequiredCaseTypeButtonClicked = function () {
-        scope.commandView = '';
-      };// End Close
+                // Show Export Pdf
+                scope.toggleExportPopup = function (visible) {
+                    scope.showExport = visible;
+                    scope.commandView = true;
+                }; // End Show Export Pdf
 
-      // FormOnClose
-      scope.closeWithForm = function () {
-        scope.commandView = 'formonclose';
-        scope.show = true;
-      }; // End FormOnClose
+                scope.onExportButtonClicked = function (submittedForms, attachments, conversations, contacts, caseLog, notes) {
+                    caseService.getCasePdf($routeParams.caseId, submittedForms, attachments, conversations, contacts, caseLog, notes);
+                    scope.toggleExportPopup(false);
+                };// End Send to
 
-      // Reopen
-      scope.reopen = function () {
-        sidebarService.reopen(scope);
-      };
-      // End Reopen
+                scope.toggleDeletePopup = function (visible) {
+                    scope.showDelete = visible;
+                    scope.commandView = true;
+                };
 
-      // Delete
-      scope.deleteCase = function () {
-        sidebarService.deleteCase(scope);
-      }; // End Delete
+                // Close
+                scope.close = function () {
+                    sidebarService.close(scope);
+                };
+                scope.onCancelRequiredCaseTypeButtonClicked = function () {
+                    scope.commandView = '';
+                };// End Close
 
-      // Assign / Unassign
-      scope.assign = function () {
-        sidebarService.assign(scope);
-      };
-      scope.unassign = function () {
-        sidebarService.unassign(scope);
-      }; // End Assign / Unassign
+                // FormOnClose
+                scope.closeWithForm = function () {
+                    scope.commandView = 'formonclose';
+                    scope.show = true;
+                }; // End FormOnClose
 
-      // Attachments
-      scope.downloadAttachment = function (attachment) {
-        sidebarService.downloadAttachment(scope, attachment);
-      };
-      scope.deleteAttachment = function (attachmentId) {
-        sidebarService.deleteAttachment(scope, attachmentId);
-      }; // End Attachments
+                // Reopen
+                scope.reopen = function () {
+                    sidebarService.reopen(scope);
+                };
+                // End Reopen
 
-      scope.exportCaseInfo = function () {
-        scope.caseExportInfo = caseService.getCaseExportInfo($routeParams.caseId);
-      };
-      scope.onFileSelect = function ($files) {
-        var url = httpService.apiUrl + 'workspacev2/cases/' + $routeParams.caseId + '/attachments/createattachment';
-        fileService.uploadFiles($files, url);
-        updateObject(scope.attachments);
-      };
+                // Delete
+                scope.deleteCase = function () {
+                    sidebarService.deleteCase(scope);
+                }; // End Delete
 
-      // Show / Close pop up
-      scope.showExportCaseInfoPopUp = function () {
-        scope.showExportInfo = true;
-      };
+                // Assign / Unassign
+                scope.assign = function () {
+                    sidebarService.assign(scope);
+                };
+                scope.unassign = function () {
+                    sidebarService.unassign(scope);
+                }; // End Assign / Unassign
 
-      // Filter for caselog
-      var defaultFiltersUrl =  caseService.getWorkspace() + '/cases/' + $routeParams.caseId + '/caselog/defaultfilters';
-      httpService.getRequest(defaultFiltersUrl, false).then(function(result){
-        scope.defaultFilters = result.data;
-        scope.sideBarCaseLogs = caseService.getSelectedFilteredCaseLog($routeParams.caseId, scope.defaultFilters);
-      }); // End Filter for caselog
+                // Attachments
+                scope.downloadAttachment = function (attachment) {
+                    sidebarService.downloadAttachment(scope, attachment);
+                };
+                scope.deleteAttachment = function (attachmentId) {
+                    sidebarService.deleteAttachment(scope, attachmentId);
+                }; // End Attachments
 
-      var updateObject = function(itemToUpdate){
-        itemToUpdate.invalidate();
-        itemToUpdate.resolve();
-      };
+                scope.exportCaseInfo = function () {
+                    scope.caseExportInfo = caseService.getCaseExportInfo($routeParams.caseId);
+                };
+                scope.onFileSelect = function ($files) {
+                    var url = httpService.apiUrl + 'workspacev2/cases/' + $routeParams.caseId + '/attachments/createattachment';
+                    fileService.uploadFiles($files, url);
+                    updateObject(scope.attachments);
+                };
 
-      //Event-listeners
-      scope.$on('case-changed', function() {
-        updateObject(scope.possibleCaseTypes);
-        updateObject(scope.sendToRecipients);
-        sidebarService.caseType(scope);
-      });
-      scope.$on('case-unassigned', function(){
-        checkFilterCaseLog('system');
-      });
-      scope.$on('case-assigned', function(){
-        checkFilterCaseLog('system');
-      });
-      scope.$on('case-restricted', function(){
-        checkFilterCaseLog('system');
-      });
-      scope.$on('case-unrestricted', function(){
-        checkFilterCaseLog('system');
-      });
-      scope.$on('case-type-changed', function(){
-        checkFilterCaseLog('system');
-      });
-      scope.$on('casedescription-changed', function(){
-        updateObject(scope.caze);
-      });
-      // scope.$on('note-changed', function(event){
-      //   updateObject(scope.notes);
-      // });
-      scope.$on('form-submitted', function(){
-        updateObject(scope.submittedFormList);
-        checkFilterCaseLog('form');
-      });
-      scope.$on('conversation-created', function(){
-        updateObject(scope.conversations);
-        checkFilterCaseLog('conversation');
-      });
-      scope.$on('conversation-message-created', function(){
-        // updateObject(scope.conversations);
-        checkFilterCaseLog('conversation');
-      });
-      scope.$on('participant-removed', function(){
-        updateObject(scope.conversations);
-      });
-      scope.$on('contact-created', function(){
-        updateObject(scope.contacts);
-        checkFilterCaseLog('contact');
-      });
-      scope.$on('contact-name-updated', function(){
-        updateObject(scope.contacts);
-        checkFilterCaseLog('contact');
-      });
-      scope.$on('caselog-message-created', function(){
-        // updateObject(scope.sideBarCaseLogs);
-        checkFilterCaseLog('custom');
-      });
-      //End Event-listeners
+                // Show / Close pop up
+                scope.showExportCaseInfoPopUp = function () {
+                    scope.showExportInfo = true;
+                };
 
-      var checkFilterCaseLog = function(filter){
-        if(scope.defaultFilters[filter] === false){
-          return;
-        }
-        updateObject(scope.sideBarCaseLogs);
-      };
-    }
-  };
-});
+                // Filter for caselog
+                var defaultFiltersUrl = caseService.getWorkspace() + '/cases/' + $routeParams.caseId + '/caselog/defaultfilters';
+                httpService.getRequest(defaultFiltersUrl, false).then(function (result) {
+                    scope.defaultFilters = result.data;
+                    scope.sideBarCaseLogs = caseService.getSelectedFilteredCaseLog($routeParams.caseId, scope.defaultFilters);
+                }); // End Filter for caselog
+
+                var checkFilterCaseLog = function (filter) {
+                    if (scope.defaultFilters[filter] === false) {
+                        return;
+                    }
+                    updateObject(scope.sideBarCaseLogs);
+                };
+
+                //Event-listeners
+                scope.$on('case-changed', function () {
+                    updateObject(scope.possibleCaseTypes);
+                    updateObject(scope.sendToRecipients);
+                    updateObject(scope.assignToRecipients);
+                    sidebarService.caseType(scope);
+                });
+                scope.$on('case-unassigned', function () {
+                    checkFilterCaseLog('system');
+                });
+                scope.$on('case-assigned', function () {
+                    checkFilterCaseLog('system');
+                });
+                scope.$on('case-restricted', function () {
+                    checkFilterCaseLog('system');
+                });
+                scope.$on('case-unrestricted', function () {
+                    checkFilterCaseLog('system');
+                });
+                scope.$on('case-type-changed', function () {
+                    checkFilterCaseLog('system');
+                });
+                scope.$on('casedescription-changed', function () {
+                    updateObject(scope.caze);
+                });
+                // scope.$on('note-changed', function(event){
+                //   updateObject(scope.notes);
+                // });
+                scope.$on('form-submitted', function () {
+                    updateObject(scope.submittedFormList);
+                    checkFilterCaseLog('form');
+                });
+                $window.addEventListener('storage', function (event) {
+                    if (event.key === 'submittedFormId' && event.newValue != null) {
+                        $rootScope.$broadcast('form-submitted');
+                        $window.localStorage.removeItem('submittedFormId');
+                    }
+                }, false);
+
+                scope.$on('conversation-created', function () {
+                    updateObject(scope.conversations);
+                    checkFilterCaseLog('conversation');
+                });
+                scope.$on('conversation-message-created', function () {
+                    updateObject(scope.conversations);
+                    checkFilterCaseLog('conversation');
+                });
+                scope.$on('participant-removed', function () {
+                    updateObject(scope.conversations);
+                });
+                scope.$on('contact-created', function () {
+                    updateObject(scope.contacts);
+                    checkFilterCaseLog('contact');
+                });
+                scope.$on('contact-name-updated', function () {
+                    updateObject(scope.contacts);
+                    checkFilterCaseLog('contact');
+                });
+                $rootScope.$on('caselog-message-created', function () {
+
+                });
+                //End Event-listeners
+            }
+        };
+    });
 

@@ -17,76 +17,125 @@
 
 'use strict';
 
-angular.module('sf').controller('CaseEditCtrl', function($scope, $rootScope, $routeParams, caseService ) {
-  $scope.sidebardata = {};
+angular.module('sf').controller('CaseEditCtrl', function ($scope, $rootScope, $routeParams, caseService) {
+    $scope.sidebardata = {};
+    $scope.caseId = $routeParams.caseId;
+    $scope.projectId = $routeParams.projectId;
+    $scope.notesHistory = caseService.getAllNotes($routeParams.caseId);
+    $scope.caze = caseService.getSelected($routeParams.caseId);
+    $scope.status = $routeParams.status;
 
-  $scope.$watch('sidebardata.caze', function(newVal){
-    if(!newVal){
-      return;
-    }
-    $scope.caze = $scope.sidebardata.caze;
-    $scope.caze.promise.then(function(){
-      $scope.caseDescription = $scope.caze[0].text;
+    $scope.caseLogs = caseService.getSelectedFilteredCaseLog($routeParams.caseId, {
+        system: false,
+        systemTrace: false,
+        form: false,
+        conversation: false,
+        attachment: false,
+        contact: false,
+        custom: true
     });
-  });
 
-  $scope.$watch('sidebardata.notes', function(newVal){
-    if(!newVal){
-      return;
-    }
-    $scope.notes = $scope.sidebardata.notes;
-
-    $scope.notes.promise.then(function(){
-      $scope.caseNote = $scope.notes[0].note;
+    $scope.$watch('sidebardata.caze', function (newVal) {
+        if (!newVal) {
+            return;
+        }
+        $scope.caze = $scope.sidebardata.caze;
+        $scope.caze.promise.then(function () {
+            $scope.caseDescription = $scope.caze[0].text;
+        });
     });
-  });
 
-  $scope.$watch('caseDescription', function(newVal){
-    if(!newVal){
-      return;
-    }
-    $scope.caseDescription = newVal;
-  });
+    $scope.$watch('sidebardata.notes', function (newVal) {
+        if (!newVal) {
+            return;
+        }
+        $scope.notes = $scope.sidebardata.notes;
 
-  $scope.$watch('caseNote', function(newVal){
-    if(!newVal){
-      return;
-    }
-    $scope.caseNote = newVal;
-  });
+        $scope.notes.promise.then(function () {
+            $scope.caseNote = $scope.notes[0].note;
+            if (!($scope.status == 'new' || $scope.status == 'empty' || $scope.status == 'notes')) {
+                if (!$scope.caseNote && $scope.caze[0].id) {
+                    $scope.status = 'new'
+                }
+            }
+        });
+    });
 
+    $scope.$watch('caseDescription', function (newVal) {
+        if (!newVal) {
+            return;
+        }
+        $scope.caseDescription = newVal;
+    });
 
-  $scope.addNote = function($event, $success, $error){
-    $event.preventDefault();
+    $scope.$watch('caseNote', function (newVal) {
+        if (!newVal) {
+            return;
+        }
+        $scope.caseNote = newVal;
+    });
 
-    $scope.notes[0].note = $scope.caseNote;
-    if($scope.notes[0].note === $event.target.value){
-      caseService.addNote($routeParams.caseId, $scope.notes[0])
-      .then(function () {
-        $rootScope.$broadcast('note-changed');
-        $success($($event.target));
-      }, function () {
-        $error($error($event.target));
-      });
-    }
-  };
+    var updateObject = function (itemToUpdate) {
+        itemToUpdate.invalidate();
+        itemToUpdate.resolve();
+    };
 
-  $scope.changeCaseDescription = function($event, $success, $error){
-    $event.preventDefault();
+    $scope.addNote = function ($event, $success, $error) {
+        $event.preventDefault();
 
-    $scope.caze[0].text = $scope.caseDescription;
-    if($event.currentTarget.value.length > 50){
-      $error($($event.target));
-    }else{
-      caseService.changeCaseDescription($routeParams.caseId, $scope.caze[0].text)
-      .then(function(){
-        $rootScope.$broadcast('casedescription-changed');
-        $success($($event.target));
-      }, function(error) {
-        $error($error($event.target));
-      });
-    }
-  };
+        $scope.notes[0].note = $scope.caseNote;
+        if ($scope.notes[0].note === $event.target.value) {
+            caseService.addNote($routeParams.caseId, $scope.notes[0])
+                .then(function () {
+                    updateObject($scope.notesHistory);
+                    $success($($event.target));
+                    $event.currentTarget.value = '';
+                }, function () {
+                    $error($error($event.target));
+                });
+        }
+    };
 
+    $scope.changeCaseDescription = function ($event, $success, $error) {
+        $event.preventDefault();
+
+        $scope.caze[0].text = $scope.caseDescription;
+        if ($event.currentTarget.value.length > 50) {
+            $error($($event.target));
+        } else {
+            caseService.changeCaseDescription($routeParams.caseId, $scope.caze[0].text)
+                .then(function () {
+                    $rootScope.$broadcast('casedescription-changed');
+                    $success($($event.target));
+                }, function (error) {
+                    $error($error($event.target));
+                });
+        }
+    };
+
+    $scope.showSpinner = {
+        notesHistory: true
+    };
+
+    $scope.notesHistory.promise.then(function () {
+        $scope.showSpinner.notesHistory = false;
+    });
+
+    $scope.caze.promise.then(function () {
+        document.title = 'Streamflow ' + $scope.caze[0].caseId;
+    });
+
+    $scope.caseLogs.promise.then(function () {
+        $scope.showSpinner.caseLogs = false;
+    });
+
+    $scope.$on('caselog-message-created', function () {
+        $scope.showSpinner.caseLogs = true;
+        updateObject($scope.caseLogs);
+
+        $scope.caseLogs.promise.then(function () {
+            $scope.showSpinner.caseLogs = false;
+        });
+    });
 });
 

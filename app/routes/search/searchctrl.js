@@ -17,48 +17,49 @@
 
 'use strict';
 
-angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $rootScope, searchService, groupByService, paginationService, caseService, casePropertiesService) {
-  $scope.currentCases = [];
+angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $rootScope, searchService, groupByService, paginationService) {
+    $scope.currentCases = [];
+    $scope.scroll = 0;
+    $scope.busyLoadingData = false;
 
-  var query = $routeParams.query;
-  var originalCurrentCases = [];
-  var pagesShown = 1;
+    var query = $routeParams.query;
+    var originalCases = [];
+    var pageSize = paginationService.pageSize;
 
-  $scope.showSpinner = {
-    currentCases: true
-  };
+    $scope.showSpinner = {
+        currentCases: true,
+        infiniteScroll: false
+    };
 
-  $scope.getHeader = function () {
-    return 'Sökresultat';
-  };
+    $scope.getHeader = function () {
+        return 'Sökresultat';
+    };
 
-  $scope.groupingOptions = groupByService.getGroupingOptions();
+    $scope.groupingOptions = groupByService.getGroupingOptions();
 
-  $scope.groupBy = function(selectedGroupItem) {
-    $scope.currentCases = groupByService.groupBy($scope.currentCases, originalCurrentCases, selectedGroupItem);
-    $scope.specificGroupByDefaultSortExpression = groupByService.getSpecificGroupByDefault(selectedGroupItem);
-  };
+    // TODO
+    $scope.groupBy = function (selectedGroupItem) {
+        $scope.currentCases = groupByService.groupBy($scope.currentCases, originalCases, selectedGroupItem);
+        $scope.specificGroupByDefaultSortExpression = groupByService.getSpecificGroupByDefault(selectedGroupItem);
+    };
 
-  searchService.getCases(query).promise.then(function (result) {
-    $scope.currentCases = result;
-    $scope.showSpinner.currentCases = false;
+    $scope.showMoreItems = function () {
+        $scope.groupByValue = groupByService.getGroupByValue();
+        if ($scope.busyLoadingData) {
+            return;
+        }
+        $scope.busyLoadingData = true;
+        $scope.showSpinner.infiniteScroll = true;
 
-    $scope.currentCases.promise.then(function(){
-      originalCurrentCases = $scope.currentCases;
-      $rootScope.$broadcast('breadcrumb-updated',[]);
-
-      $scope.currentCases = casePropertiesService.checkCaseProperties($scope.currentCases);
-
-      // 'Pagination'
-      $scope.itemsLimit = paginationService.itemsLimit(pagesShown);
-      $scope.hasMoreItemsToShow = paginationService.hasMoreItemsToShow($scope.currentCases, pagesShown);
-
-      $scope.showMoreItems = function() {
-        pagesShown = paginationService.showMoreItems(pagesShown);
-        $scope.itemsLimit = paginationService.itemsLimit(pagesShown);
-        $scope.hasMoreItemsToShow = paginationService.hasMoreItemsToShow($scope.currentCases, pagesShown);
-      };
-    });
-  });
-
+        searchService.getCases(query + '+limit+' + pageSize + '+offset+' + $scope.currentCases.length).promise.then(function (result) {
+            $scope.caseCount = result.unlimitedResultCount;
+            $scope.currentCases = $scope.currentCases.concat(result);
+            if ($scope.groupByValue) {
+                $scope.currentCases = groupByService.groupBy($scope.currentCases, $scope.currentCases, $scope.groupByValue);
+            }
+            $scope.showSpinner.currentCases = false;
+            $scope.busyLoadingData = false;
+            $scope.showSpinner.infiniteScroll = false;
+        });
+    };
 });

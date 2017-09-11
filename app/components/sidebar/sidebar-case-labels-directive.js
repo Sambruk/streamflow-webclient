@@ -17,6 +17,10 @@ angular.module('sf').directive('sidebarCaseLabels', function (sidebarService) {
       scope.changeCaseLabels = function (labels) {
         sidebarService.changeCaseLabels(scope, labels);
       };
+
+      scope.$on('case-type-changed', function(){
+        sidebarService.updateCaseLabels(scope);
+      });
     }
   };
 });

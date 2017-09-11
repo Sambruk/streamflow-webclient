@@ -16,42 +16,52 @@
  */
 'use strict';
 angular.module('sf')
-  .controller('ConversationParticipantCreateCtrl', function($scope, caseService, $routeParams, navigationService) {
+  .controller('ConversationParticipantCreateCtrl', function($scope, caseService, $routeParams, navigationService, $location) {
     $scope.caseId = $routeParams.caseId;
     $scope.conversationId = $routeParams.conversationId;
     $scope.possibleParticipants = caseService.getPossibleConversationParticipants($routeParams.caseId, $routeParams.conversationId);
 
+    var onSearchFieldKeyDown = function (keyEvent){
+      function isTabOrEnter(theKeyEvent) {
+        return (theKeyEvent.which === 9 || theKeyEvent.which === 13);
+      }
 
-    $scope.possibleParticipants.promise.then(function(){
-      setTimeout(function () {
-        jQuery('.chosen-conversation-participant').chosen({ 'search_contains': true }).trigger('chosen:updated');
-      }, 0);
-    });
+      function noMatchingResult() {
+        return $('#convo_participant_select_chosen').find('li.no-results').length > 0;
+      }
 
-    // cache the select element as we'll be using it a few times
-    var select = $('.chosen-select');
-    select.chosen();
-    var chosen = select.data('chosen');
+      function isEmailAddress(value) {
+        return value.match(/^$|^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+      }
 
-    chosen.dropdown.find('input').on('keydown', function(keyEvent){
-      if ((keyEvent.which === 9 || keyEvent.which === 13) && chosen.dropdown.find('li.no-results').length > 0){
-        if(!this.value.match(/^$|^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+      if (isTabOrEnter(keyEvent) && noMatchingResult()){
+        if(!isEmailAddress(this.value)){
           return;
         }
 
+        var select = $('#convo-participant-select');
         var option = $('<option>').val(this.value).text(this.value);
         select.prepend(option);
-        select.find(option).prop('selected', true);
+        select.val(this.value);
         select.trigger('chosen:updated');
+        $scope.participant = undefined;
         $scope.externalParticipant = option[0].text;
       }
-    });
+    };
+
+    /*
+     This is to enable addition of external conversation participants by email address.
+     */
+    var searchField = '#convo_participant_select_chosen input:first';
+    $('body').off('keydown.searchfield', searchField);
+    $('body').on('keydown.searchfield', searchField, onSearchFieldKeyDown);
 
     var updateParticipant = function(){
       var href = navigationService.caseHrefSimple($routeParams.caseId) + '/conversation/' + $routeParams.conversationId;
       $scope.possibleParticipants.invalidate();
       $scope.possibleParticipants.resolve();
-      window.location.assign(href);
+      var hrefWithoutHash = href.slice(1);
+      $location.path(hrefWithoutHash);
     };
 
     $scope.addParticipant = function($event){

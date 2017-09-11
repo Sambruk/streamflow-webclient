@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('sf')
-.factory('fileService', function($upload, $routeParams){
+.factory('fileService', function($upload){
 
 	var uploadFiles = function($files, url){
 		if($files.length === 1){

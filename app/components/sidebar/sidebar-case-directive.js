@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sf').directive('sidebarCase', function () {
+angular.module('sf').directive('sidebarCase', function ($routeParams, httpService, caseService) {
   return {
     restrict: 'A',
     scope: {},
@@ -8,6 +8,8 @@ angular.module('sf').directive('sidebarCase', function () {
     link: function (scope) {
       scope.caze = scope.$parent.caze;
       scope.notes = scope.$parent.notes;
+      scope.status  = $routeParams.status;
+      scope.emptyNoteMessage = '';
 
       scope.showCaseInfo = false;
 

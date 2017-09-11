@@ -20,16 +20,32 @@
 <div class="header cf" role="banner">
   <div class="header-body cf">
     <div class="client-name">
-      <div class="user-area">
-        <a href="#/logout" class="btn btn-xs">Logga ut</a>
-        <a href="#/profile" class="icon-user logged-in">{{profile[0].name}}</a>
-      </div>
-      <!-- /user-area -->
-      <h1>Streamflow Web Client Beta 1</h1>
+      <!--<h1>Streamflow Web Client Beta 1</h1>-->
+      <a href="#"><h1 class="logo"></h1></a>
     </div>
-
     <!-- /client-name -->
+
     <search class="main-search"></search>
+
+    <div class="user-area">
+      <a href="" class="logged-in" data-ng-click="toggleUserActions()">
+        {{profile[0].name}}<i class="icon-user"></i>
+      </a>
+      <div class="user-actions" data-ng-show="showUserActions">
+        <ul>
+          <li>
+            <a href="#/profile" class="" data-ng-click="toggleUserActions()">Profil</a>
+          </li>
+          <li>
+            <a href="#/logout" class="" data-ng-click="toggleUserActions()">Logga ut</a>
+          </li>
+          <li>
+            <a href="#/about" class="" data-ng-click="toggleUserActions()">Om Streamflow</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- /user-area -->
   </div>
   <!-- /header-body -->
 

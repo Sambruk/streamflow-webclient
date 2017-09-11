@@ -1,0 +1,29 @@
+<div class="collapsedCaseData">
+    <div>
+        <b class="left left-sidebar">Ärendetyp:</b>
+        <div class="left right-sidebar">{{caze[0].caseType.text}}</div>
+    </div>
+    <div class="clear"/>
+
+    <div>
+        <b class="left left-sidebar">Etiketter:</b>
+        <div class="left right-sidebar"><div ng-repeat="label in caseLabel | unique:'text'">{{label.text}}{{$last ? '' : '; '}}</div></div>
+    </div>
+    <div class="clear"/>
+
+    <div>
+        <b class="left left-sidebar">Bifogade filer:</b>
+        <div class="left right-sidebar">
+            <ul >
+                <div data-ng-show="attachment.rel === 'attachment'" data-ng-repeat="attachment in attachments" class="icon-attach">
+                    <a data-ng-show="attachment.queries[0].id === 'download'" data-ng-click="downloadAttachment(attachment)"
+                       href="" download>{{ attachment.text }}</a>
+                    <a data-ng-show="attachment.queries[0].id !== 'download'" href="" download>{{attachment.text}}</a>
+                </div>
+            </ul>
+
+        </div>
+    </div>
+    <div class="clear"/>
+</div>
+

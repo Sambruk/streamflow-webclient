@@ -14,22 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 'use strict';
-angular.module('sf')
-  .controller('NotesHistoryCtrl', function($scope, $rootScope, caseService, $routeParams) {
-    $scope.caseId = $routeParams.caseId;
-    $scope.notesHistory = caseService.getAllNotes($routeParams.caseId);
 
-    $scope.showSpinner = {
-      notesHistory: true
-    };
-
-    $scope.notesHistory.promise.then(function(){
-      $scope.showSpinner.notesHistory = false;
+angular.module('sf').directive('sfScroll', function ($window) {
+  return function(scope, element, attrs) {
+    angular.element($window).bind('scroll', function() {
+      scope.scroll = this.pageYOffset;
+      scope.$apply();
     });
-
-    $rootScope.$on('note-changed', function(){
-      $scope.notesHistory.invalidate();
-      $scope.notesHistory.resolve();
-    });
-  });
+  };
+});

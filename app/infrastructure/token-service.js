@@ -20,8 +20,11 @@ angular.module('sf')
 .factory('tokenService', function ($window) {
 
     var key = 'authToken';
+    var isDefaultToken = true;
  
     return {
+      isDefaultToken: isDefaultToken,
+
       hasToken: function () {
         return !!$window.sessionStorage.getItem(key);
       },

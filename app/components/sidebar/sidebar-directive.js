@@ -51,6 +51,7 @@ angular.module('sf')
                 scope.exportConversations = false;
                 scope.exportContacts = false;
                 scope.exportCaseLog = false;
+                scope.exportCaseNotes = false;
                 scope.status = $routeParams.status;
 
                 scope.caze.promise.then(function () {
@@ -251,15 +252,13 @@ angular.module('sf')
 
                 // Show Export Pdf
                 scope.toggleExportPopup = function (visible) {
-                    console.log('Show:', visible);
                     scope.showExport = visible;
                     scope.commandView = true;
                 }; // End Show Export Pdf
 
-                scope.onExportButtonClicked = function (submittedForms, attachments, conversations, contacts, caseLog) {
-                    caseService.getCasePdf($routeParams.caseId, submittedForms, attachments, conversations, contacts, caseLog);
+                scope.onExportButtonClicked = function (submittedForms, attachments, conversations, contacts, caseLog, notes) {
+                    caseService.getCasePdf($routeParams.caseId, submittedForms, attachments, conversations, contacts, caseLog, notes);
                     scope.toggleExportPopup(false);
-                    console.log('Hide');
                 };// End Send to
 
                 scope.toggleDeletePopup = function (visible) {
@@ -396,9 +395,8 @@ angular.module('sf')
                     updateObject(scope.contacts);
                     checkFilterCaseLog('contact');
                 });
-                scope.$on('caselog-message-created', function () {
-                    // updateObject(scope.sideBarCaseLogs);
-                    checkFilterCaseLog('custom');
+                $rootScope.$on('caselog-message-created', function () {
+
                 });
                 //End Event-listeners
             }

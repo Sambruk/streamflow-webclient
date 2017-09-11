@@ -16,7 +16,7 @@
  */
 'use strict';
 angular.module('sf')
-    .controller('CaselogListCtrl', function ($scope, $rootScope, caseService, $routeParams, navigationService, httpService) {
+    .controller('CaselogListCtrl', function ($scope, $rootScope, $q, caseService, $routeParams, navigationService, httpService) {
         $scope.sidebardata = {};
         $scope.caseId = $routeParams.caseId;
         var defaultFiltersUrl = caseService.getWorkspace() + '/cases/' + $scope.caseId + '/caselog/defaultfilters';
@@ -32,10 +32,20 @@ angular.module('sf')
                 for (var prop in filterObj) {
                     filterArray.push({'filterName': prop, 'filterValue': filterObj[prop]});
                 }
+                //Adding note filter manually since it not in present in filter API
+                filterArray.push({'filterName': 'note', 'filterValue': false});
                 $scope.caseLogFilters = filterArray;
                 $scope.caseLogs = caseService.getSelectedCaseLog($routeParams.caseId);
 
-                $scope.caseLogs.promise.then(function () {
+                var notesPromise = caseService.getSelectedNote($routeParams.caseId);
+
+                $q.all([ $scope.caseLogs.promise, notesPromise.promise]).then(function (data) {
+                    data[1].forEach(function (note) {
+                        note.caseLogType = 'note';
+                        note.creationDate = note.createdOn;
+                        $scope.caseLogs.push(note);
+
+                    });
                     $scope.showSpinner.caseLogs = false;
                 });
             });
@@ -45,12 +55,7 @@ angular.module('sf')
             itemToUpdate.resolve();
         };
 
-        $scope.$on('caselog-message-created', function () {
-            $scope.showSpinner.caseLogs = true;
-            updateObject($scope.caseLogs);
+        $rootScope.$watch('caselog-message-created', function () {
 
-            $scope.caseLogs.promise.then(function () {
-                $scope.showSpinner.caseLogs = false;
-            });
         });
     });

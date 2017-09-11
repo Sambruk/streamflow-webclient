@@ -28,7 +28,8 @@ angular.module('sf', [
     'angular.filter',
     'localytics.directives',
     'uiGmapgoogle-maps',
-    'infinite-scroll'
+    'infinite-scroll',
+    'angular-autogrow'
   ])
   .config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
@@ -44,7 +45,7 @@ angular.module('sf', [
     $rootScope.isLoggedIn = $rootScope.hasToken();
     $rootScope.logout = tokenService.clear;
 
-      if (window.isFormWindow) {
+      if ($location.$$search.isFormWindow) {
           $rootScope.isFormWindow = true;
       } else {
           $rootScope.isFormWindow = false;

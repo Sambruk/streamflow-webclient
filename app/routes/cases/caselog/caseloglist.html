@@ -23,12 +23,13 @@
       <h2>Ärendelogg</h2>
     </div>
     <div class="issue-body">
-      <caselogentry caseid="caseId"></caselogentry>
       <div class="caselog-filter-options">
         <p>Visa loggposter av typ:</p>
-        <div  class="caselog-filter-length" ng-repeat="filterTemp in caseLogFilters|limitTo:(caseLogFilters.length/4)+1">
+        <div  class="caselog-filter-length custom-checkbox" ng-repeat="filterTemp in caseLogFilters|limitTo:(caseLogFilters.length/4)+1">
           <label class="caselog-filter caselog-filter-label" data-ng-repeat="filter in caseLogFilters.slice($index*4,($index*4+4))">
-            <input class="caselog-filter-checkbox" type="checkbox" name="filters" data-ng-model="filter.filterValue" />{{ filter.filterName | translate }}
+            <input class="caselog-filter-checkbox" type="checkbox" name="filters" data-ng-model="filter.filterValue" />
+            <span></span>
+            {{ filter.filterName | translate }}
           </label>
         </div>
       </div>
@@ -42,7 +43,7 @@
             <span class="note-timestamp">{{ entry.creationDate | dateTime }}</span>
           </div>
           <div class="note-body">
-            <p>{{ entry.text }}</p>
+            <p>{{ entry.text || entry.note }}</p>
           </div>
         </div>
       </div>

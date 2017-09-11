@@ -21,7 +21,7 @@
     <h2 class="struct">Verktyg och annan information</h2>
 
     <!-- Issue toolbar -->
-    <div class="toolbar" data-sf-fixed-toolbar>
+    <div class="toolbar">
 
         <div class="id left left-sidebar">{{ caze[0].caseId }}</div>
         <div class="left">{{ caze[0].assignedTo}}</div>
@@ -31,19 +31,12 @@
         <ul class="buttons cf" data-ng-show="commands[0]">
 
             <li data-ng-show="canAssign" class="left-sidebar"><a href="" data-ng-click="assign()"
-                                                                 class="btn sidebar-top-button">Tilldela</a>
+                                                                 class="btn sidebar-top-button">Tilldela mig</a>
             </li>
             <li data-ng-show="canUnassign" class="left-sidebar"><a href="" data-ng-click="unassign()"
                                                                    class="btn sidebar-top-button">Återlämna</a></li>
             <li data-ng-show="canAssign" class="left-sidebar"><a href="" data-ng-click="assignTo()"
-                                                                 class="btn sidebar-top-button">Tilldela
-                till</a></li>
-            <li data-ng-show="canSendTo" class="left-sidebar"><a href="" data-ng-click="sendTo()"
-                                                                 class="btn sidebar-top-button">Byt ägare</a>
-            </li>
-        </ul>
-        <p></p>
-        <ul class="buttons cf" data-ng-show="commands[0]">
+                                                                 class="btn sidebar-top-button">Tilldela annan</a></li>
             <li data-ng-show="canResolve" class="left-sidebar "><a href="" data-ng-click="resolveCase()"
                                                                    class="btn sidebar-top-button">Stäng</a>
             </li>
@@ -54,15 +47,16 @@
             <li data-ng-show="canCloseWithForm" class="left-sidebar"><a href="" class="btn sidebar-top-button"
                                                                         data-ng-click="closeWithForm()">Stäng</a>
             </li>
-            <li data-ng-show="canExportCase" class="left-sidebar"><a data-ng-click="toggleExportPopup(true)" href=""
-                                                                     class="btn sidebar-top-button">Exportera</a></li>
 
-            <li data-ng-show="canDelete || canMarkRead || canMarkUnread || canRestrict || canUnrestrict || canReopen "
+            <li data-ng-show="canDelete || canMarkRead || canMarkUnread || canRestrict || canUnrestrict || canReopen || canExportCase || canSendTo"
                 class="left-sidebar">
                 <a href="" class="btn dropdown sidebar-top-button">Mer <i class="icon-direction downwards"></i></a>
                 <ul>
-                    <li><a href="" data-ng-show="canDelete" data-ng-click="toggleDeletePopup(true)"
-                           class="btn">Radera</a></li>
+                    <li data-ng-show="canSendTo" class="left-sidebar"><a href="" data-ng-click="sendTo()"
+                                                                         class="btn sidebar-top-button">Byt ägare</a>
+                    </li>
+                    <li data-ng-show="canExportCase" class="left-sidebar"><a data-ng-click="toggleExportPopup(true)" href=""
+                                                                             class="btn sidebar-top-button">Exportera</a></li>
                     <li><a data-ng-show="canMarkRead" data-ng-click="markReadUnread(true)" href="" class="btn">Markera
                         läst</a>
                     </li>
@@ -71,6 +65,8 @@
                     <li><a data-ng-show="canRestrict" data-ng-click="restrict()" href="" class="btn">Begränsa</a></li>
                     <li><a data-ng-show="canUnrestrict" data-ng-click="unrestrict()" href="" class="btn">Begränsa
                         inte</a></li>
+                    <li><a href="" data-ng-show="canDelete" data-ng-click="toggleDeletePopup(true)"
+                           class="btn">Radera</a></li>
                     <li data-ng-show="canReopen"><a href="" data-ng-click="reopen()" class="btn">Återuppta</a></li>
                     </li>
                 </ul>
@@ -132,7 +128,7 @@
                     <modal dialog-title="Byt ägare" show="show">
                         <div class="row cf">
                             <div class="select">
-                                <select
+                                <select chosen
                                         class="popup-select"
                                         id="issue-owner"
                                         name="issue-owner"
@@ -155,12 +151,14 @@
                         <div class="row cf">
                             <div class="select">
                                 <select
+                                        chosen
                                         class="popup-select"
                                         id="issue-assignee"
                                         name="issue-assignee"
                                         data-ng-options="option.id as option.text for option in assignToRecipients | orderBy: ['title', 'text']"
                                         data-ng-model="assignToId"
                                         data-ng-change='assignToIdChanged(assignToId)'>
+                                    <opntion></opntion>
                                 </select>
                             </div>
                         </div>
@@ -186,31 +184,47 @@
         <h4>Exporteringsalternativ</h4>
         <ul class="dialog-list">
             <li>
-                <input id="export-submitted-forms" type="checkbox" ng-model="exportSubmittedForms"
-                       name="export-submitted-forms">
-                <label for="export-submitted-forms">Skickade formulär</label>
+                <label for="export-submitted-forms" class="custom-checkbox">
+                    <input id="export-submitted-forms" type="checkbox" ng-model="exportSubmittedForms"
+                           name="export-submitted-forms">
+                    <span></span>
+                Skickade formulär</label>
             </li>
             <li>
-                <input id="export-attachments" type="checkbox" ng-model="exportAttachments" name="export-attachments">
-                <label for="export-attachments">Bifogade filer</label>
+                <label for="export-attachments" class="custom-checkbox">
+                    <input id="export-attachments" type="checkbox" ng-model="exportAttachments" name="export-attachments">
+                    <span></span>
+                    Bifogade filer</label>
             </li>
             <li>
-                <input id="export-conversations" type="checkbox" ng-model="exportConversations"
-                       name="export-conversations">
-                <label for="export-conversations">Konversationer</label>
+                <label for="export-conversations" class="custom-checkbox">
+                    <input id="export-conversations" type="checkbox" ng-model="exportConversations"
+                           name="export-conversations">
+                    <span></span>
+                Konversationer</label>
             </li>
             <li>
-                <input id="export-contacts" type="checkbox" ng-model="exportContacts" name="export-contacts">
-                <label for="export-contacts">Kontakter</label>
+                <label for="export-contacts" class="custom-checkbox">
+                    <input id="export-contacts" type="checkbox" ng-model="exportContacts" name="export-contacts">
+                    <span></span>
+                Kontakter</label>
             </li>
             <li>
-                <input id="export-case-log" type="checkbox" ng-model="exportCaseLog" name="export-case-log">
-                <label for="export-case-log">Ärendelogg</label>
+                <label for="export-case-log" class="custom-checkbox">
+                    <input id="export-case-log" type="checkbox" ng-model="exportCaseLog" name="export-case-log">
+                    <span></span>
+                Ärendelogg</label>
+            </li>
+          <li>
+                <label for="export-case-notes" class="custom-checkbox">
+                    <input id="export-case-notes" type="checkbox" ng-model="exportCaseNotes" name="export-case-note">
+                    <span></span>
+                Ärendeposter</label>
             </li>
         </ul>
         <div class="submit-area cf dialog-submit">
             <button type="submit" name="save-issue-owner"
-                    data-ng-click="onExportButtonClicked(exportSubmittedForms, exportAttachments, exportConversations, exportContacts, exportCaseLog)">
+                    data-ng-click="onExportButtonClicked(exportSubmittedForms, exportAttachments, exportConversations, exportContacts, exportCaseLog, exportCaseNotes)">
                 Exportera
             </button>
         </div>
@@ -257,9 +271,9 @@
                             <li data-ng-show="attachment.rel === 'attachment'"
                                 data-ng-repeat="attachment in attachments">
                                 <a data-ng-show="attachment.queries[0].id === 'download'"
-                                   data-ng-click="downloadAttachment(attachment)" href="">{{ attachment.text }}</a>
+                                   data-ng-click="downloadAttachment(attachment)" href="" download>{{ attachment.text }}</a>
                                 <a data-ng-show="attachment.queries[0].id !== 'download'"
-                                   href="">{{attachment.text}}</a>
+                                   href="" download>{{attachment.text}}</a>
                                 <a data-ng-show="attachment.commands.length"
                                    data-ng-click="deleteAttachment(attachment)" href="" class="delete"
                                    title="Radera fil">
@@ -369,8 +383,32 @@
                 </a>
             </div>
         </div>
+        <div class="sidebar-group-divider"></div>
     </div>
     <!-- /Module: Kontakter -->
+
+    <!-- Module: Log -->
+    <div class="m m-convos">
+        <div class="m-h">
+            <h2>Logg</h2>
+        </div>
+
+        <div>
+            <ul>
+                <li data-ng-class-even="'even'" class="convo-li">
+                    <a href="#/cases/{{ caze[0].id }}/caselog" class="block-link">
+                        <h3>Visa den fullständiga loggen</h3>
+                        <div class="date">{{caze[0].lastLogEntryTime | date : "yyyy-MM-dd 'kl' HH:mm"}}</div>
+                    </a>
+                    <a href="#/cases/{{ caze[0].id }}/caselog">
+                        <span class="action-btn icon-history" title="Ärendelogg, historik">
+                            <span class="struct">Ärendelogg, historik</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 
     <!-- <pre><code>{{ form[0] | json }}</code></pre> -->
 </div>

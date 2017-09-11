@@ -23,6 +23,17 @@ angular.module('sf').controller('CaseEditCtrl', function ($scope, $rootScope, $r
     $scope.projectId = $routeParams.projectId;
     $scope.notesHistory = caseService.getAllNotes($routeParams.caseId);
     $scope.caze = caseService.getSelected($routeParams.caseId);
+    $scope.status = $routeParams.status;
+
+    $scope.caseLogs = caseService.getSelectedFilteredCaseLog($routeParams.caseId, {
+        system: false,
+        systemTrace: false,
+        form: false,
+        conversation: false,
+        attachment: false,
+        contact: false,
+        custom: true
+    });
 
     $scope.$watch('sidebardata.caze', function (newVal) {
         if (!newVal) {
@@ -42,6 +53,11 @@ angular.module('sf').controller('CaseEditCtrl', function ($scope, $rootScope, $r
 
         $scope.notes.promise.then(function () {
             $scope.caseNote = $scope.notes[0].note;
+            if (!($scope.status == 'new' || $scope.status == 'empty' || $scope.status == 'notes')) {
+                if (!$scope.caseNote && $scope.caze[0].id) {
+                    $scope.status = 'new'
+                }
+            }
         });
     });
 
@@ -107,6 +123,19 @@ angular.module('sf').controller('CaseEditCtrl', function ($scope, $rootScope, $r
 
     $scope.caze.promise.then(function () {
         document.title = 'Streamflow ' + $scope.caze[0].caseId;
+    });
+
+    $scope.caseLogs.promise.then(function () {
+        $scope.showSpinner.caseLogs = false;
+    });
+
+    $scope.$on('caselog-message-created', function () {
+        $scope.showSpinner.caseLogs = true;
+        updateObject($scope.caseLogs);
+
+        $scope.caseLogs.promise.then(function () {
+            $scope.showSpinner.caseLogs = false;
+        });
     });
 });
 

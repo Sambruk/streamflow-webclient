@@ -20,7 +20,8 @@
 <div class="header cf" role="banner">
   <div class="header-body cf">
     <div class="client-name">
-      <h1>Streamflow Web Client Beta 1</h1>
+      <!--<h1>Streamflow Web Client Beta 1</h1>-->
+      <a href="#"><h1 class="logo"></h1></a>
     </div>
     <!-- /client-name -->
 
@@ -28,7 +29,7 @@
 
     <div class="user-area">
       <a href="" class="logged-in" data-ng-click="toggleUserActions()">
-        <i class="icon-user"></i>{{profile[0].name}}
+        {{profile[0].name}}<i class="icon-user"></i>
       </a>
       <div class="user-actions" data-ng-show="showUserActions">
         <ul>

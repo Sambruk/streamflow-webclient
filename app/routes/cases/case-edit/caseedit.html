@@ -17,46 +17,91 @@
 
 -->
 <div class="content-primary" role="main">
-  <div class="m single-issue">
-    <div class="m-h cf">
-      <h2 class="id">{{caze[0].caseId}}</h2>
-    </div>
-    <div class="m-c">
-      <div class="issue-body">
-        <form action="#" method="get" class="form-general cf" name="editCaseForm" onsubmit='return false;'>
-          <div class="row">
-            <div class="text">
-              <label for="case-description" class="struct">Ärende</label>
-              <input placeholder="Beskrivning" type="text" name="description" id="case-description" data-sf-update-on-blur="changeCaseDescription($event, $success, $error)" data-ng-model="caseDescription" maxlength="50" data-ng-disabled="!sidebardata.canChangeDescription">
-            </div>
-            <div class="text">
-              <label for="issue-notes" class="struct">Notering</label>
-              <textarea placeholder="Noteringar" id="issue-notes" cols="30" rows="5" data-sf-update-on-blur="addNote($event, $success, $error)" data-ng-model="caseNote" data-ng-disabled="!sidebardata.canAddNote"></textarea>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="m" ng-hide="notesHistory.length === 0">
-        <h2>Noteringar, historik</h2>
-        <div ng-hide="showSpinner.notesHistory">
-          <div class="posted-notes">
-            <div data-ng-repeat="note in notesHistory">
-              <div class="note-item cf">
-                <div class="note-posted-by">
-                  <span class="struct">Postad av: </span>{{ note.creator }}
-                  <span class="note-timestamp">{{ note.createdOn | dateTime }}</span>
-                </div>
-                <div class="note-body">
-                  <p>{{ note.note }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div class="m single-issue">
+        <div class="m-h cf">
+            <h2 class="id">Ärende: {{caze[0].caseId}} {{caze[0].text.length === 0 ? '' : '- ' + caze[0].text}}</h2>
         </div>
-        <div ng-show="showSpinner.notesHistory" class="spinner"></div>
-      </div>
+        <!--Empty or new case-->
+        <div class="m-c">
+            <div class="issue-body">
+                <form action="#" method="get" class="form-general cf" name="editCaseForm" onsubmit='return false;'>
+                    <div class="row">
+                        <div class="text" data-ng-show="status =='new' || status=='empty'">
+                            <label for="case-description" class="struct">Ärende</label>
+                            <input placeholder="Skriv rubrik här" type="text" name="description" id="case-description"
+                                   data-sf-update-on-blur="caseDescription ? changeCaseDescription($event, $success, $error) : ''"
+                                   data-ng-model="caseDescription" maxlength="50"
+                                   data-ng-disabled="!sidebardata.canChangeDescription">
+                        </div>
+                        <div class="text" data-ng-show="status=='empty'">
+                            <h2>Ändra sammanfattning</h2>
+                            <label for="issue-notes" class="struct">Notering</label>
+                            <textarea placeholder="Skriv din ärendebeskriving här" id="issue-notes" cols="30" rows="5"
+                                      data-sf-update-on-blur="caseNote ? addNote($event, $success, $error) : ''"
+                                      data-ng-model="caseNote" data-ng-disabled="!sidebardata.canAddNote"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="m" ng-hide="notesHistory.length === 0 || !(status == 'empty')">
+                <h2>Tidigare sammanfattningar</h2>
+                <div ng-hide="showSpinner.notesHistory">
+                    <div class="posted-notes">
+                        <div data-ng-repeat="note in notesHistory">
+                            <div class="note-item cf">
+                                <div class="note-posted-by">
+                                    <span class="struct">Postad av: </span>{{ note.creator }}
+                                    <span class="note-timestamp">{{ note.createdOn | dateTime }}</span>
+                                </div>
+                                <div class="note-body">
+                                    <p>{{ note.note }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="showSpinner.notesHistory" class="spinner"></div>
+            </div>
+        </div>
+        <!--Not new-->
+        <div class="m-c">
+            <h2 data-ng-show="status === undefined || status=='notes'">Sammanfattning</h2>
+            <span data-ng-show="status === undefined || status=='notes'" data-ng-click="status = 'empty'"
+                  class="action-btn icon-pencil" title="Edit case">
+                    <span class="struct">Edit case</span>
+                </span>
+            <div data-ng-show="status === undefined || status=='notes'" class="issue-body">
+                <div class="text">
+                    {{sidebardata.notes[0].note}}
+                </div>
+            </div>
+            <caselogentry data-ng-show="status === undefined || status=='notes' || status=='new'"
+                          caseid="caseId"></caselogentry>
+            <div data-ng-show="status === undefined || status=='notes' || status=='new'" class="m single-issue">
+                <div class="m-h">
+                    <h2>Tidigare kommentarer</h2>
+                </div>
+                <div ng-show="showSpinner.caseLogs" class="spinner"></div>
+                <div class="issue-notes cf" ng-show="!showSpinner.caseLogs && filteredCaseLogs.length > 0">
+                    <div class="posted-notes">
+                        <div class="note-item cf"
+                             data-ng-repeat="entry in filteredCaseLogs = (caseLogs | orderBy:'-creationDate') track by $index">
+                            <div class="note-posted-by">
+                                <span class="struct">Postad av: </span>{{ entry.creator }} <span> - {{ entry.caseLogType | translate }}</span>
+                                <span class="note-timestamp">{{ entry.creationDate | dateTime }}</span>
+                            </div>
+                            <div class="note-body">
+                                <p>{{ entry.text || entry.note}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-hide="showSpinner.caseLogs">
+                <p ng-hide="filteredCaseLogs.length">Inga loggposter att visa med det angivna filtret.</p>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <sidebar class="sidebar-content" sidebardata="sidebardata"></sidebar>

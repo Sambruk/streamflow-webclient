@@ -77,6 +77,11 @@ angular.module('sf')
     return $filter('date')(input, format);
   };
 }])
+.filter('dateField', ['$filter', function ($filter) {
+  return function (input) {
+    return $filter('date')(input, 'yyyy-MM-dd');
+  };
+}])
 .filter('dateTime', ['$filter', function ($filter) {
   return function (input) {
     return $filter('date')(input, 'yyyy-MM-dd, HH:mm');
@@ -89,13 +94,14 @@ angular.module('sf')
     var translation = {
       inbox: 'Inkorg',
       assignments: 'Mina ärenden',
-      attachment: 'Bifogande',
+      attachment: 'Bifogade filer',
       contact: 'Kontakt',
       conversation: 'Konversation',
-      custom: 'Manuelt tillagd',
+      custom: 'Ärendekommentarer',
       form: 'Formulär',
+      note: 'Sammanfattning',
       system: 'System',
-      systemTrace: 'System Trace',
+      systemTrace: 'Systemdetaljer',
       successMessage: 'Hämtning lyckades',
       errorMessage: 'Hämtning misslyckades',
       'read: All': 'Läsa: Alla',

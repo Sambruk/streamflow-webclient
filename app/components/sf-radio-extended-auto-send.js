@@ -27,8 +27,6 @@ angular.module('sf').directive('sfRadioExtendedAutoSend', ['$parse', '$routePara
       scope.$watch(attr.ngModel, function (newValue, oldValue) {
 
         if (hasRunAtLeastOnce) {
-          console.log('new: ', newValue, ', old: ', oldValue);
-
           if (newValue === attr.value) {
 
             var isOther = $parse(attr.sfRadioExtendedAutoSend)();

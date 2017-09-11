@@ -65,14 +65,17 @@ angular.module('sf')
       },
       'se.streamsource.streamflow.api.administration.form.ListBoxFieldValue': {
         addProperties: function(field){
-          addOptions(field.field.fieldValue);
-
+         addOptions(field.field.fieldValue);
           if (field.value) {
-            var escapedValue = field.value.replace(/\[(.*),(.*)\]/, '$1' + encodeURIComponent(',')  + '$2');
-            var values = _.map(escapedValue.split(', '), function(espaced){
-              return decodeURIComponent(espaced);
+            var escapedValue = '';
+            if (field.value.constructor === Array) {
+              escapedValue = field.value.toString();
+            } else {
+              escapedValue = field.value.replace(/\[(.*),(.*)\]/, '$1' + encodeURIComponent(',') + '$2');
+            }
+            var values = _.map(escapedValue.split(', '), function (escaped) {
+              return decodeURIComponent(escaped);
             });
-
             field.value = values;
           }
         },

@@ -1,12 +1,12 @@
 <div data-ng-repeat="form in possibleForms" class="main">
     <span data-ng-repeat="submittedForm in submittedForms = (submittedFormList | filter: form.id: submittedForm.id && submittedForms.length > 0)"></span>
     <div data-ng-if="submittedForms.length != '0'">
-        <a href="#/cases/{{ caze[0].id  }}/formdrafts/{{ form.id }}"
+        <a data-ng-click="openFormInNewWindow(form.id, false)" href=""
            class="left form-name convCaseSidebar">
             {{form.text}}
         </a>
         <div class="form-icons convo-status">
-            <a data-ng-click="openFormInNewWindow(form.id)" href=""><span class="action-btn icon-folder-open"
+            <a data-ng-click="openFormInNewWindow(form.id, true)" href=""><span class="action-btn icon-folder-open"
                                                                           title="Open in new window"> <span
                     class="struct">Open in new window</span></span></a>
             <a href="#/cases/{{ caze[0].id }}/formhistory/{{ form.id }}"><span class="action-btn icon-history"

@@ -20,10 +20,7 @@
   <form action="#" method="get" class="cf">
     <div class="text col full">
       <label for="caselog-entry-text" class="struct">Ärende</label>
-      <textarea name="caselog-entry-text" id="caselog-entry-text" cols="70" rows="3" placeholder="Skriv ditt meddelande här" data-ng-model="caseLogEntryToCreate"></textarea>
-    </div>
-    <div class="send">
-      <button data-ng-click="submitCaseLogEntry($event)" name="caselog-entry-submit">Lägg till loggpost</button>
+      <textarea name="caselog-entry-text" id="caselog-entry-text" cols="70" rows="3" placeholder="Skriv ditt inlägg här" data-ng-model="caseLogEntryToCreate" data-sf-update-on-blur="submitCaseLogEntry($event, $success, $error)"></textarea>
     </div>
   </form>
 </div>

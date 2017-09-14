@@ -17,136 +17,127 @@
 'use strict';
 
 angular.module('sf').directive('login', function ($rootScope, buildMode, $location, $timeout, $http, $window, tokenService, httpService) {
-  return {
-    restrict: 'E',
-    templateUrl: 'components/login/login.html',
-    scope: {
+    return {
+        restrict: 'E',
+        templateUrl: 'components/login/login.html',
+        scope: {
 
-    },
-    link: function(scope){
-      scope.errorMessage = '';
-      scope.username = '';
-      scope.password = '';
-      scope.hasToken = tokenService.hasToken();
-      scope.hasLoggedOut = $rootScope.hasLoggedOut;
+        },
+        link: function(scope){
+            scope.errorMessage = '';
+            scope.username = '';
+            scope.password = '';
+            scope.hasToken = tokenService.hasToken();
+            scope.hasLoggedOut = $rootScope.hasLoggedOut;
 
-      function getLogoutUrl() {
-        var url;
-        if (buildMode === 'dev') {
-          url= 'https://username:password@test-sf.jayway.com/streamflow/';
-        } else {
-            // var userCredentials = getInternetExplorerVersion()>0?'':'username:password@';
-            var userCredentials = '';
-            url = $location.$$protocol + '://' + userCredentials + $location.$$host + ':' + $location.$$port + '/streamflow/webclient/api';
-        }
-        return url;
-      }
-
-      function getLoggedInStatus(){
-        return $http.get(httpService.apiUrl)
-          .success(function () {
-            return true;
-          })
-          .error(function () {
-            return false;
-          });
-      }
-
-        /**
-         * detect IE
-         * returns version of IE or false, if browser is not Internet Explorer
-         */
-        function detectIE() {
-            var ua = window.navigator.userAgent;
-
-            // Test values; Uncomment to check result …
-
-            // IE 10
-            // ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)';
-
-            // IE 11
-            // ua = 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko';
-
-            // Edge 12 (Spartan)
-            // ua = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0';
-
-            // Edge 13
-            // ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
-
-            var msie = ua.indexOf('MSIE ');
-            if (msie > 0) {
-                // IE 10 or older => return version number
-                return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+            function getLogoutUrl() {
+                var url;
+                if (buildMode === 'dev') {
+                    url= 'https://username:password@test-sf.jayway.com/streamflow/';
+                } else {
+                    url= $location.$$protocol + '://username:password@' + $location.$$host + ':' + $location.$$port + '/streamflow';
+                }
+                return url;
             }
 
-            var trident = ua.indexOf('Trident/');
-            if (trident > 0) {
-                // IE 11 => return version number
-                var rv = ua.indexOf('rv:');
-                return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+            function getLoggedInStatus(){
+                return $http.get(httpService.apiUrl)
+                    .success(function () {
+                        return true;
+                    })
+                    .error(function () {
+                        return false;
+                    });
             }
 
-            var edge = ua.indexOf('Edge/');
-            if (edge > 0) {
-                // Edge (IE 12+) => return version number
-                return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+            /**
+             * detect IE
+             * returns version of IE or false, if browser is not Internet Explorer
+             */
+            function detectIE() {
+                var ua = window.navigator.userAgent;
+
+                // Test values; Uncomment to check result …
+
+                // IE 10
+                // ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)';
+
+                // IE 11
+                // ua = 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko';
+
+                // Edge 12 (Spartan)
+                // ua = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0';
+
+                // Edge 13
+                // ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
+
+                var msie = ua.indexOf('MSIE ');
+                if (msie > 0) {
+                    // IE 10 or older => return version number
+                    return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+                }
+
+                var trident = ua.indexOf('Trident/');
+                if (trident > 0) {
+                    // IE 11 => return version number
+                    var rv = ua.indexOf('rv:');
+                    return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+                }
+
+                var edge = ua.indexOf('Edge/');
+                if (edge > 0) {
+                    // Edge (IE 12+) => return version number
+                    return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+                }
+
+                // other browser
+                return false;
             }
 
-            // other browser
-            return false;
-        }
+            getLoggedInStatus()
+                .then(function (status) {
+                    $rootScope.isLoggedIn = status;
+                });
 
-      getLoggedInStatus()
-        .then(function (status) {
-          $rootScope.isLoggedIn = status;
-        });
+            $rootScope.$on('logout', function (event, logout) {
+                if (logout) {
 
-      $rootScope.$on('logout', function (event, logout) {
-        if (logout) {
-            var basicAuthBase64 = btoa('username:password');
-            $http.defaults.headers.common.Authorization = 'Basic ' + basicAuthBase64;
-            $http({
-                method: 'GET',
-                headers: {'Content-Type': 'text/html; charset=UTF-8'},
-                url: httpService.absApiUrl('account/profile'),
-                cache: 'false'
-            }).then(function () {
-                tokenService.clear();
-                $location.path('/#');
-                $window.location.reload();
-                tokenService.isDefaultToken = true;
-            }, function () {
-                scope.errorMessage = 'Användarnamn / lösenord ej giltigt!';
+
+                    var basicAuthBase64 = btoa('username:password');
+                    $http.defaults.headers.common.Authorization = 'Basic ' + basicAuthBase64;
+
+                    var logoutUrl = getLogoutUrl();
+                    $http.get(logoutUrl, {
+                            // $http.get(logoutUrl
+                            headers: {'Authorization': 'Basic ' + basicAuthBase64},
+                            cache: false
+                        }
+                    ).success(function (response) {
+                        console.log("Failed to log out",response);
+                    }).error(function (response) {
+                        // An error should mean we successfully logged out. This is handled
+                        // by the response interceptor, so just show the error message.
+                        console.log('Logged out',response);
+                        tokenService.clear();
+                    });
+                }
             });
+
+            scope.validate = function () {
+                var basicAuthBase64 = btoa(scope.username + ':' + scope.password);
+                $http.defaults.headers.common.Authorization = 'Basic ' + basicAuthBase64;
+
+                $http({
+                    method: 'GET',
+                    url: httpService.absApiUrl('account/profile'),
+                    cache: 'false'
+                }).then(function () {
+                    tokenService.storeToken(basicAuthBase64);
+                    window.location.reload();
+                }, function () {
+                    scope.errorMessage = 'Användarnamn / lösenord ej giltigt!';
+                });
+            };
         }
-      });
-
-      scope.validate = function () {
-          tokenService.isDefaultToken = false;
-
-          if (!scope.username) {
-              // scope.username = 'username';
-              tokenService.isDefaultToken = true;
-          }
-
-          if (!scope.password) {
-              tokenService.isDefaultToken = true;
-          }
-
-          var basicAuthBase64 = btoa(scope.username + ':' + scope.password);
-          $http.defaults.headers.common.Authorization = 'Basic ' + basicAuthBase64;
-
-          $http({
-          method: 'GET',
-          url: httpService.absApiUrl('account/profile'),
-          cache: 'false'
-        }).then(function () {
-          tokenService.storeToken(basicAuthBase64);
-          window.location.reload();
-        }, function () {
-          scope.errorMessage = 'Användarnamn / lösenord ej giltigt!';
-        });
-      };
-    }
-  };
+    };
 });

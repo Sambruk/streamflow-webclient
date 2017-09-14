@@ -20,27 +20,26 @@ angular.module('sf').directive('login', function ($rootScope, buildMode, $locati
     return {
         restrict: 'E',
         templateUrl: 'components/login/login.html',
-        scope: {
-
-        },
-        link: function(scope){
+        scope: {},
+        link: function (scope) {
             scope.errorMessage = '';
             scope.username = '';
             scope.password = '';
             scope.hasToken = tokenService.hasToken();
             scope.hasLoggedOut = $rootScope.hasLoggedOut;
 
-            function getLogoutUrl() {
+            function getLogoutUrl(isIE) {
                 var url;
+                var credentials = isIE ? '' : "username:password@";
                 if (buildMode === 'dev') {
-                    url= 'https://username:password@test-sf.jayway.com/streamflow/';
+                    url = 'https://' + credentials + 'test-sf.jayway.com/streamflow/';
                 } else {
-                    url= $location.$$protocol + '://username:password@' + $location.$$host + ':' + $location.$$port + '/streamflow';
+                    url = $location.$$protocol + '://' + credentials + $location.$$host + ':' + $location.$$port + '/streamflow';
                 }
                 return url;
             }
 
-            function getLoggedInStatus(){
+            function getLoggedInStatus() {
                 return $http.get(httpService.apiUrl)
                     .success(function () {
                         return true;
@@ -102,23 +101,22 @@ angular.module('sf').directive('login', function ($rootScope, buildMode, $locati
             $rootScope.$on('logout', function (event, logout) {
                 if (logout) {
 
+                    var logoutUrl = getLogoutUrl(detectIE());
 
                     var basicAuthBase64 = btoa('username:password');
                     $http.defaults.headers.common.Authorization = 'Basic ' + basicAuthBase64;
 
-                    var logoutUrl = getLogoutUrl();
-                    $http.get(logoutUrl, {
-                            // $http.get(logoutUrl
-                            headers: {'Authorization': 'Basic ' + basicAuthBase64},
-                            cache: false
-                        }
-                    ).success(function (response) {
-                        console.log("Failed to log out",response);
-                    }).error(function (response) {
-                        // An error should mean we successfully logged out. This is handled
-                        // by the response interceptor, so just show the error message.
-                        console.log('Logged out',response);
+                    $http({
+                        method: 'GET',
+                        url: logoutUrl,
+                        headers: {'Authorization': 'Basic ' + basicAuthBase64},
+                        cache: 'false'
+                    }).then(function (response) {
+                        console.log('Logout response', response);
                         tokenService.clear();
+                        tokenService.isDefaultToken = true;
+                    }, function () {
+                        scope.errorMessage = 'Användarnamn / lösenord ej giltigt!';
                     });
                 }
             });

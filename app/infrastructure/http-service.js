@@ -19,7 +19,7 @@
 
 angular.module('sf').factory('httpService', function ($q, $cacheFactory, buildMode, $location, $http, $window, errorHandlerService, tokenService) {
   var token = tokenService.getToken();
-  if (token && !tokenService.isDefaultToken) {
+  if (token) {
     $http.defaults.headers.common.Authorization = 'Basic ' + token;
   }
 

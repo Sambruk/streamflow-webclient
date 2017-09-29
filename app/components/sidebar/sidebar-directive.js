@@ -366,7 +366,6 @@ angular.module('sf')
                 //   updateObject(scope.notes);
                 // });
                 scope.$on('form-submitted', function () {
-                    console.log('triggered form uppdate');
                     debounce(updateObject(scope.submittedFormList),10);
                     checkFilterCaseLog('form');
                 });

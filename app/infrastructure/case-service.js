@@ -21,6 +21,8 @@ angular.module('sf')
 
         var workspaceId = 'workspacev2';
 
+        var repeatLimit = 3;
+
         var caseBase = function (caseId) {
             return [
                 {resources: workspaceId},
@@ -1062,6 +1064,7 @@ angular.module('sf')
             }, 1000),
 
             updateFields: debounce(function (caseId, formId, fields) {
+                var self = this;
                 return backendService.postNested(
                     caseBase(caseId).concat([
                         {resources: 'formdrafts/' + formId, unsafe: true},
@@ -1073,6 +1076,11 @@ angular.module('sf')
                         caseBase.broadcastMessage(result.status);
                     },
                     function (error) {
+                        console.log("Failed to send, repeating");
+                        if (repeatLimit > 0) {
+                            self.updateFields(caseId, formId, fields);
+                            repeatLimit--;
+                        }
                         caseBase.broadcastMessage(error);
                     });
             }, 1000),

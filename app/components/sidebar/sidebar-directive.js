@@ -18,7 +18,7 @@
 'use strict';
 
 angular.module('sf')
-    .directive('sidebar', function ($location, growl, contactService, sidebarService, fileService, $cacheFactory, $rootScope, $routeParams, projectService, caseService, httpService, navigationService, $q, tokenService, checkPermissionService, $window) {
+    .directive('sidebar', function ($location, growl, contactService, sidebarService, fileService, $cacheFactory, $rootScope, debounce, $routeParams, projectService, caseService, httpService, navigationService, $q, tokenService, checkPermissionService, $window) {
         return {
             restrict: 'E',
             templateUrl: 'components/sidebar/sidebar.html',
@@ -366,7 +366,8 @@ angular.module('sf')
                 //   updateObject(scope.notes);
                 // });
                 scope.$on('form-submitted', function () {
-                    updateObject(scope.submittedFormList);
+                    console.log('triggered form uppdate');
+                    debounce(updateObject(scope.submittedFormList),10);
                     checkFilterCaseLog('form');
                 });
                 $window.addEventListener('storage', function (event) {

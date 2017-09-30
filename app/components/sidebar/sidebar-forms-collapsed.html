@@ -1,5 +1,6 @@
 <div data-ng-repeat="form in possibleForms" class="main">
-    <span data-ng-repeat="submittedForm in submittedForms = (submittedFormList | filter: form.id: submittedForm.id && submittedForms.length > 0)"></span>
+    <span data-ng-repeat="submittedForm in submittedForms = (submittedFormList | filter: form.id: submittedForm.id | unique:'submissionDate') "></span>
+
     <div data-ng-if="submittedForms.length != '0'">
         <a data-ng-click="openFormInNewWindow(form.id, false)" href=""
            class="left form-name convCaseSidebar">

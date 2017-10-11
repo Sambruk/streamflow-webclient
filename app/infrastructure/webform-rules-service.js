@@ -58,12 +58,7 @@ angular.module('sf').factory('webformRulesService', function () {
         }
 
         var a = traverse(items);
-        if (a === true) {
-            return true;
-        } else {
-            //return traverse(items);
-            return false;
-        }
+        return a === true;
     };
 
     //Recursive function that traverses down the object tree until it finds an object with

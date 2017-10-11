@@ -148,6 +148,6 @@ angular.module('sf')
         }
 
         return value;
-      },
+      }
     };
 });

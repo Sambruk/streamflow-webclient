@@ -53,7 +53,7 @@ angular.module('sf').controller('CaseEditCtrl', function ($scope, $rootScope, $r
 
         $scope.notes.promise.then(function () {
             $scope.caseNote = $scope.notes[0].note;
-            if (!($scope.status == 'new' || $scope.status == 'empty' || $scope.status == 'notes')) {
+            if (!($scope.status === 'new' || $scope.status === 'empty' || $scope.status === 'notes')) {
                 if (!$scope.caseNote && $scope.caze[0].id) {
                     $scope.status = 'new'
                 }

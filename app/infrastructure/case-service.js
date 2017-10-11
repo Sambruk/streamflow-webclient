@@ -411,7 +411,7 @@ angular.module('sf')
                     onSuccess: function (resource, result) {
                         result.push(resource.response.index);
                         result.commands = resource.response.commands;
-                    },
+                    }
                 });
             },
 

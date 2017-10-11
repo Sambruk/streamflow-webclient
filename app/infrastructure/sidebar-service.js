@@ -462,7 +462,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
     var _caseType = function (scope) {
         $q.all([
             scope.possibleCaseTypes.promise,
-            scope.caze.promise,
+            scope.caze.promise
         ]).then(function (results) {
             scope.caseType = results[1][0].caseType && results[1][0].caseType.id;
             scope.possibleCaseTypes = results[0].sort(sortByText);

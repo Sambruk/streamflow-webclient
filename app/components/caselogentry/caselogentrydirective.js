@@ -44,7 +44,7 @@ angular.module('sf')
                 scope.submitCaseLogEntry = function ($event) {
                     $event.preventDefault();
                     if (scope.caseLogEntryToCreate) {
-                        if (scope.$parent.status == 'new' && scope.$parent.caseLogs.length == 0) {
+                        if (scope.$parent.status === 'new' && scope.$parent.caseLogs.length === 0) {
                             scope.$parent.notes[0].note = scope.caseLogEntryToCreate;
                             caseService.addNote(scope.caseId, scope.$parent.notes[0]);
                             $window.location.href = '#/cases/' + scope.$parent.caze[0].id + '/' + scope.$parent.caze[0].ownerId + '/notes';

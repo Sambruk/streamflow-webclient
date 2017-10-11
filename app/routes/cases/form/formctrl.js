@@ -18,14 +18,14 @@
 angular.module('sf')
     .controller('FormCtrl', function ($q, $scope, $parse, caseService, $routeParams, $rootScope, webformRulesService, $sce, navigationService, fileService, httpService, sidebarService, $timeout, formMapperService) {
         $scope.sidebardata = {};
-        $scope.caseId = $routeParams.caseId;
-        $scope.currentFormId = $routeParams.formId;
+        $scope.caseId = $scope.loadChild ? $scope.$parent.caseId : $routeParams.caseId;
+        $scope.currentFormId = $scope.loadChild ? $scope.$parent.formId : $routeParams.formId;
         $scope.currentFormDescription = '';
-        $scope.possibleForms = caseService.getSelectedPossibleForms($routeParams.caseId);
+        $scope.possibleForms = caseService.getSelectedPossibleForms($scope.caseId);
         $scope.selectedItems = {};
         $scope.applyRules = webformRulesService.applyRules;
         $scope.possibleForm = '';
-        $scope.caze = caseService.getSelected($routeParams.caseId);
+        $scope.caze = caseService.getSelected($scope.caseId);
 
         $scope.showSpinner = {
             form: true
@@ -46,15 +46,15 @@ angular.module('sf')
             if (!newVal) {
                 return;
             }
-            caseService.createFormOnCloseDraft($routeParams.caseId).then(function () {
-                caseService.getFormOnCloseDraft($routeParams.caseId).promise.then(function (response) {
-                    caseService.getFormDraft($routeParams.caseId, response[0].id).promise.then(function (response) {
+            caseService.createFormOnCloseDraft($scope.caseId).then(function () {
+                caseService.getFormOnCloseDraft($scope.caseId).promise.then(function (response) {
+                    caseService.getFormDraft($scope.caseId, response[0].id).promise.then(function (response) {
                         $scope.closeWithFormId = response[0].draftId;
                     })
                         .then(function () {
                             $scope.formMessage = '';
 
-                            var form = caseService.getFormDraft($routeParams.caseId, $scope.closeWithFormId);
+                            var form = caseService.getFormDraft($scope.caseId, $scope.closeWithFormId);
                             form.promise.then(function (response) {
                                 $scope.getFormData(response);
                                 $scope.closeWithForm = true;
@@ -81,7 +81,7 @@ angular.module('sf')
             $scope.formMessage = '';
 
             if (formId) {
-                $scope.possibleForm = caseService.getPossibleForm($routeParams.caseId, formId);
+                $scope.possibleForm = caseService.getPossibleForm($scope.caseId, formId);
             }
 
             $scope.$watch('possibleForm[0]', function () {
@@ -89,14 +89,14 @@ angular.module('sf')
                     return;
                 }
                 if ($scope.possibleForm[0].queries.length !== 0) {
-                    caseService.getFormDraftId($routeParams.caseId, formId).promise.then(function (response) {
+                    caseService.getFormDraftId($scope.caseId, formId).promise.then(function (response) {
                         $scope.formDraftId = response[0].id;
                     }).then(function () {
-                        var settings = caseService.getFormDraftLocationSettings($routeParams.caseId, $scope.formDraftId);
+                        var settings = caseService.getFormDraftLocationSettings($scope.caseId, $scope.formDraftId);
                         settings.promise.then(function (response) {
                             $scope.locationSettings = response[0];
                         });
-                        var form = caseService.getFormDraftFromForm($routeParams.caseId, $scope.formDraftId);
+                        var form = caseService.getFormDraftFromForm($scope.caseId, $scope.formDraftId);
                         form.promise.then(function (response) {
                             $scope.getFormData(response);
                         })
@@ -109,16 +109,16 @@ angular.module('sf')
                     });
                 }
                 else {
-                    caseService.createSelectedForm($routeParams.caseId, formId).then(function (response) {
+                    caseService.createSelectedForm($scope.caseId, formId).then(function (response) {
                         var draftId = JSON.parse(response.data.events[0].parameters).param1;
                         $scope.showSpinner.form = false;
                         $scope.possibleForm.invalidate();
                         $scope.possibleForm.resolve();
-                        var settings = caseService.getFormDraftLocationSettings($routeParams.caseId, draftId);
+                        var settings = caseService.getFormDraftLocationSettings($scope.caseId, draftId);
                         settings.promise.then(function (response) {
                             $scope.locationSettings = response[0];
                         });
-                        var form = caseService.getFormDraft($routeParams.caseId, draftId);
+                        var form = caseService.getFormDraft($scope.caseId, draftId);
                         form.promise.then(function (response) {
                             $scope.form = response;
                             $scope.showSpinner.form = false;
@@ -177,13 +177,13 @@ angular.module('sf')
         };
 
         $scope.submitForm = function () {
-            updateFieldsOnPages($scope.form[0]).then(function(){
-                caseService.submitForm($routeParams.caseId, $scope.form[0].draftId).then(function () {
+            updateFieldsOnPages($scope.form[0]).then(function () {
+                caseService.submitForm($scope.caseId, $scope.form[0].draftId).then(function () {
 
                     if (!$scope.closeWithForm) {
                         formSubmitted();
                     } else {
-                        caseService.closeFormOnClose($routeParams.caseId).then(function () {
+                        caseService.closeFormOnClose($scope.caseId).then(function () {
                             formSubmitted();
                             $timeout(function () {
                                 sidebarService.close($scope);
@@ -205,8 +205,8 @@ angular.module('sf')
                             //Ignoring fields which shouldn't be sent
                             //TODO Check for file attachment
                             return !(field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.AttachmentFieldValue"
-                            || field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.CommentFieldValue"
-                            || field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.FieldGroupFieldValue");
+                                || field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.CommentFieldValue"
+                                || field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.FieldGroupFieldValue");
                         })
                         .map(function (field) {
                             var value = '';
@@ -232,7 +232,7 @@ angular.module('sf')
                             }
                             return {field: field.field.field, value: value};
                         });
-                    return caseService.updateFields($routeParams.caseId, $scope.formDraftId, fields);
+                    return caseService.updateFields($scope.caseId, $scope.formDraftId, fields);
                 });
         };
 
@@ -250,24 +250,24 @@ angular.module('sf')
                 return attachment.fieldId === fieldId;
             });
 
-            caseService.deleteFormDraftAttachment($routeParams.caseId, $scope.formDraftId, attachment.id).then(function () {
+            caseService.deleteFormDraftAttachment($scope.caseId, $scope.formDraftId, attachment.id).then(function () {
                 $scope.formAttachments.forEach(function (attachment, index) {
                     if ($scope.formAttachments[index].fieldId === fieldId) {
                         $scope.formAttachments[index].name = null;
                         $scope.formAttachments[index].id = null;
                     }
                 });
-                caseService.updateField($routeParams.caseId, $scope.formDraftId, fieldId, null);
+                caseService.updateField($scope.caseId, $scope.formDraftId, fieldId, null);
             });
         };
 
         $scope.onFormDraftFileSelect = function ($files, fieldId) {
-            var url = httpService.apiUrl + 'workspacev2/cases/' + $routeParams.caseId + '/formdrafts/' + $scope.formDraftId + '/formattachments/createformattachment';
+            var url = httpService.apiUrl + 'workspacev2/cases/' + $scope.caseId + '/formdrafts/' + $scope.formDraftId + '/formattachments/createformattachment';
 
             fileService.uploadFile($files[0], url).then(function (data) {
                 return JSON.parse(data.data.events[0].parameters).param1;
             }).then(function (attachmentId) {
-                caseService.updateFormDraftAttachmentField($routeParams.caseId, $scope.formDraftId, $files[0].name, attachmentId, fieldId).then(function () {
+                caseService.updateFormDraftAttachmentField($scope.caseId, $scope.formDraftId, $files[0].name, attachmentId, fieldId).then(function () {
 
                     $scope.formAttachments.forEach(function (attachment, index) {
                         if ($scope.formAttachments[index].fieldId === fieldId) {
@@ -310,11 +310,11 @@ angular.module('sf')
             $scope.currentFormPage = $scope.form[0].enhancedPages[index];
         };
 
-     /*   //Used for send submit message only after correct form data sending to server
-        //TODO: Maybe it would be good to rewrite that to promises somehow?
-        $scope.$on('form-saved', function (event, formId) {
-            if (!$scope.closeWithForm) {
-                formSubmitted();
-            }
-        });*/
+        /*   //Used for send submit message only after correct form data sending to server
+           //TODO: Maybe it would be good to rewrite that to promises somehow?
+           $scope.$on('form-saved', function (event, formId) {
+               if (!$scope.closeWithForm) {
+                   formSubmitted();
+               }
+           });*/
     });

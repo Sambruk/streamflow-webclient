@@ -19,7 +19,8 @@ angular.module('sf')
   .controller('FormHistoryCtrl', function($scope, caseService, $routeParams, httpService) {
 
     $scope.caseId = $routeParams.caseId;
-    $scope.submittedForms = caseService.getSubmittedForms($routeParams.caseId, $routeParams.formId);
+    $scope.formId = $routeParams.formId;
+    $scope.submittedForms = caseService.getSubmittedForms($routeParams.caseId, $scope.formId);
 
     $scope.submittedForms.promise.then(function(){
       if(!$scope.selectedSubmittedForm && $scope.submittedForms.length > 0){

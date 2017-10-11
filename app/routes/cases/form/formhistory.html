@@ -100,3 +100,11 @@
 
 <!-- Content secondary -->
 <sidebar class="sidebar-content" sidebardata="sidebarData"></sidebar>
+
+<button class="btn" type="button" data-ng-click="loadChild=true">New form</button>
+
+<div ng-controller="FormHistoryCtrl">
+  <div class="child-container" data-ng-if='loadChild'>
+    <div ng-controller="FormCtrl" ng-include="'routes/cases/form/forms.html'" />
+  </div>
+</div>

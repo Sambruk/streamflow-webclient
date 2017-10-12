@@ -982,7 +982,7 @@ angular.module('sf')
                     onFailure: function (err) {
                         caseBase.broadcastMessage(err);
                     }
-                });
+                }, true);
             },
 
             getFormDraftLocationSettings: function (caseId, formDraftId) {

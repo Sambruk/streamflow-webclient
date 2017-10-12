@@ -16,7 +16,7 @@
  */
 'use strict';
 angular.module('sf')
-    .controller('FormCtrl', function ($q, $scope, $parse, caseService, $routeParams, $rootScope, webformRulesService, $sce, navigationService, fileService, httpService, sidebarService, $timeout, formMapperService) {
+    .controller('FormCtrl', function ($q, $scope, $parse, growl, $route, caseService, $routeParams, $templateCache, $rootScope, webformRulesService, $sce, navigationService, fileService, httpService, sidebarService, $timeout, formMapperService) {
         $scope.sidebardata = {};
         $scope.caseId = $scope.loadChild ? $scope.$parent.caseId : $routeParams.caseId;
         $scope.currentFormId = $scope.loadChild ? $scope.$parent.formId : $routeParams.formId;
@@ -190,6 +190,9 @@ angular.module('sf')
                             }, 1000);
                         });
                     }
+
+                    growl.success('Skickat!');
+                    $route.reload();
                 });
             });
         };
@@ -240,7 +243,6 @@ angular.module('sf')
             if (!$scope.closeWithForm) {
                 $rootScope.$broadcast('form-submitted');
             }
-            $scope.formMessage = 'Skickat!';
             $scope.form = [];
             $scope.currentFormPage = null;
         };

@@ -81,10 +81,10 @@ angular.module('sf').factory('httpService', function ($q, $cacheFactory, buildMo
     //GET: skipCache decides whether to skip the cache or not.
     // if skipCache the cached item href will be removed from cache and
     // replaced with updated one.
-    getRequest: function (href) {
-      //if(skipCache === true){
-      //  cache.remove(href);
-      //}
+    getRequest: function (href, skipCache) {
+      if(skipCache === true){
+       cache.remove(href);
+      }
       var result = cache.get(href);
       var resultUndefined = angular.isUndefined(result);
       if (!result || resultUndefined === true) {

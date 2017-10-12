@@ -68,7 +68,7 @@
 
     <div class="form-history-field">
       <div data-ng-repeat="field in page.fields">
-        <div ng-if="field.fieldType === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue'" class="form-field"> 
+        <div ng-if="field.fieldType === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue'" class="form-field">
           <div data-ng-if="field.value">
             <em>{{ field.field }}</em>: {{ field.value | attachmentJson }}
             <button ng-click="downloadFormAttachment(field)">Ladda ner</button>
@@ -90,21 +90,21 @@
         <div ng-hide="field.fieldType === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue' || field.fieldType === 'se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue' || field.fieldType === 'se.streamsource.streamflow.api.administration.form.DateFieldValue'"
              class="form-field"><em>{{ field.field }}</em>: {{ field.value }}</div>
       </div>
-      
+
     </div>
     <div ng-show="$last === true">
       <div class="form-history-submitted" style="float:left;">Submitted: {{ submittedForm[0].submissionDate | dateTime}}</div>
     </div>
   </div>
+  <div class="clear"></div>
+  <button class="btn" type="button" data-ng-click="loadChild=!loadChild">New form</button>
 </div>
 
 <!-- Content secondary -->
 <sidebar class="sidebar-content" sidebardata="sidebarData"></sidebar>
 
-<button class="btn" type="button" data-ng-click="loadChild=true">New form</button>
-
 <div ng-controller="FormHistoryCtrl">
   <div class="child-container" data-ng-if='loadChild'>
-    <div ng-controller="FormCtrl" ng-include="'routes/cases/form/forms.html'" />
+    <div ng-controller="FormCtrl" ng-include="'routes/cases/form/forms.html'"/>
   </div>
 </div>

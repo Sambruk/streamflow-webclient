@@ -2,7 +2,7 @@
     <span data-ng-repeat="submittedForm in submittedForms = (submittedFormList | filter: form.id: submittedForm.id | unique:'submissionDate')"></span>
 
     <div data-ng-if="submittedForms.length==0">
-        <a data-ng-click="openFormInNewWindow(form.id, false,submittedForms.length === 0)" href="" class="left form-name convCaseSidebar">
+        <a href="#/cases/{{ caze[0].id }}/formdrafts/{{ form.id }}" class="left form-name convCaseSidebar">
             {{form.text}}
         </a>
     </div>

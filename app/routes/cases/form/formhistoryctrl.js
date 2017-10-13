@@ -16,7 +16,7 @@
  */
 'use strict';
 angular.module('sf')
-  .controller('FormHistoryCtrl', function($scope, caseService, $routeParams, httpService) {
+  .controller('FormHistoryCtrl', function($scope, caseService, $routeParams, $rootScope, $route, httpService) {
 
     $scope.caseId = $routeParams.caseId;
     $scope.formId = $routeParams.formId;
@@ -48,4 +48,8 @@ angular.module('sf')
         $scope.submittedForm = caseService.getSubmittedForm($routeParams.caseId, index);
       }
     });
+
+      $rootScope.$on('form-saved', function () {
+          $route.reload();
+      });
   });

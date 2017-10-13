@@ -12,8 +12,8 @@ angular.module('sf').directive('sidebarForms', function (sidebarService) {
             scope.submittedFormList = scope.$parent.submittedFormList;
             scope.caze = scope.$parent.caze;
 
-            scope.openFormInNewWindow = function (formId, newWindow) {
-                sidebarService.openForm(scope, formId, newWindow, scope.submittedFormList.length==0);
+            scope.openFormInNewWindow = function (formId, newWindow, isEmpty) {
+                sidebarService.openForm(scope, formId, newWindow, isEmpty);
             };
         }
     };

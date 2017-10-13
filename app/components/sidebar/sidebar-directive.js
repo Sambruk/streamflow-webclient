@@ -365,8 +365,13 @@ angular.module('sf')
                 // scope.$on('note-changed', function(event){
                 //   updateObject(scope.notes);
                 // });
-                scope.$on('form-submitted', function () {
-                    debounce(updateObject(scope.submittedFormList),10);
+                $rootScope.$on('form-submitted', function () {
+                    debounce(updateObject(scope.submittedFormList), 10);
+                    checkFilterCaseLog('form');
+                });
+
+                $rootScope.$on('form-saved', function () {
+                    debounce(updateObject(scope.submittedFormList), 10);
                     checkFilterCaseLog('form');
                 });
                 $window.addEventListener('storage', function (event) {

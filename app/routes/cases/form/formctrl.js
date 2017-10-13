@@ -242,6 +242,9 @@ angular.module('sf')
         var formSubmitted = function () {
             if (!$scope.closeWithForm) {
                 $rootScope.$broadcast('form-submitted');
+                if ($rootScope.isFormWindow) {
+                    $rootScope.$broadcast('form-saved', $scope.currentFormId);
+                }
             }
             $scope.form = [];
             $scope.currentFormPage = null;

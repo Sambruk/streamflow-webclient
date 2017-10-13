@@ -13,7 +13,7 @@ angular.module('sf').directive('sidebarFormsCollapsed', function ($routeParams, 
             scope.caze = scope.$parent.caze;
 
             scope.openFormInNewWindow = function (formId, newWindow) {
-                sidebarService.openForm(scope, formId, newWindow);
+                sidebarService.openForm(scope, formId, newWindow, scope.submittedFormList.length==0);
             };
         }
     };

@@ -500,11 +500,12 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
         });
     };
 
-    var _openForm = function (scope, formId, isNewWindow) {
+    var _openForm = function (scope, formId, isNewWindow, isEmpty) {
         if (isNewWindow) {
             var height = $(window).height();
             var width = $(window).width();
-            var popupWindow = window.open('#/cases/' + scope.caze[0].id + '/formhistory/' + formId+"?isFormWindow=true", 'FormWindow_' + Math.random(), 'height=' + height * 0.7 + ', width=' + width / 2.17 + ', left=' + width * 0.33 + ', scrollbars=yes');
+            var url = '#/cases/' + scope.caze[0].id + (isEmpty?'/formdrafts/':'/formhistory/') + formId+'?isFormWindow=true';
+            var popupWindow = window.open(url, 'FormWindow_' + Math.random(), 'height=' + height * 0.7 + ', width=' + width / 2.17 + ', left=' + width * 0.33 + ', scrollbars=yes');
             if (window.focus) {
                 popupWindow.focus();
             }

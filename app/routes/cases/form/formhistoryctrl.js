@@ -16,40 +16,40 @@
  */
 'use strict';
 angular.module('sf')
-  .controller('FormHistoryCtrl', function($scope, caseService, $routeParams, $rootScope, $route, httpService) {
+    .controller('FormHistoryCtrl', function ($scope, caseService, $routeParams, $rootScope, $route, httpService) {
 
-    $scope.caseId = $routeParams.caseId;
-    $scope.formId = $routeParams.formId;
-    $scope.submittedForms = caseService.getSubmittedForms($routeParams.caseId, $scope.formId);
+        $scope.caseId = $routeParams.caseId;
+        $scope.formId = $routeParams.formId;
+        $scope.submittedForms = caseService.getSubmittedForms($routeParams.caseId, $scope.formId);
 
-    $scope.submittedForms.promise.then(function(){
-      if(!$scope.selectedSubmittedForm && $scope.submittedForms.length > 0){
-        $scope.selectedSubmittedForm = $scope.submittedForms[0].index;
-      }
+        $scope.submittedForms.promise.then(function () {
+            if (!$scope.selectedSubmittedForm && $scope.submittedForms.length > 0) {
+                $scope.selectedSubmittedForm = $scope.submittedForms[0].index;
+            }
+        });
+
+        $scope.downloadFormAttachment = function (attachment) {
+            var jsonParse = JSON.parse(attachment.value);
+
+            var url = httpService.apiUrl + 'workspacev2/cases/' + $routeParams.caseId + '/submittedforms/download?id=' + jsonParse.attachment;
+            window.location.replace(url);
+        };
+
+        $scope.sendSignatureReminder = function (taskRef) {
+            caseService.sendSignatureReminder($scope.caseId, taskRef).then(function () {
+                $scope.submittedForm.invalidate();
+                $scope.submittedForm.resolve();
+            });
+        };
+
+        $scope.$watch('selectedSubmittedForm', function () {
+            var index = $scope.selectedSubmittedForm;
+            if (_.isNumber(index)) {
+                $scope.submittedForm = caseService.getSubmittedForm($routeParams.caseId, index);
+            }
+        });
+
+        $rootScope.$on('form-saved', function () {
+            $route.reload();
+        });
     });
-
-    $scope.downloadFormAttachment = function(attachment){
-      var jsonParse = JSON.parse(attachment.value);
-
-      var url = httpService.apiUrl+'workspacev2/cases/'+$routeParams.caseId+'/submittedforms/download?id='+jsonParse.attachment;
-      window.location.replace(url);
-    };
-
-    $scope.sendSignatureReminder = function (taskRef) {
-      caseService.sendSignatureReminder($scope.caseId, taskRef).then(function() {
-        $scope.submittedForm.invalidate();
-        $scope.submittedForm.resolve();
-      });
-    };
-
-    $scope.$watch('selectedSubmittedForm', function(){
-      var index = $scope.selectedSubmittedForm;
-      if (_.isNumber(index)){
-        $scope.submittedForm = caseService.getSubmittedForm($routeParams.caseId, index);
-      }
-    });
-
-      $rootScope.$on('form-saved', function () {
-          $route.reload();
-      });
-  });

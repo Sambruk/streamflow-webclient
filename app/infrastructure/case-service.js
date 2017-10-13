@@ -1070,9 +1070,9 @@ angular.module('sf')
                         {resources: 'formdrafts/' + formId, unsafe: true},
                         {commands: 'updatefields'}
                     ]),
-                    {fieldValues : fields},
+                    {fieldValues: fields},
                     null,
-                    {json:true}).then(function (result) {
+                    {json: true}).then(function (result) {
                         caseBase.broadcastMessage(result.status);
                     },
                     function (error) {

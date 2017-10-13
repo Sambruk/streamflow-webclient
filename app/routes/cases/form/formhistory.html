@@ -101,7 +101,7 @@
 </div>
 
 <!-- Content secondary -->
-<sidebar ng-if="!isFormWindow" class="sidebar-content" sidebardata="sidebarData"></sidebar>
+<sidebar ng-show="!isFormWindow" class="sidebar-content" sidebardata="sidebarData"></sidebar>
 
 <div ng-controller="FormHistoryCtrl">
   <div class="child-container" data-ng-if='loadChild'>

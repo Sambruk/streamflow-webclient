@@ -366,6 +366,7 @@ angular.module('sf')
                 //   updateObject(scope.notes);
                 // });
                 $rootScope.$on('form-submitted', function () {
+                    growl.success('Skickat!');
                     debounce(updateObject(scope.submittedFormList), 10);
                     checkFilterCaseLog('form');
                 });

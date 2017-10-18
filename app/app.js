@@ -39,6 +39,9 @@ angular.module('sf', [
       language: 'sv'
     });
   })
+  .config(['growlProvider', function (growlProvider) {
+      growlProvider.globalTimeToLive({success: 3000, error: 3000, warning: 3000, info: 3000});
+  }])
   .run(function ($rootScope, $http, httpService, $location, $routeParams, tokenService) {
 
     $rootScope.hasToken = tokenService.hasToken;

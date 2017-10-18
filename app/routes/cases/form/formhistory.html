@@ -76,7 +76,7 @@
 
 
     <!-- Pages -->
-    <div class="form-history" data-ng-show="showHistory" data-ng-repeat="page in submittedForm[0].pages">
+    <div class="form-history" data-ng-if="showHistory" data-ng-repeat="page in submittedForm[0].pages">
         <div class="form-history-sections cf row">
             <div class="section-history-item">{{page.name}}</div>
         </div>

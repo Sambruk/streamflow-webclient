@@ -122,7 +122,7 @@
     <div class="form-sections row"></div>
 
     <div ng-controller="FormHistoryCtrl">
-        <div class="child-container" data-ng-if='loadChild'>
+        <div class="child-container" data-ng-if='loadChild || isFormWindow'>
             <div ng-controller="FormCtrl" ng-include="'routes/cases/form/forms.html'"/>
         </div>
     </div>

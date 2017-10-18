@@ -22,13 +22,15 @@
         <h2>{{submittedForms[0].form}}</h2>
     </div>
 
-    <span>Välj ett datum:</span>
+    <span style="display: block; margin-bottom: 10px;">Välj ett datum:</span>
     <span>
-    <div class="select">
+    <div class="select" style="width: calc(100% - 90px); display: inline-block">
       <select chosen data-ng-options="form.index as (form.submissionDate | dateTime) for form in submittedForms"
               id="selectedSubmittedForm" data-ng-model="selectedSubmittedForm"></select>
       <option></option>
     </div>
+        <button class="btn" type="button" data-ng-click="loadChild=!loadChild"
+                style="display: inline-block; margin-left: 5px;">New form</button>
     </span>
     <br/>
     <!-- Signature -->
@@ -112,7 +114,6 @@
         </div>
     </div>
     <div class="clear"></div>
-    <button class="btn" type="button" data-ng-click="loadChild=!loadChild">New form</button>
 </div>
 
 <!-- Content secondary -->

@@ -16,6 +16,7 @@
     limitations under the License.
 
 -->
+<sidebar ng-show="!isFormWindow" class="sidebar-content" sidebardata="sidebarData"></sidebar>
 
 <div class="content-primary" role="main">
     <div class="m-h m">
@@ -26,10 +27,11 @@
     <span>
     <div class="select" style="width: calc(100% - 90px); display: inline-block">
       <select chosen data-ng-options="form.index as (form.submissionDate | dateTime) for form in submittedForms"
+              data-ng-change="showHistory=true"
               id="selectedSubmittedForm" data-ng-model="selectedSubmittedForm"></select>
       <option></option>
     </div>
-        <button class="btn" type="button" data-ng-click="loadChild=!loadChild"
+        <button class="btn" type="button" data-ng-click="loadChild=!loadChild;showHistory=false;"
                 style="display: inline-block; margin-left: 5px;">New form</button>
     </span>
     <br/>
@@ -71,8 +73,10 @@
             <div class="form-field">Alternativet att endast ha en signatur är valt.</div>
         </div>
     </div>
+
+
     <!-- Pages -->
-    <div class="form-history" data-ng-repeat="page in submittedForm[0].pages">
+    <div class="form-history" data-ng-show="showHistory" data-ng-repeat="page in submittedForm[0].pages">
         <div class="form-history-sections cf row">
             <div class="section-history-item">{{page.name}}</div>
         </div>
@@ -112,15 +116,15 @@
                 Submitted: {{ submittedForm[0].submissionDate | dateTime}}
             </div>
         </div>
+
     </div>
     <div class="clear"></div>
-</div>
+    <div class="form-sections row"></div>
 
-<!-- Content secondary -->
-<sidebar ng-show="!isFormWindow" class="sidebar-content" sidebardata="sidebarData"></sidebar>
-
-<div ng-controller="FormHistoryCtrl">
-    <div class="child-container" data-ng-if='loadChild'>
-        <div ng-controller="FormCtrl" ng-include="'routes/cases/form/forms.html'"/>
+    <div ng-controller="FormHistoryCtrl">
+        <div class="child-container" data-ng-if='loadChild'>
+            <div ng-controller="FormCtrl" ng-include="'routes/cases/form/forms.html'"/>
+        </div>
     </div>
+
 </div>

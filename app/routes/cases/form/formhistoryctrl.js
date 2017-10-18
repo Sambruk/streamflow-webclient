@@ -18,6 +18,7 @@
 angular.module('sf')
     .controller('FormHistoryCtrl', function ($scope, caseService, $routeParams, $rootScope, $route, httpService) {
 
+        $scope.showHistory = true;
         $scope.caseId = $routeParams.caseId;
         $scope.formId = $routeParams.formId;
         $scope.submittedForms = caseService.getSubmittedForms($routeParams.caseId, $scope.formId);

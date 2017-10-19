@@ -18,7 +18,7 @@
 'use strict';
 
 angular.module('sf')
-    .directive('sidebar', function ($location, growl, contactService, sidebarService, fileService, $cacheFactory, $rootScope, debounce, $routeParams, projectService, caseService, httpService, navigationService, $q, tokenService, checkPermissionService, $window) {
+    .directive('sidebar', function ($location, growl, $route, contactService, sidebarService, fileService, $cacheFactory, $rootScope, debounce, $routeParams, projectService, caseService, httpService, navigationService, $q, tokenService, checkPermissionService, $window) {
         return {
             restrict: 'E',
             templateUrl: 'components/sidebar/sidebar.html',
@@ -367,13 +367,13 @@ angular.module('sf')
                 // });
                 $rootScope.$on('form-submitted', function () {
                     growl.success('Skickat!');
-                    debounce(updateObject(scope.submittedFormList), 10);
+                    $route.reload();
                     checkFilterCaseLog('form');
                 });
 
                 $rootScope.$on('form-saved', function () {
                     debounce(updateObject(scope.submittedFormList), 10);
-                    checkFilterCaseLog('form');
+                    $route.reload();
                 });
                 $window.addEventListener('storage', function (event) {
                     if (event.key === 'submittedFormId' && event.newValue != null) {

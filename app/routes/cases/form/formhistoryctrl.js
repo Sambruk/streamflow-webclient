@@ -17,7 +17,9 @@
 'use strict';
 angular.module('sf')
     .controller('FormHistoryCtrl', function ($scope, caseService, $location, $routeParams, $rootScope, $route, httpService) {
-        $scope.loadChild = $location.$$search.showForm?true:false;
+        if ($location.$$search.showForm) {
+            $scope.loadChild = true;
+        }
 
         $scope.showHistory = true;
         $scope.caseId = $routeParams.caseId;

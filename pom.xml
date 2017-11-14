@@ -5,7 +5,7 @@
   <groupId>se.streamsource.streamflow</groupId>
   <packaging>war</packaging>
   <name>Streamflow WebClient</name>
-  <version>1.1.3a</version>
+  <version>1.1.4</version>
   <description>Streamflow WebClient</description>
   <properties>
     <spring.security.version>3.2.4.RELEASE</spring.security.version>

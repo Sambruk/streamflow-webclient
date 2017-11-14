@@ -1,6 +1,6 @@
 {
   "name": "streamflow-client",
-  "version": "1.1.3a",
+  "version": "1.1.4",
   "main": "app/app.js",
   "ignore": [
     "**/.*",

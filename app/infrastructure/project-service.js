@@ -36,12 +36,13 @@ angular.module('sf')
               .value();
 
             _.forEach(projects, function(values, key){
-
+              var id = undefined;
               var types = _.map(values, function(item){
+                id = item.id;
                 return {name: item.rel, href: item.href, caseCount: item.caseCount};
               });
 
-              result.push({text: key, types: types});
+              result.push({text: key, types: types, id: id});
             });
             result.unlimitedResultCount = resource.response.unlimitedResultCount;
           }

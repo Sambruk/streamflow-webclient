@@ -17,11 +17,32 @@
 'use strict';
 
 angular.module('sf')
-    .controller('CaseListCtrl', function ($scope, $location, $routeParams, $window, projectService, $rootScope, caseService, groupByService, paginationService) {
+    .controller('CaseListCtrl', function ($scope, $q, $location, $routeParams, $window, projectService, $rootScope, caseService, groupByService, paginationService) {
         var initialCase = projectService.getSelected($routeParams.projectId, $routeParams.projectType, '+limit+1+offset+0');
         var pageSize = paginationService.pageSize;
         $scope.currentCases = [];
         $scope.projects = projectService.getAll();
+
+        var initCaseCount = function () {
+            $q.when($scope.projects.promise).then(function () {
+                $scope.projects.forEach(function (project) {
+                    if (project.id === $routeParams.projectId) {
+                        project.types.forEach(function (type) {
+                            if (type.name === $routeParams.projectType) {
+                                $scope.$parent.caseCount = type.caseCount;
+                                return true;
+                            }
+                        })
+                    }
+                });
+            });
+        };
+
+
+        if (!$scope.$parent.caseCount) {
+            initCaseCount();
+        }
+
         $scope.projectType = $routeParams.projectType;
         $scope.scroll = 0;
 
@@ -50,21 +71,24 @@ angular.module('sf')
             if ($scope.busyLoadingData) {
                 return;
             }
-            $scope.busyLoadingData = true;
-            $scope.showSpinner.infiniteScroll = true;
+            $scope.$watch("$parent.caseCount", function (caseCount) {
+                if ($scope.currentCases.length < $scope.$parent.caseCount) {
+                    $scope.busyLoadingData = true;
+                    $scope.showSpinner.infiniteScroll = true;
 
-            var query = '+limit+' + pageSize + '+offset+' + $scope.currentCases.length;
-            projectService.getSelected($routeParams.projectId, $routeParams.projectType, query).promise.then(function (result) {
-                if ($scope.currentCases.length === 0) {
-                    $scope.currentCases = result;
-                    $scope.currentCases.invalidateFunctions = [result.invalidate];
-                } else {
-                    Array.prototype.push.apply($scope.currentCases, result);
-                    $scope.currentCases.invalidateFunctions.push(result.invalidate);
+                    var query = '+limit+' + pageSize + '+offset+' + $scope.currentCases.length;
+                    projectService.getSelected($routeParams.projectId, $routeParams.projectType, query).promise.then(function (result) {
+                        if ($scope.currentCases.length === 0) {
+                            $scope.currentCases = result;
+                            $scope.currentCases.invalidateFunctions = [result.invalidate];
+                        } else {
+                            Array.prototype.push.apply($scope.currentCases, result);
+                            $scope.currentCases.invalidateFunctions.push(result.invalidate);
+                        }
+                        $scope.busyLoadingData = false;
+                        $scope.showSpinner.infiniteScroll = false;
+                    });
                 }
-
-                $scope.busyLoadingData = false;
-                $scope.showSpinner.infiniteScroll = false;
             });
         };
 

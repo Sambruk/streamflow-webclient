@@ -20,6 +20,8 @@ angular.module('sf')
     .controller('CaseListCtrl', function ($scope, $q, $location, $routeParams, $window, projectService, $rootScope, caseService, groupByService, paginationService) {
         var initialCase = projectService.getSelected($routeParams.projectId, $routeParams.projectType, '+limit+1+offset+0');
         var pageSize = paginationService.pageSize;
+        var stopLoad = false;
+
         $scope.currentCases = [];
         $scope.projects = projectService.getAll();
 
@@ -72,12 +74,17 @@ angular.module('sf')
                 return;
             }
             $scope.$watch("$parent.caseCount", function (caseCount) {
-                if ($scope.currentCases.length < $scope.$parent.caseCount) {
+                if (!stopLoad) {
                     $scope.busyLoadingData = true;
                     $scope.showSpinner.infiniteScroll = true;
 
                     var query = '+limit+' + pageSize + '+offset+' + $scope.currentCases.length;
                     projectService.getSelected($routeParams.projectId, $routeParams.projectType, query).promise.then(function (result) {
+                        $q.when(result.promise).then(function () {
+                            if (result.length === 0) {
+                                stopLoad = true;
+                            }
+                        });
                         if ($scope.currentCases.length === 0) {
                             $scope.currentCases = result;
                             $scope.currentCases.invalidateFunctions = [result.invalidate];

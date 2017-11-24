@@ -233,7 +233,7 @@ angular.module('sf')
                                 default:
                                     value = formMapperService.getValue(field.value, field.field);
                             }
-                            return {field: field.field.field, value: value};
+                            return {field: field.field.field, value: value === null ? "" : value};
                         });
                     return caseService.updateFields($scope.caseId, $scope.formDraftId, fields);
                 });

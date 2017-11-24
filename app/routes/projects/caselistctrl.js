@@ -73,30 +73,28 @@ angular.module('sf')
             if ($scope.busyLoadingData) {
                 return;
             }
-            $scope.$watch("$parent.caseCount", function (caseCount) {
-                if (!stopLoad) {
-                    $scope.busyLoadingData = true;
-                    $scope.showSpinner.infiniteScroll = true;
+            if (!stopLoad) {
+                $scope.busyLoadingData = true;
+                $scope.showSpinner.infiniteScroll = true;
 
-                    var query = '+limit+' + pageSize + '+offset+' + $scope.currentCases.length;
-                    projectService.getSelected($routeParams.projectId, $routeParams.projectType, query).promise.then(function (result) {
-                        $q.when(result.promise).then(function () {
-                            if (result.length === 0) {
-                                stopLoad = true;
-                            }
-                        });
-                        if ($scope.currentCases.length === 0) {
-                            $scope.currentCases = result;
-                            $scope.currentCases.invalidateFunctions = [result.invalidate];
-                        } else {
-                            Array.prototype.push.apply($scope.currentCases, result);
-                            $scope.currentCases.invalidateFunctions.push(result.invalidate);
+                var query = '+limit+' + pageSize + '+offset+' + $scope.currentCases.length;
+                projectService.getSelected($routeParams.projectId, $routeParams.projectType, query).promise.then(function (result) {
+                    $q.when(result.promise).then(function () {
+                        if (result.length === 0) {
+                            stopLoad = true;
                         }
-                        $scope.busyLoadingData = false;
-                        $scope.showSpinner.infiniteScroll = false;
                     });
-                }
-            });
+                    if ($scope.currentCases.length === 0) {
+                        $scope.currentCases = result;
+                        $scope.currentCases.invalidateFunctions = [result.invalidate];
+                    } else {
+                        Array.prototype.push.apply($scope.currentCases, result);
+                        $scope.currentCases.invalidateFunctions.push(result.invalidate);
+                    }
+                    $scope.busyLoadingData = false;
+                    $scope.showSpinner.infiniteScroll = false;
+                });
+            }
         };
 
         $scope.projects.promise.then(function (response) {

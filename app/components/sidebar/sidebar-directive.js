@@ -339,7 +339,6 @@ angular.module('sf')
                 scope.$on('case-changed', function () {
                     updateObject(scope.possibleCaseTypes);
                     updateObject(scope.sendToRecipients);
-                    updateObject(scope.assignToRecipients);
                     updateObject(scope.possibleSendTo);
                     sidebarService.caseType(scope);
                 });

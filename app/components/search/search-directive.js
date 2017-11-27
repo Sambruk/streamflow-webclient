@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sf').directive('search', function ($location, $timeout, searchService, navigationService, groupByService, $rootScope) {
+angular.module('sf').directive('search', function ($location, $timeout, searchService, navigationService, groupByService, $rootScope, growl) {
     return {
         restrict: 'E',
         templateUrl: 'components/search/search.html',
@@ -158,6 +158,10 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                     } else if (!scope.filter.dueOnFrom) {
                         scope.filter.dueOnFrom = scope.filter.dueOnTo;
                         return;
+                    } else if (scope.filter.dueOnFrom > scope.filter.dueOnTo) {
+                        scope.filter.dueOnTo = scope.filter.dueOnFrom;
+                        growl.warning('Fel datumintervall!');
+                        return;
                     }
                 });
 
@@ -175,6 +179,10 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                         return;
                     } else if (!scope.filter.createdOnFrom) {
                         scope.filter.createdOnFrom = scope.filter.createdOnTo;
+                        return;
+                    } else if (scope.filter.createdOnFrom > scope.filter.createdOnTo) {
+                        scope.filter.createdOnTo = scope.filter.createdOnFrom;
+                        growl.warning('Fel datumintervall!');
                         return;
                     }
                 });

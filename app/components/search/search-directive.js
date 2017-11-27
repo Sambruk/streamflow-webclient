@@ -149,6 +149,10 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                     } else if (!scope.filter.dueOnTo) {
                         scope.filter.dueOnTo = scope.filter.dueOnFrom;
                         return;
+                    } else if (scope.filter.dueOnFrom > scope.filter.dueOnTo) {
+                        scope.filter.dueOnTo = scope.filter.dueOnFrom;
+                        growl.warning('Fel datumintervall!');
+                        return;
                     }
                 });
 
@@ -170,6 +174,10 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                         return;
                     } else if (!scope.filter.createdOnTo) {
                         scope.filter.createdOnTo = scope.filter.createdOnFrom;
+                        return;
+                    } else if (scope.filter.createdOnFrom > scope.filter.createdOnTo) {
+                        scope.filter.createdOnTo = scope.filter.createdOnFrom;
+                        growl.warning('Fel datumintervall!');
                         return;
                     }
                 });

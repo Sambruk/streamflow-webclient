@@ -55,7 +55,7 @@
                  data-ng-change="labelsChanged(filter.label)">
         <ui-select-match placeholder="Välj etiketter...">{{$item.text}}</ui-select-match>
         <ui-select-choices repeat="label.id as label in possibleLabels | filter: $select.search" group-by="'title'">
-          <div ng-bind-html="label.text"></div>
+          <div ng-bind-html="label.text | trustAsHTML"></div>
         </ui-select-choices>
       </ui-select>
     </div>

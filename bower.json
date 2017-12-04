@@ -10,14 +10,15 @@
     "tests"
   ],
   "dependencies": {
+    "jquery": "2.2.4",
+    "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip",
     "angular": "1.4",
     "momentjs": "2.8.4",
-    "typewatch": "git://github.com/dennyferra/TypeWatch.git",
+    "typewatch": " git://github.com/dennyferra/TypeWatch.git",
     "angular-sanitize": "1.4",
     "ng-file-upload": "2.2.2",
 
     "ng-file-upload-shim": "1.6.12",
-    "jquery": "2.2.4",
     "angular-mocks": "1.4",
     "angular-scenario": "1.4",
     "pickadate": "~3.5.4",
@@ -28,8 +29,7 @@
     "angular-resource": "1.4",
     "angular-growl-v2": "0.7.9",
     "angular-filter": "0.5.16",
-    "angular-chosen-localytics": "1.0.7",
-    "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip",
+    "angular-chosen-localytics": "1.0.8",
     "angular-google-maps": "2.0.20",
     "angular-ui-select": "0.11.2",
     "ngInfiniteScroll": "1.2.0",

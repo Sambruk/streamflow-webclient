@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 // Karma E2E configuration
+require('phantomjs-polyfill');
 
 // base path, that will be used to resolve files and exclude
 module.exports = function(config){

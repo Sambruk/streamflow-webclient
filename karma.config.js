@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 // Karma configuration
+require('phantomjs-polyfill');
 module.exports = function(config){
   config.set({
 

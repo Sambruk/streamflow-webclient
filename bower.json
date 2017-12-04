@@ -11,7 +11,7 @@
   ],
   "dependencies": {
     "jquery": "2.2.4",
-    "chosen": "https://github.com/harvesthq/chosen/releases/download/v1.3.0/chosen_v1.3.0.zip",
+    "chosen": " https://github.com/harvesthq/chosen/releases/download/v1.5.1/chosen_v1.5.1.zip",
     "angular": "1.4",
     "momentjs": "2.8.4",
     "typewatch": " git://github.com/dennyferra/TypeWatch.git",

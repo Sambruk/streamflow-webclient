@@ -4,4 +4,6 @@
 .. toctree::
    :titlesonly:
 
-   webclient-dev-start
+   installation
+   short-dev-guide
+   dev-cheatsheet

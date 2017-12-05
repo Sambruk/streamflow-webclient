@@ -87,6 +87,15 @@ Deployment and releasing
 
 #. Make sure you have all the latest changes.
 
+#. You may wish to change default proxy mapping for server (Optional)
+
+    To do that modify ``targetUri`` parameter in **web.xml** located at **../WEB-INF/web.xml** with following
+
+    .. code-block:: xml
+
+        <param-name>targetUri</param-name>
+        <param-value>http://localhost/streamflow</param-value>
+
 #. In the root directory type:
 
     .. code-block:: bash

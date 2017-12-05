@@ -95,6 +95,27 @@ Deployment and releasing
 
     The build process should start and will create a `.war` file in the `target/` directory.
 
+
+Running
+*******
+To run simply use following command from project root.
+
+    .. code-block:: bash
+
+        gulp -dev
+
+or even
+
+    .. code-block:: bash
+
+        gulp
+
+For prod mode use
+
+    .. code-block:: bash
+
+        gulp -prod
+
 Coding Conventions
 ******************
 

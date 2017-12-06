@@ -3,7 +3,9 @@ Installation of Streamflow webclient
 
 #. First download **.war** file from needed release at `GitHub <https://github.com/Sambruk/streamflow-webclient/releases/>`_
 
-#. Deploy downloaded file to application server with path ``/webclient``. No other special actions needed. If you need help you can read `Server part setup <https://streamflow-core.readthedocs.io/en/latest/quick_start/installation.html/>`_
+#. Uninstall previous version if was installed. Usual name **is webclient-1.x.x**. If you need more detailed guide how to perform uninstalling follow `Server part uninstall <https://streamflow-core.readthedocs.io/en/latest/quick_start/uninstallation.html>`_
+
+#. Deploy downloaded file to application server with path ``/webclient``. No other special actions needed. If you need help you can read `Server part setup <https://streamflow-core.readthedocs.io/en/latest/quick_start/installation.html>`_
 
     .. important::
         It's important to use exactly context path or it will not connect to streamflow-core. If you need to change it refer to :doc:`short-dev-guide`

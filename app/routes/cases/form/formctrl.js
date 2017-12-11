@@ -27,6 +27,10 @@ angular.module('sf')
         $scope.possibleForm = '';
         $scope.caze = caseService.getSelected($scope.caseId);
 
+        $scope.isValidForm = true;
+        $scope.formPageIndex = 0;
+        $scope.formPagesValid = []
+
         $scope.showSpinner = {
             form: true
         };
@@ -72,6 +76,7 @@ angular.module('sf')
                         if ($scope.form && $scope.form[0]) {
                             $scope.currentFormDescription = $scope.form[0].description;
                             $scope.currentFormPage = $scope.form[0].enhancedPages[0];
+                            $scope.formPageIndex = 0;
                             $scope.displayField($scope.form[0].enhancedPages);
                         }
                     });
@@ -121,6 +126,7 @@ angular.module('sf')
                         var form = caseService.getFormDraft($scope.caseId, draftId);
                         form.promise.then(function (response) {
                             $scope.form = response;
+                            $scope.formPagesValid = new Array(form[0].enhancedPages.length);
                             $scope.showSpinner.form = false;
                         })
                             .then(function () {
@@ -131,6 +137,7 @@ angular.module('sf')
                     });
                 }
                 $scope.currentFormPage = null;
+                $scope.formPageIndex = 0;
             });
         };
 
@@ -174,6 +181,7 @@ angular.module('sf')
 
         $scope.selectFormPage = function (page) {
             $scope.currentFormPage = page;
+            $scope.formPageIndex = $scope.form[0].enhancedPages.indexOf($scope.currentFormPage);
         };
 
         $scope.submitForm = function () {
@@ -208,8 +216,8 @@ angular.module('sf')
                             //Ignoring fields which shouldn't be sent
                             //TODO Check for file attachment
                             return !(field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.AttachmentFieldValue"
-                                || field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.CommentFieldValue"
-                                || field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.FieldGroupFieldValue");
+                            || field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.CommentFieldValue"
+                            || field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.FieldGroupFieldValue");
                         })
                         .map(function (field) {
                             var value = '';
@@ -249,6 +257,7 @@ angular.module('sf')
             window.location.href = '#/cases/' + $scope.caseId + '/formhistory/' + $scope.currentFormId
             $scope.form = [];
             $scope.currentFormPage = null;
+            $scope.formPageIndex = 0;
         };
 
         $scope.deleteFormDraftAttachment = function (fieldId) {
@@ -305,22 +314,31 @@ angular.module('sf')
         };
 
         $scope.nextFormPage = function () {
-            var index = $scope.form[0].enhancedPages.indexOf($scope.currentFormPage);
-            index += 1;
-            $scope.currentFormPage = $scope.form[0].enhancedPages[index];
+            $scope.formPageIndex += 1;
+            $scope.currentFormPage = $scope.form[0].enhancedPages[$scope.formPageIndex];
         };
 
         $scope.previousFormPage = function () {
-            var index = $scope.form[0].enhancedPages.indexOf($scope.currentFormPage);
-            index -= 1;
-            $scope.currentFormPage = $scope.form[0].enhancedPages[index];
+            $scope.formPageIndex -= 1;
+            $scope.currentFormPage = $scope.form[0].enhancedPages[$scope.formPageIndex];
         };
 
+        $scope.$watchCollection('formPagesValid', function (newValues, oldValues) {
+            var isAllPagesValid = true;
+            $scope.formPagesValid.forEach(function (value) {
+                if (!value) {
+                    isAllPagesValid = value
+                }
+            });
+
+            $scope.isValidForm = isAllPagesValid;
+        });
+
         /*   //Used for send submit message only after correct form data sending to server
-           //TODO: Maybe it would be good to rewrite that to promises somehow?
-           $scope.$on('form-saved', function (event, formId) {
-               if (!$scope.closeWithForm) {
+         //TODO: Maybe it would be good to rewrite that to promises somehow?
+         $scope.$on('form-saved', function (event, formId) {
+         if (!$scope.closeWithForm) {
                    formSubmitted();
-               }
-           });*/
+         }
+         });*/
     });

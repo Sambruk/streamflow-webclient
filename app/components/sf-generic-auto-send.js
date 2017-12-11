@@ -23,9 +23,6 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
     priority: 1010,
     link: function(scope, element, attr, ctrl) {
 
-      if(scope.$root.$root.isValidForm === undefined){
-        scope.$root.$root.isValidForm=true;
-      }
       var validates = function () {
         // Validation
         if (element.hasClass('ng-invalid')) {
@@ -58,9 +55,9 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
 
           if (validates()) {
                         // updateField(newValue);
-            scope.$root.$root.isValidForm=true;
+              scope.$parent.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex]= true;
           } else{
-            scope.$root.$root.isValidForm=false;
+              scope.$parent.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex]= false;
           }
         });
       } else {
@@ -72,12 +69,11 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
 
           // Valid input, clear error warnings
           $('[class^=error]', element.parent()).hide();
-
-          if (validates()) {
+            if (validates()) {
                         // updateField(newValue);
-            scope.$root.$root.isValidForm=true;
+              scope.$parent.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex]= true;
           } else {
-            scope.$root.$root.isValidForm=false;
+              scope.$parent.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex]= false;
           }
         });
       }

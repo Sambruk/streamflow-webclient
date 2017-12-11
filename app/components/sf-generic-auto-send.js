@@ -17,67 +17,67 @@
 
 'use strict';
 
-angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', 'caseService', 'formMapperService', function($parse, $routeParams, caseService, formMapper) {
-  return {
-    require: 'ngModel',
-    priority: 1010,
-    link: function(scope, element, attr, ctrl) {
+angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', 'caseService', 'formMapperService', function ($parse, $routeParams, caseService, formMapper) {
+    return {
+        require: 'ngModel',
+        priority: 1010,
+        link: function (scope, element, attr, ctrl) {
 
-      var validates = function () {
-        // Validation
-        if (element.hasClass('ng-invalid')) {
-          _.each(element.attr('class').split(' '), function (klass) {
-            var errorClass = '.error-' + klass;
-            $(errorClass, element.parent()).show();
-          });
-          return false;
-        }
-        return true;
-      };
+            var validates = function () {
+                // Validation
+                if (element.hasClass('ng-invalid')) {
+                    _.each(element.attr('class').split(' '), function (klass) {
+                        var errorClass = '.error-' + klass;
+                        $(errorClass, element.parent()).show();
+                    });
+                    return false;
+                }
+                return true;
+            };
 
-      var updateField = function (newValue) {
-        var value = formMapper.getValue(newValue, attr);
-        caseService.updateField($routeParams.caseId,  scope.$parent.form[0].draftId, attr.name, value);
-      };
+            var updateField = function (newValue) {
+                var value = formMapper.getValue(newValue, attr);
+                caseService.updateField($routeParams.caseId, scope.$parent.form[0].draftId, attr.name, value);
+            };
 
-      if (_.indexOf(['se.streamsource.streamflow.api.administration.form.TextFieldValue',
-          'se.streamsource.streamflow.api.administration.form.NumberFieldValue',
-          'se.streamsource.streamflow.api.administration.form.TextAreaFieldValue'], attr.fieldType) >= 0) {
-        element.on('blur', function (event) {
-          if (!ctrl.$dirty) {
-            return;
-          }
+            if (_.indexOf(['se.streamsource.streamflow.api.administration.form.TextFieldValue',
+                    'se.streamsource.streamflow.api.administration.form.NumberFieldValue',
+                    'se.streamsource.streamflow.api.administration.form.TextAreaFieldValue'], attr.fieldType) >= 0) {
+                element.on('blur', function (event) {
+                    if (!ctrl.$dirty) {
+                        return;
+                    }
 
                     var newValue = event.target.value;
 
-          // Valid input, clear error warnings
-          $('[class^=error]', element.parent()).hide();
+                    // Valid input, clear error warnings
+                    $('[class^=error]', element.parent()).hide();
 
-          if (validates()) {
+                    if (validates()) {
                         // updateField(newValue);
-              scope.$parent.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex]= true;
-          } else{
-              scope.$parent.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex]= false;
-          }
-        });
-      } else {
-        scope.$watch(attr.ngModel, function (value) {
-          if (!ctrl.$dirty) {
-            return;
-          }
+                        scope.$parent.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = true;
+                    } else {
+                        scope.$parent.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = false;
+                    }
+                });
+            } else {
+                scope.$watch(attr.ngModel, function (value) {
+                    if (!ctrl.$dirty) {
+                        return;
+                    }
                     var newValue = value;
 
-          // Valid input, clear error warnings
-          $('[class^=error]', element.parent()).hide();
-            if (validates()) {
+                    // Valid input, clear error warnings
+                    $('[class^=error]', element.parent()).hide();
+                    if (validates()) {
                         // updateField(newValue);
-              scope.$parent.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex]= true;
-          } else {
-              scope.$parent.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex]= false;
-          }
-        });
-      }
-    }
-  };
+                        scope.$parent.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = true;
+                    } else {
+                        scope.$parent.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = false;
+                    }
+                });
+            }
+        }
+    };
 }]);
 

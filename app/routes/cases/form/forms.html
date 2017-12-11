@@ -281,7 +281,7 @@
                     <a data-ng-show="isLastPage(currentFormPage)" href="" class="btn inline"
                        data-ng-class="{inactive: !issueForm.$valid || !isValidForm}"
                        data-ng-disabled="!issueForm.$valid || !isValidForm"
-                       data-ng-click="issueForm.$valid && isValidForm && submitForm()">Slutför</a>
+                       data-ng-click="(issueForm.$valid && isValidForm) && submitForm()">Slutför</a>
                 </div>
             </form>
         </div>

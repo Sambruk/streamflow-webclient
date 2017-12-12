@@ -29,7 +29,7 @@ angular.module('sf')
 
         $scope.isValidForm = true;
         $scope.formPageIndex = 0;
-        $scope.formPagesValid = []
+        $scope.formPagesValid = [];
 
         $scope.showSpinner = {
             form: true
@@ -314,11 +314,13 @@ angular.module('sf')
         };
 
         $scope.nextFormPage = function () {
+            $scope.formPagesValid[$scope.formPageIndex] = $scope.issueForm.$valid;
             $scope.formPageIndex += 1;
             $scope.currentFormPage = $scope.form[0].enhancedPages[$scope.formPageIndex];
         };
 
         $scope.previousFormPage = function () {
+            $scope.formPagesValid[$scope.formPageIndex] = $scope.issueForm.$valid;
             $scope.formPageIndex -= 1;
             $scope.currentFormPage = $scope.form[0].enhancedPages[$scope.formPageIndex];
         };

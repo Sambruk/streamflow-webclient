@@ -96,6 +96,9 @@ angular.module('sf').directive('contextmenu', function (projectService, navigati
       $rootScope.$on('case-owner-changed', function(){
         updateObject(scope.projects);
       });
+      $rootScope.$on('case-opened', function () {
+          scope.showSidebar = false;
+      });
       // End Event listeners
     }
   };

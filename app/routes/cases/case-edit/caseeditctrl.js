@@ -18,6 +18,8 @@
 'use strict';
 
 angular.module('sf').controller('CaseEditCtrl', function ($scope, $rootScope, $routeParams, caseService) {
+    $rootScope.$broadcast('case-opened');
+
     $scope.sidebardata = {};
     $scope.caseId = $routeParams.caseId;
     $scope.projectId = $routeParams.projectId;

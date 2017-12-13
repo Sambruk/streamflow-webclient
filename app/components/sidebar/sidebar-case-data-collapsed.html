@@ -3,13 +3,13 @@
         <b class="left left-sidebar">Ärendetyp:</b>
         <div class="left right-sidebar">{{caze[0].caseType.text}}</div>
     </div>
-    <div class="clear"/>
+    <div class="clear"></div>
 
     <div>
         <b class="left left-sidebar">Etiketter:</b>
         <div class="left right-sidebar"><div ng-repeat="label in caseLabel | unique:'text'">{{label.text}}{{$last ? '' : '; '}}</div></div>
     </div>
-    <div class="clear"/>
+    <div class="clear"></div>
 
     <div>
         <b class="left left-sidebar">Bifogade filer:</b>
@@ -24,6 +24,6 @@
 
         </div>
     </div>
-    <div class="clear"/>
+    <div class="clear"></div>
 </div>
 

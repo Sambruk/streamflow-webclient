@@ -230,10 +230,11 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
         scope.possibleSendTo.promise.then(function (response) {
             scope.sendToRecipients = response;
             if (response[0]) {
+                scope.showSendTo = true;
                 scope.show = true;
                 scope.sendToId = response[0] && response[0].id;
             }
-            scope.commandView = 'sendTo';
+            scope.commandView = 'sendToView';
         });
     };
 
@@ -268,9 +269,10 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
             scope.assignToRecipients = response;
             if (response[0]) {
                 scope.show = true;
+                scope.showAssignTo = true;
                 scope.assignToId = response[0] && response[0].id;
             }
-            scope.commandView = 'assignTo';
+            scope.commandView = 'assignToView';
         });
     };
 

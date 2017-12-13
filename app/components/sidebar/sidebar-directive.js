@@ -46,6 +46,8 @@ angular.module('sf')
                 scope.possibleAssignees = caseService.getPossibleAssignees($routeParams.caseId);
                 scope.uploadProgress = 0;
                 scope.showExport = false;
+                scope.showAssignTo = false;
+                scope.showSendTo = false;
                 scope.exportSubmittedForms = false;
                 scope.exportAttachments = false;
                 scope.exportConversations = false;

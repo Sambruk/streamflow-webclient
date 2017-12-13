@@ -27,6 +27,7 @@ angular.module('sf')
     $scope.conversationParticipants = caseService.getConversationParticipants($routeParams.caseId, $routeParams.conversationId);
     $scope.conversationMessageDraft = caseService.getMessageDraft($routeParams.caseId, $routeParams.conversationId);
     $scope.conversationMessageDraftAttachments = caseService.getMessageDraftAttachments($routeParams.caseId, $routeParams.conversationId);
+    $scope.lastDraftMessage = '';
 
     $scope.showSpinner = {
       conversation: true,
@@ -43,7 +44,8 @@ angular.module('sf')
     });
 
     $scope.conversationMessageDraft.promise.then(function(){
-      $scope.showSpinner.conversationMessageDraft = false;
+        $scope.lastDraftMessage = $scope.conversationMessageDraft[0];
+        $scope.showSpinner.conversationMessageDraft = false;
     });
 
     $scope.$watch('sidebardata.conversations', function(newVal){
@@ -71,6 +73,7 @@ angular.module('sf')
 
     $scope.changeMessageDraft = function($event){
       var message = $event.currentTarget.value;
+      $scope.lastDraftMessage = message;
       caseService.updateMessageDraft($scope.caseId, $scope.conversationId, message).then(function(){
         updateObject($scope.conversationMessageDraft);
       });
@@ -92,17 +95,22 @@ angular.module('sf')
 
     $scope.submitMessage = function($event){
       $event.preventDefault();
-      $scope.showSpinner.conversation = true;
+      if(!$scope.showSpinner.conversation) {
+          $scope.showSpinner.conversation = true;
+          caseService.updateMessageDraft($scope.caseId, $scope.conversationId, $scope.lastDraftMessage).then(function(){
+              caseService.createMessage($routeParams.caseId, $routeParams.conversationId).then(function () {
+                  updateObject($scope.conversationMessages);
+                  updateObject($scope.conversationMessageDraftAttachments);
 
-      caseService.createMessage($routeParams.caseId, $routeParams.conversationId).then(function(){
-        updateObject($scope.conversationMessages);
-        updateObject($scope.conversationMessageDraftAttachments);
+                  $scope.conversationMessageDraft[0] = '';
+                  $scope.lastDraftMessage = '';
+                  $rootScope.$broadcast('conversation-message-created');
 
-        $scope.conversationMessageDraft[0] = '';
-        $rootScope.$broadcast('conversation-message-created');
+                  $scope.showSpinner.conversation = false;
+              });
 
-        $scope.showSpinner.conversation = false;
-      });
+          });
+      }
     };
 
     $scope.deleteDraftAttachment = function(attachment){

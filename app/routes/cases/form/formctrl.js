@@ -254,7 +254,7 @@ angular.module('sf')
                     $rootScope.$broadcast('form-saved', $scope.currentFormId);
                 }
             }
-            window.location.href = '#/cases/' + $scope.caseId + '/formhistory/' + $scope.currentFormId
+            window.location.href = '#/cases/' + $scope.caseId + '/formhistory/' + $scope.currentFormId;
             $scope.form = [];
             $scope.currentFormPage = null;
             $scope.formPageIndex = 0;

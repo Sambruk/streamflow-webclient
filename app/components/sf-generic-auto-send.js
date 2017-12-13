@@ -53,12 +53,7 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
                     // Valid input, clear error warnings
                     $('[class^=error]', element.parent()).hide();
 
-                    if (validates() && scope.$parent.issueForm.$valid) {
-                        // updateField(newValue);
-                        scope.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = true;
-                    } else {
-                        scope.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = false;
-                    }
+                    scope.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = validates() && scope.$parent.issueForm.$valid;
                 });
             } else {
                 scope.$watch(attr.ngModel, function (value) {
@@ -69,12 +64,7 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
 
                     // Valid input, clear error warnings
                     $('[class^=error]', element.parent()).hide();
-                    if (validates() && scope.$parent.$parent.issueForm.$valid) {
-                        // updateField(newValue);
-                        scope.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = true;
-                    } else {
-                        scope.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = false;
-                    }
+                    scope.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = validates() && scope.$parent.$parent.issueForm.$valid;
                 });
             }
         }

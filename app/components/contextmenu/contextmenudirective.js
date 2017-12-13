@@ -45,10 +45,8 @@ angular.module('sf').directive('contextmenu', function (projectService, navigati
         if(!scope.params){
           return false;
         }
-        if (!scope.params.projectType && $rootScope.location.$$path.indexOf('cases') < 0) {
-          return false;
-        }
-        return true;
+        return !(!scope.params.projectType && $rootScope.location.$$path.indexOf('cases') < 0);
+
       };
 
       scope.createCase = function(){

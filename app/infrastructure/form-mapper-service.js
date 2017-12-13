@@ -21,11 +21,9 @@ angular.module('sf')
 .factory('formMapperService', function ($parse) {
 
     function addOptions(fieldValue){
-      var options = _.map(fieldValue.values, function(value){
-        return {name: value, value: value};
+        fieldValue.options = _.map(fieldValue.values, function (value) {
+          return {name: value, value: value};
       });
-
-      fieldValue.options = options;
     }
 
     var mappings = {
@@ -46,11 +44,9 @@ angular.module('sf')
       },
       'se.streamsource.streamflow.api.administration.form.CheckboxesFieldValue': {
         addProperties: function(field){
-          var checkings = _.map(field.field.fieldValue.values, function(value){
-            return {name: value, checked: field.value && field.value.indexOf(value) !== -1};
+            field.field.fieldValue.checkings = _.map(field.field.fieldValue.values, function (value) {
+              return {name: value, checked: field.value && field.value.indexOf(value) !== -1};
           });
-
-          field.field.fieldValue.checkings = checkings;
         },
         getValue: function(value, attr){
           var checked = _.chain($parse(attr.backingField)())
@@ -73,10 +69,9 @@ angular.module('sf')
             } else {
               escapedValue = field.value.replace(/\[(.*),(.*)\]/, '$1' + encodeURIComponent(',') + '$2');
             }
-            var values = _.map(escapedValue.split(', '), function (escaped) {
-              return decodeURIComponent(escaped);
+              field.value = _.map(escapedValue.split(', '), function (escaped) {
+                return decodeURIComponent(escaped);
             });
-            field.value = values;
           }
         },
         getValue: function(value){

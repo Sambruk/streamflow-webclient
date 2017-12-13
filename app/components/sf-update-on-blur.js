@@ -50,17 +50,14 @@ angular.module('sf').directive('sfUpdateOnBlur', ['$parse', function ($parse) {
             }
 
             if ($('form div').hasClass('error') || !$('#contact-name').val()) {
-                $('#contact-submit-button').attr('disabled', true);
-                $('#contact-submit-button').addClass('inactive');
+                $('#contact-submit-button').attr('disabled', true).addClass('inactive');
             }
             else {
-                $('#contact-submit-button').attr('disabled', false);
-                $('#contact-submit-button').removeClass('inactive');
+                $('#contact-submit-button').attr('disabled', false).removeClass('inactive');
             }
 
             element.parent()[0].addEventListener('webkitAnimationEnd', function () {
-                element.parent().removeClass('saved');
-                element.parent().removeClass('saved-select');
+                element.parent().removeClass('saved').removeClass('saved-select');
             });
 
 
@@ -75,8 +72,7 @@ angular.module('sf').directive('sfUpdateOnBlur', ['$parse', function ($parse) {
 
         var errorCallback = function (element) {
             element.parent().addClass('error');
-            $('#contact-submit-button').attr('disabled', true);
-            $('#contact-submit-button').addClass('inactive');
+            $('#contact-submit-button').attr('disabled', true).addClass('inactive');
         };
 
         element.bind('blur', function (event) {

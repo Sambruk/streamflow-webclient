@@ -29,9 +29,9 @@
       <select chosen data-ng-options="form.index as (form.submissionDate | dateTime) for form in submittedForms"
               data-ng-change="showHistory=true"
               id="selectedSubmittedForm" data-ng-model="selectedSubmittedForm"></select>
-      <option></option>
+      <!--<option></option>-->
     </div>
-        <button class="btn" type="button" data-ng-click="loadChild=!loadChild;showHistory=false;"
+        <button class="btn" type="button" style="width: 90px;" data-ng-click="loadChild=!loadChild;showHistory=false;"
                 style="display: inline-block; margin-left: 5px;">New form</button>
     </span>
     <br/>

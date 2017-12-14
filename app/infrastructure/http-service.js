@@ -42,7 +42,8 @@ angular.module('sf').factory('httpService', function ($q, $cacheFactory, buildMo
       case 'prod':
         return prodUrl;
       case 'dev':
-        return 'https://test-sf.jayway.com/streamflow/';
+        return 'http://192.168.1.119:8082/streamflow/';
+        // return 'https://test-sf.jayway.com/streamflow/';
         //return 'http://localhost:8082/streamflow/';
       default:
         return 'https://dummyuser:dummypass@test-sf.jayway.com/streamflow/';

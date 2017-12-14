@@ -12,11 +12,17 @@
         </a>
     </div>
 
-    <div class="convo-status form-icons"><a href="#/cases/{{ caze[0].id }}/formhistory/{{ form.id }}"><span
-            class="icon-history" title="Formulär, historik">{{submittedForms.length}} <span class="struct">Formulär, historik</span></span></a>
-        <a data-ng-click="openFormInNewWindow(form.id, true, submittedForms.length === 0)" href=""><span class="icon-folder-open"
-                                                                            title="Open in new window"> <span
-                class="struct">Open in new window</span></span></a>
+    <div class="convo-status form-icons">
+        <a data-ng-click="openFormInNewWindow(form.id, true, submittedForms.length === 0)" href="">
+            <span
+                class="icon-folder-open"
+                title="Open in new window">
+                <span class="struct">Open in new window</span>
+            </span>
+        </a>
+        <a href="#/cases/{{ caze[0].id }}/formhistory/{{ form.id }}">
+            <span class="icon-history" title="Formulär, historik">{{submittedForms.length}} <span class="struct">Formulär, historik</span></span>
+        </a>
     </div>
     <div class="clear"></div>
 </div>

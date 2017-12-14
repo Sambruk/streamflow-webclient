@@ -27,6 +27,8 @@ angular.module('sf')
         $scope.possibleForm = '';
         $scope.caze = caseService.getSelected($scope.caseId);
 
+        $scope.issueForm = {};
+
         $scope.isValidForm = true;
         $scope.formPageIndex = 0;
         $scope.formPagesValid = [];

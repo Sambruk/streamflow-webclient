@@ -18,6 +18,8 @@
 
 angular.module('sf')
     .controller('CaseListCtrl', function ($scope, $q, $location, $routeParams, $window, projectService, $rootScope, caseService, groupByService, paginationService) {
+        $rootScope.$broadcast('case-list-load');
+
         var initialCase = projectService.getSelected($routeParams.projectId, $routeParams.projectType, '+limit+1+offset+0');
         var pageSize = paginationService.pageSize;
         var stopLoad = false;

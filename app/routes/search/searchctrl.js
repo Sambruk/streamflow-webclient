@@ -18,6 +18,8 @@
 'use strict';
 
 angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $rootScope, searchService, groupByService, paginationService) {
+    $rootScope.$broadcast('case-list-load');
+
     $scope.currentCases = [];
     $scope.scroll = 0;
     $scope.busyLoadingData = false;

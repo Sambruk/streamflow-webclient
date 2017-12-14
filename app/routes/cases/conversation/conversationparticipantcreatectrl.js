@@ -74,10 +74,12 @@ angular.module('sf')
           updateParticipant();
         });
       }else{
-        caseService.addExternalParticipantToConversation($routeParams.caseId, $routeParams.conversationId, $scope.externalParticipant)
-        .then(function(){
-          updateParticipant();
-        });
+          if($scope.externalParticipant) {
+              caseService.addExternalParticipantToConversation($routeParams.caseId, $routeParams.conversationId, $scope.externalParticipant)
+                  .then(function () {
+                      updateParticipant();
+                  });
+          }
       }
     };
   });

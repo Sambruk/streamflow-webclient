@@ -39,7 +39,7 @@
                 allow-single-deselect="true" search-contains="true" name="name-select" id="project-select" class="item">
           <option></option>
         </select>
-          <a href="" id="" data-ng-click="clearGrouping()" data-ng-show="filter.project" class="icon-cancel__wrapp icon-cancel__select">
+          <a href="" id="" data-ng-click="clearProject()" data-ng-show="filter.project" class="icon-cancel__wrapp icon-cancel__select">
               <i class="icon-cancel"></i>
           </a>
       </div>
@@ -51,7 +51,7 @@
                 allow-single-deselect="true" search-contains="true" name="name-select" id="type-select">
           <option></option>
         </select>
-          <a href="" id="" data-ng-click="clearGrouping()" data-ng-show="filter.caseType" class="icon-cancel__wrapp icon-cancel__select">
+          <a href="" id="" data-ng-click="clearCaseType()" data-ng-show="filter.caseType" class="icon-cancel__wrapp icon-cancel__select">
               <i class="icon-cancel"></i>
           </a>
       </div>
@@ -65,7 +65,7 @@
             <div ng-bind-html="label.text | trustAsHTML"></div>
           </ui-select-choices>
         </ui-select>
-        <a href="" id="" data-ng-click="clearGrouping()" data-ng-show="true" class="icon-cancel__wrapp icon-cancel__select">
+        <a href="" id="" data-ng-click="clearLabels()" data-ng-show="filter.label.length > 0" class="icon-cancel__wrapp icon-cancel__select">
           <i class="icon-cancel"></i>
         </a>
       </div>
@@ -87,7 +87,7 @@
                 allow-single-deselect="true" search-contains="true" name="name-select" id="assignee-select">
           <option></option>
         </select>
-          <a href="" id="" data-ng-click="clearGrouping()" data-ng-show="filter.assignedTo" class="icon-cancel__wrapp icon-cancel__select">
+          <a href="" id="" data-ng-click="clearAssignedTo()" data-ng-show="filter.assignedTo" class="icon-cancel__wrapp icon-cancel__select">
               <i class="icon-cancel"></i>
           </a>
       </div>
@@ -111,7 +111,7 @@
                   allow-single-deselect="true" search-contains="true" name="name-select" id="createdby-select">
             <option></option>
           </select>
-          <a href="" id="" data-ng-click="clearGrouping()" data-ng-show="filter.createdBy" class="icon-cancel__wrapp icon-cancel__select">
+          <a href="" id="" data-ng-click="clearCreatedBy()" data-ng-show="filter.createdBy" class="icon-cancel__wrapp icon-cancel__select">
             <i class="icon-cancel"></i>
           </a>
         </div>
@@ -134,7 +134,7 @@
             <option value="CLOSED">Stängd</option>
             <option></option>
           </select>
-          <a href="" id="" data-ng-click="clearGrouping()" data-ng-show="filter.status" class="icon-cancel__wrapp icon-cancel__select">
+          <a href="" id="" data-ng-click="clearStatus()" data-ng-show="filter.status" class="icon-cancel__wrapp icon-cancel__select">
             <i class="icon-cancel"></i>
           </a>
 

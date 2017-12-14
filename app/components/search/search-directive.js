@@ -313,6 +313,30 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                     scope.sort.order = 'asc';
                 };
 
+                scope.clearProject = function () {
+                    scope.filter.project = undefined;
+                };
+
+                scope.clearCaseType = function () {
+                    scope.filter.caseType = undefined;
+                };
+
+                scope.clearLabels = function () {
+                    scope.filter.label = [];
+                };
+
+                scope.clearAssignedTo = function () {
+                    scope.filter.assignedTo = undefined;
+                };
+
+                scope.clearCreatedBy = function () {
+                    scope.filter.createdBy = undefined;
+                };
+
+                scope.clearStatus = function () {
+                    scope.filter.status = undefined;
+                };
+
                 scope.toggleSearchFilter = function (bool) {
                     if (bool !== undefined) {
                         scope.showSearchFilter = bool;

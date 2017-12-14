@@ -204,6 +204,14 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                     }
                 });
 
+                $rootScope.$on('case-list-load', function () {
+                    scope.showSearchFilter = false;
+                });
+
+                $rootScope.$on('case-opened', function () {
+                    scope.showSearchFilter = false;
+                });
+
                 var isSet = function (values) {
                     var set = false;
                     _.each(values, function (value) {

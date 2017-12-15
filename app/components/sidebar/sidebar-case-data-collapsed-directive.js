@@ -7,7 +7,7 @@ angular.module('sf').directive('sidebarCaseDataCollapsed', function (sidebarServ
             canChange: '='
         },
         templateUrl: 'components/sidebar/sidebar-case-data-collapsed.html',
-        link: function (scope, element) {
+        link: function (scope) {
             // TODO: Something better than this. Updating current scope to match
             // parent scope just seems wrong.
             scope.possibleCaseTypes = scope.$parent.possibleCaseTypes;

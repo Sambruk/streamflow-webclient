@@ -12,7 +12,7 @@ angular.module('sf').factory('authInterceptor', function (tokenService) {
             }
             return config;
         }
-    }
+    };
 }).config(function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptor');
 });

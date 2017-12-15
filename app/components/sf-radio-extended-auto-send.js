@@ -24,7 +24,7 @@ angular.module('sf').directive('sfRadioExtendedAutoSend', ['$parse', '$routePara
     link: function(scope, element, attr) {
 
       var hasRunAtLeastOnce = false;
-      scope.$watch(attr.ngModel, function (newValue, oldValue) {
+      scope.$watch(attr.ngModel, function (newValue) {
 
         if (hasRunAtLeastOnce) {
           if (newValue === attr.value) {

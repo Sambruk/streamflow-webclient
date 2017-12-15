@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('sf').directive('sidebarCase', function ($routeParams, httpService, caseService) {
+angular.module('sf').directive('sidebarCase', function ($routeParams) {
   return {
     restrict: 'A',
     scope: {},

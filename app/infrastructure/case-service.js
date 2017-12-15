@@ -1076,7 +1076,7 @@ angular.module('sf')
                         caseBase.broadcastMessage(result.status);
                     },
                     function (error) {
-                        console.log("Failed to send, repeating");
+                        console.log('Failed to send, repeating');
                         if (repeatLimit > 0) {
                             self.updateFields(caseId, formId, fields);
                             repeatLimit--;

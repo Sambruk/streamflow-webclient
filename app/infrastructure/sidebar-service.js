@@ -184,14 +184,14 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
                 if (!$.isEmptyObject(possibleCaseLabels)) {
                     if (!$.isEmptyObject(scope.caseTypeSearchInput)) {
                         var currentCase = caseTypes.filter(function (e) {
-                            return e.id == casetype;
+                            return e.id === casetype;
                         });
 
                         //Removing square braces
                         var caseLabels = currentCase[0].labels.slice(2, -2).split(' ');
 
                         var finalCaseLabels = $.grep(caseLabels, function (e) {
-                            return e.toLowerCase().indexOf(scope.caseTypeSearchInput.toLowerCase()) != -1;
+                            return e.toLowerCase().indexOf(scope.caseTypeSearchInput.toLowerCase()) !== -1;
                         });
 
                         finalCaseLabels = possibleCaseLabels.filter(function (e) {
@@ -204,7 +204,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
                             return p.then(function () {
                                 return caseService.addCaseLabel($routeParams.caseId, val.id);
                             });
-                        }, $q.when(true)).then(function (finalResult) {
+                        }, $q.when(true)).then(function () {
                             $rootScope.$broadcast('case-type-changed');
                         });
 

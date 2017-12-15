@@ -43,24 +43,22 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
             if (_.indexOf(['se.streamsource.streamflow.api.administration.form.TextFieldValue',
                     'se.streamsource.streamflow.api.administration.form.NumberFieldValue',
                     'se.streamsource.streamflow.api.administration.form.TextAreaFieldValue'], attr.fieldType) >= 0) {
-                element.on('blur', function (event) {
+                element.on('blur', function () {
                     if (!ctrl.$dirty) {
                         return;
                     }
 
-                    var newValue = event.target.value;
-
                     // Valid input, clear error warnings
                     $('[class^=error]', element.parent()).hide();
-                    if(attr.fieldType == 'se.streamsource.streamflow.api.administration.form.OptionButtonsFieldValue'){
+                    if(attr.fieldType === 'se.streamsource.streamflow.api.administration.form.OptionButtonsFieldValue'){
                         scope.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = scope.$parent.$parent.issueForm.$valid;
                     } else {
                         scope.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = validates() && scope.$parent.$parent.issueForm.$valid;
                     }
                 });
             } else {
-                scope.$watch(attr.ngModel, function (value) {
-                    if(attr.fieldType == 'se.streamsource.streamflow.api.administration.form.OptionButtonsFieldValue'){
+                scope.$watch(attr.ngModel, function () {
+                    if(attr.fieldType === 'se.streamsource.streamflow.api.administration.form.OptionButtonsFieldValue'){
                         scope.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = scope.$parent.$parent.issueForm.$valid;
                     } else {
                         scope.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = validates() && scope.$parent.$parent.issueForm.$valid;
@@ -69,7 +67,6 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
                     if (!ctrl.$dirty) {
                         return;
                     }
-                    var newValue = value;
 
                     // Valid input, clear error warnings
                     $('[class^=error]', element.parent()).hide();

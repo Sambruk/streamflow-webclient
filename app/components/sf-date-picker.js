@@ -16,7 +16,7 @@
  */
 'use strict';
 angular.module('sf')
-.directive('sfDatePicker', [function (location) {
+.directive('sfDatePicker', [function () {
     return {
       restrict:'A',
       require: 'ngModel',

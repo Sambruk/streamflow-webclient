@@ -30,7 +30,7 @@ angular.module('sf').directive('login', function ($rootScope, buildMode, $locati
 
             function getLogoutUrl(isIE) {
                 var url;
-                var credentials = isIE ? '' : "username:password@";
+                var credentials = isIE ? '' : 'username:password@';
                 if (buildMode === 'dev') {
                     url = 'https://' + credentials + 'test-sf.jayway.com/streamflow/';
                 } else {

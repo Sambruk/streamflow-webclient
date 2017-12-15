@@ -219,9 +219,9 @@ angular.module('sf')
                         .filter(function (field) {
                             //Ignoring fields which shouldn't be sent
                             //TODO Check for file attachment
-                            return !(field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.AttachmentFieldValue"
-                            || field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.CommentFieldValue"
-                            || field.field.fieldValue._type === "se.streamsource.streamflow.api.administration.form.FieldGroupFieldValue");
+                            return !(field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue'
+                            || field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.CommentFieldValue'
+                            || field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.FieldGroupFieldValue');
                         })
                         .map(function (field) {
                             var value = '';
@@ -245,7 +245,7 @@ angular.module('sf')
                                 default:
                                     value = formMapperService.getValue(field.value, field.field);
                             }
-                            return {field: field.field.field, value: value === null ? "" : value};
+                            return {field: field.field.field, value: value === null ? '' : value};
                         });
                     return caseService.updateFields($scope.caseId, $scope.formDraftId, fields);
                 });
@@ -329,11 +329,11 @@ angular.module('sf')
             $scope.currentFormPage = $scope.form[0].enhancedPages[$scope.formPageIndex];
         };
 
-        $scope.$watchCollection('formPagesValid', function (newValues, oldValues) {
+        $scope.$watchCollection('formPagesValid', function () {
             var isAllPagesValid = true;
             $scope.formPagesValid.forEach(function (value) {
                 if (!value) {
-                    isAllPagesValid = value
+                    isAllPagesValid = value;
                 }
             });
 

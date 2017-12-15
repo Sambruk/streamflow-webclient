@@ -20,7 +20,7 @@ angular.module('sf')
 .directive('sfActiveLink', ['$location', function (location) {
   return {
     restrict:'A',
-    link: function (scope, element, attrs, controller) {
+    link: function (scope, element, attrs) {
       scope.$watch('location.path()', function (newPath) {
         scope.location = location;
         var href = attrs.href.substring(1);

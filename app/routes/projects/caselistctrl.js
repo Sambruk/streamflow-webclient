@@ -36,7 +36,7 @@ angular.module('sf')
                                 $scope.$parent.caseCount = type.caseCount;
                                 return true;
                             }
-                        })
+                        });
                     }
                 });
             });

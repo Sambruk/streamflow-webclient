@@ -23,7 +23,7 @@ angular.module('sf').directive('sfCheckboxAutoSend', ['$parse', '$routeParams', 
     link: function(scope, element, attr) {
 
       var hasRunAtLeastOnce = false;
-      scope.$watch(attr.ngModel, function (newValue) {
+      scope.$watch(attr.ngModel, function () {
         if (hasRunAtLeastOnce) {
           var checked = _.chain($parse(attr.sfCheckboxAutoSend)())
           .filter(function(input){

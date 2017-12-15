@@ -80,6 +80,7 @@ angular.module('sf')
                             $scope.currentFormPage = $scope.form[0].enhancedPages[0];
                             $scope.formPageIndex = 0;
                             $scope.displayField($scope.form[0].enhancedPages);
+                            $scope.formPagesValid[$scope.formPageIndex] = $scope.issueForm.$valid;
                         }
                     });
                 }, 1000);
@@ -93,6 +94,7 @@ angular.module('sf')
 
             $scope.$watch('possibleForm[0]', function () {
                 if (!$scope.possibleForm[0]) {
+                    $scope.formPagesValid[$scope.formPageIndex] = $scope.issueForm.$valid;
                     return;
                 }
                 if ($scope.possibleForm[0].queries.length !== 0) {

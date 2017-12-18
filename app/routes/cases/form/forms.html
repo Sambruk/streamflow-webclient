@@ -28,7 +28,7 @@
             <ol class="form-sections cf row">
                 <li class="section-item" data-ng-class="{sel: currentFormPage.title==page.title}"
                     data-ng-repeat="page in form[0].enhancedPages" id="{{page.page}}">
-                    <a href="" id="page-{{$index}}" data-ng-click="issueForm.$valid && selectFormPage(page)">
+                    <a href="" id="page-{{$index}}" data-ng-click="selectFormPage(page)">
                         {{page.title}}
                     </a>
                 </li>

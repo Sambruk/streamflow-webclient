@@ -13,7 +13,7 @@
     "jquery": "2.2.4",
     "chosen": "~1.8.2",
     "angular": "1.4",
-    "momentjs": "2.19.3",
+    "momentjs": "~2.19",
     "typewatch": " git://github.com/dennyferra/TypeWatch.git",
     "angular-sanitize": "1.4",
     "ng-file-upload": "2.2.2",

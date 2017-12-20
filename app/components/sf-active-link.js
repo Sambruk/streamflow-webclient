@@ -17,23 +17,23 @@
 'use strict';
 
 angular.module('sf')
-.directive('sfActiveLink', ['$location', function (location) {
-  return {
-    restrict:'A',
-    link: function (scope, element, attrs) {
-      scope.$watch('location.path()', function (newPath) {
-        scope.location = location;
-        var href = attrs.href.substring(1);
-        if (!newPath) {
-          return;
-        }
-        if (newPath.match(href)) {
-          element.addClass('sel');
-        }
-        else {
-          element.removeClass('sel');
-        }
-      });
-    }
-  };
-}]);
+    .directive('sfActiveLink', ['$location', function (location) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                scope.$watch('location.path()', function (newPath) {
+                    scope.location = location;
+                    var href = attrs.href.substring(1);
+                    if (!newPath) {
+                        return;
+                    }
+                    if (newPath.match(href)) {
+                        element.addClass('sel');
+                    }
+                    else {
+                        element.removeClass('sel');
+                    }
+                });
+            }
+        };
+    }]);

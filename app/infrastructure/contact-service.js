@@ -17,27 +17,27 @@
 'use strict';
 
 angular.module('sf')
-.factory('contactService', function(caseService, navigationService, $rootScope, $location){
-    var contact = {
-      name: '',
-      contactId: '',
-      note: '',
-      addresses: [{ address: '', zipCode: '', city: '', region: '', country: '', contactType: 'HOME' }],
-      emailAddresses: [{ emailAddress: '', contactType: 'HOME'}],
-      phoneNumbers: [{ phoneNumber: '', contactType: 'HOME' }],
-      contactPreference: 'email'
-    };
+    .factory('contactService', function (caseService, navigationService, $rootScope, $location) {
+        var contact = {
+            name: '',
+            contactId: '',
+            note: '',
+            addresses: [{address: '', zipCode: '', city: '', region: '', country: '', contactType: 'HOME'}],
+            emailAddresses: [{emailAddress: '', contactType: 'HOME'}],
+            phoneNumbers: [{phoneNumber: '', contactType: 'HOME'}],
+            contactPreference: 'email'
+        };
 
-    var _submitContact = function(caseId, contactIndex) {
-      caseService.addContact(caseId, contact).then(function(){
-        $rootScope.$broadcast('contact-created');
-        var href = navigationService.caseHrefSimple(caseId);
-        var hrefWithoutHash = href.slice(1);
-        $location.path(hrefWithoutHash + '/contact/' + contactIndex + '/');
-      });
-    };
+        var _submitContact = function (caseId, contactIndex) {
+            caseService.addContact(caseId, contact).then(function () {
+                $rootScope.$broadcast('contact-created');
+                var href = navigationService.caseHrefSimple(caseId);
+                var hrefWithoutHash = href.slice(1);
+                $location.path(hrefWithoutHash + '/contact/' + contactIndex + '/');
+            });
+        };
 
-  return {
-    submitContact: _submitContact
-  };
-});
+        return {
+            submitContact: _submitContact
+        };
+    });

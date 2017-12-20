@@ -16,6 +16,6 @@
  */
 'use strict';
 angular.module('sf').controller('CaseOverviewCtrl', function ($scope, perspectiveService) {
-  $scope.perspectives = perspectiveService.getPerspectives();
+    $scope.perspectives = perspectiveService.getPerspectives();
 });
 

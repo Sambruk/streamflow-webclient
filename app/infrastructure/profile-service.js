@@ -16,49 +16,49 @@
  */
 'use strict';
 angular.module('sf').factory('profileService', function (backendService) {
-  return {
-    getCurrent: function() {
-      return backendService.get({
-        specs: [{resources: 'account'},
-            {resources: 'profile'},
-            {queries: 'index'}],
-        onSuccess:function (resource, result) {
-          result.push(resource.response);
+    return {
+        getCurrent: function () {
+            return backendService.get({
+                specs: [{resources: 'account'},
+                    {resources: 'profile'},
+                    {queries: 'index'}],
+                onSuccess: function (resource, result) {
+                    result.push(resource.response);
+                }
+            });
+        },
+        updateCurrent: function (value) {
+            return backendService.postNested(
+                [{resources: 'account'},
+                    {resources: 'profile'},
+                    {commands: 'update'}
+                ],
+                value);
+        },
+        changeMessageDeliveryType: function (value) {
+            return backendService.postNested(
+                [{resources: 'account'},
+                    {resources: 'profile'},
+                    {commands: 'changemessagedeliverytype'}
+                ],
+                value);
+        },
+        changeMailFooter: function (value) {
+            return backendService.postNested(
+                [{resources: 'account'},
+                    {resources: 'profile'},
+                    {commands: 'changemailfooter'}
+                ],
+                value);
+        },
+        changeMarkReadTimeout: function (value) {
+            return backendService.postNested(
+                [{resources: 'account'},
+                    {resources: 'profile'},
+                    {commands: 'changemarkreadtimeout'}
+                ],
+                value);
         }
-      });
-    },
-    updateCurrent: function(value) {
-      return backendService.postNested(
-        [{resources: 'account'},
-            {resources: 'profile'},
-            {commands: 'update'}
-        ],
-        value);
-    },
-    changeMessageDeliveryType: function(value) {
-      return backendService.postNested(
-        [{resources: 'account'},
-            {resources: 'profile'},
-            {commands: 'changemessagedeliverytype'}
-        ],
-        value);
-    },
-    changeMailFooter: function(value) {
-      return backendService.postNested(
-        [{resources: 'account'},
-            {resources: 'profile'},
-            {commands: 'changemailfooter'}
-        ],
-        value);
-    },
-    changeMarkReadTimeout: function(value) {
-      return backendService.postNested(
-        [{resources: 'account'},
-            {resources: 'profile'},
-            {commands: 'changemarkreadtimeout'}
-        ],
-        value);
-    }
-};
+    };
 });
 

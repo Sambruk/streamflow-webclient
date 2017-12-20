@@ -18,26 +18,26 @@
 'use strict';
 
 angular.module('sf')
-.directive('breadcrumbbanner', function(profileService, $rootScope){
-  return {
-    restrict: 'E',
-    templateUrl: 'components/breadcrumb-banner/breadcrumb-banner.html',
-    scope: {
-      breadcrumblist: '=?'
-    },
-    link: function (scope) {
-      scope.breadcrumbList = null;
-      scope.$watch('breadcrumbList', function (newVal) {
-        if (!newVal) {
-          return;
-        }
-        scope.breadcrumbList = newVal;
-      });
+    .directive('breadcrumbbanner', function (profileService, $rootScope) {
+        return {
+            restrict: 'E',
+            templateUrl: 'components/breadcrumb-banner/breadcrumb-banner.html',
+            scope: {
+                breadcrumblist: '=?'
+            },
+            link: function (scope) {
+                scope.breadcrumbList = null;
+                scope.$watch('breadcrumbList', function (newVal) {
+                    if (!newVal) {
+                        return;
+                    }
+                    scope.breadcrumbList = newVal;
+                });
 
-      $rootScope.$on('breadcrumb-updated', function (event, breadcrumbList) {
-        scope.breadcrumbList = breadcrumbList;
-      });
-    }
-  };
-});
+                $rootScope.$on('breadcrumb-updated', function (event, breadcrumbList) {
+                    scope.breadcrumbList = breadcrumbList;
+                });
+            }
+        };
+    });
 

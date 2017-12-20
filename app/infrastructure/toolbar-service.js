@@ -17,10 +17,8 @@
 'use strict';
 
 angular.module('sf')
-.factory('toolbarService', function(){
+    .factory('toolbarService', function () {
 
 
-  return {
-
-  };
-});
+        return {};
+    });

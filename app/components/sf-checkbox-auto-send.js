@@ -17,29 +17,29 @@
 
 'use strict';
 
-angular.module('sf').directive('sfCheckboxAutoSend', ['$parse', '$routeParams', 'caseService', function($parse, $params, caseService) {
-  return {
-    require: 'ngModel',
-    link: function(scope, element, attr) {
+angular.module('sf').directive('sfCheckboxAutoSend', ['$parse', '$routeParams', 'caseService', function ($parse, $params, caseService) {
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attr) {
 
-      var hasRunAtLeastOnce = false;
-      scope.$watch(attr.ngModel, function () {
-        if (hasRunAtLeastOnce) {
-          var checked = _.chain($parse(attr.sfCheckboxAutoSend)())
-          .filter(function(input){
-            return input.checked;
-          }).map(function(input){
-            return input.name;
-          }).value();
+            var hasRunAtLeastOnce = false;
+            scope.$watch(attr.ngModel, function () {
+                if (hasRunAtLeastOnce) {
+                    var checked = _.chain($parse(attr.sfCheckboxAutoSend)())
+                        .filter(function (input) {
+                            return input.checked;
+                        }).map(function (input) {
+                            return input.name;
+                        }).value();
 
-          var valueToSend = checked.join(', ');
+                    var valueToSend = checked.join(', ');
 
-          caseService.updateField($params.caseId, scope.$parent.form[0].draftId, attr.name, valueToSend);
+                    caseService.updateField($params.caseId, scope.$parent.form[0].draftId, attr.name, valueToSend);
+                }
+
+                hasRunAtLeastOnce = true;
+            });
         }
-
-        hasRunAtLeastOnce = true;
-      });
-    }
-  };
+    };
 }]);
 

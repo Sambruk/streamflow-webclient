@@ -18,45 +18,45 @@
 'use strict';
 
 angular.module('sf').directive('banner', function ($rootScope, $q, profileService) {
-  return {
-    restrict: 'E',
-    templateUrl: 'components/banner/banner.html',
-    scope: {
-      //Optional attribute in case we want to have some communication for the profile object
-      // from / to the parent scope i e. the controller ruling the view which injects the
-      // directive.
-      profile: '=?'
-    },
-    link: function(scope) {
-      scope.showUserActions = false;
-      var profile = profileService.getCurrent();
+    return {
+        restrict: 'E',
+        templateUrl: 'components/banner/banner.html',
+        scope: {
+            //Optional attribute in case we want to have some communication for the profile object
+            // from / to the parent scope i e. the controller ruling the view which injects the
+            // directive.
+            profile: '=?'
+        },
+        link: function (scope) {
+            scope.showUserActions = false;
+            var profile = profileService.getCurrent();
 
-      $q.all([profile.promise])
-      .then(function(response){
-        scope.profile = response[0];
-      });
+            $q.all([profile.promise])
+                .then(function (response) {
+                    scope.profile = response[0];
+                });
 
-      scope.hasToken = $rootScope.hasToken;
+            scope.hasToken = $rootScope.hasToken;
 
-      scope.$on('profile-name-updated', function(){
-        scope.profile.invalidate();
-        scope.profile.resolve();
-      });
+            scope.$on('profile-name-updated', function () {
+                scope.profile.invalidate();
+                scope.profile.resolve();
+            });
 
-      scope.toggleUserActions = function (bool) {
-        if (bool !== undefined) {
-          scope.showUserActions = bool;
-        } else {
-          scope.showUserActions = !scope.showUserActions;
+            scope.toggleUserActions = function (bool) {
+                if (bool !== undefined) {
+                    scope.showUserActions = bool;
+                } else {
+                    scope.showUserActions = !scope.showUserActions;
+                }
+            };
+
+            scope.$on('dialogCloseEvent', function (e, data) {
+                if (data.dialog === 'showUserActions') {
+                    scope.toggleUserActions(false);
+                }
+            });
         }
-      };
-
-      scope.$on('dialogCloseEvent', function (e, data) {
-        if (data.dialog === 'showUserActions') {
-          scope.toggleUserActions(false);
-        }
-      });
-    }
-  };
+    };
 });
 

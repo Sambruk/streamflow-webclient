@@ -16,22 +16,23 @@
  */
 'use strict';
 angular.module('sf')
-.directive('sfDatePicker', [function () {
-    return {
-      restrict:'A',
-      require: 'ngModel',
-      link: function (scope, element, attrs, ngModel) {
-        try {
-          $(element).pickadate({
-            format: 'yyyy-mm-dd',
-            onSet: function(e){
-              scope.$apply(function(){
-                var $element = $(element);
-                ngModel.$setViewValue($element.val());
-              });
+    .directive('sfDatePicker', [function () {
+        return {
+            restrict: 'A',
+            require: 'ngModel',
+            link: function (scope, element, attrs, ngModel) {
+                try {
+                    $(element).pickadate({
+                        format: 'yyyy-mm-dd',
+                        onSet: function (e) {
+                            scope.$apply(function () {
+                                var $element = $(element);
+                                ngModel.$setViewValue($element.val());
+                            });
+                        }
+                    });
+                } catch (e) {
+                }
             }
-         });
-        } catch(e) {}
-      }
-    };
-  }]);
+        };
+    }]);

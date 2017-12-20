@@ -16,27 +16,27 @@
  */
 'use strict';
 angular.module('sf')
-.directive('sfLayoutStyle', ['$location', function (location) {
-    function clearLayoutClasses(element) {
-      _.each(['layout-1', 'layout-2'], function(c) {
-        element.removeClass(c);
-      });
-    }
+    .directive('sfLayoutStyle', ['$location', function (location) {
+        function clearLayoutClasses(element) {
+            _.each(['layout-1', 'layout-2'], function (c) {
+                element.removeClass(c);
+            });
+        }
 
-    return {
-      restrict:'A',
-      link:function (scope, element) {
-        scope.location = location;
-        scope.$watch('location.path()', function () {
-          clearLayoutClasses(element);
-          if (location.path().indexOf('/projects') === 0 || location.path().indexOf('/search') === 0) {
-            element.addClass('layout-1');
-          }
-          else {
-            element.addClass('layout-2');
-          }
-        });
-      }
-    };
-  }]);
+        return {
+            restrict: 'A',
+            link: function (scope, element) {
+                scope.location = location;
+                scope.$watch('location.path()', function () {
+                    clearLayoutClasses(element);
+                    if (location.path().indexOf('/projects') === 0 || location.path().indexOf('/search') === 0) {
+                        element.addClass('layout-1');
+                    }
+                    else {
+                        element.addClass('layout-2');
+                    }
+                });
+            }
+        };
+    }]);
 

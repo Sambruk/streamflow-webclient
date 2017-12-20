@@ -18,10 +18,10 @@
 'use strict';
 
 angular.module('sf').directive('sfScroll', function ($window) {
-  return function(scope, element, attrs) {
-    angular.element($window).bind('scroll', function() {
-      scope.scroll = this.pageYOffset;
-      scope.$apply();
-    });
-  };
+    return function (scope, element, attrs) {
+        angular.element($window).bind('scroll', function () {
+            scope.scroll = this.pageYOffset;
+            scope.$apply();
+        });
+    };
 });

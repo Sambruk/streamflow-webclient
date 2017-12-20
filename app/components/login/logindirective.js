@@ -93,7 +93,7 @@ angular.module('sf').directive('login', function ($rootScope, buildMode, $locati
                 return false;
             }
 
-            function logOut(){
+            function logOut() {
                 var logoutUrl = getLogoutUrl(detectIE());
 
                 var basicAuthBase64 = btoa('username:password');

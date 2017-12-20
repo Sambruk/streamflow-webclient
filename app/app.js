@@ -31,39 +31,39 @@ angular.module('sf', [
     'infinite-scroll',
     'angular-autogrow',
     'ngIdle'
-  ])
-  .config(function(uiGmapGoogleMapApiProvider) {
-    uiGmapGoogleMapApiProvider.configure({
-      key: 'AIzaSyCqH4sFJMZXvVTaBm4JYk2v089WlarlBtw',
-      v: '3.17',
-      libraries: 'places,drawing',
-      language: 'sv'
+])
+    .config(function (uiGmapGoogleMapApiProvider) {
+        uiGmapGoogleMapApiProvider.configure({
+            key: 'AIzaSyCqH4sFJMZXvVTaBm4JYk2v089WlarlBtw',
+            v: '3.17',
+            libraries: 'places,drawing',
+            language: 'sv'
+        });
+    })
+    .config(function (IdleProvider) {
+        IdleProvider.idle(2 * 60 * 60);
+    })
+    .config(['growlProvider', function (growlProvider) {
+        growlProvider.globalTimeToLive({success: 3000, error: 3000, warning: 3000, info: 3000});
+    }])
+    .run(function ($rootScope, $http, httpService, $location, $routeParams, tokenService, Idle) {
+
+        Idle.watch();
+        $rootScope.hasToken = tokenService.hasToken;
+        $rootScope.isLoggedIn = $rootScope.hasToken();
+        $rootScope.logout = tokenService.clear;
+
+        $rootScope.isFormWindow = $location.$$search.isFormWindow;
+
+        //Add current project type to rootScope to let toolbar update accordingly in index.html
+        $rootScope.$on('$routeChangeSuccess', function (e, current, pre) {
+            // Get all URL parameter
+            $rootScope.contextmenuParams = {};
+            if ($routeParams.projectType) {
+                $rootScope.contextmenuParams.projectType = $routeParams.projectType;
+            }
+            if ($routeParams.projectId) {
+                $rootScope.contextmenuParams.projectId = $routeParams.projectId;
+            }
+        });
     });
-  })
-  .config( function(IdleProvider) {
-    IdleProvider.idle(2*60*60);
-  })
-  .config(['growlProvider', function (growlProvider) {
-      growlProvider.globalTimeToLive({success: 3000, error: 3000, warning: 3000, info: 3000});
-  }])
-  .run(function ($rootScope, $http, httpService, $location, $routeParams, tokenService, Idle) {
-
-    Idle.watch();
-    $rootScope.hasToken = tokenService.hasToken;
-    $rootScope.isLoggedIn = $rootScope.hasToken();
-    $rootScope.logout = tokenService.clear;
-
-    $rootScope.isFormWindow = $location.$$search.isFormWindow;
-
-    //Add current project type to rootScope to let toolbar update accordingly in index.html
-    $rootScope.$on('$routeChangeSuccess', function(e, current, pre) {
-      // Get all URL parameter
-      $rootScope.contextmenuParams = {};
-      if($routeParams.projectType){
-        $rootScope.contextmenuParams.projectType = $routeParams.projectType;
-      }
-      if($routeParams.projectId){
-        $rootScope.contextmenuParams.projectId = $routeParams.projectId;
-      }
-    });
-  });

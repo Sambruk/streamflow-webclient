@@ -435,8 +435,8 @@
 
                 ctrl.findGroupByName = function (name) {
                     return ctrl.groups && ctrl.groups.filter(function (group) {
-                            return group.name === name;
-                        })[0];
+                        return group.name === name;
+                    })[0];
                 };
 
                 ctrl.parseRepeatAttr = function (repeatAttr, groupByExp) {
@@ -540,7 +540,7 @@
                     var itemIndex = ctrl.items.indexOf(itemScope[ctrl.itemProperty]);
                     var isActive = itemIndex === ctrl.activeIndex;
 
-                    if (!isActive || ( itemIndex < 0 && ctrl.taggingLabel !== false ) || ( itemIndex < 0 && ctrl.taggingLabel === false)) {
+                    if (!isActive || (itemIndex < 0 && ctrl.taggingLabel !== false) || (itemIndex < 0 && ctrl.taggingLabel === false)) {
                         return false;
                     }
 
@@ -1446,11 +1446,11 @@
                         return false;
                     }
                     var hasDupe = arr.filter(function (origItem) {
-                            if ($select.search.toUpperCase() === undefined || origItem === undefined) {
-                                return false;
-                            }
-                            return origItem.toUpperCase() === $select.search.toUpperCase();
-                        }).length > 0;
+                        if ($select.search.toUpperCase() === undefined || origItem === undefined) {
+                            return false;
+                        }
+                        return origItem.toUpperCase() === $select.search.toUpperCase();
+                    }).length > 0;
 
                     return hasDupe;
                 }

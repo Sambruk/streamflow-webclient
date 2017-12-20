@@ -17,34 +17,34 @@
 'use strict';
 
 angular.module('sf')
-.directive('issuelist', function($scope){
-  return {
-    restrict: 'E',
-    templateUrl: 'components/issuelist/issuelist.html',
-    scope: {
-      items: '=?'
-    },
-    link: function (scope) {
-      var initCurrentCases = function () {
-        scope.items = items;
-        scope.currentCases = [];
-      };
-      initCurrentCases();
+    .directive('issuelist', function ($scope) {
+        return {
+            restrict: 'E',
+            templateUrl: 'components/issuelist/issuelist.html',
+            scope: {
+                items: '=?'
+            },
+            link: function (scope) {
+                var initCurrentCases = function () {
+                    scope.items = items;
+                    scope.currentCases = [];
+                };
+                initCurrentCases();
 
-      $scope.loadCases = function () {
-        var scrollSize = 10;
-        var last = $scope.currentCases.length - 1;
-        for(var i = 1; i <= scrollSize; i++) {
-          $scope.currentCases.push($scope.items[last + i]);
-        }
-      };
+                $scope.loadCases = function () {
+                    var scrollSize = 10;
+                    var last = $scope.currentCases.length - 1;
+                    for (var i = 1; i <= scrollSize; i++) {
+                        $scope.currentCases.push($scope.items[last + i]);
+                    }
+                };
 
-      scope.$watch('items', function(newVal){
-        if(newVal){
-          scope.items = newVal;
-          initCurrentCases();
-        }
-      });
-    }
-  };
-});
+                scope.$watch('items', function (newVal) {
+                    if (newVal) {
+                        scope.items = newVal;
+                        initCurrentCases();
+                    }
+                });
+            }
+        };
+    });

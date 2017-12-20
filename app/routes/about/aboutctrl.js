@@ -16,16 +16,16 @@
  */
 'use strict';
 angular.module('sf').controller('AboutCtrl', function ($scope, profileService, $rootScope, httpService) {
-  $rootScope.$broadcast('breadcrumb-updated', [
-  {
-    title: 'Om Streamflow'
-  }]);
+    $rootScope.$broadcast('breadcrumb-updated', [
+        {
+            title: 'Om Streamflow'
+        }]);
 
-  httpService.getRequest('static/version.html', false)
-    .then(function(result){
-      var versionMatch = /(Version: )[a-z,A-Z,\d,.,-]+/.exec(result.data);
-      if(versionMatch && versionMatch.length > 0 && versionMatch[0].length > 9) {
-        $scope.serverVersion = versionMatch[0].substr(9);
-      }
-  });
+    httpService.getRequest('static/version.html', false)
+        .then(function (result) {
+            var versionMatch = /(Version: )[a-z,A-Z,\d,.,-]+/.exec(result.data);
+            if (versionMatch && versionMatch.length > 0 && versionMatch[0].length > 9) {
+                $scope.serverVersion = versionMatch[0].substr(9);
+            }
+        });
 });

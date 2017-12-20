@@ -16,29 +16,29 @@
  */
 'use strict';
 angular.module('sf')
-.factory('navigationService', function ($location, $routeParams) {
+    .factory('navigationService', function ($location, $routeParams) {
 
-    return {
-      linkTo: function(href){
-        return $location.path(href);
-      },
-      caseHref: function(caseId) {
-        return '#/' + this.projectId() + '/' + this.projectType() + '/' + caseId;
-      },
-      caseHrefSimple: function(caseId) {
-        return '#/cases/' + caseId + '/' + this.projectId();
-      },
-      caseListHrefFromCase: function(caze) {
-        return '#/' + 'projects/' + caze[0].ownerId + '/' + caze[0].listType + '/';
-      },
-      projectId: function() {
-        return $routeParams.projectId;
-      },
-      projectType: function() {
-        return $routeParams.projectType;
-      },
-      caseId: function() {
-        return $routeParams.caseId;
-      }
-    };
-});
+        return {
+            linkTo: function (href) {
+                return $location.path(href);
+            },
+            caseHref: function (caseId) {
+                return '#/' + this.projectId() + '/' + this.projectType() + '/' + caseId;
+            },
+            caseHrefSimple: function (caseId) {
+                return '#/cases/' + caseId + '/' + this.projectId();
+            },
+            caseListHrefFromCase: function (caze) {
+                return '#/' + 'projects/' + caze[0].ownerId + '/' + caze[0].listType + '/';
+            },
+            projectId: function () {
+                return $routeParams.projectId;
+            },
+            projectType: function () {
+                return $routeParams.projectType;
+            },
+            caseId: function () {
+                return $routeParams.caseId;
+            }
+        };
+    });

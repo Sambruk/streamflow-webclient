@@ -141,6 +141,7 @@ angular.module('sf').factory('backendService', function ($window, $http, $q, htt
 
     function clear(obj) {
         obj.length = 0;
+
         function clearable(i) {
             return obj.hasOwnProperty(i) && ['invalidate', 'resolve'].indexOf(i) === -1;
         }

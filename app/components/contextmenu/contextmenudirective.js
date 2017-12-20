@@ -17,87 +17,87 @@
 'use strict';
 
 angular.module('sf').directive('contextmenu', function (projectService, navigationService, $rootScope) {
-  return {
-    restrict: 'E',
-    templateUrl: 'components/contextmenu/contextmenu.html',
-    scope: {
-      params: '=?'
-    },
-    link: function (scope) {
-      scope.showSidebar = false;
+    return {
+        restrict: 'E',
+        templateUrl: 'components/contextmenu/contextmenu.html',
+        scope: {
+            params: '=?'
+        },
+        link: function (scope) {
+            scope.showSidebar = false;
 
-      scope.projects = projectService.getAll();
+            scope.projects = projectService.getAll();
 
-      scope.navigateTo = function (href, projectName, caseCount, $event){
-        $event.preventDefault();
-        scope.toggleSidebar($event);
-        navigationService.linkTo(href);
-        $rootScope.projectName = projectName;
-        $rootScope.caseCount = caseCount;
-      };
+            scope.navigateTo = function (href, projectName, caseCount, $event) {
+                $event.preventDefault();
+                scope.toggleSidebar($event);
+                navigationService.linkTo(href);
+                $rootScope.projectName = projectName;
+                $rootScope.caseCount = caseCount;
+            };
 
-      scope.toggleSidebar = function ($event) {
-        $event.preventDefault();
-        scope.showSidebar = !scope.showSidebar;
-      };
+            scope.toggleSidebar = function ($event) {
+                $event.preventDefault();
+                scope.showSidebar = !scope.showSidebar;
+            };
 
-      scope.canCreateCase = function() {
-        if(!scope.params){
-          return false;
+            scope.canCreateCase = function () {
+                if (!scope.params) {
+                    return false;
+                }
+                return !(!scope.params.projectType && $rootScope.location.$$path.indexOf('cases') < 0);
+
+            };
+
+            scope.createCase = function () {
+                if (!scope.canCreateCase()) {
+                    alert("Du måste välja brevlåda nedan");
+                    return;
+                }
+                var projectId = navigationService.projectId();
+
+                //Add cases possible only with that type
+                var projectType = 'assignments';
+
+                projectService.createCase(projectId, projectType).then(function (response) {
+                    var caseId = response.data.events[1].entity;
+                    var href = navigationService.caseHrefSimple(caseId) + '/new';
+                    $rootScope.$broadcast('case-created');
+                    window.open(href);
+                });
+            };
+
+            var updateObject = function (itemToUpdate) {
+                itemToUpdate.invalidate();
+                itemToUpdate.resolve();
+            };
+
+            // Event listeners
+            $rootScope.$on('case-created', function () {
+                updateObject(scope.projects);
+            });
+            $rootScope.$on('case-closed', function () {
+                updateObject(scope.projects);
+            });
+            $rootScope.$on('case-assigned', function () {
+                updateObject(scope.projects);
+            });
+            $rootScope.$on('case-unassigned', function () {
+                updateObject(scope.projects);
+            });
+            $rootScope.$on('case-resolved', function () {
+                updateObject(scope.projects);
+            });
+            $rootScope.$on('case-deleted', function () {
+                updateObject(scope.projects);
+            });
+            $rootScope.$on('case-owner-changed', function () {
+                updateObject(scope.projects);
+            });
+            $rootScope.$on('case-opened', function () {
+                scope.showSidebar = false;
+            });
+            // End Event listeners
         }
-        return !(!scope.params.projectType && $rootScope.location.$$path.indexOf('cases') < 0);
-
-      };
-
-      scope.createCase = function(){
-        if(!scope.canCreateCase()){
-          alert("Du måste välja brevlåda nedan");
-          return;
-        }
-        var projectId = navigationService.projectId();
-       
-        //Add cases possible only with that type
-        var projectType = 'assignments';
-
-        projectService.createCase(projectId, projectType).then(function(response){
-          var caseId = response.data.events[1].entity;
-          var href = navigationService.caseHrefSimple(caseId)+'/new';
-          $rootScope.$broadcast('case-created');
-          window.open(href);
-        });
-      };
-
-      var updateObject = function(itemToUpdate){
-        itemToUpdate.invalidate();
-        itemToUpdate.resolve();
-      };
-
-      // Event listeners
-      $rootScope.$on('case-created', function(){
-        updateObject(scope.projects);
-      });
-      $rootScope.$on('case-closed', function(){
-        updateObject(scope.projects);
-      });
-      $rootScope.$on('case-assigned', function(){
-        updateObject(scope.projects);
-      });
-      $rootScope.$on('case-unassigned', function(){
-        updateObject(scope.projects);
-      });
-      $rootScope.$on('case-resolved', function(){
-        updateObject(scope.projects);
-      });
-      $rootScope.$on('case-deleted', function(){
-        updateObject(scope.projects);
-      });
-      $rootScope.$on('case-owner-changed', function(){
-        updateObject(scope.projects);
-      });
-      $rootScope.$on('case-opened', function () {
-          scope.showSidebar = false;
-      });
-      // End Event listeners
-    }
-  };
+    };
 });

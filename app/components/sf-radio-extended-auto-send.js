@@ -17,36 +17,36 @@
 
 'use strict';
 
-angular.module('sf').directive('sfRadioExtendedAutoSend', ['$parse', '$routeParams', 'caseService', function($parse, $params, caseService) {
-  return {
-    require: 'ngModel',
-    scope: true,
-    link: function(scope, element, attr) {
+angular.module('sf').directive('sfRadioExtendedAutoSend', ['$parse', '$routeParams', 'caseService', function ($parse, $params, caseService) {
+    return {
+        require: 'ngModel',
+        scope: true,
+        link: function (scope, element, attr) {
 
-      var hasRunAtLeastOnce = false;
-      scope.$watch(attr.ngModel, function (newValue) {
+            var hasRunAtLeastOnce = false;
+            scope.$watch(attr.ngModel, function (newValue) {
 
-        if (hasRunAtLeastOnce) {
-          if (newValue === attr.value) {
+                if (hasRunAtLeastOnce) {
+                    if (newValue === attr.value) {
 
-            var isOther = $parse(attr.sfRadioExtendedAutoSend)();
-            var value;
+                        var isOther = $parse(attr.sfRadioExtendedAutoSend)();
+                        var value;
 
-            if (isOther) {
-              value = $('div input[type=text]', $(element).parent().parent()).val();
-              $(element).val(value);
-            }
-            else {
-              value = newValue;
-            }
+                        if (isOther) {
+                            value = $('div input[type=text]', $(element).parent().parent()).val();
+                            $(element).val(value);
+                        }
+                        else {
+                            value = newValue;
+                        }
 
-            caseService.updateField($params.caseId, scope.$parent.form[0].draftId, attr.name, value);
-          }
+                        caseService.updateField($params.caseId, scope.$parent.form[0].draftId, attr.name, value);
+                    }
+                }
+
+                hasRunAtLeastOnce = true;
+            });
         }
-
-        hasRunAtLeastOnce = true;
-      });
-    }
-  };
+    };
 }]);
 

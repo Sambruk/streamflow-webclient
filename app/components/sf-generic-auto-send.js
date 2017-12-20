@@ -50,7 +50,7 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
 
                     // Valid input, clear error warnings
                     $('[class^=error]', element.parent()).hide();
-                    if(attr.fieldType === 'se.streamsource.streamflow.api.administration.form.OptionButtonsFieldValue'){
+                    if (attr.fieldType === 'se.streamsource.streamflow.api.administration.form.OptionButtonsFieldValue') {
                         scope.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = scope.$parent.$parent.issueForm.$valid;
                     } else {
                         scope.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = validates() && scope.$parent.$parent.issueForm.$valid;
@@ -58,7 +58,7 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
                 });
             } else {
                 scope.$watch(attr.ngModel, function () {
-                    if(attr.fieldType === 'se.streamsource.streamflow.api.administration.form.OptionButtonsFieldValue'){
+                    if (attr.fieldType === 'se.streamsource.streamflow.api.administration.form.OptionButtonsFieldValue') {
                         scope.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = scope.$parent.$parent.issueForm.$valid;
                     } else {
                         scope.$parent.$parent.formPagesValid[scope.$parent.$parent.$parent.formPageIndex] = validates() && scope.$parent.$parent.issueForm.$valid;
@@ -70,7 +70,7 @@ angular.module('sf').directive('sfGenericAutoSend', ['$parse', '$routeParams', '
 
                     // Valid input, clear error warnings
                     $('[class^=error]', element.parent()).hide();
-                   });
+                });
             }
         }
     };

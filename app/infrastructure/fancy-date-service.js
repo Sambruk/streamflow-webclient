@@ -17,19 +17,19 @@
 'use strict';
 
 angular.module('sf')
-.factory('fancyDateService', function () {
-  moment.locale('sv');
+    .factory('fancyDateService', function () {
+        moment.locale('sv');
 
-  return {
-    format: function (value) {
-      var date = moment(new Date(value).setHours(23, 59, 59, 0));
-      var today = moment(new Date().setHours(23, 59, 59, 0));
+        return {
+            format: function (value) {
+                var date = moment(new Date(value).setHours(23, 59, 59, 0));
+                var today = moment(new Date().setHours(23, 59, 59, 0));
 
-      if (date.diff(today, 'days') === 0) {
-        return 'i dag';
-      }
+                if (date.diff(today, 'days') === 0) {
+                    return 'i dag';
+                }
 
-      return moment(date).fromNow();
-    }
-  };
-});
+                return moment(date).fromNow();
+            }
+        };
+    });

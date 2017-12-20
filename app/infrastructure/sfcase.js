@@ -17,51 +17,51 @@
 
 'use strict';
 
-angular.module('sf').factory('SfCase', function() {
-  function SfCase(model, href) {
-    _.extend(this, model, {href: href});
-  }
-
-  SfCase.prototype = {
-    overdueDays: function() {
-      var oneDay = 24*60*60*1000;
-      var now = new Date();
-      if (!this.dueOn) {
-        return 0;
-      }
-      var dueOn = new Date(this.dueOn);
-      var diff = Math.floor((now.getTime() - dueOn.getTime())/(oneDay));
-      return diff > 0 ? diff : 0;
-    },
-
-    checkdueDay: function() {
-      var oneDay = 24*60*60*1000;
-      var now = new Date();
-      var dueOn = new Date(this.dueOn);
-      var diff = Math.floor((now.getTime() - dueOn.getTime())/(oneDay));
-      return diff;
-    },
-
-    overdueStatus: function() {
-      if (!this.dueOn) {
-        return 'unset';
-      }
-      return this.overdueDays() > 0 ? 'overdue' : 'set';
-    },
-
-    modificationDate: function() {
-      return this.lastLogEntryTime || this.creationDate;
-    },
-
-    labelList: function() {
-      return this.labels.links.map(function(label) {
-        return label.text;
-      }).join(', ');
-    },
-
-    closed: function() {
-      return 'CLOSED' === this.status;
+angular.module('sf').factory('SfCase', function () {
+    function SfCase(model, href) {
+        _.extend(this, model, {href: href});
     }
-  };
-  return SfCase;
+
+    SfCase.prototype = {
+        overdueDays: function () {
+            var oneDay = 24 * 60 * 60 * 1000;
+            var now = new Date();
+            if (!this.dueOn) {
+                return 0;
+            }
+            var dueOn = new Date(this.dueOn);
+            var diff = Math.floor((now.getTime() - dueOn.getTime()) / (oneDay));
+            return diff > 0 ? diff : 0;
+        },
+
+        checkdueDay: function () {
+            var oneDay = 24 * 60 * 60 * 1000;
+            var now = new Date();
+            var dueOn = new Date(this.dueOn);
+            var diff = Math.floor((now.getTime() - dueOn.getTime()) / (oneDay));
+            return diff;
+        },
+
+        overdueStatus: function () {
+            if (!this.dueOn) {
+                return 'unset';
+            }
+            return this.overdueDays() > 0 ? 'overdue' : 'set';
+        },
+
+        modificationDate: function () {
+            return this.lastLogEntryTime || this.creationDate;
+        },
+
+        labelList: function () {
+            return this.labels.links.map(function (label) {
+                return label.text;
+            }).join(', ');
+        },
+
+        closed: function () {
+            return 'CLOSED' === this.status;
+        }
+    };
+    return SfCase;
 });

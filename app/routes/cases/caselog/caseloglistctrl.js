@@ -39,7 +39,7 @@ angular.module('sf')
 
                 var notesPromise = caseService.getSelectedNote($routeParams.caseId);
 
-                $q.all([ $scope.caseLogs.promise, notesPromise.promise]).then(function (data) {
+                $q.all([$scope.caseLogs.promise, notesPromise.promise]).then(function (data) {
                     data[1].forEach(function (note) {
                         note.caseLogType = 'note';
                         note.creationDate = note.createdOn;

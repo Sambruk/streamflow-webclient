@@ -17,24 +17,24 @@
 'use strict';
 
 angular.module('sf')
-.factory('paginationService', function(){
-    var pageSize = 10;
+    .factory('paginationService', function () {
+        var pageSize = 10;
 
-    var itemsLimit = function(pagesShown) {
-      return pageSize * pagesShown;
-    };
-    var hasMoreItemsToShow = function(currentCases, pagesShown) {
-      return pagesShown < (currentCases.length / pageSize);
-    };
-    var showMoreItems = function(pagesShown) {
-      return pagesShown + 1;
-    };
+        var itemsLimit = function (pagesShown) {
+            return pageSize * pagesShown;
+        };
+        var hasMoreItemsToShow = function (currentCases, pagesShown) {
+            return pagesShown < (currentCases.length / pageSize);
+        };
+        var showMoreItems = function (pagesShown) {
+            return pagesShown + 1;
+        };
 
-  return {
-    pageSize: pageSize,
-    itemsLimit: itemsLimit,
-    hasMoreItemsToShow: hasMoreItemsToShow,
-    showMoreItems: showMoreItems
-  };
+        return {
+            pageSize: pageSize,
+            itemsLimit: itemsLimit,
+            hasMoreItemsToShow: hasMoreItemsToShow,
+            showMoreItems: showMoreItems
+        };
 
-});
+    });

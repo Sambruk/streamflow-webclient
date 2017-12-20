@@ -17,26 +17,26 @@
 
 'use strict';
 
-angular.module('sf').directive('sfMultipleSelectAutoSend', ['$parse', '$routeParams', 'caseService', function($parse, $params, caseService) {
-  return {
-    require: 'ngModel',
-    link: function(scope, element, attr) {
+angular.module('sf').directive('sfMultipleSelectAutoSend', ['$parse', '$routeParams', 'caseService', function ($parse, $params, caseService) {
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attr) {
 
-      var hasRunAtLeastOnce = false;
-      scope.$watch(attr.ngModel, function (newValue) {
-        if (hasRunAtLeastOnce) {
+            var hasRunAtLeastOnce = false;
+            scope.$watch(attr.ngModel, function (newValue) {
+                if (hasRunAtLeastOnce) {
 
-          var espacedValues = _.map(newValue, function(value){
-            return value.indexOf(',') !== -1 ? '[' + value + ']' : value;
-          });
+                    var espacedValues = _.map(newValue, function (value) {
+                        return value.indexOf(',') !== -1 ? '[' + value + ']' : value;
+                    });
 
-          var valueToSend = espacedValues.join(', ');
-          caseService.updateField($params.caseId, scope.$parent.form[0].draftId, attr.name, valueToSend);
+                    var valueToSend = espacedValues.join(', ');
+                    caseService.updateField($params.caseId, scope.$parent.form[0].draftId, attr.name, valueToSend);
+                }
+
+                hasRunAtLeastOnce = true;
+            });
         }
-
-        hasRunAtLeastOnce = true;
-      });
-    }
-  };
+    };
 }]);
 

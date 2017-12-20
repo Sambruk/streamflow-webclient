@@ -16,48 +16,48 @@
  */
 'use strict';
 angular.module('sf')
-  .controller('ContactEditCtrl', function($scope, $rootScope, caseService, $routeParams, navigationService, checkPermissionService) {
-    $scope.sidebardata = {};
-    $scope.projectId = $routeParams.projectId;
-    $scope.projectType = $routeParams.projectType;
-    $scope.caseId = $routeParams.caseId;
-    $scope.contactIndex = $routeParams.contactIndex;
-    $scope.contact = caseService.getSelectedContact($routeParams.caseId, $routeParams.contactIndex);
+    .controller('ContactEditCtrl', function ($scope, $rootScope, caseService, $routeParams, navigationService, checkPermissionService) {
+        $scope.sidebardata = {};
+        $scope.projectId = $routeParams.projectId;
+        $scope.projectType = $routeParams.projectType;
+        $scope.caseId = $routeParams.caseId;
+        $scope.contactIndex = $routeParams.contactIndex;
+        $scope.contact = caseService.getSelectedContact($routeParams.caseId, $routeParams.contactIndex);
 
-    $scope.showSpinner = {
-      contact: true
-    };
+        $scope.showSpinner = {
+            contact: true
+        };
 
-    $scope.contact.promise.then(function(){
-      $scope.showSpinner.contact = false;
-      checkPermissionService.checkPermissions($scope, $scope.contact.commands, ['delete', 'update'], ['canDeleteContact', 'canUpdateContact']);
-      if(!$scope.canUpdateContact) {
-        $('.select select, .contact-pref').addClass('disabled');
-      }
-    });
-
-    $scope.updateField = function ($event, $success, $error) {
-      $event.preventDefault();
-      var contact = {};
-
-      contact[$event.currentTarget.name] = $event.currentTarget.value;
-
-      if ($event.currentTarget.id === 'contact-phone' &&  !$event.currentTarget.value.match(/^$|^([0-9\(\)\/\+ \-]*)$/))  {
-        $error($($event.target));
-      }else if($event.currentTarget.id ==='contact-email' && !$event.currentTarget.value.match(/^$|^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
-        $error($($event.target));
-      }else if($event.currentTarget.id === 'contact-id' && !$event.currentTarget.value.match(/^$|^19\d{10}$/)) {
-        $error($($event.target));
-      }else {
-        $scope.contactId = caseService.updateContact($routeParams.caseId, $routeParams.contactIndex, contact)
-        .then(function(){
-          if ($event.currentTarget.id === 'contact-name') {
-            $rootScope.$broadcast('contact-name-updated');
-          }
-          $success($($event.target));
-        }, function (){
-          $error($($event.target));
+        $scope.contact.promise.then(function () {
+            $scope.showSpinner.contact = false;
+            checkPermissionService.checkPermissions($scope, $scope.contact.commands, ['delete', 'update'], ['canDeleteContact', 'canUpdateContact']);
+            if (!$scope.canUpdateContact) {
+                $('.select select, .contact-pref').addClass('disabled');
+            }
         });
-      }
-    };
-  });
+
+        $scope.updateField = function ($event, $success, $error) {
+            $event.preventDefault();
+            var contact = {};
+
+            contact[$event.currentTarget.name] = $event.currentTarget.value;
+
+            if ($event.currentTarget.id === 'contact-phone' && !$event.currentTarget.value.match(/^$|^([0-9\(\)\/\+ \-]*)$/)) {
+                $error($($event.target));
+            } else if ($event.currentTarget.id === 'contact-email' && !$event.currentTarget.value.match(/^$|^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+                $error($($event.target));
+            } else if ($event.currentTarget.id === 'contact-id' && !$event.currentTarget.value.match(/^$|^19\d{10}$/)) {
+                $error($($event.target));
+            } else {
+                $scope.contactId = caseService.updateContact($routeParams.caseId, $routeParams.contactIndex, contact)
+                    .then(function () {
+                        if ($event.currentTarget.id === 'contact-name') {
+                            $rootScope.$broadcast('contact-name-updated');
+                        }
+                        $success($($event.target));
+                    }, function () {
+                        $error($($event.target));
+                    });
+            }
+        };
+    });

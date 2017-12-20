@@ -17,28 +17,28 @@
 'use strict';
 
 angular.module('sf')
-.factory('tokenService', function ($window) {
+    .factory('tokenService', function ($window) {
 
-    var key = 'authToken';
-    var isDefaultToken = true;
- 
-    return {
-      isDefaultToken: isDefaultToken,
+        var key = 'authToken';
+        var isDefaultToken = true;
 
-      hasToken: function () {
-        return !!$window.sessionStorage.getItem(key);
-      },
+        return {
+            isDefaultToken: isDefaultToken,
 
-      clear: function () {
-        $window.sessionStorage.clear();
-      },
+            hasToken: function () {
+                return !!$window.sessionStorage.getItem(key);
+            },
 
-      storeToken: function (token) {
-        $window.sessionStorage.setItem(key, token);
-      },
+            clear: function () {
+                $window.sessionStorage.clear();
+            },
 
-      getToken: function () {
-        return $window.sessionStorage.getItem(key);
-      }
-  };
-});
+            storeToken: function (token) {
+                $window.sessionStorage.setItem(key, token);
+            },
+
+            getToken: function () {
+                return $window.sessionStorage.getItem(key);
+            }
+        };
+    });

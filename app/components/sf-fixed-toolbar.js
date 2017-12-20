@@ -16,26 +16,27 @@
  */
 'use strict';
 angular.module('sf')
-.directive('sfFixedToolbar', ['$location', function (location) {
+    .directive('sfFixedToolbar', ['$location', function (location) {
 
-    return {
-      restrict: 'A',
-      link: function () {
-        var sidebar     = $('.toolbar'),
-          view          = $(window),
-          offset        = sidebar.offset();
+        return {
+            restrict: 'A',
+            link: function () {
+                var sidebar = $('.toolbar'),
+                    view = $(window),
+                    offset = sidebar.offset();
 
-        view.scroll(function() {
-          var contentSecondaryWidth = $('.content-secondary').width();
-          try {
-            if (view.scrollTop() > offset.top - 76) {
-              sidebar.addClass('fixed').css('width', contentSecondaryWidth);
-            } else {
-              sidebar.removeClass('fixed').removeAttr('style');
+                view.scroll(function () {
+                    var contentSecondaryWidth = $('.content-secondary').width();
+                    try {
+                        if (view.scrollTop() > offset.top - 76) {
+                            sidebar.addClass('fixed').css('width', contentSecondaryWidth);
+                        } else {
+                            sidebar.removeClass('fixed').removeAttr('style');
+                        }
+                    } catch (e) {
+                    }
+                });
             }
-          } catch(e) {}
-        });
-      }
-    };
+        };
 
-  }]);
+    }]);

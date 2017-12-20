@@ -18,78 +18,78 @@
 'use strict';
 
 angular.module('sf')
-.factory('projectService', function (backendService, navigationService, SfCase, caseService) {
+    .factory('projectService', function (backendService, navigationService, SfCase, caseService) {
 
-    return {
-      getAll:function () {
-        return backendService.get({
-          specs:[
-            {resources: caseService.getWorkspace()}
-            //{resources: 'projects'}
-          ],
-          onSuccess:function (resource, result) {
-            var projects = _.chain(resource.response.index.links)
-              .filter(function(item){
-                return item.rel === 'inbox' || item.rel === 'assignments';
-              })
-              .groupBy('text')
-              .value();
+        return {
+            getAll: function () {
+                return backendService.get({
+                    specs: [
+                        {resources: caseService.getWorkspace()}
+                        //{resources: 'projects'}
+                    ],
+                    onSuccess: function (resource, result) {
+                        var projects = _.chain(resource.response.index.links)
+                            .filter(function (item) {
+                                return item.rel === 'inbox' || item.rel === 'assignments';
+                            })
+                            .groupBy('text')
+                            .value();
 
-            _.forEach(projects, function(values, key){
-              var id = undefined;
-              var types = _.map(values, function(item){
-                id = item.id;
-                return {name: item.rel, href: item.href, caseCount: item.caseCount};
-              });
+                        _.forEach(projects, function (values, key) {
+                            var id = undefined;
+                            var types = _.map(values, function (item) {
+                                id = item.id;
+                                return {name: item.rel, href: item.href, caseCount: item.caseCount};
+                            });
 
-              result.push({text: key, types: types, id: id});
-            });
-            result.unlimitedResultCount = resource.response.unlimitedResultCount;
-          }
-        });
-      },
-      //http://localhost:3501/b35873ba-4007-40ac-9936-975eab38395a-3f/inbox/f9d9a7f7-b8ef-4c56-99a8-3b9b5f2e7159-0
-      getSelected: function(projectId, projectType, query, callback) {
-        var self = this;
-        query = query || '';
+                            result.push({text: key, types: types, id: id});
+                        });
+                        result.unlimitedResultCount = resource.response.unlimitedResultCount;
+                    }
+                });
+            },
+            //http://localhost:3501/b35873ba-4007-40ac-9936-975eab38395a-3f/inbox/f9d9a7f7-b8ef-4c56-99a8-3b9b5f2e7159-0
+            getSelected: function (projectId, projectType, query, callback) {
+                var self = this;
+                query = query || '';
 
-        return backendService.get({
-          specs:[
-            {resources:caseService.getWorkspace()},
-            {resources: 'projects'},
-            {'index.links': projectId},
-            {resources: projectType},
-            {queries: 'cases?tq=select+*' + query}
-          ],
-          onSuccess:function (resource, result) {
-            resource.response.links.forEach(function(item){
-              result.push(self.sfCaseFactory(item));
-            });
+                return backendService.get({
+                    specs: [
+                        {resources: caseService.getWorkspace()},
+                        {resources: 'projects'},
+                        {'index.links': projectId},
+                        {resources: projectType},
+                        {queries: 'cases?tq=select+*' + query}
+                    ],
+                    onSuccess: function (resource, result) {
+                        resource.response.links.forEach(function (item) {
+                            result.push(self.sfCaseFactory(item));
+                        });
 
-            if (callback) {
-              callback();
+                        if (callback) {
+                            callback();
+                        }
+                    }
+                });
+            },
+
+            sfCaseFactory: function (model) {
+                var href = navigationService.caseHrefSimple(model.id);
+                return new SfCase(model, href);
+            },
+
+            createCase: function (projectId, projectType) {
+                return backendService.postNested(
+                    [
+                        {resources: caseService.getWorkspace()},
+                        {resources: 'projects'},
+                        {'index.links': projectId},
+                        {resources: projectType},
+                        {commands: 'createcase'}
+                    ],
+                    {});
             }
-          }
-        });
-      },
-
-      sfCaseFactory: function(model) {
-        var href = navigationService.caseHrefSimple(model.id);
-          return new SfCase(model, href);
-      },
-
-      createCase: function(projectId, projectType) {
-        return backendService.postNested(
-          [
-            {resources: caseService.getWorkspace()},
-            {resources: 'projects'},
-            {'index.links': projectId},
-            {resources: projectType },
-            {commands: 'createcase'}
-          ],
-          {});
-      }
 
 
-    };
-  });
+        };
+    });

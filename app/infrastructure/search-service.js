@@ -19,133 +19,133 @@
 
 angular.module('sf').factory('searchService', function (backendService, projectService) {
 
-  var workspaceId = 'workspacev2';
+    var workspaceId = 'workspacev2';
 
-  function getCases(query) {
-    query = query.replace(/: /g, ':');
-    // Replace 'group by X desc, sort by Y asc'
-    // with 'order by X desc, Y asc'
-    if (query.indexOf('group by') > 0 && query.indexOf('sort by') > 0) {
-      query = query.replace('group', 'order');
-      query = query.replace('sort by ', '');
-    } else if (query.indexOf('group by ') > 0) {
-      query = query.replace('group', 'order');
-    } else if (query.indexOf('sort by') > 0) {
-      query = query.replace('sort', 'order');
+    function getCases(query) {
+        query = query.replace(/: /g, ':');
+        // Replace 'group by X desc, sort by Y asc'
+        // with 'order by X desc, Y asc'
+        if (query.indexOf('group by') > 0 && query.indexOf('sort by') > 0) {
+            query = query.replace('group', 'order');
+            query = query.replace('sort by ', '');
+        } else if (query.indexOf('group by ') > 0) {
+            query = query.replace('group', 'order');
+        } else if (query.indexOf('sort by') > 0) {
+            query = query.replace('sort', 'order');
+        }
+        return backendService.get({
+            specs: [
+                {resources: workspaceId},
+                {resources: 'search'},
+                {queries: 'cases?tq=select+*+where+' + query}
+            ],
+            onSuccess: function (resource, result) {
+                resource.response.links.forEach(function (item) {
+                    result.push(projectService.sfCaseFactory(item));
+                });
+                result.unlimitedResultCount = resource.response.unlimitedResultCount;
+            }
+        });
     }
-    return backendService.get({
-      specs: [
-        {resources: workspaceId},
-        {resources: 'search'},
-        {queries: 'cases?tq=select+*+where+' + query}
-      ],
-      onSuccess: function (resource, result) {
-        resource.response.links.forEach(function (item) {
-          result.push(projectService.sfCaseFactory(item));
-        });
-        result.unlimitedResultCount = resource.response.unlimitedResultCount;
-      }
-    });
-  }
 
-  function getPossibleAssignees() {
-    return backendService.get({
-      specs: [
-        {resources: workspaceId},
-        {resources: 'search'},
-        {queries: 'possibleassignees'}
-      ],
-      onSuccess: function (resource, result) {
-        resource.response.links.forEach(function (item) {
-          result.push(projectService.sfCaseFactory(item));
+    function getPossibleAssignees() {
+        return backendService.get({
+            specs: [
+                {resources: workspaceId},
+                {resources: 'search'},
+                {queries: 'possibleassignees'}
+            ],
+            onSuccess: function (resource, result) {
+                resource.response.links.forEach(function (item) {
+                    result.push(projectService.sfCaseFactory(item));
+                });
+            }
         });
-      }
-    });
-  }
+    }
 
-  function getPossibleCaseTypes() {
-    return backendService.get({
-      specs: [
-        {resources: workspaceId},
-        {resources: 'search'},
-        {queries: 'possiblecasetypes'}
-      ],
-      onSuccess: function (resource, result) {
-        resource.response.links.forEach(function (item) {
-          result.push(projectService.sfCaseFactory(item));
+    function getPossibleCaseTypes() {
+        return backendService.get({
+            specs: [
+                {resources: workspaceId},
+                {resources: 'search'},
+                {queries: 'possiblecasetypes'}
+            ],
+            onSuccess: function (resource, result) {
+                resource.response.links.forEach(function (item) {
+                    result.push(projectService.sfCaseFactory(item));
+                });
+            }
         });
-      }
-    });
-  }
+    }
 
-  function getPossibleCreatedBy() {
-    return backendService.get({
-      specs: [
-        {resources: workspaceId},
-        {resources: 'search'},
-        {queries: 'possiblecreatedby'}
-      ],
-      onSuccess: function (resource, result) {
-        resource.response.links.forEach(function (item) {
-          result.push(projectService.sfCaseFactory(item));
+    function getPossibleCreatedBy() {
+        return backendService.get({
+            specs: [
+                {resources: workspaceId},
+                {resources: 'search'},
+                {queries: 'possiblecreatedby'}
+            ],
+            onSuccess: function (resource, result) {
+                resource.response.links.forEach(function (item) {
+                    result.push(projectService.sfCaseFactory(item));
+                });
+            }
         });
-      }
-    });
-  }
+    }
 
-  function getPossibleLabels() {
-    return backendService.get({
-      specs: [
-        {resources: workspaceId},
-        {resources: 'search'},
-        {queries: 'possiblelabels'}
-      ],
-      onSuccess: function (resource, result) {
-        resource.response.links.forEach(function (item) {
-          result.push(projectService.sfCaseFactory(item));
+    function getPossibleLabels() {
+        return backendService.get({
+            specs: [
+                {resources: workspaceId},
+                {resources: 'search'},
+                {queries: 'possiblelabels'}
+            ],
+            onSuccess: function (resource, result) {
+                resource.response.links.forEach(function (item) {
+                    result.push(projectService.sfCaseFactory(item));
+                });
+            }
         });
-      }
-    });
-  }
+    }
 
-  function getPossibleProjects() {
-    return backendService.get({
-      specs: [
-        {resources: workspaceId},
-        {resources: 'search'},
-        {queries: 'possibleprojects'}
-      ],
-      onSuccess: function (resource, result) {
-        resource.response.links.forEach(function (item) {
-          result.push(projectService.sfCaseFactory(item));
+    function getPossibleProjects() {
+        return backendService.get({
+            specs: [
+                {resources: workspaceId},
+                {resources: 'search'},
+                {queries: 'possibleprojects'}
+            ],
+            onSuccess: function (resource, result) {
+                resource.response.links.forEach(function (item) {
+                    result.push(projectService.sfCaseFactory(item));
+                });
+            }
         });
-      }
-    });
-  }
+    }
 
-  function getPossibleStatus() {
-    return backendService.get({
-      specs: [
-        {resources: workspaceId},
-        {resources: 'search'},
-        {queries: 'possiblestatus'}
-      ],
-      onSuccess: function (resource, result) {
-        resource.response.links.forEach(function (item) {
-          result.push(projectService.sfCaseFactory(item));
+    function getPossibleStatus() {
+        return backendService.get({
+            specs: [
+                {resources: workspaceId},
+                {resources: 'search'},
+                {queries: 'possiblestatus'}
+            ],
+            onSuccess: function (resource, result) {
+                resource.response.links.forEach(function (item) {
+                    result.push(projectService.sfCaseFactory(item));
+                });
+            }
         });
-      }
-    });
-  }
+    }
 
-  return {
-    getCases: getCases,
-    getPossibleAssignees: getPossibleAssignees,
-    getPossibleCaseTypes: getPossibleCaseTypes,
-    getPossibleLabels: getPossibleLabels,
-    getPossibleProjects: getPossibleProjects,
-    getPossibleStatus: getPossibleStatus,
-    getPossibleCreatedBy: getPossibleCreatedBy
-};
+    return {
+        getCases: getCases,
+        getPossibleAssignees: getPossibleAssignees,
+        getPossibleCaseTypes: getPossibleCaseTypes,
+        getPossibleLabels: getPossibleLabels,
+        getPossibleProjects: getPossibleProjects,
+        getPossibleStatus: getPossibleStatus,
+        getPossibleCreatedBy: getPossibleCreatedBy
+    };
 
 });

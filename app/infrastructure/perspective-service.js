@@ -17,60 +17,60 @@
 'use strict';
 
 angular.module('sf')
-.factory('perspectiveService', function (backendService, navigationService, SfCase, $http, debounce, caseService) {
+    .factory('perspectiveService', function (backendService, navigationService, SfCase, $http, debounce, caseService) {
 
-    var perspectiveBase = function(){
-     return [
-       {resources: caseService.getWorkspace()},
-       {resources:'perspectives'}
-      ];
-    };
+        var perspectiveBase = function () {
+            return [
+                {resources: caseService.getWorkspace()},
+                {resources: 'perspectives'}
+            ];
+        };
 
-    return {
-      getPerspectives: function() {
-        return backendService.get({
-          specs: perspectiveBase(),
-          onSuccess:function (resource, result) {
-            resource.response.index.links.forEach(function(item){
-              result.push(item);
-            });
-          }
-        });
-      }
+        return {
+            getPerspectives: function () {
+                return backendService.get({
+                    specs: perspectiveBase(),
+                    onSuccess: function (resource, result) {
+                        resource.response.index.links.forEach(function (item) {
+                            result.push(item);
+                        });
+                    }
+                });
+            }
 
-/*      getMyCases: function() {
-        return backendService.get({
-          specs: perspectiveBase().concat([
-            {queries: 'skapadav:mig'}
-          ]),
-          onSuccess:function (resource, result) {
-            resource.response.links.forEach(function(item){result.push(item)});
-          }
-        });
-      },
+            /*      getMyCases: function() {
+                    return backendService.get({
+                      specs: perspectiveBase().concat([
+                        {queries: 'skapadav:mig'}
+                      ]),
+                      onSuccess:function (resource, result) {
+                        resource.response.links.forEach(function(item){result.push(item)});
+                      }
+                    });
+                  },
 
-      getMyLatestCases: function() {
-        return backendService.get({
-          specs: perspectiveBase().concat([
-            {queries: 'skapadav:mig'},
-            {createdOnPeriod: 'six_months'}
-          ]),
-          onSuccess:function (resource, result) {
-            resource.response.links.forEach(function(item){result.push(item)});
-          }
-        });
-      },
+                  getMyLatestCases: function() {
+                    return backendService.get({
+                      specs: perspectiveBase().concat([
+                        {queries: 'skapadav:mig'},
+                        {createdOnPeriod: 'six_months'}
+                      ]),
+                      onSuccess:function (resource, result) {
+                        resource.response.links.forEach(function(item){result.push(item)});
+                      }
+                    });
+                  },
 
-      getTodaysCases: function() {
-        return backendService.get({
-          specs: perspectiveBase().concat([
-            {createdOnPeriod: 'one_day'}
-           ]),
-          onSuccess:function (resource, result) {
-            resource.response.links.forEach(function(item){result.push(item)});
-          }
-        });
-      }
-      */
-    };
-});
+                  getTodaysCases: function() {
+                    return backendService.get({
+                      specs: perspectiveBase().concat([
+                        {createdOnPeriod: 'one_day'}
+                       ]),
+                      onSuccess:function (resource, result) {
+                        resource.response.links.forEach(function(item){result.push(item)});
+                      }
+                    });
+                  }
+                  */
+        };
+    });

@@ -93,31 +93,40 @@ angular.module('sf').directive('login', function ($rootScope, buildMode, $locati
                 return false;
             }
 
+            function logOut(){
+                var logoutUrl = getLogoutUrl(detectIE());
+
+                var basicAuthBase64 = btoa('username:password');
+                $http.defaults.headers.common.Authorization = 'Basic ' + basicAuthBase64;
+
+                $http({
+                    method: 'GET',
+                    url: logoutUrl,
+                    headers: {'Authorization': 'Basic ' + basicAuthBase64},
+                    cache: 'false'
+                }).then(function (response) {
+                    console.log('Logout response', response);
+                    tokenService.clear();
+                    tokenService.isDefaultToken = true;
+                }, function () {
+                    scope.errorMessage = 'Användarnamn / lösenord ej giltigt!';
+                });
+            }
+
             getLoggedInStatus()
                 .then(function (status) {
                     $rootScope.isLoggedIn = status;
                 });
 
+            $rootScope.$on('IdleTimeout', function () {
+                console.log('Logout response', response);
+
+                logOut();
+            });
+
             $rootScope.$on('logout', function (event, logout) {
                 if (logout) {
-
-                    var logoutUrl = getLogoutUrl(detectIE());
-
-                    var basicAuthBase64 = btoa('username:password');
-                    $http.defaults.headers.common.Authorization = 'Basic ' + basicAuthBase64;
-
-                    $http({
-                        method: 'GET',
-                        url: logoutUrl,
-                        headers: {'Authorization': 'Basic ' + basicAuthBase64},
-                        cache: 'false'
-                    }).then(function (response) {
-                        console.log('Logout response', response);
-                        tokenService.clear();
-                        tokenService.isDefaultToken = true;
-                    }, function () {
-                        scope.errorMessage = 'Användarnamn / lösenord ej giltigt!';
-                    });
+                    logOut();
                 }
             });
 

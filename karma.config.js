@@ -39,6 +39,7 @@ module.exports = function(config){
       'bower_components/momentjs/moment.js',
       'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
       'bower_components/angular-autogrow/angular-autogrow.min.js',
+      'bower_components/ng-idle/angular-idle.min.js',
       'app/config/config.js',
       'app/*.js',
       'app/components/**/*js',

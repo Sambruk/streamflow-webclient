@@ -29,7 +29,8 @@ angular.module('sf', [
     'localytics.directives',
     'uiGmapgoogle-maps',
     'infinite-scroll',
-    'angular-autogrow'
+    'angular-autogrow',
+    'ngIdle'
   ])
   .config(function(uiGmapGoogleMapApiProvider) {
     uiGmapGoogleMapApiProvider.configure({
@@ -39,11 +40,15 @@ angular.module('sf', [
       language: 'sv'
     });
   })
+  .config( function(IdleProvider) {
+    IdleProvider.idle(2*60*60);
+  })
   .config(['growlProvider', function (growlProvider) {
       growlProvider.globalTimeToLive({success: 3000, error: 3000, warning: 3000, info: 3000});
   }])
-  .run(function ($rootScope, $http, httpService, $location, $routeParams, tokenService) {
+  .run(function ($rootScope, $http, httpService, $location, $routeParams, tokenService, Idle) {
 
+    Idle.watch();
     $rootScope.hasToken = tokenService.hasToken;
     $rootScope.isLoggedIn = $rootScope.hasToken();
     $rootScope.logout = tokenService.clear;

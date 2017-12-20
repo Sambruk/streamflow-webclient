@@ -119,8 +119,6 @@ angular.module('sf').directive('login', function ($rootScope, buildMode, $locati
                 });
 
             $rootScope.$on('IdleTimeout', function () {
-                console.log('Logout response', response);
-
                 logOut();
             });
 

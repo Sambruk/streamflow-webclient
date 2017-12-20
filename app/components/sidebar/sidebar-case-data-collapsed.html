@@ -17,8 +17,8 @@
             <ul >
                 <div data-ng-show="attachment.rel === 'attachment'" data-ng-repeat="attachment in attachments" class="icon-attach">
                     <a data-ng-show="attachment.queries[0].id === 'download'" data-ng-click="downloadAttachment(attachment)"
-                       href="" download>{{ attachment.text }}</a>
-                    <a data-ng-show="attachment.queries[0].id !== 'download'" href="" download>{{attachment.text}}</a>
+                       href="" title="{{ attachment.text }}" download>{{ attachment.text }}</a>
+                    <a data-ng-show="attachment.queries[0].id !== 'download'" href="" title="{{ attachment.text }}" download>{{attachment.text}}</a>
                 </div>
             </ul>
 

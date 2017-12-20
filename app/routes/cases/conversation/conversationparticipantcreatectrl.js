@@ -46,6 +46,9 @@ angular.module('sf')
                 select.trigger('chosen:updated');
                 $scope.participant = undefined;
                 $scope.externalParticipant = option[0].text;
+
+                //Auto submit inputted value as external participant
+                angular.element('[name="convo-submit"]').triggerHandler('click');
             }
         };
 

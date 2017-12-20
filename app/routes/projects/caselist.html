@@ -52,9 +52,9 @@
                 </div>
                 <div data-ng-class="{'issue-closed': case.closed()}" class="issue-s">
                   <div class="issue-description">
-                    <div class="issue-description__left-part">
+                    <div data-ng-class="{'issue-description--unread': case.unread}" class="issue-description__left-part" >
                       <h4 data-ng-class="{'issue-closed': case.closed()}" class="issue-description__headline">{{case.text}}</h4>
-                      <div class="issue-description__creator creator">{{case.createdBy}}</div>
+                      <div class="issue-description__creator creator" data-ng-class="{'issue-description--unread': case.unread}">{{case.createdBy}}</div>
                       <div ng-if="case.assignedTo!=null" class="issue-description__assigned">tilldelad {{case.assignedTo}}</div>
                     </div>
                     <div class="issue-description__right-part">
@@ -99,9 +99,9 @@
               </div>
               <div data-ng-class="{'issue-closed': case.closed()}" class="issue-s">
                 <div class="issue-description">
-                  <div class="issue-description__left-part">
+                  <div data-ng-class="{'issue-description--unread': case.unread}" class="issue-description__left-part">
                     <h4 data-ng-class="{'issue-closed': case.closed()}" class="issue-description-left-part__item issue-description__headline">{{case.text}}</h4>
-                    <div class="issue-description-left-part__item issue-description__creator creator">{{case.createdBy}}</div>
+                    <div class="issue-description-left-part__item issue-description__creator creator" data-ng-class="{'issue-description--unread': case.unread}">{{case.createdBy}}</div>
                     <div ng-if="case.assignedTo!=null" class="issue-description-left-part__item issue-description__assigned">tilldelad {{case.assignedTo}}</div>
                   </div>
                   <div class="issue-description__right-part">

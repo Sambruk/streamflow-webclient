@@ -31,7 +31,7 @@
     "karma-jasmine": "~0.1",
     "karma-junit-reporter": "~0.2.2",
     "karma-ng-scenario": "^0.1.0",
-    "karma-phantomjs-launcher": "~0.1.4",
+    "karma-phantomjs-launcher": "~1.0.4",
     "phantomjs-polyfill": "~0.0.2",
     "main-bower-files": "^2.13.1",
     "run-sequence": "^0.3.6",

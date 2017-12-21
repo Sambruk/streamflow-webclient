@@ -17,7 +17,7 @@
 
 /*global google */
 'use strict';
-angular.module('sf').directive('googleMap', function () {
+angular.module('sf').directive('googleMap', function (NgMap) {
     return {
         restrict: 'E',
         templateUrl: 'components/googlemaps/googlemaps.html',
@@ -26,7 +26,8 @@ angular.module('sf').directive('googleMap', function () {
             locationSettings: '=',
             fieldSettings: '='
         },
-        controller: function ($scope, uiGmapGoogleMapApi, uiGmapIsReady) {
+        controller: function ($scope, NgMap) {
+
             var geocoder = null;
 
             function SearchResultItem(result) {
@@ -266,13 +267,11 @@ angular.module('sf').directive('googleMap', function () {
                 };
             };
 
-            uiGmapGoogleMapApi.then(function (maps) {
+            NgMap.getMap().then(function (map) {
                 initMap();
             });
 
-            var init = function () {
-                var map = $scope.map.control.getGMap();
-
+            var init = function (map) {
                 if ($scope.mapValue) {
                     // Detect if it's a single point or a line/surface
                     if ($scope.mapValue.isPoint) {
@@ -319,15 +318,11 @@ angular.module('sf').directive('googleMap', function () {
                 }
             };
 
-            uiGmapIsReady.promise().then(function () {
-                init();
-            });
-
             $scope.search = function (event) {
                 event.preventDefault();
                 $scope.searchError = undefined;
 
-                var map = $scope.map.control.getGMap();
+                var map = $scope.ngmap.map;
                 $scope.searchResults = [];
 
                 geocode($scope.searchValue, map, function (result) {
@@ -341,7 +336,7 @@ angular.module('sf').directive('googleMap', function () {
 
             $scope.selectAddress = function (event, location) {
                 event.preventDefault();
-                var map = $scope.map.control.getGMap();
+                var map = $scope.ngmap.map;
 
                 clearCurrentMarkersAndLines();
                 $scope.searchResults = undefined;
@@ -363,7 +358,7 @@ angular.module('sf').directive('googleMap', function () {
             };
 
             $scope.findMe = function () {
-                var map = $scope.map.control.getGMap();
+                var map = $scope.ngmap.map;
                 navigator.geolocation.getCurrentPosition(function (position) {
                     clearCurrentMarkersAndLines();
                     $scope.marker = new google.maps.Marker({

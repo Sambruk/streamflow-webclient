@@ -1,12 +1,12 @@
 <div class="maps">
   <div class="row">
-    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" control="map.control" options="map.options">
-      <ui-gmap-drawing-manager options="drawingManagerOptions" control="drawingManagerControl"
-                               events="drawingManagerOptions.events"></ui-gmap-drawing-manager>
+    <ng-map center="map.center" zoom="6" draggable="true" control="map.control" options="map.options" map-initialized="init(map)">
+      <drawing-manager options="drawingManagerOptions" control="drawingManagerControl"
+                               events="drawingManagerOptions.events"></drawing-manager>
 
-      <ui-gmap-marker idkey="marker.id" coords="marker.coords" options="marker.options"
-                      events="marker.events" control="map.markersControl"></ui-gmap-marker>
-    </ui-gmap-google-map>
+      <marker idkey="marker.id" coords="marker.coords" options="marker.options"
+                      events="marker.events" control="map.markersControl"></marker>
+    </ng-map>
   </div>
 
   <div class="row">

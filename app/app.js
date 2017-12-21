@@ -27,19 +27,11 @@ angular.module('sf', [
     'sf.config',
     'angular.filter',
     'localytics.directives',
-    'uiGmapgoogle-maps',
     'infinite-scroll',
     'angular-autogrow',
-    'ngIdle'
+    'ngIdle',
+    'ngMap'
 ])
-    .config(function (uiGmapGoogleMapApiProvider) {
-        uiGmapGoogleMapApiProvider.configure({
-            key: 'AIzaSyCqH4sFJMZXvVTaBm4JYk2v089WlarlBtw',
-            v: '3.17',
-            libraries: 'places,drawing',
-            language: 'sv'
-        });
-    })
     .config(function (IdleProvider) {
         IdleProvider.idle(2 * 60 * 60);
     })

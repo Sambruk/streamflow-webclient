@@ -17,7 +17,7 @@
 
 /*global google */
 'use strict';
-angular.module('sf').directive('googleMap', function (NgMap) {
+angular.module('sf').directive('googleMap', function () {
     return {
         restrict: 'E',
         templateUrl: 'components/googlemaps/googlemaps.html',
@@ -267,10 +267,6 @@ angular.module('sf').directive('googleMap', function (NgMap) {
                 };
             };
 
-            NgMap.getMap().then(function (map) {
-                initMap();
-            });
-
             var init = function (map) {
                 if ($scope.mapValue) {
                     // Detect if it's a single point or a line/surface
@@ -410,6 +406,13 @@ angular.module('sf').directive('googleMap', function (NgMap) {
                     }
                 }
             };
+
+            initMap();
+
+            NgMap.getMap().then(function (map) {
+                map.setZoom($scope.map.zoom);
+                $scope.mapValue.updateLocation($scope.ngModel.location);
+            });
 
         }
     };

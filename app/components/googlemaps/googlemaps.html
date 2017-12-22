@@ -1,6 +1,6 @@
 <div class="maps">
   <div class="row">
-    <ng-map center="map.center" zoom="6" draggable="true" control="map.control" options="map.options" map-initialized="init(map)">
+    <ng-map ng-show="modelLoaded" center="map.center" zoom="6" draggable="true" control="map.control" options="map.options" map-initialized="init(map)">
       <drawing-manager options="drawingManagerOptions" control="drawingManagerControl"
                                events="drawingManagerOptions.events"></drawing-manager>
 

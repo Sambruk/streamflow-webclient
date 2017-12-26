@@ -1,27 +1,31 @@
 <div class="maps">
-  <div class="row">
+    <div class="row">
 
-    <ng-map center="mapData.center" zoom="mapData.zoom" draggable="true" control="mapData.control" zoom-to-include-markers="true" options="mapDataoptions" map-initialized="init(map)">
-      <drawing-manager
-              drawing-control-options="drawingManagerOptions.drawingControlOptions"
-              drawingControl="drawingManagerOptions.drawingControl"
-              drawingMode="drawingManagerOptions.drawingMode"
-              events="drawingManagerOptions.events"
-      </drawing-manager>
-    </ng-map>
-  </div>
+        <ng-map center="mapData.center" zoom="mapData.zoom" draggable="true" control="mapData.control"
+                zoom-to-include-markers="true" options="mapDataoptions" map-initialized="init(map)">
+            <drawing-manager
+                    drawing-control-options="drawingManagerOptions.drawingControlOptions"
+                    drawingControl="drawingManagerOptions.drawingControl"
+                    drawingMode="drawingManagerOptions.drawingMode"
+                    events="drawingManagerOptions.events"
+            </drawing-manager>
+        </ng-map>
+    </div>
 
-  <div class="row">
-    <label>{{addressLabel}}</label>
-  </div>
+    <div class="row">
+        <label>{{addressLabel}}</label>
+    </div>
 
-  <div class="lookup">
-    <input type="text" id="map-search-input" class="" data-ng-model="searchValue">
-    <button class="btn" type="button" data-ng-click="search($event)">Sök</button>
-    <button class="btn" type="button" data-ng-click="findMe($event)"><i class="icon-target"></i>&nbsp;Min position</button>
-    <div id="mapErrorMsg">{{searchError}}</div>
-    <ul class="search-results">
-      <li data-ng-repeat="result in searchResults"><a href="" data-ng-click="selectAddress($event, result.location)">{{result.address}}</a></li>
-    </ul>
-  </div>
+    <div class="lookup">
+        <input type="text" id="map-search-input" class="" data-ng-model="searchValue">
+        <button class="btn" type="button" data-ng-click="search($event)">Sök</button>
+        <button class="btn" type="button" data-ng-click="findMe($event)"><i class="icon-target"></i>&nbsp;Min position
+        </button>
+        <div id="mapErrorMsg">{{searchError}}</div>
+        <ul class="search-results">
+            <li data-ng-repeat="result in searchResults"><a href=""
+                                                            data-ng-click="selectAddress($event, result.location)">{{result.address}}</a>
+            </li>
+        </ul>
+    </div>
 </div>

@@ -31,9 +31,6 @@ angular.module('sf').directive('googleMap', function () {
             var geocoder = null;
 
             function SearchResultItem(result) {
-                var address = '';
-                var location = null;
-
                 this.address = result.formatted_address;
                 this.location = result.geometry.location;
 
@@ -53,7 +50,7 @@ angular.module('sf').directive('googleMap', function () {
                     'bounds': map.getBounds()
                 };
                 getGeocoder().geocode(request, function (results, status) {
-                        if (status == google.maps.GeocoderStatus.OK) {
+                        if (status === google.maps.GeocoderStatus.OK) {
                             var searchResultItems = [];
                             $.each(results, function (index, result) {
                                 searchResultItems.push(new SearchResultItem(result));
@@ -68,11 +65,11 @@ angular.module('sf').directive('googleMap', function () {
 
             function reverseGeocode(position, successFunction) {
                 getGeocoder().geocode({'latLng': position}, function (results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
+                    if (status === google.maps.GeocoderStatus.OK) {
                         if (results[1]) {
                             $scope.mapValue.clearAddress();
                             $.each(results[0].address_components, function () {
-                                if (this.types[0] == 'street_number') {
+                                if (this.types[0] === 'street_number') {
                                     if ($scope.mapValue.value.street && $scope.mapValue.value.street.length > 0) {
                                         $scope.mapValue.value.street = $scope.mapValue.value.street + ' ' + this.short_name;
                                     } else {
@@ -80,20 +77,20 @@ angular.module('sf').directive('googleMap', function () {
                                     }
                                     $scope.addressLabel = results[0].formatted_address;
                                 }
-                                if (this.types[0] == 'route') {
+                                if (this.types[0] === 'route') {
                                     if ($scope.mapValue.value.street && $scope.mapValue.value.street.length > 0) {
                                         $scope.mapValue.value.street = this.short_name + ' ' + $scope.mapValue.value.street;
                                     } else {
                                         $scope.mapValue.value.street = this.short_name;
                                     }
                                 }
-                                if (this.types[0] == 'postal_code') {
+                                if (this.types[0] === 'postal_code') {
                                     $scope.mapValue.value.zipcode = this.short_name;
                                 }
-                                if (this.types[0] == 'postal_town') {
+                                if (this.types[0] === 'postal_town') {
                                     $scope.mapValue.value.city = this.short_name;
                                 }
-                                if (this.types[0] == 'country') {
+                                if (this.types[0] === 'country') {
                                     $scope.mapValue.value.country = this.short_name;
                                 }
                             });
@@ -106,10 +103,10 @@ angular.module('sf').directive('googleMap', function () {
             }
 
             function cleanUpPosition(position) {
-                if (position.indexOf('(') == 0) {
+                if (position.indexOf('(') === 0) {
                     position = position.substring(1);
                 }
-                if (position.indexOf(')') != -1) {
+                if (position.indexOf(')') !== -1) {
                     position = position.substring(0, position.indexOf(')'));
                 }
                 return $.trim(position);
@@ -396,7 +393,7 @@ angular.module('sf').directive('googleMap', function () {
                 self.isPolygon = false;
 
                 if (newLocation) {
-                    if (newLocation.indexOf('(') == -1) {
+                    if (newLocation.indexOf('(') === -1) {
                         self.isPoint = true;
                         self.path.push(new LatLong(newLocation));
 

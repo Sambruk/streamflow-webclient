@@ -1,11 +1,16 @@
 <div class="maps">
   <div class="row">
-    <ng-map ng-show="modelLoaded" center="map.center" zoom="6" draggable="true" control="map.control" options="map.options" map-initialized="init(map)">
-      <drawing-manager options="drawingManagerOptions" control="drawingManagerControl"
-                               events="drawingManagerOptions.events"></drawing-manager>
 
-      <marker idkey="marker.id" coords="marker.coords" options="marker.options"
-                      events="marker.events" control="map.markersControl"></marker>
+    <ng-map center="mapData.center" zoom="mapData.zoom" draggable="true" control="mapData.control" zoom-to-include-markers="true" options="mapDataoptions" map-initialized="init(map)">
+      <drawing-manager
+              drawing-control-options="drawingManagerOptions.drawingControlOptions"
+              drawingControl="drawingManagerOptions.drawingControl"
+              drawingMode="drawingManagerOptions.drawingMode"
+              events="drawingManagerOptions.events"
+      </drawing-manager>
+
+      <!--<marker idkey="marker.id" coords="marker.coords" options="marker.options"-->
+                      <!--events="marker.events" control="mapData.markersControl"></marker>-->
     </ng-map>
   </div>
 

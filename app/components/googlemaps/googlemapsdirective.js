@@ -220,7 +220,7 @@ angular.module('sf').directive('googleMap', function () {
                     }
                 }
 
-                console.log('FIeld settings',$scope.fieldSettings);
+                console.log('FIeld settings', $scope.fieldSettings);
                 $scope.drawingManagerOptions = {
                     drawingMode: initialDrawingMode,
                     drawingControl: true,
@@ -237,7 +237,7 @@ angular.module('sf').directive('googleMap', function () {
                             clearCurrentMarkersAndLines();
                             $scope.marker = args[0];
 
-                            if($scope.marker) {
+                            if ($scope.marker) {
                                 var position = $scope.marker.position.lat() + ', ' + $scope.marker.position.lng();
                             } else {
                                 var position = "current-location";
@@ -270,7 +270,7 @@ angular.module('sf').directive('googleMap', function () {
                         }
                     }
                 };
-                console.log('drawingManagerOptions',$scope.drawingManagerOptions);
+                console.log('drawingManagerOptions', $scope.drawingManagerOptions);
 
             };
 
@@ -419,6 +419,7 @@ angular.module('sf').directive('googleMap', function () {
             NgMap.getMap().then(function (map) {
                 map.setZoom($scope.locationSettings.zoomLevel);
                 map.mapDrawingManager[0].setOptions($scope.drawingManagerOptions);
+                init(map);
             });
         }
     };

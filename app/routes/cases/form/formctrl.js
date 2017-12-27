@@ -188,25 +188,26 @@ angular.module('sf')
             $scope.formPageIndex = $scope.form[0].enhancedPages.indexOf($scope.currentFormPage);
         };
 
-        $scope.submitForm = function () {
-            updateFieldsOnPages($scope.form[0]).then(function () {
-                caseService.submitForm($scope.caseId, $scope.form[0].draftId).then(function () {
-
-                    if (!$scope.closeWithForm) {
-                        formSubmitted();
-                    } else {
-                        caseService.closeFormOnClose($scope.caseId).then(function () {
+        $scope.submitForm = function (isValid) {
+            if (isValid) {
+                updateFieldsOnPages($scope.form[0]).then(function () {
+                    caseService.submitForm($scope.caseId, $scope.form[0].draftId).then(function () {
+                        if (!$scope.closeWithForm) {
                             formSubmitted();
-                            $timeout(function () {
-                                sidebarService.close($scope);
-                            }, 1000);
-                        });
-                    }
+                        } else {
+                            caseService.closeFormOnClose($scope.caseId).then(function () {
+                                formSubmitted();
+                                $timeout(function () {
+                                    sidebarService.close($scope);
+                                }, 1000);
+                            });
+                        }
 
-                    growl.success('Skickat!');
-                    $route.reload();
+                        growl.success('Skickat!');
+                        $route.reload();
+                    });
                 });
-            });
+            }
         };
 
         var updateFieldsOnPages = function (form) {
@@ -332,7 +333,7 @@ angular.module('sf')
         $scope.$watchCollection('formPagesValid', function () {
             var isAllPagesValid = true;
             $scope.formPagesValid.forEach(function (value) {
-                if (!value) {
+                if (value === false) {
                     isAllPagesValid = value;
                 }
             });

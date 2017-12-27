@@ -273,16 +273,16 @@
                 <div data-ng-show="currentFormPage" class="row button-group">
                     <a data-ng-show="!isFormWindow" href="#/cases/{{caze[0].id}}/{{caze[0].ownerId}}" class="btn inline"
                        data-ng-disabled="!issueForm.$valid || !isValidForm">Annullera</a>
-                    <a data-ng-hide="isFirstPage()" href="" class="btn inline"
+                    <button data-ng-hide="isFirstPage()" class="form-btn inline"
                        data-ng-class="{inactive: isFirstPage()}"
-                       data-ng-click="!isFirstPage() && previousFormPage()">Tillbaka</a>
-                    <a data-ng-hide="isLastPage(currentFormPage)" href="" class="btn inline"
+                       data-ng-click="!isFirstPage() && previousFormPage()">Tillbaka</button>
+                    <button data-ng-hide="isLastPage(currentFormPage)"class="form-btn inline"
                        data-ng-class="{inactive: isLastPage()}"
-                       data-ng-click="!isLastPage() && nextFormPage()">Nästa</a>
-                    <a data-ng-show="isLastPage(currentFormPage)" href="" class="btn inline"
+                       data-ng-click="!isLastPage() && nextFormPage()">Nästa</button>
+                    <button data-ng-show="isLastPage(currentFormPage)" class="form-btn inline"
                        data-ng-class="{inactive: !issueForm.$valid || !isValidForm}"
                        data-ng-disabled="!issueForm.$valid || !isValidForm"
-                       data-ng-click="(issueForm.$valid && isValidForm) && submitForm()">Slutför</a>
+                       data-ng-click="(issueForm.$valid && isValidForm) && submitForm(issueForm.$valid && isValidForm)">Slutför</button>
                 </div>
             </form>
         </div>

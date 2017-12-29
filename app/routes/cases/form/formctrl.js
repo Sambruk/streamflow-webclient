@@ -246,7 +246,14 @@ angular.module('sf')
                                 default:
                                     value = formMapperService.getValue(field.value, field.field);
                             }
-                            return {field: field.field.field, value: value === null ? '' : value};
+
+                            //TODO: find better approach to send empty location on submit
+                            if(field.field.fieldValue._type !== 'se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue'){
+                                value = value === null ? '' : value;
+                            } else {
+                                value = (value === '' || value === null || value === 'null') ? JSON.stringify({location:'59.3500, 18.0667'}) : value;
+                            }
+                            return {field: field.field.field, value: value};
                         });
                     return caseService.updateFields($scope.caseId, $scope.formDraftId, fields);
                 });

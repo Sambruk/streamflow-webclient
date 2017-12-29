@@ -33,6 +33,8 @@ angular.module('sf')
         $scope.formPageIndex = 0;
         $scope.formPagesValid = [];
 
+        $scope.isFormOnSubmit = false;
+
         $scope.showSpinner = {
             form: true
         };
@@ -189,7 +191,8 @@ angular.module('sf')
         };
 
         $scope.submitForm = function (isValid) {
-            if (isValid) {
+            if (isValid && !$scope.isFormOnSubmit) {
+                $scope.isFormOnSubmit = true;
                 updateFieldsOnPages($scope.form[0]).then(function () {
                     caseService.submitForm($scope.caseId, $scope.form[0].draftId).then(function () {
                         if (!$scope.closeWithForm) {
@@ -204,6 +207,7 @@ angular.module('sf')
                         }
 
                         growl.success('Skickat!');
+                        $scope.isFormOnSubmit = false;
                         $route.reload();
                     });
                 });
@@ -248,10 +252,10 @@ angular.module('sf')
                             }
 
                             //TODO: find better approach to send empty location on submit
-                            if(field.field.fieldValue._type !== 'se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue'){
+                            if (field.field.fieldValue._type !== 'se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue') {
                                 value = value === null ? '' : value;
                             } else {
-                                value = (value === '' || value === null || value === 'null') ? JSON.stringify({location:'59.3500, 18.0667'}) : value;
+                                value = (value === '' || value === null || value === 'null') ? JSON.stringify({location: '59.3500, 18.0667'}) : value;
                             }
                             return {field: field.field.field, value: value};
                         });

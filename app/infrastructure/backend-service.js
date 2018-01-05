@@ -206,6 +206,11 @@ angular.module('sf').factory('backendService', function ($window, $http, $q, htt
                     .then(function (resource) {
                         dsl.onSuccess(resource, result, urls);
                         return result;
+                    }, function(reason) {
+                        if (typeof dsl.onFailure == 'function') {
+                            dsl.onFailure(reason);
+                        }
+                        return result;
                     });
                 return result.promise;
             };

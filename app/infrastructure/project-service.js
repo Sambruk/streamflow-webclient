@@ -18,7 +18,7 @@
 'use strict';
 
 angular.module('sf')
-    .factory('projectService', function (backendService, navigationService, SfCase, caseService) {
+    .factory('projectService', function (backendService, navigationService, SfCase, caseService, growl) {
 
         return {
             getAll: function () {
@@ -69,6 +69,10 @@ angular.module('sf')
                         if (callback) {
                             callback();
                         }
+                    },
+                    onFailure: function (err) {
+                        growl.warning('Object don\'t exist');
+                        console.error(err);
                     }
                 });
             },

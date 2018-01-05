@@ -77,6 +77,27 @@ angular.module('sf')
                 });
             },
 
+            checkSelected: function (projectId, projectType, query, failureCallback) {
+                var self = this;
+                query = query || '';
+
+                return backendService.get({
+                    specs: [
+                        {resources: caseService.getWorkspace()},
+                        {resources: 'projects'},
+                        {'index.links': projectId},
+                        {resources: projectType},
+                        {queries: 'cases?tq=select+*' + query}
+                    ],
+                    onFailure: function (err) {
+                        if (failureCallback) {
+                            failureCallback();
+                        }
+                        console.error(err);
+                    }
+                });
+            },
+
             sfCaseFactory: function (model) {
                 var href = navigationService.caseHrefSimple(model.id);
                 return new SfCase(model, href);

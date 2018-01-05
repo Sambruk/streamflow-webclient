@@ -133,19 +133,30 @@ angular.module('sf')
                     if (!newVal) {
                         return;
                     }
-                    $rootScope.$broadcast('breadcrumb-updated', [
-                        {
-                            title: scope.caze[0].owner
-                        },
-                        {
-                            title: scope.caze[0].listType,
-                            url: '#/projects/' + scope.caze[0].ownerId + '/' + scope.caze[0].listType
-                        },
-                        {
-                            title: scope.caze[0].caseId,
-                            url: '#/cases/' + scope.caze[0].id + '/' + scope.caze[0].ownerId
-                        }
-                    ]);
+
+                    var isFound = true;
+                    var initialCase = projectService.checkSelected($rootScope.contextmenuParams.projectId, $rootScope.contextmenuParams.projectType, '+limit+1+offset+0', function () {
+                        isFound = false;
+
+                    });
+
+                    console.log('scope',scope);
+
+                    initialCase.promise.then(function (result) {
+                        $rootScope.$broadcast('breadcrumb-updated', [
+                            {
+                                title: scope.caze[0].owner
+                            },
+                            {
+                                title: scope.caze[0].listType,
+                                url: isFound ? '#/projects/' + scope.caze[0].ownerId + '/' + scope.caze[0].listType : undefined
+                            },
+                            {
+                                title: scope.caze[0].caseId,
+                                url: '#/cases/' + scope.caze[0].id + '/' + scope.caze[0].ownerId
+                            }
+                        ]);
+                    });
 
                     if (scope.sidebardata) {
                         scope.sidebardata.caze = scope.caze;
@@ -181,7 +192,7 @@ angular.module('sf')
                 scope.errorHandler = function () {
                     var bcMessage = caseService.getMessage();
                     if (bcMessage !== 200) {
-                        growl.warning('errorMessage');
+                        // growl.warning('errorMessage');
                     }
                 };
                 //error-handler

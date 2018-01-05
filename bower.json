@@ -32,6 +32,7 @@
     "angular-chosen-localytics": "1.0.8",
     "ngmap": "1.18.4",
     "angular-ui-select": "0.19.8",
+    "select2":"3.5.4",
     "gmap3": "~7.2",
     "jquery-placeholder": "~2.3",
     "superfish": "~1.7",

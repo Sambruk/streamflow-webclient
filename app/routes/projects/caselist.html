@@ -62,6 +62,7 @@
                       <div class="issue-description__type">{{case.caseType.text}}</div>
                       <div class="issue-description__label-list label-list">{{case.labelList() | parenthesis}}</div>
                       <div class="issue-description__icon-wrapp icon-wrapp">
+                        <span ng-if="case.restricted"><span class="issue-secret"></span></span>
                         <span ng-if="case.unread"><span class="issue-unread"></span></span>
                         <span ng-if="case.hasAttachments"><span class="issue-has-attachments"></span></span>
                         <span ng-if="case.hasContacts"><span class="issue-has-contacts"></span></span>
@@ -109,6 +110,7 @@
                     <div class="issue-description-right-part__item issue-description__type">{{case.caseType.text}}</div>
                     <div class="issue-description-right-part__item issue-description__label-list label-list">{{case.labelList() | parenthesis}}</div>
                     <div class="issue-description-right-part__item issue-description__icon-wrapp icon-wrapp">
+                      <span ng-if="case.restricted"><span class="issue-secret"></span></span>
                       <span ng-if="case.unread"><span class="issue-unread"></span></span>
                       <span ng-if="case.hasAttachments"><span class="issue-has-attachments"></span></span>
                       <span ng-if="case.hasContacts"><span class="issue-has-contacts"></span></span>

@@ -21,7 +21,7 @@ angular.module('sf')
         $rootScope.$broadcast('case-list-load');
 
         var initialCase = projectService.getSelected($routeParams.projectId, $routeParams.projectType, '+limit+1+offset+0',null,function () {
-            growl.warning('Object don\'t exist');
+            growl.warning('Objektet finns inte');
         });
         var pageSize = paginationService.pageSize;
         var stopLoad = false;

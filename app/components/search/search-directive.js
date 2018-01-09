@@ -235,14 +235,23 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                 };
 
                 var prepareCreatedOn = function () {
-                    if (scope.filter && (scope.filter.createdOnFrom || scope.filter.createdOnTo)) {
+                    if (scope.filter && (scope.filter.createdOnFrom && scope.filter.createdOnTo)) {
                         scope.filter.createdOn = formatDateField(scope.filter.createdOnFrom) + '-' + formatDateField(scope.filter.createdOnTo);
+                    } else {
+                        scope.filter.createdOnFrom = "";
+                        scope.filter.createdOnTo = "";
+                        scope.filter.createdOn = "";
+
                     }
                 };
 
                 var prepareDueOn = function () {
-                    if (scope.filter && (scope.filter.dueOnFrom || scope.filter.dueOnTo)) {
+                    if (scope.filter && (scope.filter.dueOnFrom && scope.filter.dueOnTo)) {
                         scope.filter.dueOn = formatDateField(scope.filter.dueOnFrom) + '-' + formatDateField(scope.filter.dueOnTo);
+                    } else {
+                        scope.filter.dueOnFrom = "";
+                        scope.filter.dueOnTo = "";
+                        scope.filter.dueOn = ""
                     }
                 };
 

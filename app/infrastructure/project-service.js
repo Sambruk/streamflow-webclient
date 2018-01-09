@@ -77,18 +77,16 @@ angular.module('sf')
                 });
             },
 
-            checkSelected: function (projectId, projectType, query, failureCallback) {
-                var self = this;
-                query = query || '';
-
+            checkSelected: function (projectId, failureCallback) {
                 return backendService.get({
                     specs: [
                         {resources: caseService.getWorkspace()},
                         {resources: 'projects'},
-                        {'index.links': projectId},
-                        {resources: projectType},
-                        {queries: 'cases?tq=select+*' + query}
+                        {'index.links': projectId}
                     ],
+                    onSuccess: function (resource, result) {
+                        //Just ignore if project found
+                    },
                     onFailure: function (err) {
                         if (failureCallback) {
                             failureCallback();

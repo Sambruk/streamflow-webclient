@@ -135,14 +135,11 @@ angular.module('sf')
                     }
 
                     var isFound = true;
-                    var initialCase = projectService.checkSelected($rootScope.contextmenuParams.projectId, $rootScope.contextmenuParams.projectType, '+limit+1+offset+0', function () {
+                    var initialCase = projectService.checkSelected($rootScope.contextmenuParams.projectId, function () {
                         isFound = false;
-
                     });
 
-                    console.log('scope',scope);
-
-                    initialCase.promise.then(function (result) {
+                    initialCase.promise.then(function () {
                         $rootScope.$broadcast('breadcrumb-updated', [
                             {
                                 title: scope.caze[0].owner

@@ -30,13 +30,19 @@ angular.module('sf', [
     'infinite-scroll',
     'angular-autogrow',
     'ngIdle',
-    'ngMap'
+    'ngMap',
+    '720kb.tooltips'
 ])
     .config(function (IdleProvider) {
         IdleProvider.idle(2 * 60 * 60);
     })
     .config(['growlProvider', function (growlProvider) {
         growlProvider.globalTimeToLive({success: 3000, error: 3000, warning: 3000, info: 3000});
+    }])
+    .config(['tooltipsConfProvider', function configConf(tooltipsConfProvider) {
+        tooltipsConfProvider.configure({
+            'smart': true
+        });
     }])
     .run(function ($rootScope, $http, httpService, $location, $routeParams, tokenService, Idle) {
 

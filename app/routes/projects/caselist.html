@@ -110,14 +110,14 @@
                     <div class="issue-description-right-part__item issue-description__type">{{case.caseType.text}}</div>
                     <div class="issue-description-right-part__item issue-description__label-list label-list">{{case.labelList() | parenthesis}}</div>
                     <div class="issue-description-right-part__item issue-description__icon-wrapp icon-wrapp">
-                      <span ng-if="case.restricted"><span class="issue-secret"></span></span>
-                      <span ng-if="case.unread"><span class="issue-unread"></span></span>
-                      <span ng-if="case.hasAttachments"><span class="issue-has-attachments"></span></span>
-                      <span ng-if="case.hasContacts"><span class="issue-has-contacts"></span></span>
-                      <span ng-if="case.hasUnreadConversation"><span class="issue-has-unread-conversation"></span></span>
-                      <span ng-if="case.hasConversations"><span class="issue-has-conversation"></span></span>
-                      <span ng-if="case.hasUnreadForm"><span class="issue-has-unread-forms -forms"></span></span>
-                      <span ng-if="case.hasSubmittedForms"><span class="issue-has-submitted-forms"></span></span>
+                      <span ng-if="case.restricted"><span class="issue-secret" tooltips tooltip-template="Begränsad åtkomst"></span></span>
+                      <span ng-if="case.unread"><span class="issue-unread" tooltips tooltip-template="Oläst"></span></span>
+                      <span ng-if="case.hasAttachments"><span class="issue-has-attachments" tooltips tooltip-template="Har bilagor"></span></span>
+                      <span ng-if="case.hasContacts"><span class="issue-has-contacts" tooltips tooltip-template="Har kontakter"></span></span>
+                      <span ng-if="case.hasUnreadConversation"><span class="issue-has-unread-conversation"tooltips tooltip-template="Finns olästa konversationer"></span></span>
+                      <span ng-if="case.hasConversations"><span class="issue-has-conversation"tooltips tooltip-template="Har konversationer"></span></span>
+                      <span ng-if="case.hasUnreadForm"><span class="issue-has-unread-forms" tooltips tooltip-template="Har oläst formulär"></span></span>
+                      <span ng-if="case.hasSubmittedForms"><span class="issue-has-submitted-forms" tooltips tooltip-template="Har ifyllt formulär"></span></span>
                     </div>
                   </div>
                 </div>

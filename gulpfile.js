@@ -58,7 +58,8 @@ var paths = {
     'bower_components/pickadate/lib/themes/default.*',
     'bower_components/chosen/chosen.css',
     'bower_components/angular-chosen-localytics/chosen-spinner.css',
-    'bower_components/ui-select/dist/select.css'
+    'bower_components/ui-select/dist/select.css',
+    'bower_components/angular-tooltips/dist/angular-tooltips.css'
   ],
   templates: [
     'app/**/*.html'

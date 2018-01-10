@@ -17,7 +17,7 @@
 
 'use strict';
 
-angular.module('sf').directive('banner', function ($rootScope, $q, profileService) {
+angular.module('sf').directive('banner', function ($rootScope, $q, $location, profileService) {
     return {
         restrict: 'E',
         templateUrl: 'components/banner/banner.html',
@@ -49,6 +49,16 @@ angular.module('sf').directive('banner', function ($rootScope, $q, profileServic
                 } else {
                     scope.showUserActions = !scope.showUserActions;
                 }
+            };
+
+            scope.refreshBreadcrumbs = function () {
+                $rootScope.$broadcast('breadcrumb-updated', [
+                    {
+                        title: '',
+                        url: ''
+                    }
+                ]);
+                $location.path('#');
             };
 
             scope.$on('dialogCloseEvent', function (e, data) {

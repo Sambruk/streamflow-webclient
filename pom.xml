@@ -125,6 +125,7 @@
                 <exclude>**/bower_components/**</exclude>
                 <exclude>**/node_modules/**</exclude>
                 <exclude>**/target/**</exclude>
+                <exclude>**/*.html</exclude>
                 <exclude>**/*.properties</exclude>
                 <exclude>**/*.txt</exclude>
                 <exclude>**/*.pdf</exclude>

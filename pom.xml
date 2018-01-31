@@ -24,6 +24,15 @@
       </properties>
     </profile>
   </profiles>
+
+  <inceptionYear>2016-2018</inceptionYear>
+  <url>http://www.sambruk.se/streamflow/</url>
+
+  <organization>
+    <name>Föreningen Sambruk</name>
+    <url>http://www.sambruk.se/streamflow/</url>
+  </organization>
+
   <build>
     <plugins>
       <!-- Build JavaScript app -->
@@ -83,6 +92,51 @@
           <fromFile>target/${project.build.finalName}.war</fromFile>
           <toFile>${project.build.finalName}.war</toFile>
         </configuration>
+      </plugin>
+      <plugin>
+        <inherited>false</inherited>
+        <groupId>com.mycila.maven-license-plugin</groupId>
+        <artifactId>maven-license-plugin</artifactId>
+        <version>1.9.0</version>
+        <configuration>
+          <header>${basedir}/src/main/resources/LICENSE_HEADER.txt</header>
+          <failIfMissing>true</failIfMissing>
+          <aggregate>true</aggregate>
+          <properties>
+            <owner>${project.organization.name}</owner>
+            <year>${project.inceptionYear}</year>
+          </properties>
+          <mapping>
+            <tcl>SCRIPT_STYLE</tcl>
+          </mapping>
+          <strictCheck>true</strictCheck>
+        </configuration>
+        <executions>
+          <execution>
+            <id>check-headers UTF-8</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>format</goal>
+            </goals>
+            <configuration>
+              <excludes>
+                <exclude>**/docs/**</exclude>
+                <exclude>**/build/**</exclude>
+                <exclude>**/bower_components/**</exclude>
+                <exclude>**/node_modules/**</exclude>
+                <exclude>**/target/**</exclude>
+                <exclude>**/*.properties</exclude>
+                <exclude>**/*.txt</exclude>
+                <exclude>**/*.pdf</exclude>
+                <exclude>**/.idea/**</exclude>
+                <exclude>**/*.scenario</exclude>
+                <exclude>**/*.vm</exclude>
+                <exclude>**/*.atom</exclude>
+              </excludes>
+              <encoding>UTF-8</encoding>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

@@ -28,7 +28,7 @@ var imagemin = require('gulp-imagemin');
 var jshint = require('gulp-jshint');
 var karma = require('gulp-karma');
 var mainBowerFiles = require('main-bower-files');
-var minifyCSS = require('gulp-minify-css');
+var minifyCSS = require('gulp-clean-css');
 var minifyHtml = require('gulp-minify-html');
 var ngAnnotate = require('gulp-ng-annotate');
 var ngConstant = require('gulp-ng-constant');
@@ -120,11 +120,11 @@ gulp.task('lint', function () {
 
 gulp.task('build-scripts', ['lint', 'unit-test'], function () {
   return gulp.src(paths.scripts)
-    //.pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(ngAnnotate())
     .pipe(concat('streamflow.js'))
-    //.pipe(uglify())
-    //.pipe(sourcemaps.write())
+    // .pipe(uglify())
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('build/app'))
     .pipe(connect.reload());
 });

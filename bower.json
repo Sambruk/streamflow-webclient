@@ -14,7 +14,7 @@
     "chosen": "~1.8.2",
     "angular": "1.4",
     "momentjs": "~2.19",
-    "typewatch": " git://github.com/dennyferra/TypeWatch.git",
+    "jquery-typewatch": "3.0.0",
     "angular-sanitize": "1.4",
     "ng-file-upload": "2.2.2",
 

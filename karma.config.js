@@ -51,7 +51,7 @@ module.exports = function(config){
       'app/routes/**/*.js',
       'test/fixture/backend.js',
       'test/unit/**/*.js',
-      'bower_components/ui-select/dist/select.js'
+      'bower_components/angular-ui-select/dist/select.js'
     ],
 
     exclude: ['test/e2e/**/*.js'],

@@ -19,7 +19,7 @@
 'use strict';
 
 angular.module('sf')
-    .factory('fileService', function ($upload) {
+    .factory('fileService', function (Upload) {
 
         var uploadFiles = function ($files, url) {
             if ($files.length === 1) {
@@ -32,11 +32,13 @@ angular.module('sf')
         };
 
         var uploadFile = function (file, url) {
-            return $upload.upload({
+            return Upload.upload({
                 url: url,
                 headers: {'Content-Type': 'multipart/formdata'},
-                file: file
-            });
+                data: {
+                    file: file
+                }
+            })
         };
 
         return {

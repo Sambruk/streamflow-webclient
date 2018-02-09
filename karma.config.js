@@ -24,7 +24,7 @@ module.exports = function(config){
     basePath : '',
 
     files : [
-      'bower_components/ng-file-upload/angular-file-upload-shim.js',
+      'bower_components/ng-file-upload/ng-file-upload-shim.js',
       'bower_components/jquery/dist/jquery.js',
       'bower_components/angular/angular.js',
       'bower_components/angular-resource/angular-resource.js',
@@ -33,7 +33,7 @@ module.exports = function(config){
       'bower_components/angular-animate/angular-animate.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
-      'bower_components/ng-file-upload/angular-file-upload.js',
+      'bower_components/ng-file-upload/ng-file-upload.js',
       'bower_components/underscore/underscore-min.js',
       'bower_components/angular-filter/dist/angular-filter.js',
       'bower_components/angular-chosen-localytics/chosen.js',

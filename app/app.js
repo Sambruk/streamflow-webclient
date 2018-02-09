@@ -25,7 +25,7 @@ angular.module('sf', [
     'angular-growl',
     'ui.select',
     'ngSanitize',
-    'angularFileUpload',
+    'ngFileUpload',
     'sf.config',
     'angular.filter',
     'localytics.directives',

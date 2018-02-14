@@ -11,7 +11,7 @@
   ],
   "dependencies": {
     "jquery": "2.2.4",
-    "chosen": "~1.8.2",
+    "chosen": "~1.8.3",
     "angular": "1.5",
     "momentjs": "~2.19",
     "jquery-typewatch": "3.0.0",
@@ -21,7 +21,7 @@
     "ng-file-upload-shim": "12.2.13",
     "angular-mocks": "1.5",
     "angular-scenario": "1.5",
-    "pickadate": "~3.5.4",
+    "pickadate": "~3.5.6",
     "lodash": "~4.17",
     "underscore": "1.8.3",
     "angular-animate": "1.5",

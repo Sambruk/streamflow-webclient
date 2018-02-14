@@ -26,9 +26,9 @@ describe("sf.services.case", function () {
   beforeEach(inject(function (httpService, navigationService) {
     httpService.baseUrl = '';
     httpService.apiUrl = 'mock/';
-    spyOn(navigationService, 'projectId').andReturn('b35873ba-4007-40ac-9936-975eab38395a-3f');
+    spyOn(navigationService, 'projectId').and.returnValue('b35873ba-4007-40ac-9936-975eab38395a-3f');
     //spyOn(navigationService, 'caseType').andReturn('inbox');
-    spyOn(navigationService, 'caseId').andReturn('b35873ba-4007-40ac-9936-975eab38395a-30');
+    spyOn(navigationService, 'caseId').and.returnValue('b35873ba-4007-40ac-9936-975eab38395a-30');
   }));
 
   describe("caseService", function () {

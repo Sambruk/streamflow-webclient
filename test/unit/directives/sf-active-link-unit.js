@@ -58,7 +58,7 @@ describe("sf.directives.sf-active-link", function () {
     $location.path('/dingo');
     scope.$digest();
     var klass = el.attr('class');
-    expect(klass).toNotMatch(/layout-2/);
+    expect(klass).not.toMatch(/layout-2/);
   }));
 });
 

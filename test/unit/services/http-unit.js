@@ -25,8 +25,8 @@ describe("sf.services.http", function () {
 
   describe('httpService', function () {
     beforeEach(inject(function ($location) {
-      spyOn($location, 'absUrl').andReturn("http://localhost:8000/app/index.html#/customers/197606030001");
-      spyOn($location, 'path').andReturn("/customers/197606030001");
+      spyOn($location, 'absUrl').and.returnValue("http://localhost:8000/app/index.html#/customers/197606030001");
+      spyOn($location, 'path').and.returnValue("/customers/197606030001");
     }));
 
     xit("can get the entry point", inject(function (httpService) {

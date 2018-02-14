@@ -66,7 +66,7 @@ describe("sf.directives.sf-layout-style", function () {
     $location.path('/not-projects/whatever');
     scope.$digest();
     var klass = el.attr('class');
-    expect(klass).toNotMatch(/layout-1/);
+    expect(klass).not.toMatch(/layout-1/);
   }));
 });
 

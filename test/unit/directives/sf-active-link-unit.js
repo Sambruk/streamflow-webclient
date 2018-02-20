@@ -35,30 +35,33 @@
 'use strict';
 describe("sf.directives.sf-active-link", function () {
 
-  beforeEach(function() {
-    module('sf');
-  });
+    beforeEach(function () {
+        module('sf');
+    });
 
-  var scope, el;
-  beforeEach(inject(function($rootScope, $compile) {
-    var html = '<a href="#/tapir" sf-active-link>Hello</a>';
-    scope = $rootScope;
-    el = angular.element(html);
-    $compile(el)(scope);
-  }));
+    var scope, el;
+    beforeEach(inject(function ($rootScope, $compile) {
+        var html = '<a href="#/tapir" sf-active-link>Hello</a>';
+        scope = $rootScope.$new();
+        el = angular.element(html);
+        $compile(el)(scope);
+    }));
 
-  it('sets the sel class for matching path', inject(function($location) {
-    $location.path('/tapir');
-    scope.$digest();
-    var klass = el.attr('class');
-    expect(klass).toMatch(/sel/);
-  }));
+    it('sets the sel class for matching path', inject(function ($location, $timeout) {
+        $location.path('/tapir');
+        scope.$digest();
+        $timeout(function () {
+            var klass = el.attr('class');
+            expect(klass).toMatch(/sel/);
+        }, 100);
 
-  it('does not set sel class for non matching path', inject(function($location) {
-    $location.path('/dingo');
-    scope.$digest();
-    var klass = el.attr('class');
-    expect(klass).not.toMatch(/layout-2/);
-  }));
+    }));
+
+    it('does not set sel class for non matching path', inject(function ($location) {
+        $location.path('/dingo');
+        scope.$digest();
+        var klass = el.attr('class');
+        expect(klass).not.toMatch(/layout-2/);
+    }));
 });
 

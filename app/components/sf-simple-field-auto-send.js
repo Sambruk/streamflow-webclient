@@ -22,7 +22,7 @@ angular.module('sf')
     .directive('sfSimpleFieldAutoSend', function ($parse, $params, caseService, $rootScope) {
         return {
             require: 'ngModel',
-            link: function (scope, element, attr, ngModel) {
+            link: function (scope, element, attr) {
 
                 var hasRunAtLeastOnce = false;
                 scope.$watch(attr.ngModel, function (newValue, oldValue) {

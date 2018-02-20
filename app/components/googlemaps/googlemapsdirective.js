@@ -235,10 +235,12 @@ angular.module('sf').directive('googleMap', function () {
                             clearCurrentMarkersAndLines();
                             $scope.marker = args[0];
 
+                            var position;
+
                             if ($scope.marker) {
-                                var position = $scope.marker.position.lat() + ', ' + $scope.marker.position.lng();
+                                position = $scope.marker.position.lat() + ', ' + $scope.marker.position.lng();
                             } else {
-                                var position = "current-location";
+                                position = 'current-location';
                             }
                             $scope.mapValue.updateLocation(position);
                             reverseGeocode($scope.marker.position, function () {

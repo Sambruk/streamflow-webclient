@@ -19,7 +19,7 @@
 'use strict';
 
 angular.module('sf')
-    .factory('groupByService', function (SfCase) {
+    .factory('groupByService', function () {
 
         var optionNone = {name: 'Ingen', value: ''};
 

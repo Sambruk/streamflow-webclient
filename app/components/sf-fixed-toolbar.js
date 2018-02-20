@@ -18,7 +18,7 @@
  */
 'use strict';
 angular.module('sf')
-    .directive('sfFixedToolbar', ['$location', function (location) {
+    .directive('sfFixedToolbar', function () {
 
         return {
             restrict: 'A',
@@ -41,4 +41,4 @@ angular.module('sf')
             }
         };
 
-    }]);
+    });

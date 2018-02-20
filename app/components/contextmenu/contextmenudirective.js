@@ -53,7 +53,7 @@ angular.module('sf').directive('contextmenu', function (projectService, navigati
 
             scope.createCase = function () {
                 if (!scope.canCreateCase()) {
-                    alert("Du måste välja brevlåda nedan");
+                    alert('Du måste välja brevlåda nedan');
                     return;
                 }
                 var projectId = navigationService.projectId();

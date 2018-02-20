@@ -38,7 +38,7 @@ angular.module('sf')
                 data: {
                     file: file
                 }
-            })
+            });
         };
 
         return {

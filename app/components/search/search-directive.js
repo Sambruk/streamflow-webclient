@@ -256,9 +256,9 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                     if (scope.filter && (scope.filter.createdOnFrom && scope.filter.createdOnTo)) {
                         scope.filter.createdOn = formatDateField(scope.filter.createdOnFrom) + '-' + formatDateField(scope.filter.createdOnTo);
                     } else {
-                        scope.filter.createdOnFrom = "";
-                        scope.filter.createdOnTo = "";
-                        scope.filter.createdOn = "";
+                        scope.filter.createdOnFrom = '';
+                        scope.filter.createdOnTo = '';
+                        scope.filter.createdOn = '';
 
                     }
                 };
@@ -267,9 +267,9 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                     if (scope.filter && (scope.filter.dueOnFrom && scope.filter.dueOnTo)) {
                         scope.filter.dueOn = formatDateField(scope.filter.dueOnFrom) + '-' + formatDateField(scope.filter.dueOnTo);
                     } else {
-                        scope.filter.dueOnFrom = "";
-                        scope.filter.dueOnTo = "";
-                        scope.filter.dueOn = ""
+                        scope.filter.dueOnFrom = '';
+                        scope.filter.dueOnTo = '';
+                        scope.filter.dueOn = '';
                     }
                 };
 

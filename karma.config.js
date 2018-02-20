@@ -40,7 +40,7 @@ module.exports = function(config){
       'bower_components/ngmap/build/scripts/ng-map.min.js',
       'bower_components/momentjs/moment.js',
       'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
-      'bower_components/angular-autogrow/angular-autogrow.min.js',
+      'bower_components/angular-autogrow/angularjs-autogrow.min.js',
       'bower_components/ng-idle/angular-idle.min.js',
       'bower_components/angular-tooltips/dist/angular-tooltips.js',
       'app/config/config.js',

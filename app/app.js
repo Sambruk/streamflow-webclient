@@ -30,7 +30,7 @@ angular.module('sf', [
     'angular.filter',
     'localytics.directives',
     'infinite-scroll',
-    'angular-autogrow',
+    'angularjs-autogrow',
     'ngIdle',
     'ngMap',
     '720kb.tooltips'

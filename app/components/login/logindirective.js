@@ -42,13 +42,13 @@ angular.module('sf').directive('login', function ($rootScope, buildMode, $locati
             }
 
             function getLoggedInStatus() {
-                return $http.get(httpService.apiUrl)
-                    .success(function () {
+                return $http.get(httpService.apiUrl).then(
+                    function (){
                         return true;
-                    })
-                    .error(function () {
-                        return false;
-                    });
+                    }, function (error) {
+                    return false;
+
+                });
             }
 
             /**

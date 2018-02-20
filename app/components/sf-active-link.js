@@ -19,12 +19,13 @@
 'use strict';
 
 angular.module('sf')
-    .directive('sfActiveLink', ['$location', function (location) {
+    .directive('sfActiveLink', function ($location) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
-                scope.$watch('location.path()', function (newPath) {
-                    scope.location = location;
+                scope.$watch(function () {
+                    return $location.path();
+                }, function (newPath) {
                     var href = attrs.href.substring(1);
                     if (!newPath) {
                         return;
@@ -38,4 +39,4 @@ angular.module('sf')
                 });
             }
         };
-    }]);
+    });

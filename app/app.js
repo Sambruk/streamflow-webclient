@@ -38,6 +38,9 @@ angular.module('sf', [
     .config(function (IdleProvider) {
         IdleProvider.idle(2 * 60 * 60);
     })
+    .config(['$locationProvider', function($locationProvider) {
+        $locationProvider.hashPrefix('');
+    }])
     .config(['growlProvider', function (growlProvider) {
         growlProvider.globalTimeToLive({success: 3000, error: 3000, warning: 3000, info: 3000});
     }])

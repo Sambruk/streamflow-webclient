@@ -18,7 +18,7 @@
  */
 'use strict';
 angular.module('sf')
-    .directive('sfLayoutStyle', ['$location', function (location) {
+    .directive('sfLayoutStyle', function ($location) {
         function clearLayoutClasses(element) {
             _.each(['layout-1', 'layout-2'], function (c) {
                 element.removeClass(c);
@@ -28,10 +28,10 @@ angular.module('sf')
         return {
             restrict: 'A',
             link: function (scope, element) {
-                scope.location = location;
-                scope.$watch('location.path()', function () {
+                scope.location = $location;
+                scope.$watch('$location.path()', function () {
                     clearLayoutClasses(element);
-                    if (location.path().indexOf('/projects') === 0 || location.path().indexOf('/search') === 0) {
+                    if ($location.path().indexOf('/projects') === 0 || $location.path().indexOf('/search') === 0) {
                         element.addClass('layout-1');
                     }
                     else {
@@ -40,5 +40,5 @@ angular.module('sf')
                 });
             }
         };
-    }]);
+    });
 

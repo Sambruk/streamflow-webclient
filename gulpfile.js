@@ -26,7 +26,7 @@ var del = require('del');
 var gulp = require('gulp');
 var imagemin = require('gulp-imagemin');
 var jshint = require('gulp-jshint');
-var karma = require('gulp-karma');
+var karmaServer = require('karma').Server;
 var mainBowerFiles = require('main-bower-files');
 var minifyCSS = require('gulp-clean-css');
 var minifyHtml = require('gulp-minify-html');
@@ -76,6 +76,16 @@ var paths = {
   ]
 };
 
+function karmaCallback(done) {
+    return function (exitCode) {
+        if (exitCode) {
+            done(new Error('Karma tests failed with exit code ' + exitCode));
+        } else {
+            done();
+        }
+    }
+}
+
 gulp.task('config', function () {
   gulp.src(paths.config)
     .pipe(ngConstant({
@@ -85,26 +95,18 @@ gulp.task('config', function () {
     .pipe(gulp.dest('app/config'));
 });
 
-gulp.task('unit-test', function () {
-  return gulp.src(testFiles)
-    .pipe(karma({
-      configFile: 'karma.config.js',
-      action: 'run'
-    }))
-    .on('error', function (err) {
-      throw err;
-    });
+gulp.task('unit-test', function (done) {
+    new karmaServer({
+        configFile: __dirname + '/karma.config.js',
+        singleRun: true
+    }, karmaCallback(done)).start();
 });
 
-gulp.task('e2e-test', function () {
-  return gulp.src(testFiles)
-    .pipe(karma({
-      configFile: 'karma-e2e.conf.js',
-      action: 'run'
-    }))
-    .on('error', function (err) {
-      throw err;
-    });
+gulp.task('e2e-test', function (done) {
+    new karmaServer({
+        configFile: __dirname + '/karma-e2e.conf.js',
+        singleRun: true
+    }, karmaCallback(done)).start();
 });
 
 gulp.task('lint', function () {

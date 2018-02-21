@@ -33,7 +33,8 @@ angular.module('sf', [
     'angularjs-autogrow',
     'ngIdle',
     'ngMap',
-    '720kb.tooltips'
+    '720kb.tooltips',
+    'localytics.directives'
 ])
     .config(function (IdleProvider) {
         IdleProvider.idle(2 * 60 * 60);

@@ -24,6 +24,7 @@ var concat = require('gulp-concat');
 var connect = require('gulp-connect');
 var del = require('del');
 var gulp = require('gulp');
+var merge = require('merge-stream');
 var imagemin = require('gulp-imagemin');
 var jshint = require('gulp-jshint');
 var karmaServer = require('karma').Server;
@@ -131,7 +132,7 @@ gulp.task('build-scripts', ['lint', 'unit-test'], function () {
 });
 
 gulp.task('build-vendor-scripts', function () {
-  return gulp.src(mainBowerFiles({filter: /\.js$/i}))
+  return merge(gulp.src('bower_components/jquery/dist/jquery.js'), gulp.src(mainBowerFiles({filter: /\.js$/i})))
     .pipe(concat('vendor.js'))
     .pipe(ngAnnotate())
     .pipe(uglify())

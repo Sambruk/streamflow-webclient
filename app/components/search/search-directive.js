@@ -162,8 +162,7 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                 initFromQueryParams();
 
                 scope.$watch('filter.dueOnFrom', function () {
-                    if (!scope.filter || !scope.filter.dueOnFrom) {
-                    } else if (!scope.filter.dueOnTo) {
+                    if (!scope.filter.dueOnTo) {
                         scope.filter.dueOnTo = scope.filter.dueOnFrom;
                     } else if (scope.filter.dueOnFrom > scope.filter.dueOnTo) {
                         scope.filter.dueOnTo = scope.filter.dueOnFrom;
@@ -172,8 +171,7 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                 });
 
                 scope.$watch('filter.dueOnTo', function () {
-                    if (!scope.filter || !scope.filter.dueOnTo) {
-                    } else if (!scope.filter.dueOnFrom) {
+                    if (!scope.filter.dueOnFrom) {
                         scope.filter.dueOnFrom = scope.filter.dueOnTo;
                     } else if (scope.filter.dueOnFrom > scope.filter.dueOnTo) {
                         scope.filter.dueOnTo = scope.filter.dueOnFrom;
@@ -182,8 +180,7 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                 });
 
                 scope.$watch('filter.createdOnFrom', function () {
-                    if (!scope.filter || !scope.filter.createdOnFrom) {
-                    } else if (!scope.filter.createdOnTo) {
+                    if (!scope.filter.createdOnTo) {
                         scope.filter.createdOnTo = scope.filter.createdOnFrom;
                     } else if (scope.filter.createdOnFrom > scope.filter.createdOnTo) {
                         scope.filter.createdOnTo = scope.filter.createdOnFrom;
@@ -192,8 +189,7 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                 });
 
                 scope.$watch('filter.createdOnTo', function () {
-                    if (!scope.filter || !scope.filter.createdOnTo) {
-                    } else if (!scope.filter.createdOnFrom) {
+                    if (!scope.filter.createdOnFrom) {
                         scope.filter.createdOnFrom = scope.filter.createdOnTo;
                     } else if (scope.filter.createdOnFrom > scope.filter.createdOnTo) {
                         scope.filter.createdOnTo = scope.filter.createdOnFrom;
@@ -372,11 +368,11 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                     scope.showSearchFilter = false;
 
                     if (scope.queryFilter) {
-                        query = query + scope.queryFilter;
+                        query += scope.queryFilter;
                     }
 
                     if (scope.queryGroupSorting) {
-                        query = query + scope.queryGroupSorting;
+                        query += scope.queryGroupSorting;
                     }
                     groupByService.setGroupByValue(scope.group.value);
 

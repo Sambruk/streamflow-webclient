@@ -37,7 +37,7 @@ angular.module('sf')
                             .value();
 
                         _.forEach(projects, function (values, key) {
-                            var id = undefined;
+                            var id;
                             var types = _.map(values, function (item) {
                                 id = item.id;
                                 return {name: item.rel, href: item.href, caseCount: item.caseCount};

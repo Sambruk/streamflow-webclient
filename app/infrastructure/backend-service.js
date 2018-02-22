@@ -59,7 +59,7 @@ angular.module('sf').factory('backendService', function ($window, $http, $q, htt
 
             // Fix for broken API links to entities
             if (w && isId(w.href) && _.last(w.href) !== '/') {
-                w.href = w.href + '/';
+                w.href += '/';
             }
 
             if (!w) {

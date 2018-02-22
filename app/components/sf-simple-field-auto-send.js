@@ -37,7 +37,7 @@ angular.module('sf')
                     var value = newValue;
 
                     if (attr.inputType === 'date') {
-                        value = value + 'T00:00:00.000Z';
+                        value += 'T00:00:00.000Z';
                     }
 
                     var callback = function () {

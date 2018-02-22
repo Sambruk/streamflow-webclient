@@ -21,16 +21,6 @@
 angular.module('sf')
     .factory('fileService', function (Upload) {
 
-        var uploadFiles = function ($files, url) {
-            if ($files.length === 1) {
-                uploadFile($files[0], url);
-            } else {
-                $files.forEach(function (file) {
-                    uploadFile(file, url);
-                });
-            }
-        };
-
         var uploadFile = function (file, url) {
             return Upload.upload({
                 url: url,
@@ -39,6 +29,16 @@ angular.module('sf')
                     file: file
                 }
             });
+        };
+
+        var uploadFiles = function ($files, url) {
+            if ($files.length === 1) {
+                uploadFile($files[0], url);
+            } else {
+                $files.forEach(function (file) {
+                    uploadFile(file, url);
+                });
+            }
         };
 
         return {

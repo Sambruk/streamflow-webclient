@@ -44,9 +44,9 @@ angular.module('sf')
 
             contact[$event.currentTarget.name] = $event.currentTarget.value;
 
-            if ($event.currentTarget.id === 'contact-phone' && !$event.currentTarget.value.match(/^$|^([0-9\(\)\/\+ \-]*)$/)) {
+            if ($event.currentTarget.id === 'contact-phone' && !$event.currentTarget.value.match(/^$|^([0-9()\/+ \-]*)$/)) {
                 $error($($event.target));
-            } else if ($event.currentTarget.id === 'contact-email' && !$event.currentTarget.value.match(/^$|^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+            } else if ($event.currentTarget.id === 'contact-email' && !$event.currentTarget.value.match(/^$|^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)) {
                 $error($($event.target));
             } else if ($event.currentTarget.id === 'contact-id' && !$event.currentTarget.value.match(/^$|^19\d{10}$/)) {
                 $error($($event.target));

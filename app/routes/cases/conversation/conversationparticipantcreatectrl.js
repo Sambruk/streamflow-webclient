@@ -33,7 +33,7 @@ angular.module('sf')
             }
 
             function isEmailAddress(value) {
-                return value.match(/^$|^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
+                return value.match(/^$|^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/);
             }
 
             if (isTabOrEnter(keyEvent) && noMatchingResult()) {
@@ -58,8 +58,9 @@ angular.module('sf')
          This is to enable addition of external conversation participants by email address.
          */
         var searchField = '#convo_participant_select_chosen input:first';
-        $('body').off('keydown.searchfield', searchField);
-        $('body').on('keydown.searchfield', searchField, onSearchFieldKeyDown);
+        var body = $('body');
+        body.off('keydown.searchfield', searchField);
+        body.on('keydown.searchfield', searchField, onSearchFieldKeyDown);
 
         var updateParticipant = function () {
             var href = navigationService.caseHrefSimple($routeParams.caseId) + '/conversation/' + $routeParams.conversationId;

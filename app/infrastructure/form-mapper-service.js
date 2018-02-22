@@ -69,7 +69,7 @@ angular.module('sf')
                         if (field.value.constructor === Array) {
                             escapedValue = field.value.toString();
                         } else {
-                            escapedValue = field.value.replace(/\[(.*),(.*)\]/, '$1' + encodeURIComponent(',') + '$2');
+                            escapedValue = field.value.replace(/\[(.*),(.*)]/, '$1' + encodeURIComponent(',') + '$2');
                         }
                         field.value = _.map(escapedValue.split(', '), function (escaped) {
                             return decodeURIComponent(escaped);
@@ -91,7 +91,7 @@ angular.module('sf')
                         regex = /^\d+$/; // Integer
                     }
                     else {
-                        regex = /^(\d+(?:[\.\,]\d*)?)$/; // Possible decimal, with . or ,
+                        regex = /^(\d+(?:[.,]\d*)?)$/; // Possible decimal, with . or ,
                     }
 
                     field.field.fieldValue.regularExpression = regex;

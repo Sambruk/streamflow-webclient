@@ -65,9 +65,9 @@ angular.module('sf').controller('ProfileEditCtrl', function ($scope, profileServ
         var profile = {};
         profile[$event.currentTarget.name] = $event.currentTarget.value;
 
-        if ($event.currentTarget.id === 'profile-phone' && !$event.currentTarget.value.match(/^([0-9\(\)\/\+ \-]*)$/)) {
+        if ($event.currentTarget.id === 'profile-phone' && !$event.currentTarget.value.match(/^([0-9()\/+ \-]*)$/)) {
             $error($($event.target));
-        } else if ($event.currentTarget.id === 'profile-email' && !$event.currentTarget.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+        } else if ($event.currentTarget.id === 'profile-email' && !$event.currentTarget.value.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)) {
             $error($($event.target));
         } else {
             profileService.updateCurrent(profile).then(function () {

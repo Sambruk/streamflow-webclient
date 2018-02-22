@@ -197,7 +197,7 @@
                     <label for="field-{{ field.field.field }}-{{option.name}}" class="custom-checkbox">
                       <input class="form-checkbox" type="checkbox" value="{{option.name}}"
                              data-ng-model="option.checked"
-                             type="radio" name="{{ field.field.field }}"
+                             name="{{ field.field.field }}"
                              id="field-{{ field.field.field }}-{{option.name}}" ng-change="addToSelected(field)"
                              sf-generic-auto-send
                              data-field-type="{{ field.field.fieldValue._type }}"
@@ -276,7 +276,7 @@
                     <button data-ng-hide="isFirstPage()" class="form-btn inline"
                        data-ng-class="{inactive: isFirstPage()}"
                        data-ng-click="!isFirstPage() && previousFormPage()">Tillbaka</button>
-                    <button data-ng-hide="isLastPage(currentFormPage)"class="form-btn inline"
+                    <button data-ng-hide="isLastPage(currentFormPage)" class="form-btn inline"
                        data-ng-class="{inactive: isLastPage()}"
                        data-ng-click="!isLastPage() && nextFormPage()">Nästa</button>
                     <button data-ng-show="isLastPage(currentFormPage)" class="form-btn inline"

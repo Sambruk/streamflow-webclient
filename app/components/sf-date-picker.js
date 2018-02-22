@@ -26,7 +26,7 @@ angular.module('sf')
                 try {
                     $(element).pickadate({
                         format: 'yyyy-mm-dd',
-                        onSet: function (e) {
+                        onSet: function () {
                             scope.$apply(function () {
                                 var $element = $(element);
                                 ngModel.$setViewValue($element.val());

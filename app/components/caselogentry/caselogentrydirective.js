@@ -52,7 +52,7 @@ angular.module('sf')
                             $window.location.href = '#/cases/' + scope.$parent.caze[0].id + '/' + scope.$parent.caze[0].ownerId + '/notes';
                         }
                         caseService.createCaseLogEntry(scope.caseId, scope.caseLogEntryToCreate)
-                            .then(function (response) {
+                            .then(function () {
                                 $rootScope.$broadcast('caselog-message-created');
                                 scope.caseLogEntryToCreate = '';
                             });

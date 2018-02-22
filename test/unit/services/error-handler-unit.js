@@ -22,7 +22,7 @@ describe("sf.services.error-handler", function () {
   function isPhantomJS() {
     return ( navigator 
              && navigator.userAgent 
-             && navigator.userAgent.indexOf("PhantomJS") != -1 ); 
+             && navigator.userAgent.indexOf("PhantomJS") !== -1 );
   }
 
   beforeEach(module('sf'));

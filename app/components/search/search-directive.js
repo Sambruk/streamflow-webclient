@@ -163,61 +163,46 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
 
                 scope.$watch('filter.dueOnFrom', function () {
                     if (!scope.filter || !scope.filter.dueOnFrom) {
-                        return;
                     } else if (!scope.filter.dueOnTo) {
                         scope.filter.dueOnTo = scope.filter.dueOnFrom;
-                        return;
                     } else if (scope.filter.dueOnFrom > scope.filter.dueOnTo) {
                         scope.filter.dueOnTo = scope.filter.dueOnFrom;
                         growl.warning('Fel datumintervall!');
-                        return;
                     }
                 });
 
                 scope.$watch('filter.dueOnTo', function () {
                     if (!scope.filter || !scope.filter.dueOnTo) {
-                        return;
                     } else if (!scope.filter.dueOnFrom) {
                         scope.filter.dueOnFrom = scope.filter.dueOnTo;
-                        return;
                     } else if (scope.filter.dueOnFrom > scope.filter.dueOnTo) {
                         scope.filter.dueOnTo = scope.filter.dueOnFrom;
                         growl.warning('Fel datumintervall!');
-                        return;
                     }
                 });
 
                 scope.$watch('filter.createdOnFrom', function () {
                     if (!scope.filter || !scope.filter.createdOnFrom) {
-                        return;
                     } else if (!scope.filter.createdOnTo) {
                         scope.filter.createdOnTo = scope.filter.createdOnFrom;
-                        return;
                     } else if (scope.filter.createdOnFrom > scope.filter.createdOnTo) {
                         scope.filter.createdOnTo = scope.filter.createdOnFrom;
                         growl.warning('Fel datumintervall!');
-                        return;
                     }
                 });
 
                 scope.$watch('filter.createdOnTo', function () {
                     if (!scope.filter || !scope.filter.createdOnTo) {
-                        return;
                     } else if (!scope.filter.createdOnFrom) {
                         scope.filter.createdOnFrom = scope.filter.createdOnTo;
-                        return;
                     } else if (scope.filter.createdOnFrom > scope.filter.createdOnTo) {
                         scope.filter.createdOnTo = scope.filter.createdOnFrom;
                         growl.warning('Fel datumintervall!');
-                        return;
                     }
                 });
 
                 scope.$watch('filter.status', function () {
                     if (!scope.filter || !scope.filter.status) {
-                        return;
-                    } else if (!scope.filter.status) {
-                        scope.filter.status = scope.filter.status;
                         return;
                     }
                 });

@@ -60,7 +60,7 @@ angular.module('sf', [
         $rootScope.isFormWindow = $location.$$search.isFormWindow;
 
         //Add current project type to rootScope to let toolbar update accordingly in index.html
-        $rootScope.$on('$routeChangeSuccess', function (e, current, pre) {
+        $rootScope.$on('$routeChangeSuccess', function () {
             // Get all URL parameter
             $rootScope.contextmenuParams = {};
             if ($routeParams.projectType) {

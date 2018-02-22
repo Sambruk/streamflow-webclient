@@ -110,7 +110,7 @@ angular.module('sf').controller('CaseEditCtrl', function ($scope, $rootScope, $r
                 .then(function () {
                     $rootScope.$broadcast('casedescription-changed');
                     $success($($event.target));
-                }, function (error) {
+                }, function () {
                     $error($error($event.target));
                 });
         }

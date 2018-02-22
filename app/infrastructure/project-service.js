@@ -85,7 +85,7 @@ angular.module('sf')
                         {resources: 'projects'},
                         {'index.links': projectId}
                     ],
-                    onSuccess: function (resource, result) {
+                    onSuccess: function () {
                         //Just ignore if project found
                     },
                     onFailure: function (err) {

@@ -148,7 +148,7 @@ window.mockBackend = window.mockBackend || (function () {
     {"classes":null, "href":"b35873ba-4007-40ac-9936-975eab38395a-3f/", "id":"b35873ba-4007-40ac-9936-975eab38395a-3f", "rel":"project", "text":"Streamflow"}
   ]}, "queries":[
     {"classes":"query", "href":"index", "id":"index", "rel":"index", "text":"Index"}
-  ], "resources":[]}
+  ], "resources":[]};
 
   mockBackend.project1 = {"commands":[], "index":null, "queries":[], "resources":[
     {
@@ -291,7 +291,7 @@ window.mockBackend = window.mockBackend || (function () {
       "rel":"index",
       "text":"Index"
     }
-  ], "resources":[]}
+  ], "resources":[]};
 
   mockBackend.open = {"commands":[], "index":null, "queries":[
     {

@@ -45,7 +45,7 @@ angular.module('sf').directive('login', function ($rootScope, buildMode, $locati
                 return $http.get(httpService.apiUrl).then(
                     function (){
                         return true;
-                    }, function (error) {
+                    }, function () {
                     return false;
 
                 });

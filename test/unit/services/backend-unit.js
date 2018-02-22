@@ -39,19 +39,20 @@ describe("sf.services.backend", function () {
   describe("get", function() {
 
     describe('backendService', function () {
-      // TODO: Fix test
-      xit("calls the error handler when a resource is unavailable", inject(function (backendService, $httpBackend) {
+      it("calls the error handler when a resource is unavailable", inject(function (backendService, $httpBackend, $rootScope) {
         $httpBackend.expectGET('mock/').respond(backend.customer);
         $httpBackend.expectGET('mock/open/').respond(backend.open);
         $httpBackend.expectGET('mock/open/cases').respond(404, 'oops');
 
-        var self = this;
-        var result = backendService.get({
+        var $scope = {};
+
+        backendService.get({
           specs: [{resources:'open'},{queries:'cases'}],
-          onSuccess: function () { }
+            onSuccess: function (response) { $scope.response = response;},
+            onFailure:function (response) { $scope.response = response;}
           });
         $httpBackend.flush();
-        expect(error.status).toBe(404);
+        expect($scope.response.status).toBe(404);
       }));
 
       it("can chain several request in one go", inject(function (backendService, $httpBackend) {

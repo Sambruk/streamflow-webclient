@@ -29,8 +29,11 @@ describe("sf.services.http", function () {
       spyOn($location, 'path').and.returnValue("/customers/197606030001");
     }));
 
-    it("can get the entry point", inject(function (httpService) {
-        expect(httpService.apiUrl).toEqual("http://localhost:8082/streamflow/");
+    it("can get the entry point", inject(function ($location, buildMode, httpService) {
+        var protocol = $location.$$protocol;
+        var host = $location.$$host;
+        var port = $location.$$port;
+        expect(httpService.apiUrl).toEqual(protocol + '://' + host + ':' + port + '/webclient/api/');
       }
     ));
 

@@ -36,7 +36,7 @@ module.exports = function(config){
       'bower_components/ng-file-upload/ng-file-upload.js',
       'bower_components/underscore/underscore-min.js',
       'bower_components/angular-filter/dist/angular-filter.js',
-      'bower_components/chosen.jquery/dist/chosen.jquery.min.js',
+      'bower_components/chosen.jquery/chosen.jquery.min.js',
       'bower_components/angular-chosen-localytics/dist/angular-chosen.min.js',
       'bower_components/ngmap/build/scripts/ng-map.min.js',
       'bower_components/momentjs/moment.js',

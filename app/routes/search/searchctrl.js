@@ -42,7 +42,6 @@ angular.module('sf').controller('SearchCtrl', function ($scope, $routeParams, $r
 
     $scope.groupingOptions = groupByService.getGroupingOptions();
 
-    // TODO
     $scope.groupBy = function (selectedGroupItem) {
         $scope.currentCases = groupByService.groupBy($scope.currentCases, originalCases, selectedGroupItem);
         $scope.specificGroupByDefaultSortExpression = groupByService.getSpecificGroupByDefault(selectedGroupItem);

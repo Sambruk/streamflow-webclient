@@ -68,7 +68,6 @@ angular.module('sf')
 
         $scope.groupingOptions = groupByService.getGroupingOptions();
 
-        // TODO
         $scope.groupBy = function (selectedGroupItem) {
             $scope.currentCases = groupByService.groupBy($scope.currentCases, initialCase, selectedGroupItem);
             $scope.specificGroupByDefaultSortExpression = groupByService.getSpecificGroupByDefault(selectedGroupItem);

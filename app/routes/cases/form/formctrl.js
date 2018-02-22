@@ -225,7 +225,6 @@ angular.module('sf')
                         }, [])
                         .filter(function (field) {
                             //Ignoring fields which shouldn't be sent
-                            //TODO Check for file attachment
                             return !(field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue'
                                 || field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.CommentFieldValue'
                                 || field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.FieldGroupFieldValue');
@@ -354,11 +353,4 @@ angular.module('sf')
             $scope.isValidForm = isAllPagesValid;
         });
 
-        /*   //Used for send submit message only after correct form data sending to server
-         //TODO: Maybe it would be good to rewrite that to promises somehow?
-         $scope.$on('form-saved', function (event, formId) {
-         if (!$scope.closeWithForm) {
-                   formSubmitted();
-         }
-         });*/
     });

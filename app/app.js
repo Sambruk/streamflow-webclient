@@ -28,7 +28,6 @@ angular.module('sf', [
     'ngFileUpload',
     'sf.config',
     'angular.filter',
-    'localytics.directives',
     'infinite-scroll',
     'angularjs-autogrow',
     'ngIdle',

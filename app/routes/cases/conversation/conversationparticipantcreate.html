@@ -25,23 +25,20 @@
       <form action="#" method="get" class="cf">
         <div class="form-row cols-1">
           <div class="text select large full">
-            <select
-                chosen
-                no-results-text="'Inga deltagare funna'"
-                data-placeholder="Deltagare/e-post"
-                data-ng-options="participant.id as participant.text for participant in possibleParticipants"
-                data-ng-model="participant"
-                search_contains="true"
-                style="width: 100%;"
-                name="convo-participant-select"
-                id="convo-participant-select"
-                >
-              <!--
-                  empty option needs to be here due to this issue:
-                  https://github.com/localytics/angular-chosen/issues/8
-              -->
-              <option></option>
-            </select>
+            <ui-select ng-model="$parent.participant" theme="select2" style="width: 100%;"
+                       name="convo-participant-select"
+                       id="convo-participant-select">
+              <ui-select-match placeholder="Deltagare/e-post">
+                <span ng-bind="$select.selected.text"></span>
+              </ui-select-match>
+              <ui-select-choices
+                      repeat="item.id as item in possibleParticipants | filter: $select.search track by item.id">
+                <span ng-bind="item.text"></span>
+              </ui-select-choices>
+              <ui-select-no-choice>
+                <span>Inga deltagare funna {{$select.search}}</span>
+              </ui-select-no-choice>
+            </ui-select>
           </div>
         </div>
         <div class="form-row participants">

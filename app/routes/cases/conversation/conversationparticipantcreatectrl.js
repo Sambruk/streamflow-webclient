@@ -23,13 +23,15 @@ angular.module('sf')
         $scope.conversationId = $routeParams.conversationId;
         $scope.possibleParticipants = caseService.getPossibleConversationParticipants($routeParams.caseId, $routeParams.conversationId);
 
+        var searchInput;
+
+        var noMatchingResult = function () {
+            return $('.ui-select-no-choice:first').not('.ng-hide').length > 0;
+        };
+
         var onSearchFieldKeyDown = function (keyEvent) {
             function isTabOrEnter(theKeyEvent) {
                 return (theKeyEvent.which === 9 || theKeyEvent.which === 13);
-            }
-
-            function noMatchingResult() {
-                return $('#convo_participant_select_chosen').find('li.no-results').length > 0;
             }
 
             function isEmailAddress(value) {
@@ -37,14 +39,15 @@ angular.module('sf')
             }
 
             if (isTabOrEnter(keyEvent) && noMatchingResult()) {
-                if (!isEmailAddress(this.value)) {
+                var value = searchInput.val();
+                if (!isEmailAddress(value)) {
                     return;
                 }
 
                 var select = $('#convo-participant-select');
-                var option = $('<option>').val(this.value).text(this.value);
+                var option = $('<option>').val(value).text(value);
                 select.prepend(option);
-                select.val(this.value);
+                select.val(value);
                 select.trigger('chosen:updated');
                 $scope.participant = undefined;
                 $scope.externalParticipant = option[0].text;
@@ -57,10 +60,14 @@ angular.module('sf')
         /*
          This is to enable addition of external conversation participants by email address.
          */
-        var searchField = '#convo_participant_select_chosen input:first';
-        var body = $('body');
-        body.off('keydown.searchfield', searchField);
-        body.on('keydown.searchfield', searchField, onSearchFieldKeyDown);
+        $(function () {
+            searchInput = $('.search-container.select2-search input:first');
+            searchInput.keydown(function (e) {
+                if (noMatchingResult()) {
+                    onSearchFieldKeyDown(e);
+                }
+            });
+        });
 
         var updateParticipant = function () {
             var href = navigationService.caseHrefSimple($routeParams.caseId) + '/conversation/' + $routeParams.conversationId;

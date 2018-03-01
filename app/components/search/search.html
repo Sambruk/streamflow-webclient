@@ -15,13 +15,22 @@
         <div class="title-divider"><span>Sökfilter</span></div>
         <div class="select" style="position: relative">
             <label for="type-select">Funktion</label>
-            <select chosen no-results-text="'Inga funktioner funna'" data-placeholder="Funktion"
-                    data-ng-options="project.id as (project.text) group by project.title for project in possibleProjects"
-                    data-ng-model="filter.project"
-                    allow-single-deselect="true" search-contains="true" name="name-select" id="project-select"
-                    class="item">
-                <option></option>
-            </select>
+
+            <ui-select ng-model="$parent.filter.project" theme="select2" style="width: 100%;"
+                       name="name-select" id="project-select">
+                <ui-select-match placeholder="Funktion">
+                    <span ng-bind="$select.selected.text"></span>
+                </ui-select-match>
+                <ui-select-choices
+                        repeat="item.id as item in possibleProjects track by item.id"
+                        group-by="'title'">
+                    <span ng-bind="item.text"></span>
+                </ui-select-choices>
+                <ui-select-no-choice>
+                    <span>Inga funktioner funna {{$select.search}}</span>
+                </ui-select-no-choice>
+            </ui-select>
+
             <a href="" id="" data-ng-click="clearProject()" data-ng-show="filter.project"
                class="icon-cancel__wrapp icon-cancel__select">
                 <i class="icon-cancel"></i>
@@ -29,12 +38,21 @@
         </div>
         <div class="select" style="position: relative">
             <label for="type-select">Ärendetyp</label>
-            <select chosen no-results-text="'Inga ärendetyper funna'" data-placeholder="Ärendetyp"
-                    data-ng-options="caseType.id as (caseType.text + caseType.labels) group by caseType.title for caseType in possibleCaseTypes"
-                    data-ng-model="filter.caseType" data-ng-change="changeCaseType(caseType)"
-                    allow-single-deselect="true" search-contains="true" name="name-select" id="type-select">
-                <option></option>
-            </select>
+
+            <ui-select ng-model="$parent.filter.caseType" theme="select2" style="width: 100%;"
+                       name="name-select" id="type-select" data-ng-change="changeCaseType(caseType)">
+                <ui-select-match placeholder="Ärendetyp">
+                    <span ng-bind="$select.selected.text"></span>
+                </ui-select-match>
+                <ui-select-choices group-by="'title'"
+                                   repeat="item.id as item in possibleCaseTypes track by item.id">
+                    <span ng-bind="item.text+item.labels"></span>
+                </ui-select-choices>
+                <ui-select-no-choice>
+                    <span>Inga funktioner funna {{$select.search}}</span>
+                </ui-select-no-choice>
+            </ui-select>
+
             <a href="" id="" data-ng-click="clearCaseType()" data-ng-show="filter.caseType"
                class="icon-cancel__wrapp icon-cancel__select">
                 <i class="icon-cancel"></i>
@@ -70,12 +88,20 @@
         </div>
         <div class="select" style="position: relative">
             <label for="type-select">Tilldelad</label>
-            <select chosen no-results-text="'Inga användare funna'" data-placeholder="Tilldelad"
-                    data-ng-options="assignee.id as assignee.text for assignee in possibleAssignees"
-                    data-ng-model="filter.assignedTo"
-                    allow-single-deselect="true" search-contains="true" name="name-select" id="assignee-select">
-                <option></option>
-            </select>
+
+            <ui-select ng-model="$parent.filter.assignedTo" theme="select2" style="width: 100%;"
+                       name="name-select" id="assignee-select">
+                <ui-select-match placeholder="Tilldelad">
+                    <span ng-bind="$select.selected.text"></span>
+                </ui-select-match>
+                <ui-select-choices repeat="item.id as item in possibleCaseTypes track by item.id">
+                    <span ng-bind="item.text"></span>
+                </ui-select-choices>
+                <ui-select-no-choice>
+                    <span>Inga funktioner funna {{$select.search}}</span>
+                </ui-select-no-choice>
+            </ui-select>
+
             <a href="" id="" data-ng-click="clearAssignedTo()" data-ng-show="filter.assignedTo"
                class="icon-cancel__wrapp icon-cancel__select">
                 <i class="icon-cancel"></i>
@@ -97,12 +123,20 @@
         <div>
             <div class="select" style="position: relative">
                 <label for="type-select">Skapad av</label>
-                <select chosen no-results-text="'Inga användare funna'" data-placeholder="Skapad av"
-                        data-ng-options="createdBy.id as createdBy.text for createdBy in possibleCreatedBy"
-                        data-ng-model="filter.createdBy"
-                        allow-single-deselect="true" search-contains="true" name="name-select" id="createdby-select">
-                    <option></option>
-                </select>
+
+                <ui-select ng-model="$parent.filter.createdBy" theme="select2" style="width: 100%;"
+                           name="name-select" id="createdby-select">
+                    <ui-select-match placeholder="Skapad av">
+                        <span ng-bind="$select.selected.text"></span>
+                    </ui-select-match>
+                    <ui-select-choices repeat="item.id as item in possibleCreatedBy track by item.id">
+                        <span ng-bind="item.text"></span>
+                    </ui-select-choices>
+                    <ui-select-no-choice>
+                        <span>Inga användare funna {{$select.search}}</span>
+                    </ui-select-no-choice>
+                </ui-select>
+
                 <a href="" id="" data-ng-click="clearCreatedBy()" data-ng-show="filter.createdBy"
                    class="icon-cancel__wrapp icon-cancel__select">
                     <i class="icon-cancel"></i>
@@ -114,20 +148,19 @@
             <div class="select" style="position: relative">
                 <label for="filter-status">Status</label>
                 <!--TODO: replace hardcoded vales with value from server like below-->
-                <!--<select chosen no-results-text="'Inga användare funna'" data-placeholder="Skapad av"-->
-                <!--data-ng-options="status.id as status.text for status in possibleStatus"-->
-                <!--data-ng-model="filter.createdBy"-->
-                <!--allow-single-deselect="true" search-contains="true" name="status-select" id="status-select">-->
-                <!--<option></option>-->
-                <!--</select>-->
+                <ui-select ng-model="$parent.filter.status" theme="select2" class="hasCustomSelect" style="width: 100%;"
+                           id="filter-status" name="filter-status">
+                    <ui-select-match placeholder="Välj status">
+                        <span ng-bind="$select.selected.text"></span>
+                    </ui-select-match>
+                    <ui-select-choices repeat="item.id as item in possibleStatuses track by item.id">
+                        <span ng-bind="item.text"></span>
+                    </ui-select-choices>
+                    <ui-select-no-choice>
+                        <span>Inga användare funna {{$select.search}}</span>
+                    </ui-select-no-choice>
+                </ui-select>
 
-                <select chosen allow-single-deselect="true" data-placeholder="Välj status" data-ng-model="filter.status"
-                        id="filter-status" name="filter-status">
-                    <option value="OPEN">Aktiv</option>
-                    <option value="ON_HOLD">Pausad</option>
-                    <option value="CLOSED">Stängd</option>
-                    <option></option>
-                </select>
                 <a href="" id="" data-ng-click="clearStatus()" data-ng-show="filter.status"
                    class="icon-cancel__wrapp icon-cancel__select">
                     <i class="icon-cancel"></i>
@@ -141,10 +174,16 @@
         <label for="group">Gruppera</label>
         <div class="select group">
             <div class="select">
-                <select chosen class="hasCustomSelect" name="group" id="group"
-                        data-ng-options="option.name for option in groupingOptions" data-ng-model="group.value">
-                    <option></option>
-                </select>
+
+                <ui-select ng-model="$parent.group.value" theme="select2" class="hasCustomSelect" style="width: 100%;"
+                           name="group" id="group">
+                    <ui-select-match placeholder="Skapad av">
+                        <span ng-bind="$select.selected.name"></span>
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in groupingOptions">
+                        <span ng-bind="item.name"></span>
+                    </ui-select-choices>
+                </ui-select>
                 <a href="" id="" data-ng-click="clearGrouping()" data-ng-show="group.value" class="icon-cancel__wrapp">
                     <i class="icon-cancel"></i>
                 </a>
@@ -166,14 +205,17 @@
         <label for="sort">Sortera</label>
         <div class="select sort">
             <div class="select">
-                <select chosen class="hasCustomSelect" allow-single-deselect="true" data-ng-model="sort.value" id="sort"
-                        name="sort">
-                    <option></option>
-                    <option value="createdOn">Skapad</option>
-                    <option value="dueOn">Förfallodatum</option>
-                    <option value="description">Beskrivning</option>
-                    <option value="priority">Prioritet</option>
-                </select>
+
+                <ui-select ng-model="$parent.sort.value" theme="select2" class="hasCustomSelect" style="width: 100%;"
+                           id="sort"
+                           name="sort">
+                    <ui-select-match placeholder="Välj status">
+                        <span ng-bind="$select.selected.text"></span>
+                    </ui-select-match>
+                    <ui-select-choices repeat="item.id as item in possibleSorts track by item.id">
+                        <span ng-bind="item.text"></span>
+                    </ui-select-choices>
+                </ui-select>
                 <a href="" id="" data-ng-click="clearSorting()" data-ng-show="sort.value" class="icon-cancel__wrapp">
                     <i class="icon-cancel"></i></a>
             </div>

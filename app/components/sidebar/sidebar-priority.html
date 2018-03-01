@@ -2,11 +2,16 @@
   <label for="priority-select">Prioritet</label>
   <span class="priority-color" data-ng-style="activePriorityColor"></span>
   <div class="select">
-  <select chosen name="priority-select" id="priority-select"
-          data-ng-options="priority.id as priority.text for priority in possiblePriorities" data-ng-model="priority"
-          data-ng-change="changePriorityLevel(priority, activePriorityColor, priorityColor, caseId);">
-    <option></option>
-  </select>
+      <ui-select ng-model="$parent.priority" theme="select2" style="width: 100%;"
+                 data-ng-change="changePriorityLevel(priority);"
+                 name="priority-select" id="priority-select">
+          <ui-select-match placeholder="Skapad av">
+              <span ng-bind="$select.selected.text"></span>
+          </ui-select-match>
+          <ui-select-choices repeat="priority.id as priority in possiblePriorities">
+              <span ng-bind="priority.text"></span>
+          </ui-select-choices>
+      </ui-select>
   </div>
 </div>
 

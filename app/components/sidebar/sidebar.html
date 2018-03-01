@@ -139,16 +139,19 @@
                     <modal dialog-title="Tilldela till" show="showAssignTo">
                         <div class="row cf">
                             <div class="select">
-                                <select
-                                        chosen
-                                        class="popup-select"
-                                        id="issue-assignee"
-                                        name="issue-assignee"
-                                        data-ng-options="option.id as option.text for option in assignToRecipients | orderBy: ['title', 'text']"
-                                        data-ng-model="assignToId"
-                                        data-ng-change='assignToIdChanged(assignToId)'>
-                                    <opntion></opntion>
-                                </select>
+                                <ui-select ng-model="$parent.assignToId" theme="select2" style="width: 100%;"
+                                           class="popup-select"
+                                           data-ng-change="assignToIdChanged(assignToId)"
+                                           id="issue-assignee"
+                                           name="issue-assignee">
+                                    <ui-select-match placeholder="Skapad av">
+                                        <span ng-bind="$select.selected.text"></span>
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                            repeat="option.id as option in assignToRecipients | orderBy: ['title', 'text']">
+                                        <span ng-bind="option.text"></span>
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
                         </div>
                         <div class="submit-area cf dialog-submit">

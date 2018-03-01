@@ -110,14 +110,21 @@
                     <modal dialog-title="Byt ägare" show="showSendTo">
                         <div class="row cf">
                             <div class="select">
-                                <select chosen
-                                        class="popup-select"
-                                        id="issue-owner"
-                                        name="issue-owner"
-                                        data-ng-options="option.id as option.text group by option.title for option in sendToRecipients | orderBy: ['title', 'text']"
-                                        data-ng-model="sendToId"
-                                        data-ng-change='sendToIdChanged(sendToId)'>
-                                </select>
+                                <ui-select ng-model="$parent.sendToId" theme="select2" style="width: 100%;"
+                                           class="popup-select"
+                                           data-ng-change="sendToIdChanged(sendToId)"
+                                           id="issue-owner"
+                                           name="issue-owner">
+                                    <ui-select-match placeholder="Skapad av">
+                                        <span ng-bind="$select.selected.text"></span>
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                            repeat="option.id as option in sendToRecipients | orderBy: ['title', 'text']"
+                                            group-by="'title'">
+                                        <span ng-bind="option.text"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+
                             </div>
                         </div>
                         <div class="submit-area cf dialog-submit">

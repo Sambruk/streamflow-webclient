@@ -159,7 +159,7 @@ describe("sf.services.forms", function () {
         expect(field.field.fieldValue.checkings[0].checked).toEqual(true);
       }));
 
-      xit("getValue joins the checked values", inject(function (formMapperService) {
+      it("getValue joins the checked values", inject(function (formMapperService) {
         // TODO: inject stubbed $parse, but how?
       }));
 

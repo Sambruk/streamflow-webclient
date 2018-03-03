@@ -26,6 +26,13 @@ angular.module('sf')
         $scope.contactIndex = $routeParams.contactIndex;
         $scope.contact = caseService.getSelectedContact($routeParams.caseId, $routeParams.contactIndex);
 
+        $scope.contactTypes = [
+            {id:"letter", text:"Brev"},
+            {id:"email", text:"E-post"},
+            {id:"sms", text:"SMS"},
+            {id:"phone", text:"Telefon"}
+        ];
+
         $scope.showSpinner = {
             contact: true
         };
@@ -37,6 +44,21 @@ angular.module('sf')
                 $('.select select, .contact-pref').addClass('disabled');
             }
         });
+
+        $scope.triggera1 = function (event) {
+            console.log('12312',event);
+            // event.trigger('click');
+            $('#internal-value1').trigger('blur');
+
+
+            event.$select.$element.trigger('blur');
+            // event.$select.$element.find('input:first').trigger('blur');
+            // $scope.updateField(event,success,error)
+            // $('#contact-pref').blur();
+            // $('.select2').blur();
+            // console.log('55512');
+
+        };
 
         $scope.updateField = function ($event, $success, $error) {
             $event.preventDefault();
@@ -60,4 +82,14 @@ angular.module('sf')
                     });
             }
         };
+
+        $scope.updateContactCommType = function ($success, $error) {
+            var contact = $scope.contact;
+                $scope.contactId = caseService.updateContact($routeParams.caseId, $routeParams.contactIndex, contact)
+                    .then(function () {
+                        $success();
+                    }, function () {
+                        $error();
+                    });
+            }
     });

@@ -18,33 +18,10 @@
  */
 'use strict';
 
-angular.module('sf').directive('sfUpdateOnBlur', function ($parse, $rootScope) {
+angular.module('sf').directive('sfUpdateOnBlur', function ($parse) {
     return function (scope, element, attr) {
-        if(attr.$$element.hasClass('select2')){
-            // element = element.find('input[type=hidden]');
-            // element = $('#internal-value1');
-
-
-
-            // element.append('<input type="hidden" value="'+scope.$parent[attr.ngModel]+'">');
-
-
-            // attr.$$element= element;
-            console.log('test',scope, element, attr);
-            console.log('test12',scope, element.val(), attr);
-
-            // scope = scope.$parent;
-        }
-        // var fn = $parse(attr.$$element.sfUpdateOnBlur);
-
-
-        // scope.$watch(attr.length, function(newVal, oldVal) {
-        //     // console.log('123');
-        //     if (newVal!==oldVal) element[0].blur();
-        // });
 
         var fn = $parse(attr.sfUpdateOnBlur);
-        // console.log(fn);
         var form = scope[element.closest('form').attr('name')];
 
         var setPristine = function (form, element) {
@@ -55,17 +32,10 @@ angular.module('sf').directive('sfUpdateOnBlur', function ($parse, $rootScope) {
                 form.$pristine = true;
                 element.$dirty = false;
                 element.$pristine = true;
-                if (attr.$$element.hasClass('select2')) {
-                    var innerInput = element.find('input[type=hidden]');
-                    innerInput.$dirty = false;
-                    innerInput.$pristine = true;
-                }
             }
         };
 
         var successCallback = function (element) {
-
-            console.log('ss');
             if (element.parent().hasClass('error')) {
                 element.parent().removeClass('error');
             }
@@ -107,50 +77,26 @@ angular.module('sf').directive('sfUpdateOnBlur', function ($parse, $rootScope) {
         };
 
         element.bind('blur', function (event) {
-            if(attr.$$element.hasClass('select2')){
-                element = element.find('input[type=hidden]');
-                // element = $('#internal-value1');
+            if (!element.hasClass('ng-invalid') && element.hasClass('ng-dirty')) {
+
                 scope.$apply(function () {
                     fn(scope, {$event: event, $success: successCallback, $error: errorCallback});
                 });
-
-
-                // // element.append('<input type="hidden" value="'+scope.$parent[attr.ngModel]+'">');
-                //
-                //
-                // // attr.$$element= element;
-                // console.log('test',scope, element, attr);
-                // console.log('test12',scope, element.val(), attr);
-
-                // scope = scope.$parent;
-            } else {
-                if (!element.hasClass('ng-invalid') && element.hasClass('ng-dirty')) {
-                    //
-                    // if (attr.$$element.hasClass('select2')) {
-                    //         fn(scope, {$event: event, $success: successCallback, $error: errorCallback});
-                    // }
-
-                    scope.$apply(function () {
-                        fn(scope, {$event: event, $success: successCallback, $error: errorCallback});
-                    });
-                }
-                else {
-                    _.each(element.attr('class').split(' '), function (klass) {
-                        var errorClass = '.error-' + klass;
-                        $(errorClass, element.parent()).show();
-                    });
-                }
+            }
+            else {
+                _.each(element.attr('class').split(' '), function (klass) {
+                    var errorClass = '.error-' + klass;
+                    $(errorClass, element.parent()).show();
+                });
             }
         });
 
         $('select').change(function () {
-            console.log('trigger', this);
             $(this).parent().removeClass('saved');
             $(this).parent().removeClass('saved-select');
             $('[class^=error]', $(this).parent()).hide();
         });
 
-        console.log(element);
         if (element[0].type === 'text' || element[0].type === 'textarea') {
             var resetFieldState = function () {
                 $(this).parent().removeClass('saved');

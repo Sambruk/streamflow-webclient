@@ -71,19 +71,9 @@
             <div class="text col medium-small col-3">
               <label for="contact-pref">Kontaktpreferens</label>
               <div class="select">
-                <!--<select chosen class="hasCustomSelect" data-placeholder="Välj" data-ng-model="contact[0].contactPreference" id="contact-pref" name="contactpreference"
-                 data-sf-update-on-blur="updateField($event, $success, $error)" data-ng-disabled="!canUpdateContact">-->
-                  <!--<option value="letter">Brev</option>-->
-                  <!--<option value="email" selected>E-post</option>-->
-                  <!--<option value="sms">SMS</option>-->
-                  <!--<option value="phone">Telefon</option>-->
-                <!--</select>-->
-
-
                 <ui-select ng-model="contact[0].contactPreference" theme="select2" class="hasCustomSelect" style="width: 100%;"
                            id="contact-pref" name="contactpreference"
-                           data-ng-change="triggera1(this)"
-                           data-sf-update-on-blur="updateContactCommType($success, $error)"
+                           data-ng-change="updateFieldManually(this)"
                            data-ng-disabled="!canUpdateContact">
                   <ui-select-match placeholder="Välj">
                       <input id="internal-value" type="hidden" value="{{contact[0].contactPreference}}">
@@ -92,19 +82,8 @@
                   <ui-select-choices repeat="item.id as item in contactTypes track by item.id">
                     <span ng-bind="item.text"></span>
                   </ui-select-choices>
-
-
-
-
                 </ui-select>
-
-                  {{contact[0].contactPreference}}
-                  <!--<input id="internal-value1" type="hidden" value="{{contact[0].contactPreference}}" data-sf-update-on-blur="updateField($event, $success, $error)" >-->
-                  <!--<input id="internal-value1" type="text" value="{{contact[0].contactPreference}}" data-sf-update-on-blur="updateField($event, $success, $error)" >-->
-
               </div>
-                <!--<input id="internal-value1" type="hidden" value="{{contact[0].contactPreference}}">-->
-
             </div>
           </div>
           <div class="row cols-2 cf">

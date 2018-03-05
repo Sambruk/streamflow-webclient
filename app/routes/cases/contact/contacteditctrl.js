@@ -45,21 +45,6 @@ angular.module('sf')
             }
         });
 
-        $scope.triggera1 = function (event) {
-            console.log('12312',event);
-            // event.trigger('click');
-            $('#internal-value1').trigger('blur');
-
-
-            event.$select.$element.trigger('blur');
-            // event.$select.$element.find('input:first').trigger('blur');
-            // $scope.updateField(event,success,error)
-            // $('#contact-pref').blur();
-            // $('.select2').blur();
-            // console.log('55512');
-
-        };
-
         $scope.updateField = function ($event, $success, $error) {
             $event.preventDefault();
             var contact = {};
@@ -83,13 +68,63 @@ angular.module('sf')
             }
         };
 
-        $scope.updateContactCommType = function ($success, $error) {
-            var contact = $scope.contact;
-                $scope.contactId = caseService.updateContact($routeParams.caseId, $routeParams.contactIndex, contact)
-                    .then(function () {
-                        $success();
-                    }, function () {
-                        $error();
-                    });
+
+        //TODO fix update animation and clean up this
+        $scope.updateFieldManually = function ($event) {
+            var contact = {};
+            contact[$event.$select.$element.attr('name')] = $event.$select.selected.id;
+            $scope.contactId = caseService.updateContact($routeParams.caseId, $routeParams.contactIndex, contact)
+                .then(function () {
+                    successCallback($event.$select.$element);
+                }, function () {
+                    errorCallback($event.$select.$element);
+                });
+        };
+
+        var successCallback = function (element) {
+            if (element.hasClass('error')) {
+                element.removeClass('error');
             }
+
+            // if (element[0].type === 'select-one') {
+            element.addClass('saved saved-select');
+            // }
+
+            if ($('form div').hasClass('error') || !$('#contact-name').val()) {
+                $('#contact-submit-button').attr('disabled', true).addClass('inactive');
+            }
+            else {
+                $('#contact-submit-button').attr('disabled', false).removeClass('inactive');
+            }
+
+            element.parent()[0].addEventListener('webkitAnimationEnd', function () {
+                element.removeClass('saved').removeClass('saved-select');
+            });
+
+
+            //Talk of removing the saved icon after a while, whis coule be one way.
+            //Looked at fading it in and out however you cannot fade the "content" in a :after pseudo element
+            //it triggers a remove of the last one and add of a new element and that can not be transitioned
+            //setTimeout(removeIt,2000);
+            var form = $scope[element.closest('form').attr('name')];
+
+            setPristine(form, element);
+            $('[class^=error]', element.parent()).hide();
+        };
+
+        var errorCallback = function (element) {
+            element.parent().addClass('error');
+            $('#contact-submit-button').attr('disabled', true).addClass('inactive');
+        };
+
+        var setPristine = function (form, element) {
+            if (form.$setPristine) {//only supported from v1.1.x
+                form.$setPristine();
+            } else {
+                form.$dirty = false;
+                form.$pristine = true;
+                element.$dirty = false;
+                element.$pristine = true;
+            }
+        };
     });

@@ -76,7 +76,6 @@
                            data-ng-change="updateFieldManually(this)"
                            data-ng-disabled="!canUpdateContact">
                   <ui-select-match placeholder="Välj">
-                      <input id="internal-value" type="hidden" value="{{contact[0].contactPreference}}">
                       <span ng-bind="$select.selected.text"></span>
                   </ui-select-match>
                   <ui-select-choices repeat="item.id as item in contactTypes track by item.id">

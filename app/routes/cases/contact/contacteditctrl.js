@@ -70,14 +70,14 @@ angular.module('sf')
 
 
         //TODO fix update animation and clean up this
-        $scope.updateFieldManually = function ($event) {
+        $scope.updateFieldManually = function (scope) {
             var contact = {};
-            contact[$event.$select.$element.attr('name')] = $event.$select.selected.id;
+            contact[scope.$select.$element.attr('name')] = scope.$select.selected.id;
             $scope.contactId = caseService.updateContact($routeParams.caseId, $routeParams.contactIndex, contact)
                 .then(function () {
-                    successCallback($event.$select.$element);
+                    successCallback(scope.$select.$element);
                 }, function () {
-                    errorCallback($event.$select.$element);
+                    errorCallback(scope.$select.$element);
                 });
         };
 

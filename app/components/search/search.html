@@ -14,17 +14,16 @@
     <div class="select-wrapp">
         <div class="title-divider"><span>Sökfilter</span></div>
         <div class="select" style="position: relative">
-            <label for="type-select">Funktion</label>
+            <label for="project-select">Funktion</label>
 
-            <ui-select ng-model="$parent.filter.project" theme="select2" style="width: 100%;"
-                       name="project-select" id="project-select">
+            <ui-select data-ng-model="filter.project"
+                       id="project-select" name="project-select"
+                       theme="select2" style="width: 100%;">
                 <ui-select-match placeholder="Funktion">
-                    <span ng-bind="$select.selected.text"></span>
+                    <span data-ng-bind="$select.selected.text"></span>
                 </ui-select-match>
-                <ui-select-choices
-                        repeat="item.id as item in possibleProjects track by item.id"
-                        group-by="'title'">
-                    <span ng-bind="item.text"></span>
+                <ui-select-choices repeat="item.id as item in possibleProjects track by item.id" group-by="'title'">
+                    <span data-ng-bind="item.text"></span>
                 </ui-select-choices>
                 <ui-select-no-choice>
                     <span>Inga funktioner funna {{$select.search}}</span>
@@ -39,13 +38,13 @@
         <div class="select" style="position: relative">
             <label for="type-select">Ärendetyp</label>
 
-            <ui-select ng-model="$parent.filter.caseType" theme="select2" style="width: 100%;"
-                       name="type-select" id="type-select" data-ng-change="changeCaseType(caseType)">
+            <ui-select data-ng-model="filter.caseType" data-ng-change="changeCaseType(caseType)"
+                       id="type-select" name="type-select"
+                       theme="select2" style="width: 100%;">
                 <ui-select-match placeholder="Ärendetyp">
                     <span ng-bind="$select.selected.text"></span>
                 </ui-select-match>
-                <ui-select-choices group-by="'title'"
-                                   repeat="item.id as item in possibleCaseTypes track by item.id">
+                <ui-select-choices repeat="item.id as item in possibleCaseTypes track by item.id" group-by="'title'">
                     <span ng-bind="item.text+item.labels"></span>
                 </ui-select-choices>
                 <ui-select-no-choice>
@@ -60,13 +59,13 @@
         </div>
         <div style="position: relative">
             <label for="label-select">Etiketter</label>
-            <ui-select multiple data-ng-model="filter.label" theme="select2"
-                       name="label-select" id="label-select" style="width: 100%;"
-                       data-ng-change="labelsChanged(filter.label)">
+            <ui-select multiple data-ng-model="filter.label" data-ng-change="labelsChanged(filter.label)"
+                       id="label-select" name="label-select"
+                       theme="select2" style="width: 100%;">
                 <ui-select-match placeholder="Välj etiketter...">{{$item.text}}</ui-select-match>
                 <ui-select-choices repeat="label.id as label in possibleLabels | filter: $select.search"
                                    group-by="'title'">
-                    <div ng-bind-html="label.text | trustAsHTML"></div>
+                    <div data-ng-bind-html="label.text | trustAsHTML"></div>
                 </ui-select-choices>
             </ui-select>
             <a href="" id="" data-ng-click="clearLabels()" data-ng-show="filter.label.length > 0"
@@ -87,15 +86,16 @@
             </div>
         </div>
         <div class="select" style="position: relative">
-            <label for="type-select">Tilldelad</label>
+            <label for="assignee-select">Tilldelad</label>
 
-            <ui-select ng-model="$parent.filter.assignedTo" theme="select2" style="width: 100%;"
-                       name="assignee-select" id="assignee-select">
+            <ui-select data-ng-model="filter.assignedTo"
+                       id="assignee-select" name="assignee-select"
+                       theme="select2" style="width: 100%;">
                 <ui-select-match placeholder="Tilldelad">
-                    <span ng-bind="$select.selected.text"></span>
+                    <span data-ng-bind="$select.selected.text"></span>
                 </ui-select-match>
                 <ui-select-choices repeat="item.id as item in possibleCaseTypes track by item.id">
-                    <span ng-bind="item.text"></span>
+                    <span data-ng-bind="item.text"></span>
                 </ui-select-choices>
                 <ui-select-no-choice>
                     <span>Inga funktioner funna {{$select.search}}</span>
@@ -122,15 +122,16 @@
         </div>
         <div>
             <div class="select" style="position: relative">
-                <label for="type-select">Skapad av</label>
+                <label for="createdby-select">Skapad av</label>
 
-                <ui-select ng-model="$parent.filter.createdBy" theme="select2" style="width: 100%;"
-                           name="createdby-select" id="createdby-select">
+                <ui-select data-ng-model="filter.createdBy"
+                           id="createdby-select" name="createdby-select"
+                           theme="select2" style="width: 100%;">
                     <ui-select-match placeholder="Skapad av">
-                        <span ng-bind="$select.selected.text"></span>
+                        <span data-ng-bind="$select.selected.text"></span>
                     </ui-select-match>
                     <ui-select-choices repeat="item.id as item in possibleCreatedBy track by item.id">
-                        <span ng-bind="item.text"></span>
+                        <span data-ng-bind="item.text"></span>
                     </ui-select-choices>
                     <ui-select-no-choice>
                         <span>Inga användare funna {{$select.search}}</span>
@@ -146,15 +147,16 @@
 
         <div>
             <div class="select" style="position: relative">
-                <label for="filter-status">Status</label>
+                <label for="filterstatus-select">Status</label>
                 <!--TODO: replace hardcoded vales with value from server like below-->
-                <ui-select ng-model="$parent.filter.status" theme="select2" class="hasCustomSelect" style="width: 100%;"
-                           id="filter-status-select" name="filter-status-select">
+                <ui-select data-ng-model="filter.status"
+                           id="filterstatus-select" name="filterstatus-select"
+                           theme="select2" class="hasCustomSelect" style="width: 100%;">
                     <ui-select-match placeholder="Välj status">
-                        <span ng-bind="$select.selected.text"></span>
+                        <span data-ng-bind="$select.selected.text"></span>
                     </ui-select-match>
                     <ui-select-choices repeat="item.id as item in possibleStatuses track by item.id">
-                        <span ng-bind="item.text"></span>
+                        <span data-ng-bind="item.text"></span>
                     </ui-select-choices>
                     <ui-select-no-choice>
                         <span>Inga användare funna {{$select.search}}</span>
@@ -171,17 +173,18 @@
     </div>
     <div class="select-wrapp">
         <div class="title-divider"><span>Gruppera & sortera</span></div>
-        <label for="group">Gruppera</label>
+        <label for="group-select">Gruppera</label>
         <div class="select group">
             <div class="select">
 
-                <ui-select ng-model="$parent.group.value" theme="select2" class="hasCustomSelect" style="width: 100%;"
-                           name="group-select" id="group-select">
+                <ui-select data-ng-model="group.value"
+                           id="group-select" name="group-select"
+                           theme="select2" class="hasCustomSelect" style="width: 100%;">
                     <ui-select-match placeholder="Skapad av">
-                        <span ng-bind="$select.selected.name"></span>
+                        <span data-ng-bind="$select.selected.name"></span>
                     </ui-select-match>
                     <ui-select-choices repeat="item in groupingOptions">
-                        <span ng-bind="item.name"></span>
+                        <span data-ng-bind="item.name"></span>
                     </ui-select-choices>
                 </ui-select>
                 <a href="" id="" data-ng-click="clearGrouping()" data-ng-show="group.value" class="icon-cancel__wrapp">
@@ -202,18 +205,17 @@
                 </div>
             </div>
         </div>
-        <label for="sort">Sortera</label>
+        <label for="sort-select">Sortera</label>
         <div class="select sort">
             <div class="select">
-
-                <ui-select ng-model="$parent.sort.value" theme="select2" class="hasCustomSelect" style="width: 100%;"
-                           id="sort-select"
-                           name="sort-select">
+                <ui-select data-ng-model="sort.value"
+                           id="sort-select" name="sort-select"
+                           theme="select2" class="hasCustomSelect" style="width: 100%;">
                     <ui-select-match placeholder="Välj status">
-                        <span ng-bind="$select.selected.text"></span>
+                        <span data-ng-bind="$select.selected.text"></span>
                     </ui-select-match>
                     <ui-select-choices repeat="item.id as item in possibleSorts track by item.id">
-                        <span ng-bind="item.text"></span>
+                        <span data-ng-bind="item.text"></span>
                     </ui-select-choices>
                 </ui-select>
                 <a href="" id="" data-ng-click="clearSorting()" data-ng-show="sort.value" class="icon-cancel__wrapp">

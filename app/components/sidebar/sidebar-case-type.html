@@ -2,6 +2,7 @@
     <label for="type-select">Ärendetyp</label>
 
     <ui-select data-ng-model="$parent.caseType" data-ng-change="changeCaseType($select.selected.id)"
+               search-enabled="true"
                id="type-select" name="type-select"
                theme="select2" style="width: 100%;">
         <ui-select-match placeholder="Ärendetyp">{{$select.selected.text}}{{$select.selected.labels}}</ui-select-match>

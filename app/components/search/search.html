@@ -17,7 +17,7 @@
             <label for="type-select">Funktion</label>
 
             <ui-select ng-model="$parent.filter.project" theme="select2" style="width: 100%;"
-                       name="name-select" id="project-select">
+                       name="project-select" id="project-select">
                 <ui-select-match placeholder="Funktion">
                     <span ng-bind="$select.selected.text"></span>
                 </ui-select-match>
@@ -40,7 +40,7 @@
             <label for="type-select">Ärendetyp</label>
 
             <ui-select ng-model="$parent.filter.caseType" theme="select2" style="width: 100%;"
-                       name="name-select" id="type-select" data-ng-change="changeCaseType(caseType)">
+                       name="type-select" id="type-select" data-ng-change="changeCaseType(caseType)">
                 <ui-select-match placeholder="Ärendetyp">
                     <span ng-bind="$select.selected.text"></span>
                 </ui-select-match>
@@ -90,7 +90,7 @@
             <label for="type-select">Tilldelad</label>
 
             <ui-select ng-model="$parent.filter.assignedTo" theme="select2" style="width: 100%;"
-                       name="name-select" id="assignee-select">
+                       name="assignee-select" id="assignee-select">
                 <ui-select-match placeholder="Tilldelad">
                     <span ng-bind="$select.selected.text"></span>
                 </ui-select-match>
@@ -125,7 +125,7 @@
                 <label for="type-select">Skapad av</label>
 
                 <ui-select ng-model="$parent.filter.createdBy" theme="select2" style="width: 100%;"
-                           name="name-select" id="createdby-select">
+                           name="createdby-select" id="createdby-select">
                     <ui-select-match placeholder="Skapad av">
                         <span ng-bind="$select.selected.text"></span>
                     </ui-select-match>
@@ -149,7 +149,7 @@
                 <label for="filter-status">Status</label>
                 <!--TODO: replace hardcoded vales with value from server like below-->
                 <ui-select ng-model="$parent.filter.status" theme="select2" class="hasCustomSelect" style="width: 100%;"
-                           id="filter-status" name="filter-status">
+                           id="filter-status-select" name="filter-status-select">
                     <ui-select-match placeholder="Välj status">
                         <span ng-bind="$select.selected.text"></span>
                     </ui-select-match>
@@ -176,7 +176,7 @@
             <div class="select">
 
                 <ui-select ng-model="$parent.group.value" theme="select2" class="hasCustomSelect" style="width: 100%;"
-                           name="group" id="group">
+                           name="group-select" id="group-select">
                     <ui-select-match placeholder="Skapad av">
                         <span ng-bind="$select.selected.name"></span>
                     </ui-select-match>
@@ -207,8 +207,8 @@
             <div class="select">
 
                 <ui-select ng-model="$parent.sort.value" theme="select2" class="hasCustomSelect" style="width: 100%;"
-                           id="sort"
-                           name="sort">
+                           id="sort-select"
+                           name="sort-select">
                     <ui-select-match placeholder="Välj status">
                         <span ng-bind="$select.selected.text"></span>
                     </ui-select-match>

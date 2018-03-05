@@ -37,8 +37,10 @@
                     <li data-ng-show="canSendTo" class="left-sidebar"><a href="" data-ng-click="sendTo()"
                                                                          class="btn sidebar-top-button">Byt ägare</a>
                     </li>
-                    <li data-ng-show="canExportCase" class="left-sidebar"><a data-ng-click="toggleExportPopup(true)" href=""
-                                                                             class="btn sidebar-top-button">Exportera</a></li>
+                    <li data-ng-show="canExportCase" class="left-sidebar"><a data-ng-click="toggleExportPopup(true)"
+                                                                             href=""
+                                                                             class="btn sidebar-top-button">Exportera</a>
+                    </li>
                     <li><a data-ng-show="canMarkRead" data-ng-click="markReadUnread(true)" href="" class="btn">Markera
                         läst</a>
                     </li>
@@ -106,22 +108,20 @@
                     </modal>
                 </div>
 
-                <div class="toolbar-content-popup" >
+                <div class="toolbar-content-popup">
                     <modal dialog-title="Byt ägare" show="showSendTo">
                         <div class="row cf">
                             <div class="select">
-                                <ui-select ng-model="$parent.sendToId" theme="select2" style="width: 100%;"
-                                           class="popup-select"
-                                           data-ng-change="sendToIdChanged(sendToId)"
-                                           id="issue-owner"
-                                           name="issue-owner">
+                                <ui-select data-ng-model="$parent.sendToId" data-ng-change="sendToIdChanged(sendToId)"
+                                           id="issue-owner" name="issue-owner"
+                                           theme="select2" class="popup-select" style="width: 100%;">
                                     <ui-select-match placeholder="Skapad av">
-                                        <span ng-bind="$select.selected.text"></span>
+                                        <span data-ng-bind="$select.selected.text"></span>
                                     </ui-select-match>
                                     <ui-select-choices
                                             repeat="option.id as option in sendToRecipients | orderBy: ['title', 'text']"
                                             group-by="'title'">
-                                        <span ng-bind="option.text"></span>
+                                        <span data-ng-bind="option.text"></span>
                                     </ui-select-choices>
                                 </ui-select>
 
@@ -135,21 +135,20 @@
                     </modal>
                 </div>
 
-                <div class="toolbar-content-popup" >
+                <div class="toolbar-content-popup">
                     <modal dialog-title="Tilldela till" show="showAssignTo">
                         <div class="row cf">
                             <div class="select">
-                                <ui-select ng-model="$parent.assignToId" theme="select2" style="width: 100%;"
-                                           class="popup-select"
+                                <ui-select data-ng-model="$parent.assignToId"
                                            data-ng-change="assignToIdChanged(assignToId)"
-                                           id="issue-assignee"
-                                           name="issue-assignee">
+                                           id="issue-assignee" name="issue-assignee"
+                                           theme="select2" class="popup-select" style="width: 100%;">
                                     <ui-select-match placeholder="Skapad av">
-                                        <span ng-bind="$select.selected.text"></span>
+                                        <span data-ng-bind="$select.selected.text"></span>
                                     </ui-select-match>
                                     <ui-select-choices
                                             repeat="option.id as option in assignToRecipients | orderBy: ['title', 'text']">
-                                        <span ng-bind="option.text"></span>
+                                        <span data-ng-bind="option.text"></span>
                                     </ui-select-choices>
                                 </ui-select>
                             </div>
@@ -180,11 +179,12 @@
                     <input id="export-submitted-forms" type="checkbox" ng-model="exportSubmittedForms"
                            name="export-submitted-forms">
                     <span></span>
-                Skickade formulär</label>
+                    Skickade formulär</label>
             </li>
             <li>
                 <label for="export-attachments" class="custom-checkbox">
-                    <input id="export-attachments" type="checkbox" ng-model="exportAttachments" name="export-attachments">
+                    <input id="export-attachments" type="checkbox" ng-model="exportAttachments"
+                           name="export-attachments">
                     <span></span>
                     Bifogade filer</label>
             </li>
@@ -193,25 +193,25 @@
                     <input id="export-conversations" type="checkbox" ng-model="exportConversations"
                            name="export-conversations">
                     <span></span>
-                Konversationer</label>
+                    Konversationer</label>
             </li>
             <li>
                 <label for="export-contacts" class="custom-checkbox">
                     <input id="export-contacts" type="checkbox" ng-model="exportContacts" name="export-contacts">
                     <span></span>
-                Kontakter</label>
+                    Kontakter</label>
             </li>
             <li>
                 <label for="export-case-log" class="custom-checkbox">
                     <input id="export-case-log" type="checkbox" ng-model="exportCaseLog" name="export-case-log">
                     <span></span>
-                Ärendelogg</label>
+                    Ärendelogg</label>
             </li>
-          <li>
+            <li>
                 <label for="export-case-notes" class="custom-checkbox">
                     <input id="export-case-notes" type="checkbox" ng-model="exportCaseNotes" name="export-case-note">
                     <span></span>
-                Ärendeposter</label>
+                    Ärendeposter</label>
             </li>
         </ul>
         <div class="submit-area cf dialog-submit">
@@ -263,7 +263,8 @@
                             <li data-ng-show="attachment.rel === 'attachment'"
                                 data-ng-repeat="attachment in attachments">
                                 <a data-ng-show="attachment.queries[0].id === 'download'"
-                                   data-ng-click="downloadAttachment(attachment)" href="" title="{{ attachment.text }}" download>{{ attachment.text }}</a>
+                                   data-ng-click="downloadAttachment(attachment)" href="" title="{{ attachment.text }}"
+                                   download>{{ attachment.text }}</a>
                                 <a data-ng-show="attachment.queries[0].id !== 'download'"
                                    href="" title="{{ attachment.text }}" download>{{attachment.text}}</a>
                                 <a data-ng-show="attachment.commands.length"

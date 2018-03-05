@@ -17,41 +17,43 @@
 
 -->
 <div class="content-primary" role="main">
-  <div class="m m-check-list">
-    <div class="m-h">
-      <h2>Lägg till deltagare</h2>
-    </div>
-    <div class="convo-input">
-      <form action="#" method="get" class="cf">
-        <div class="form-row cols-1">
-          <div class="text select large full">
-            <ui-select ng-model="$parent.participant" theme="select2" style="width: 100%;"
-                       name="convo-participant-select"
-                       id="convo-participant-select">
-              <ui-select-match placeholder="Deltagare/e-post">
-                <span ng-bind="$select.selected.text"></span>
-              </ui-select-match>
-              <ui-select-choices
-                      repeat="item.id as item in possibleParticipants | filter: $select.search track by item.id">
-                <span ng-bind="item.text"></span>
-              </ui-select-choices>
-              <ui-select-no-choice>
-                <span>Inga deltagare funna {{$select.search}}</span>
-              </ui-select-no-choice>
-            </ui-select>
-          </div>
+    <div class="m m-check-list">
+        <div class="m-h">
+            <h2>Lägg till deltagare</h2>
         </div>
-        <div class="form-row participants">
-          <div class="submit-area">
-            <button class="right" data-ng-click="addParticipant($event)" name="convo-submit">Lägg till</button>
-            <a href="#/cases/{{ caseId }}/conversation/{{ conversationId }}" role="button" class="btn left inline add-participant__item-cancel" title="Avbryt">
-              Avbryt
-            </a>
-          </div>
+        <div class="convo-input">
+            <form action="#" method="get" class="cf">
+                <div class="form-row cols-1">
+                    <div class="text select large full">
+                        <ui-select data-ng-model="$parent.participant"
+                                   id="convo-participant-select" name="convo-participant-select"
+                                   theme="select2" style="width: 100%;">
+                            <ui-select-match placeholder="Deltagare/e-post">
+                                <span data-ng-bind="$select.selected.text"></span>
+                            </ui-select-match>
+                            <ui-select-choices
+                                    repeat="item.id as item in possibleParticipants | filter: $select.search track by item.id">
+                                <span data-ng-bind="item.text"></span>
+                            </ui-select-choices>
+                            <ui-select-no-choice>
+                                <span>Inga deltagare funna {{$select.search}}</span>
+                            </ui-select-no-choice>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="form-row participants">
+                    <div class="submit-area">
+                        <button class="right" data-ng-click="addParticipant($event)" name="convo-submit">Lägg till
+                        </button>
+                        <a href="#/cases/{{ caseId }}/conversation/{{ conversationId }}" role="button"
+                           class="btn left inline add-participant__item-cancel" title="Avbryt">
+                            Avbryt
+                        </a>
+                    </div>
+                </div>
+            </form>
         </div>
-      </form>
     </div>
-  </div>
 </div>
 
 <!-- Content secondary -->

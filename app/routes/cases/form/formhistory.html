@@ -26,13 +26,14 @@
     <span style="display: block; margin-bottom: 10px;">Välj ett datum:</span>
     <span>
     <div class="select" style="width: calc(100% - 90px); display: inline-block">
-         <ui-select ng-model="$parent.selectedSubmittedForm" theme="select2" style="width: 100%;"
-                    id="selectedSubmittedForm" data-ng-change="showHistory=true">
+         <ui-select data-ng-model="$parent.selectedSubmittedForm" data-ng-change="showHistory=true" t
+                    id="selectedSubmittedForm"
+                    theme="select2" style="width: 100%;">
                 <ui-select-match>
-                    <span ng-bind="$select.selected.submissionDate | dateTime"></span>
+                    <span data-ng-bind="$select.selected.submissionDate | dateTime"></span>
                 </ui-select-match>
                 <ui-select-choices repeat="form.index as form in submittedForms">
-                    <span ng-bind="form.submissionDate | dateTime"></span>
+                    <span data-ng-bind="form.submissionDate | dateTime"></span>
                 </ui-select-choices>
             </ui-select>
     </div>

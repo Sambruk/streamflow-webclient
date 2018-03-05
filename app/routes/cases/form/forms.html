@@ -113,17 +113,19 @@
                                 <data-ng-include class="m-c"
                                                  src="'routes/cases/form/form-label.html'"></data-ng-include>
 
-                                <ui-select ng-model="field.value" theme="select2" style="width: 100%;"
-                                           class="sidebar-chosen-drop-down ng-pristine ng-valid ng-touched"
-                                           name="{{field.field.field}}" id="field-{{ field.field.field }}"
+                                <ui-select data-ng-model="field.value"
                                            data-ng-change="reapplyRules()" sf-generic-auto-send
-                                           data-field-type="{{field.field.fieldValue._type}}">
+                                           data-field-type="{{field.field.fieldValue._type}}"
+                                           name="{{field.field.field}}" id="field-{{ field.field.field }}"
+                                           theme="select2"
+                                           class="sidebar-chosen-drop-down ng-pristine ng-valid ng-touched"
+                                           style="width: 100%;">
                                     <ui-select-match>
-                                        <span ng-bind="$select.selected.name"></span>
+                                        <span data-ng-bind="$select.selected.name"></span>
                                     </ui-select-match>
                                     <ui-select-choices
                                             repeat="option.value as option in field.field.fieldValue.options">
-                                        <span ng-bind="option.name"></span>
+                                        <span data-ng-bind="option.name"></span>
                                     </ui-select-choices>
                                 </ui-select>
                             </div>
@@ -278,15 +280,19 @@
                     <a data-ng-show="!isFormWindow" href="#/cases/{{caze[0].id}}/{{caze[0].ownerId}}" class="btn inline"
                        data-ng-disabled="!issueForm.$valid || !isValidForm">Annullera</a>
                     <button data-ng-hide="isFirstPage()" class="form-btn inline"
-                       data-ng-class="{inactive: isFirstPage()}"
-                       data-ng-click="!isFirstPage() && previousFormPage()">Tillbaka</button>
+                            data-ng-class="{inactive: isFirstPage()}"
+                            data-ng-click="!isFirstPage() && previousFormPage()">Tillbaka
+                    </button>
                     <button data-ng-hide="isLastPage(currentFormPage)" class="form-btn inline"
-                       data-ng-class="{inactive: isLastPage()}"
-                       data-ng-click="!isLastPage() && nextFormPage()">Nästa</button>
+                            data-ng-class="{inactive: isLastPage()}"
+                            data-ng-click="!isLastPage() && nextFormPage()">Nästa
+                    </button>
                     <button data-ng-show="isLastPage(currentFormPage)" class="form-btn inline"
-                       data-ng-class="{inactive: !issueForm.$valid || !isValidForm}"
-                       data-ng-disabled="!issueForm.$valid || !isValidForm"
-                       data-ng-click="(issueForm.$valid && isValidForm) && submitForm(issueForm.$valid && isValidForm)">Slutför</button>
+                            data-ng-class="{inactive: !issueForm.$valid || !isValidForm}"
+                            data-ng-disabled="!issueForm.$valid || !isValidForm"
+                            data-ng-click="(issueForm.$valid && isValidForm) && submitForm(issueForm.$valid && isValidForm)">
+                        Slutför
+                    </button>
                 </div>
             </form>
         </div>

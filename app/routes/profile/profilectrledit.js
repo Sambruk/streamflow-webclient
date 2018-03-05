@@ -31,6 +31,11 @@ angular.module('sf').controller('ProfileEditCtrl', function ($scope, profileServ
         ]);
     });
 
+    $scope.messageDeliveryTypes = [
+        {id:"none", text:"Ingen"},
+        {id:"email", text:"E-post"},
+    ];
+
     $scope.$on('profile-name-updated', function () {
         $scope.profile.invalidate();
         $scope.profile.resolve();
@@ -93,5 +98,65 @@ angular.module('sf').controller('ProfileEditCtrl', function ($scope, profileServ
         });
     };
 
+    //TODO fix update animation and clean up this
+    $scope.updateFieldManually = function (scope) {
+        var valueChange = {};
+        valueChange[scope.$select.$element.attr('name')] = scope.$select.selected.id;
+
+        profileService.changeMessageDeliveryType(valueChange).then(function () {
+            successCallback(scope.$select.$element);
+        }, function () {
+            errorCallback(scope.$select.$element);
+        });
+
+    };
+
+
+    var successCallback = function (element) {
+        if (element.hasClass('error')) {
+            element.removeClass('error');
+        }
+
+        // if (element[0].type === 'select-one') {
+        element.addClass('saved saved-select');
+        // }
+
+        if ($('form div').hasClass('error') || !$('#contact-name').val()) {
+            $('#contact-submit-button').attr('disabled', true).addClass('inactive');
+        }
+        else {
+            $('#contact-submit-button').attr('disabled', false).removeClass('inactive');
+        }
+
+        element.parent()[0].addEventListener('webkitAnimationEnd', function () {
+            element.removeClass('saved').removeClass('saved-select');
+        });
+
+
+        //Talk of removing the saved icon after a while, whis coule be one way.
+        //Looked at fading it in and out however you cannot fade the "content" in a :after pseudo element
+        //it triggers a remove of the last one and add of a new element and that can not be transitioned
+        //setTimeout(removeIt,2000);
+        var form = $scope[element.closest('form').attr('name')];
+
+        setPristine(form, element);
+        $('[class^=error]', element.parent()).hide();
+    };
+
+    var errorCallback = function (element) {
+        element.parent().addClass('error');
+        $('#contact-submit-button').attr('disabled', true).addClass('inactive');
+    };
+
+    var setPristine = function (form, element) {
+        if (form.$setPristine) {//only supported from v1.1.x
+            form.$setPristine();
+        } else {
+            form.$dirty = false;
+            form.$pristine = true;
+            element.$dirty = false;
+            element.$pristine = true;
+        }
+    };
 });
 

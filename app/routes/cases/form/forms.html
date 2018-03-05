@@ -112,16 +112,20 @@
                             <div class="select col medium col-2 form-comboBox" id="{{field.field.field}}">
                                 <data-ng-include class="m-c"
                                                  src="'routes/cases/form/form-label.html'"></data-ng-include>
-                                <!--<select data-ng-model="field.value"
-                                        class="sidebar-chosen-drop-down ng-pristine ng-valid"-->
-                                <select chosen data-ng-model="field.value"
-                                        class="sidebar-chosen-drop-down ng-pristine ng-valid ng-touched"
-                                        name="{{ field.field.field }}" id="field-{{ field.field.field }}"
-                                        data-ng-options="option.value as option.name for option in field.field.fieldValue.options"
-                                        ng-change="reapplyRules()" sf-generic-auto-send
-                                        data-field-type="{{ field.field.fieldValue._type }}">
-                                    <option></option>
-                                </select>
+
+                                <ui-select ng-model="field.value" theme="select2" style="width: 100%;"
+                                           class="sidebar-chosen-drop-down ng-pristine ng-valid ng-touched"
+                                           name="{{field.field.field}}" id="field-{{ field.field.field }}"
+                                           data-ng-change="reapplyRules()" sf-generic-auto-send
+                                           data-field-type="{{field.field.fieldValue._type}}">
+                                    <ui-select-match>
+                                        <span ng-bind="$select.selected.name"></span>
+                                    </ui-select-match>
+                                    <ui-select-choices
+                                            repeat="option.value as option in field.field.fieldValue.options">
+                                        <span ng-bind="option.name"></span>
+                                    </ui-select-choices>
+                                </ui-select>
                             </div>
                         </div>
 

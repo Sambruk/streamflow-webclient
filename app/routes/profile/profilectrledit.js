@@ -32,8 +32,8 @@ angular.module('sf').controller('ProfileEditCtrl', function ($scope, profileServ
     });
 
     $scope.messageDeliveryTypes = [
-        {id:"none", text:"Ingen"},
-        {id:"email", text:"E-post"},
+        {id:'none', text:'Ingen'},
+        {id:'email', text:'E-post'},
     ];
 
     $scope.$on('profile-name-updated', function () {

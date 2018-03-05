@@ -58,16 +58,16 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
 
 
                 scope.possibleStatuses = [
-                    {id:"OPEN", text:"Aktiv"},
-                    {id:"ON_HOLD", text:"Pausad"},
-                    {id:"CLOSED", text:"Stängd"},
+                    {id:'OPEN', text:'Aktiv'},
+                    {id:'ON_HOLD', text:'Pausad'},
+                    {id:'CLOSED', text:'Stängd'},
                 ];
 
                 scope.possibleSorts = [
-                    {id:"createdOn", text:"Skapad"},
-                    {id:"dueOn", text:"Förfallodatum"},
-                    {id:"description", text:"Beskrivning"},
-                    {id:"priority", text:"Prioritet"},
+                    {id:'createdOn', text:'Skapad'},
+                    {id:'dueOn', text:'Förfallodatum'},
+                    {id:'description', text:'Beskrivning'},
+                    {id:'priority', text:'Prioritet'},
                 ];
 
                 scope.queryFilter;

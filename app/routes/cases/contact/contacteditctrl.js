@@ -27,10 +27,10 @@ angular.module('sf')
         $scope.contact = caseService.getSelectedContact($routeParams.caseId, $routeParams.contactIndex);
 
         $scope.contactTypes = [
-            {id:"letter", text:"Brev"},
-            {id:"email", text:"E-post"},
-            {id:"sms", text:"SMS"},
-            {id:"phone", text:"Telefon"}
+            {id:'letter', text:'Brev'},
+            {id:'email', text:'E-post'},
+            {id:'sms', text:'SMS'},
+            {id:'phone', text:'Telefon'}
         ];
 
         $scope.showSpinner = {

@@ -29,7 +29,7 @@ describe("sf.services.http", function () {
       spyOn($location, 'path').and.returnValue("/customers/197606030001");
     }));
 
-    xit("can get the entry point", inject(function ($location, buildMode, httpService) {
+    it("can get the entry point", inject(function ($location, buildMode, httpService) {
         var protocol = $location.$$protocol;
         var host = $location.$$host;
         var port = $location.$$port;

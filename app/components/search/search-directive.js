@@ -135,7 +135,7 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                             scope.filter.label.push(result[1]);
                         } else if (result[0] === 'status') {
                             scope.filter.status = scope.filter.status || {};
-                            scope.filter.status=result[1];
+                            scope.filter.status = result[1];
                         } else {
                             scope.filter[result[0]] = result[1];
                         }

@@ -41,34 +41,27 @@
 						<label for="profile-email">E-post</label>
 						<input type="text" data-ng-model="profile[0].emailAddresses[0].emailAddress" id="profile-email"
 							   name="email" data-sf-update-on-blur="updateField($event, $success, $error)">
-					</div>
-					<div class="text col col-3 medium-small">
-						<label for="profile-message-delivery-type">Notifiering</label>
-            <div class="select">
-              <!--<select chosen class="hasCustomSelect" data-ng-model="profile[0].messageDeliveryType"-->
-                  <!--id="profile-message-delivery-type" name="messagedeliverytype"-->
-                  <!--data-sf-update-on-blur="changeMessageDeliveryType($event, $success, $error)">-->
-              <!--</select>-->
-				<!--messageDeliveryTypes-->
-
-				<ui-select ng-model="profile[0].messageDeliveryType" theme="select2" class="hasCustomSelect" style="width: 100%;"
-						   id="profile-message-delivery-type" name="messagedeliverytype"
-						   data-ng-change="updateFieldManually(this)">
-					<ui-select-match placeholder="Välj">
-						<span ng-bind="$select.selected.text"></span>
-					</ui-select-match>
-					<ui-select-choices repeat="item.id as item in messageDeliveryTypes track by item.id">
-						<span ng-bind="item.text"></span>
-					</ui-select-choices>
-				</ui-select>
-
-
-            </div>
-					</div>
-				</div>
-				<div class="row cols-1 cf">
-					<div class="text col col-1">
-						<label id='label-profile-read' for="profile-markreadtimeoutsec">Markera som läst efter (sekunder)</label>
+                    </div>
+                    <div class="text col col-3 medium-small">
+                        <label for="profile-message-delivery-type">Notifiering</label>
+                        <div class="select">
+                            <ui-select ng-model="profile[0].messageDeliveryType" theme="select2" class="hasCustomSelect"
+                                       style="width: 100%;"
+                                       id="profile-message-delivery-type" name="messagedeliverytype"
+                                       data-ng-change="updateFieldManually(this)">
+                                <ui-select-match placeholder="Välj">
+                                    <span ng-bind="$select.selected.text"></span>
+                                </ui-select-match>
+                                <ui-select-choices repeat="item.id as item in messageDeliveryTypes track by item.id">
+                                    <span ng-bind="item.text"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row cols-1 cf">
+                    <div class="text col col-1">
+                        <label id='label-profile-read' for="profile-markreadtimeoutsec">Markera som läst efter (sekunder)</label>
 						<input type="text" data-ng-model="profile[0].markReadTimeout" id="profile-markreadtimeoutsec"
 							   name="markreadtimeoutsec"
 							   data-sf-update-on-blur="changeMarkReadTimeout($event, $success, $error)">

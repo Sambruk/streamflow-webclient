@@ -57,8 +57,6 @@ var paths = {
     'app/design/gui/css/**/*.css',
     'bower_components/angular-growl-v2/build/angular-growl.css',
     'bower_components/pickadate/lib/themes/default.*',
-    'bower_components/chosen/chosen.css',
-    'bower_components/angular-chosen-localytics/chosen-spinner.css',
     'bower_components/ui-select/dist/select.css',
     'bower_components/angular-tooltips/dist/angular-tooltips.css'
   ],
@@ -66,8 +64,7 @@ var paths = {
     'app/**/*.html'
   ],
   images: [
-    'app/design/gui/i/**/*',
-    'bower_components/chosen/*.png'
+    'app/design/gui/i/**/*'
   ],
   fonts: [
     'app/design/gui/fonts/**/*'
@@ -142,10 +139,6 @@ gulp.task('build-vendor-scripts', function () {
 
 gulp.task('build-css', function () {
   return gulp.src(paths.css)
-    // Fix path to Chosen's sprite sheet.
-    .pipe(replace(/chosen-sprite(@2x)?.png/gi, function (match) {
-      return '../i/' + match;
-    }))
     .pipe(sourcemaps.init())
       .pipe(autoprefixer())
       .pipe(concat('streamflow.css'))

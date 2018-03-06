@@ -29,9 +29,11 @@ angular.module('sf')
             restrict: 'A',
             link: function (scope, element) {
                 scope.location = $location;
-                scope.$watch('$location.path()', function () {
+                scope.$watch(function () {
+                    return $location.path();
+                }, function (path) {
                     clearLayoutClasses(element);
-                    if ($location.path().indexOf('/projects') === 0 || $location.path().indexOf('/search') === 0) {
+                    if (path.indexOf('/projects') === 0 || path.indexOf('/search') === 0) {
                         element.addClass('layout-1');
                     }
                     else {

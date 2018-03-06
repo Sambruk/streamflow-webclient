@@ -53,7 +53,7 @@ describe("sf.directives.sf-active-link", function () {
         $timeout(function () {
             var klass = el.attr('class');
             expect(klass).toMatch(/sel/);
-        }, 100);
+        }, 10);
 
     }));
 

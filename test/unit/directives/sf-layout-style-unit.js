@@ -32,11 +32,14 @@ describe("sf.directives.sf-layout-style", function () {
     $compile(el)(scope);
   }));
 
-  it('sets style to layout-1 for /projects/...', inject(function($location) {
+  it('sets style to layout-1 for /projects/...', inject(function($location, $timeout) {
     $location.path('/projects/some-project-id');
-    scope.$digest();
-    var klass = el.attr('class');
-    expect(klass).toMatch(/layout-1/);
+      scope.$digest();
+      $timeout(function () {
+          var klass = el.attr('class');
+          expect(klass).toMatch(/layout-1/);
+      }, 10);
+
   }));
 
   it('sets style to layout-2 when path does not start with /projects', inject(function($location) {

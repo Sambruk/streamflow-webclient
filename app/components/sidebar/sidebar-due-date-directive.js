@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
+'use strict'
 
 angular.module('sf').directive('sidebarDueDate', function (sidebarService) {
     return {
@@ -32,10 +32,23 @@ angular.module('sf').directive('sidebarDueDate', function (sidebarService) {
             scope.general.promise.then(function (result) {
                 scope.dueOn = result[0].dueOnShort;
             });
+            console.log("camChange", scope);
 
-            scope.changeDueOn = function (date) {
+
+            scope.$watch(function () {
+                return scope.dueOn;
+            }, function (value) {
+                console.log('triggered1111', value);
+                if (value) {
+                    scope.$root.$broadcast('case-edited', scope.$parent.caze);
+                    sidebarService.changeDueOn(scope, value);
+                    scope.$root.$broadcast('due-to-changed', value);
+                }
+            });
+            scope.changeDueOn = function (dueOn) {
+                console.log('triggered', dueOn);
                 scope.$root.$broadcast('case-edited', scope.$parent.caze);
-                sidebarService.changeDueOn(scope, date);
+                sidebarService.changeDueOn(scope, scope.dueOn);
                 scope.$root.$broadcast('due-to-changed', scope.dueOn);
             };
         }

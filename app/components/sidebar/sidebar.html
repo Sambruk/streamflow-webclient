@@ -119,7 +119,7 @@
                                         <span data-ng-bind="$select.selected.text"></span>
                                     </ui-select-match>
                                     <ui-select-choices
-                                            repeat="option.id as option in sendToRecipients | orderBy: ['title', 'text']"
+                                            repeat="option.id as option in sendToRecipients | filter: {'text':$select.search} | orderBy: ['title', 'text']"
                                             group-by="'title'">
                                         <span data-ng-bind="option.text"></span>
                                     </ui-select-choices>

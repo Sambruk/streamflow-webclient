@@ -17,7 +17,6 @@
  * limitations under the License.
  */
 'use strict'
-
 angular.module('sf').directive('sidebarDueDate', function (sidebarService) {
     return {
         restrict: 'A',
@@ -32,25 +31,20 @@ angular.module('sf').directive('sidebarDueDate', function (sidebarService) {
             scope.general.promise.then(function (result) {
                 scope.dueOn = result[0].dueOnShort;
             });
-            console.log("camChange", scope);
-
 
             scope.$watch(function () {
                 return scope.dueOn;
             }, function (value) {
-                console.log('triggered1111', value);
                 if (value) {
-                    scope.$root.$broadcast('case-edited', scope.$parent.caze);
-                    sidebarService.changeDueOn(scope, value);
-                    scope.$root.$broadcast('due-to-changed', value);
+                    changeDueOn(value);
                 }
             });
-            scope.changeDueOn = function (dueOn) {
-                console.log('triggered', dueOn);
+
+            function changeDueOn(dueOn) {
                 scope.$root.$broadcast('case-edited', scope.$parent.caze);
-                sidebarService.changeDueOn(scope, scope.dueOn);
-                scope.$root.$broadcast('due-to-changed', scope.dueOn);
-            };
+                sidebarService.changeDueOn(scope, dueOn);
+                scope.$root.$broadcast('due-to-changed', dueOn);
+            }
         }
     };
 });

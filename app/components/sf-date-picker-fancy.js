@@ -30,15 +30,6 @@ angular.module('sf').directive('sfDatePickerFancy', function () {
             post: function (scope, element, ngModel) {
                 var $element = $(element);
                 var overrides = scope.pickerOptions();
-                // var picker;
-
-                function pad(number) {
-                    var paddedValue = number;
-                    if (number < 10) {
-                        paddedValue = '0' + number;
-                    }
-                    return paddedValue;
-                }
 
                 var defaultOptions = {
                     monthsFull: ['Januari', 'Februari', 'Mars', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'Oktober', 'November', 'December'],
@@ -61,21 +52,17 @@ angular.module('sf').directive('sfDatePickerFancy', function () {
                     formatSubmit: 'yyyy mm dd',
                     min: +1,
                     onStart: function () {
-                        // picker = this;
+                        //Initial actions
                     },
                     onSet: function (date) {
                         scope.$parent.$apply(function (scope) {
                             console.log('xD', date, scope);
-                            var formattedDate = new Date(date.select);
-                            var dateLine = formattedDate.getUTCFullYear() + '-' + pad(formattedDate.getUTCMonth()) + '-' + pad(formattedDate.getUTCDay());
+                            var dateLine = moment(date.select).format('YYYY-MM-DD');
 
                             if (ngModel.ngModel.indexOf('.') > -1) {
                                 var model = ngModel.ngModel.split('.');
-                                console.log('before1',scope[model[0]][model[1]]);
                                 scope[model[0]][model[1]] = dateLine;
                             } else {
-                                console.log('before2',scope[ngModel.ngModel]);
-
                                 scope[ngModel.ngModel] = dateLine;
                             }
 

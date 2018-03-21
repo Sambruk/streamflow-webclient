@@ -61,7 +61,7 @@ angular.module('sf').factory('SfCase', function () {
         },
 
         closed: function () {
-            return 'CLOSED' === this.status;
+            return this.status === 'CLOSED';
         }
     };
     return SfCase;

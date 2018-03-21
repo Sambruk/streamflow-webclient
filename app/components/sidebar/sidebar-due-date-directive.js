@@ -35,7 +35,8 @@ angular.module('sf').directive('sidebarDueDate', function (sidebarService) {
             scope.$watch(function () {
                 return scope.dueOn;
             }, function (value) {
-                if (value) {
+                //Avoid triggering update during delayed initialization with promise
+                if (scope.general.promise.$$state.status === 1) {
                     changeDueOn(value);
                 }
             });

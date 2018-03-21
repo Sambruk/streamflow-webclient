@@ -56,7 +56,6 @@ angular.module('sf').directive('sfDatePickerFancy', function () {
                     },
                     onSet: function (date) {
                         scope.$parent.$apply(function (scope) {
-                            console.log('xD', date, scope);
                             var dateLine = moment(date.select).format('YYYY-MM-DD');
 
                             if (ngModel.ngModel.indexOf('.') > -1) {

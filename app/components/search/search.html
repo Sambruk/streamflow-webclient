@@ -23,7 +23,8 @@
                 <ui-select-match placeholder="Funktion">
                     <span data-ng-bind="$select.selected.text"></span>
                 </ui-select-match>
-                <ui-select-choices repeat="item.id as item in possibleProjects | filter: {'text':$select.search}" group-by="'title'">
+                <ui-select-choices repeat="item.id as item in possibleProjects | filter: {'text':$select.search}"
+                                   group-by="'title'">
                     <span data-ng-bind="item.text"></span>
                 </ui-select-choices>
                 <ui-select-no-choice>
@@ -46,7 +47,8 @@
                 <ui-select-match placeholder="Ärendetyp">
                     <span ng-bind="$select.selected.text"></span>
                 </ui-select-match>
-                <ui-select-choices repeat="item.id as item in possibleCaseTypes | filter: {'text':$select.search}" group-by="'title'">
+                <ui-select-choices repeat="item.id as item in possibleCaseTypes | filter: {'text':$select.search}"
+                                   group-by="'title'">
                     <span ng-bind="item.text+item.labels"></span>
                 </ui-select-choices>
                 <ui-select-no-choice>
@@ -161,7 +163,7 @@
                     <ui-select-match placeholder="Välj status">
                         <span data-ng-bind="$select.selected.text"></span>
                     </ui-select-match>
-                        <ui-select-choices repeat="item.id as item in possibleStatuses | filter: {'text':$select.search}">
+                    <ui-select-choices repeat="item.id as item in possibleStatuses | filter: {'text':$select.search}">
                         <span data-ng-bind="item.text"></span>
                     </ui-select-choices>
                     <ui-select-no-choice>
@@ -187,7 +189,7 @@
                            search-enabled="true"
                            id="group-select" name="group-select"
                            theme="select2" class="hasCustomSelect" style="width: 100%;">
-                    <ui-select-match>
+                    <ui-select-match placeholder="Välj värde">
                         <span data-ng-bind="$select.selected.name"></span>
                     </ui-select-match>
                     <ui-select-choices repeat="item in groupingOptions | filter: {'name':$select.search}">
@@ -219,7 +221,7 @@
                            search-enabled="true"
                            id="sort-select" name="sort-select"
                            theme="select2" class="hasCustomSelect" style="width: 100%;">
-                    <ui-select-match>
+                    <ui-select-match placeholder="Välj värde">
                         <span data-ng-bind="$select.selected.text"></span>
                     </ui-select-match>
                     <ui-select-choices repeat="item.id as item in possibleSorts | filter: {'text':$select.search}">

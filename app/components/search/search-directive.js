@@ -124,20 +124,26 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                     matchRegExp(query, /([a-z]+([:]){1}[\S]+)+/gi, function (match) {
                         var result = match[0].split(':');
 
-                        if (result[0] === 'dueOn') {
-                            scope.filter.dueOnFrom = moment(result[1].split('-')[0], 'YYYYMMDD').format('YYYY-MM-DD');
-                            scope.filter.dueOnTo = moment(result[1].split('-')[1], 'YYYYMMDD').format('YYYY-MM-DD');
-                        } else if (result[0] === 'createdOn') {
-                            scope.filter.createdOnFrom = moment(result[1].split('-')[0], 'YYYYMMDD').format('YYYY-MM-DD');
-                            scope.filter.createdOnTo = moment(result[1].split('-')[1], 'YYYYMMDD').format('YYYY-MM-DD');
-                        } else if (result[0] === 'label') {
-                            scope.filter.label = scope.filter.label || [];
-                            scope.filter.label.push(result[1]);
-                        } else if (result[0] === 'status') {
-                            scope.filter.status = scope.filter.status || {};
-                            scope.filter.status = result[1];
-                        } else {
-                            scope.filter[result[0]] = result[1];
+                        switch (result[0]) {
+                            case 'dueOn':
+                                scope.filter.dueOnFrom = moment(result[1].split('-')[0], 'YYYYMMDD').format('YYYY-MM-DD');
+                                scope.filter.dueOnTo = moment(result[1].split('-')[1], 'YYYYMMDD').format('YYYY-MM-DD');
+                                break;
+                            case 'createdOn':
+                                scope.filter.createdOnFrom = moment(result[1].split('-')[0], 'YYYYMMDD').format('YYYY-MM-DD');
+                                scope.filter.createdOnTo = moment(result[1].split('-')[1], 'YYYYMMDD').format('YYYY-MM-DD');
+                                break;
+                            case 'label':
+                                scope.filter.label = scope.filter.label || [];
+                                scope.filter.label.push(result[1]);
+                                break;
+                            case 'status':
+                                scope.filter.status = scope.filter.status || {};
+                                scope.filter.status = result[1];
+                                break;
+                            default:
+                                scope.filter[result[0]] = result[1];
+
                         }
                     });
                 };

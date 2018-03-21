@@ -64,7 +64,7 @@ angular.module('sf')
                 templateUrl: 'routes/cases/conversation/conversationdetail.html',
                 controller: 'ConversationDetailCtrl'
             })
-            .when('/cases/:caseId/caselog', {
+            .when('/project/:projectId/cases/:caseId/caselog', {
                 templateUrl: 'routes/cases/caselog/caseloglist.html',
                 controller: 'CaselogListCtrl'
             })

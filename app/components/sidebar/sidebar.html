@@ -389,11 +389,11 @@
         <div>
             <ul>
                 <li data-ng-class-even="'even'" class="convo-li">
-                    <a href="#/cases/{{ caze[0].id }}/caselog" class="block-link">
+                    <a href="#/project/{{projectId}}/cases/{{ caze[0].id }}/caselog" class="block-link">
                         <h3>Visa den fullständiga loggen</h3>
                         <div class="date">{{caze[0].lastLogEntryTime | date : "yyyy-MM-dd 'kl' HH:mm"}}</div>
                     </a>
-                    <a href="#/cases/{{ caze[0].id }}/caselog">
+                    <a href="#/project/{{projectId}}/cases/{{ caze[0].id }}/caselog">
                         <span class="action-btn icon-history" title="Ärendelogg, historik">
                             <span class="struct">Ärendelogg, historik</span>
                         </span>

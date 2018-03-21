@@ -136,7 +136,7 @@ angular.module('sf')
                     }
 
                     var isFound = true;
-                    var initialCase = projectService.checkSelected($rootScope.contextmenuParams.projectId, function () {
+                    var initialCase = projectService.checkSelected(scope.projectId, function () {
                         isFound = false;
                     });
 

@@ -122,7 +122,7 @@ gulp.task('build-scripts', ['lint', 'unit-test'], function () {
     .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(ngAnnotate())
     .pipe(concat('streamflow.js'))
-    // .pipe(uglify())
+    .pipe(uglify())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('build/app'))
     .pipe(connect.reload());
@@ -139,13 +139,13 @@ gulp.task('build-vendor-scripts', function () {
 
 gulp.task('build-css', function () {
   return gulp.src(paths.css)
-    .pipe(sourcemaps.init())
+      .pipe(sourcemaps.init())
       .pipe(autoprefixer())
       .pipe(concat('streamflow.css'))
       .pipe(minifyCSS())
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('build/app/css'))
-    .pipe(connect.reload());
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest('build/app/css'))
+      .pipe(connect.reload());
 });
 
 gulp.task('copy-templates', function () {

@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 'use strict';
-angular.module('sf').directive('sidebarDueDate', function (sidebarService) {
+angular.module('sf').directive('sidebarDueDate', function ($timeout, sidebarService) {
     return {
         restrict: 'A',
         scope: {
@@ -25,18 +25,21 @@ angular.module('sf').directive('sidebarDueDate', function (sidebarService) {
         },
         templateUrl: 'components/sidebar/sidebar-due-date.html',
         link: function (scope) {
+            var isLoaded = false;
             scope.general = scope.$parent.general;
             scope.caze = scope.$parent.caze;
 
             scope.general.promise.then(function (result) {
                 scope.dueOn = result[0].dueOnShort;
+                $timeout(function () {
+                    isLoaded = true;
+                });
             });
-
             scope.$watch(function () {
                 return scope.dueOn;
             }, function (value) {
                 //Avoid triggering update during delayed initialization with promise
-                if (scope.general.promise.$$state.status === 1) {
+                if (scope.general.promise.$$state.status === 1 && isLoaded) {
                     changeDueOn(value);
                 }
             });

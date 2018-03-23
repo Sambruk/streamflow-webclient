@@ -90,7 +90,7 @@
               class="issue-item {{case.overdueStatus()}} caselistItem"
               ng-repeat="case in currentCases track by $index">
 
-            <a href="{{case.href}}{{case.ownerId}}" class="block-link">
+              <a href="{{case.href}}/{{case.ownerId}}" class="block-link">
 
               <div class="due-date" data-ng-class="{'issue-closed-color-dim': case.closed()}">
                 <span>{{case.overdueDays() | positive}}{{case.dueOn | day}}</span>

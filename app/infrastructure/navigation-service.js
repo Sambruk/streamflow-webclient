@@ -28,7 +28,8 @@ angular.module('sf')
                 return '#/' + this.projectId() + '/' + this.projectType() + '/' + caseId;
             },
             caseHrefSimple: function (caseId) {
-                return '#/cases/' + caseId + '/' + this.projectId();
+                var projectId = this.projectId();
+                return '#/cases/' + caseId + '/' + (projectId ? projectId : "");
             },
             caseListHrefFromCase: function (caze) {
                 return '#/' + 'projects/' + caze[0].ownerId + '/' + caze[0].listType + '/';

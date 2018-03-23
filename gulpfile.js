@@ -33,7 +33,6 @@ var minifyCSS = require('gulp-clean-css');
 var minifyHtml = require('gulp-minify-html');
 var ngAnnotate = require('gulp-ng-annotate');
 var ngConstant = require('gulp-ng-constant');
-var replace = require('gulp-replace');
 var runSequence = require('run-sequence');
 var sourcemaps = require('gulp-sourcemaps');
 var stylish = require('jshint-stylish');

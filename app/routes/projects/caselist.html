@@ -63,7 +63,7 @@
                       <div class="issue-description__label-list label-list">{{case.labelList() | parenthesis}}</div>
                       <div class="issue-description__icon-wrapp icon-wrapp">
                         <span ng-if="case.restricted"><span class="issue-secret" tooltips tooltip-template="Begränsad åtkomst"></span></span>
-                        <span ng-if="case.unread"><span class="issue-unread" tooltips tooltip-template="Oläst"></span></span>
+                        <span ng-if="case.unread"><span class="issue-unread" tooltips tooltip-template="Stängd"></span></span>
                         <span ng-if="case.hasAttachments"><span class="issue-has-attachments" tooltips tooltip-template="Har bilagor"></span></span>
                         <span ng-if="case.hasContacts"><span class="issue-has-contacts" tooltips tooltip-template="Har kontakter"></span></span>
                         <span ng-if="case.hasUnreadConversation"><span class="issue-has-unread-conversation" tooltips tooltip-template="Finns olästa konversationer"></span></span>
@@ -78,7 +78,7 @@
                       <span class="action-status updated" data-ng-class="{'issue-closed-color-dim': case.closed()}">Ändrad {{case.modificationDate() | googleDate}}</span>
                       <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
                       <span class="priority" data-ng-if="case.priority.text">Prioritet: {{ case.priority.text }}</span>
-                      <span data-ng-show="case.unread">Oläst</span>
+                      <span data-ng-show="case.unread">Stängd</span>
                     </div>
                   </div>
                 </div>
@@ -112,7 +112,7 @@
                     <div class="issue-description-right-part__item issue-description__label-list label-list">{{case.labelList() | parenthesis}}</div>
                     <div class="issue-description-right-part__item issue-description__icon-wrapp icon-wrapp">
                       <span ng-if="case.restricted"><span class="issue-secret" tooltips tooltip-template="Begränsad åtkomst"></span></span>
-                      <span ng-if="case.unread"><span class="issue-unread" tooltips tooltip-template="Oläst"></span></span>
+                      <span ng-if="case.unread"><span class="issue-unread" tooltips tooltip-template="Stängd"></span></span>
                       <span ng-if="case.hasAttachments"><span class="issue-has-attachments" tooltips tooltip-template="Har bilagor"></span></span>
                       <span ng-if="case.hasContacts"><span class="issue-has-contacts" tooltips tooltip-template="Har kontakter"></span></span>
                       <span ng-if="case.hasUnreadConversation"><span class="issue-has-unread-conversation" tooltips tooltip-template="Finns olästa konversationer"></span></span>
@@ -128,7 +128,7 @@
                     <span class="action-status updated" data-ng-class="{'issue-closed-color-dim': case.closed()}">Ändrad {{case.modificationDate() | googleDate}} </span>
                     <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
                     <span class="priority" data-ng-if="case.priority.text">Prioritet: {{ case.priority.text }}</span>
-                    <span data-ng-show="case.unread">Oläst</span>
+                    <span data-ng-show="case.unread">Stängd</span>
                   </div>
                 </div>
               </div>

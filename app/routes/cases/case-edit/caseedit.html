@@ -65,14 +65,16 @@
         </div>
         <!--Not new-->
         <div class="m-c">
-            <h2 data-ng-show="status === undefined || status=='notes'">Sammanfattning</h2>
-            <span data-ng-show="status === undefined || status=='notes'" data-ng-click="status = 'empty'"
-                  class="action-btn icon-pencil" title="Edit case">
+            <div class="issue-summary" data-ng-show="status === undefined || status=='notes'">
+                <h2 data-ng-show="status === undefined || status=='notes'">Sammanfattning</h2>
+                <span data-ng-click="status = 'empty'"
+                      class="action-btn icon-pencil" title="Edit case">
                     <span class="struct">Edit case</span>
                 </span>
-            <div data-ng-show="status === undefined || status=='notes'" class="issue-body">
-                <div class="text">
-                    {{sidebardata.notes[0].note}}
+                <div class="issue-body">
+                    <div class="text">
+                        {{sidebardata.notes[0].note}}
+                    </div>
                 </div>
             </div>
             <caselogentry data-ng-show="status === undefined || status=='notes' || status=='new'"

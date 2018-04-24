@@ -24,8 +24,8 @@ angular.module('sf')
             linkTo: function (href) {
                 return $location.path(href);
             },
-            caseHref: function (caseId) {
-                return '#/' + this.projectId() + '/' + this.projectType() + '/' + caseId;
+            caseHref: function (projectId,caseId) {
+                return '#/cases/' + caseId + '/' + projectId;
             },
             caseHrefSimple: function (caseId) {
                 return '#/cases/' + caseId;

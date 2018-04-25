@@ -60,6 +60,18 @@ angular.module('sf').factory('profileService', function (backendService) {
                     {commands: 'changemarkreadtimeout'}
                 ],
                 value);
+        },
+        changeUserPassword: function (oldPassword, newPassword) {
+            return backendService.postNested(
+                [
+                    {resources: 'account'},
+                    {commands: 'changepassword'}
+                ],
+                {
+                    'oldpassword': oldPassword,
+                    'newpassword': newPassword
+                }
+            );
         }
     };
 });

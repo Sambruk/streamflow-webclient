@@ -79,5 +79,63 @@
                 </div>
             </form>
         </div>
+
+        <div class="profile-input">
+            <div class="m">
+                <h2>Profil lösenord</h2>
+            </div>
+            <form class="form-general cf" name="changePassword">
+                <div class="row cols-1 cf">
+                    <div class="text col full">
+                        <label for="profile-old-password">Gammalt lösenord</label>
+                        <input type="password" data-ng-model="profile[0].account.oldPassword" id="profile-old-password"
+                               name="oldPassword" required>
+                        <span class="help-block"
+                              data-ng-show="changePassword.oldPassword.$error.required">Required</span>
+                    </div>
+                </div>
+
+                <div class="row cols-1 cf">
+                    <div class="text col full">
+                        <label for="profile-new-password">Nytt lösenord</label>
+                        <input type="password" data-ng-model="profile[0].account.newPassword"
+                               id="profile-new-password" name="newPassword"
+                               required data-ng-pattern="/.\S{5,30}/"
+                               data-ng-model-options="{ updateOn: 'blur' }">
+
+                        <span class="help-block"
+                              data-ng-show="changePassword.newPassword.$error.required">Required</span>
+
+                    </div>
+                </div>
+
+                <div class="row cols-1 cf">
+                    <div class="text col full">
+                        <label for="profile-new-password-confirm">Bekräfta nytt lösenord</label>
+                        <input type="password" data-ng-model="profile[0].account.newPasswordConfirm"
+                               id="profile-new-password-confirm" name="newPasswordConfirm"
+                               required data-ng-pattern="/.\S{5,30}/"
+                               data-ng-model-options="{ updateOn: 'blur' }">
+
+                        <span class="help-block"
+                              data-ng-show="changePassword.newPasswordConfirm.$error.required">Required</span>
+                    </div>
+                </div>
+
+                <div class="error-message"
+                     data-ng-show="changePassword.newPassword.$invalid && !changePassword.newPassword.$pristine">
+                    Lösenord måste vara minst 6 och maximalt 30 tecken och utan mellanslag.
+                </div>
+
+                <div class="submit-area cf dialog-submit">
+                    <button type="submit" data-ng-class="{inactive: !changePassword.$valid}"
+                            data-ng-disabled="changePassword.$invalid" name="save-issue-owner"
+                            data-ng-click="changePassword($event, $success, $error)">
+                        Lämna
+                    </button>
+                </div>
+            </form>
+        </div>
+
     </div>
 </div><!--profileHolder -->

@@ -18,10 +18,9 @@
  */
 'use strict';
 
-angular.module('sf').controller('ProfileEditCtrl', function ($scope, profileService, $rootScope) {
+angular.module('sf').controller('ProfileEditCtrl', function ($scope, $route, $rootScope, profileService) {
     profileService.getCurrent().promise.then(function (result) {
         $scope.profile = result;
-
         $rootScope.$broadcast('breadcrumb-updated', [
             {
                 title: 'Profile'
@@ -112,14 +111,14 @@ angular.module('sf').controller('ProfileEditCtrl', function ($scope, profileServ
     };
 
 
-    $scope.changePassword = function ($event, $success, $error) {
+    $scope.changePassword = function ($event) {
         $event.preventDefault();
         profileService.changeUserPassword($scope.profile[0].account.oldPassword, $scope.profile[0].account.newPassword).then(function () {
-            console.log("Worked", this);
-            $success($($event.target));
-        }, function () {
-            console.log("Error",this);
-            $error($($event.target));
+            $scope.profile[0].account = {};
+            $route.reload();
+        }, function (error) {
+            console.error("Can't change password", error);
+            $scope.profile[0].account.errorMessage = "Fel gammalt lösenord";
         });
     };
 

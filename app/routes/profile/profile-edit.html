@@ -134,6 +134,11 @@
                     Dina lösenord måste matcha
                 </div>
 
+                <div class="error-message"
+                     data-ng-show="profile[0].account.errorMessage">
+                    {{profile[0].account.errorMessage}}
+                </div>
+
                 <div class="submit-area cf dialog-submit">
                     <button type="submit"
                             data-ng-class="{inactive:
@@ -143,7 +148,7 @@
                             data-ng-disabled="changePasswordForm.$invalid
                                 || profile[0].account.newPassword != profile[0].account.newPasswordConfirm"
                             name="change-user-password"
-                            data-ng-click="changePassword($event, $success, $error)">
+                            data-ng-click="changePassword($event)">
                         Lämna
                     </button>
                 </div>

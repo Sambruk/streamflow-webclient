@@ -90,7 +90,7 @@
                         <label for="profile-old-password">Gammalt lösenord</label>
                         <input type="password" data-ng-model="profile[0].account.oldPassword" id="profile-old-password"
                                name="oldPassword" required>
-                        <div class="error-message"
+                        <div class="error-ng-invalid-pattern"
                              data-ng-show="changePasswordForm.oldPassword.$error.required">Nödvändig
                         </div>
                     </div>
@@ -103,10 +103,10 @@
                                id="profile-new-password" name="newPassword"
                                required data-ng-pattern="/.\S{5,30}/">
 
-                        <div class="error-message"
+                        <div class="error-ng-invalid-pattern"
                              data-ng-show="changePasswordForm.newPassword.$error.required">Nödvändig
                         </div>
-                        <div class="error-message" data-ng-show="changePasswordForm.newPassword.$error.pattern">
+                        <div class="error-ng-invalid-pattern" data-ng-show="changePasswordForm.newPassword.$error.pattern">
                             Lösenord måste vara minst 6 och maximalt 30 tecken och utan mellanslag.
                         </div>
 
@@ -120,21 +120,21 @@
                                id="profile-new-password-confirm" name="newPasswordConfirm"
                                required data-ng-pattern="/.\S{5,30}/">
 
-                        <div class="error-message"
+                        <div class="error-ng-invalid-pattern"
                              data-ng-show="changePasswordForm.newPasswordConfirm.$error.required">Nödvändig
                         </div>
-                        <div class="error-message" data-ng-show="changePasswordForm.newPasswordConfirm.$error.pattern">
+                        <div class="error-ng-invalid-pattern" data-ng-show="changePasswordForm.newPasswordConfirm.$error.pattern">
                             Lösenord måste vara minst 6 och maximalt 30 tecken och utan mellanslag.
                         </div>
                     </div>
                 </div>
 
-                <div class="error-message"
+                <div class="error-ng-invalid-pattern"
                      data-ng-show="profile[0].account.newPassword != profile[0].account.newPasswordConfirm">
                     Dina lösenord måste matcha
                 </div>
 
-                <div class="error-message"
+                <div class="error-ng-invalid-pattern"
                      data-ng-show="profile[0].account.errorMessage">
                     {{profile[0].account.errorMessage}}
                 </div>

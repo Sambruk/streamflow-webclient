@@ -91,7 +91,8 @@
                         <input type="password" data-ng-model="profile[0].account.oldPassword" id="profile-old-password"
                                name="oldPassword" required>
                         <div class="error-message"
-                             data-ng-show="changePassword.oldPassword.$error.required">Nödvändig</div>
+                             data-ng-show="changePassword.oldPassword.$error.required">Nödvändig
+                        </div>
                     </div>
                 </div>
 
@@ -103,9 +104,11 @@
                                required data-ng-pattern="/.\S{5,30}/">
 
                         <div class="error-message"
-                              data-ng-show="changePassword.newPassword.$error.required">Nödvändig</div>
+                             data-ng-show="changePassword.newPassword.$error.required">Nödvändig
+                        </div>
                         <div class="error-message" data-ng-show="changePassword.newPassword.$error.pattern">
-                            Lösenord måste vara minst 6 och maximalt 30 tecken och utan mellanslag. </div>
+                            Lösenord måste vara minst 6 och maximalt 30 tecken och utan mellanslag.
+                        </div>
 
                     </div>
                 </div>
@@ -118,20 +121,28 @@
                                required data-ng-pattern="/.\S{5,30}/">
 
                         <div class="error-message"
-                              data-ng-show="changePassword.newPasswordConfirm.$error.required">Nödvändig</div>
+                             data-ng-show="changePassword.newPasswordConfirm.$error.required">Nödvändig
+                        </div>
                         <div class="error-message" data-ng-show="changePassword.newPasswordConfirm.$error.pattern">
-                            Lösenord måste vara minst 6 och maximalt 30 tecken och utan mellanslag. </div>
+                            Lösenord måste vara minst 6 och maximalt 30 tecken och utan mellanslag.
+                        </div>
                     </div>
                 </div>
 
                 <div class="error-message"
-                     data-ng-show="profile[0].account.newPassword!=profile[0].account.newPasswordConfirm">
+                     data-ng-show="profile[0].account.newPassword != profile[0].account.newPasswordConfirm">
                     Dina lösenord måste matcha
                 </div>
 
                 <div class="submit-area cf dialog-submit">
-                    <button type="submit" data-ng-class="{inactive: !changePassword.$valid}"
-                            data-ng-disabled="changePassword.$invalid" name="save-issue-owner"
+                    <button type="submit"
+                            data-ng-class="{inactive:
+                                !changePassword.$valid
+                                || profile[0].account.newPassword != profile[0].account.newPasswordConfirm
+                                }"
+                            data-ng-disabled="changePassword.$invalid
+                                || profile[0].account.newPassword != profile[0].account.newPasswordConfirm"
+                            name="change-user-password"
                             data-ng-click="changePassword($event, $success, $error)">
                         Lämna
                     </button>

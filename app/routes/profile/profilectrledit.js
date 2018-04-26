@@ -112,6 +112,17 @@ angular.module('sf').controller('ProfileEditCtrl', function ($scope, profileServ
     };
 
 
+    $scope.changePassword = function ($event, $success, $error) {
+        $event.preventDefault();
+        profileService.changeUserPassword($scope.profile[0].account.oldPassword, $scope.profile[0].account.newPassword).then(function () {
+            console.log("Worked", this);
+            $success($($event.target));
+        }, function () {
+            console.log("Error",this);
+            $error($($event.target));
+        });
+    };
+
     var successCallback = function (element) {
         if (element.hasClass('error')) {
             element.removeClass('error');

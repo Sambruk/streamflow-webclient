@@ -2,7 +2,7 @@
     <ul>
         <li>
             <a href="#/cases/{{ caze[0].id }}/{{ caze[0].ownerId }}/notes" target="_self" class="block-link convCaseSidebar">
-                <span class="contact-no-name grey" data-ng-if="caze[0].text.length === 0">Ärendebeskrivning saknas</span>
+                <span class="contact-no-name grey" data-ng-if="caze[0].text.length === 0">Sammanfattning</span>
                 <h3 data-ng-hide="caze[0].text.length === 0" class="left ">{{caze[0].text}}</h3>
                 <a href="" class="action-btn" data-ng-click="showCaseInfoPopUp()"><i class="icon-info"></i></a>
 

@@ -1,5 +1,5 @@
 <div class="m">
-    <div class="m-h cf">
+    <div class="m-h cf sidebar-header">
         <h2>Ärende: {{caze[0].caseId}} {{caze[0].text.length === 0 ? '' : '- ' + caze[0].text}}</h2>
         <a href="" class="action-btn" data-ng-click="showCaseInfoPopUp()"><i class="icon-info"></i></a>
     </div>
@@ -242,7 +242,7 @@
                     title="{{ collapsedStatus  || status=='new'? 'Collapse' : 'Edit'}}"></span></a>
         </div>
         <!--Expanded view-->
-        <div class="m-c animate-hide" data-ng-show="collapsedStatus || status=='new'">
+        <div class="m-c animate-hide sidebar-content-narrowed" data-ng-show="collapsedStatus || status=='new'">
             <form>
                 <!-- Ärendetyp -->
                 <div sidebar-case-type class="row full" can-change="canChangeCaseType || status=='new'">
@@ -287,7 +287,7 @@
         </div>
 
         <!--Collapsed view-->
-        <div class="m-c animate-hide" data-ng-hide="collapsedStatus || status=='new'">
+        <div class="m-c animate-hide sidebar-content-collapsed-narrowed" data-ng-hide="collapsedStatus || status=='new'">
             <form>
                 <div sidebar-case-data-collapsed class="row full" can-change="false">
                 </div>
@@ -354,8 +354,9 @@
                     class="action-btn {{ collapsedOther || status=='new'? 'icon-arrow-up' : 'icon-pencil'}}"
                     title="{{ collapsedOther || status=='new'? 'Collapse' : 'Edit'}}"></span></a>
         </div>
+
         <!--Expanded view-->
-        <div class="m-c animate-hide" data-ng-show="collapsedOther || status=='new'">
+        <div class="m-c animate-hide sidebar-content-narrowed" data-ng-show="collapsedOther || status=='new'">
             <form>
                 <!-- Prioritet -->
                 <div sidebar-priority class="row" can-change="canChangePriority"
@@ -367,7 +368,7 @@
         </div>
 
         <!--Collapsed view-->
-        <div class="m-c animate-hide" data-ng-hide="collapsedOther || status=='new'">
+        <div class="m-c animate-hide sidebar-content-collapsed-narrowed" data-ng-hide="collapsedOther || status=='new'">
             <form>
                 <div sidebar-case-priority-collapsed class="row full" can-change="false">
                 </div>

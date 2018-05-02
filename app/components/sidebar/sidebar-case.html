@@ -10,6 +10,11 @@
                 <div>
                     {{(notes[0].note || emptyNoteMessage)| limitTo: 180}}
                 </div>
+
+                <div>
+                    <b class="left">Senast ändrad:</b>
+                    <div class="left right-sidebar">{{caze[0].lastLogEntryTime | date : "yyyy-MM-dd 'kl' HH:mm"}}</div>
+                </div>
             </li>
         </a>
     </ul>

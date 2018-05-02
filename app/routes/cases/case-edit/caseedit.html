@@ -77,8 +77,11 @@
                     </div>
                 </div>
             </div>
-            <caselogentry data-ng-show="status === undefined || status=='notes' || status=='new'"
-                          caseid="caseId"></caselogentry>
+            <div class="issue-summary">
+                <h2 data-ng-show="status =='new'">Sammanfattning</h2>
+                <caselogentry data-ng-show="status === undefined || status=='notes' || status=='new'"
+                              caseid="caseId"></caselogentry>
+            </div>
             <div data-ng-show="status === undefined || status=='notes' || status=='new'" class="m single-issue">
                 <div class="m-h">
                     <h2>Tidigare kommentarer</h2>

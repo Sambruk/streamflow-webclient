@@ -91,7 +91,7 @@
                         <input type="password" data-ng-model="profile[0].account.oldPassword" id="profile-old-password"
                                name="oldPassword" required>
                         <div class="error-ng-invalid-pattern"
-                             data-ng-show="changePasswordForm.oldPassword.$error.required">Nödvändig
+                             data-ng-show="changePasswordForm.oldPassword.$error.required">*obligatorisk
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                                required data-ng-pattern="/.\S{5,30}/">
 
                         <div class="error-ng-invalid-pattern"
-                             data-ng-show="changePasswordForm.newPassword.$error.required">Nödvändig
+                             data-ng-show="changePasswordForm.newPassword.$error.required">*obligatorisk
                         </div>
                         <div class="error-ng-invalid-pattern" data-ng-show="changePasswordForm.newPassword.$error.pattern">
                             Lösenord måste vara minst 6 och maximalt 30 tecken och utan mellanslag.
@@ -121,7 +121,7 @@
                                required data-ng-pattern="/.\S{5,30}/">
 
                         <div class="error-ng-invalid-pattern"
-                             data-ng-show="changePasswordForm.newPasswordConfirm.$error.required">Nödvändig
+                             data-ng-show="changePasswordForm.newPasswordConfirm.$error.required">*obligatorisk
                         </div>
                         <div class="error-ng-invalid-pattern" data-ng-show="changePasswordForm.newPasswordConfirm.$error.pattern">
                             Lösenord måste vara minst 6 och maximalt 30 tecken och utan mellanslag.
@@ -149,7 +149,7 @@
                                 || profile[0].account.newPassword != profile[0].account.newPasswordConfirm"
                             name="change-user-password"
                             data-ng-click="changePassword($event)">
-                        Lämna
+                        Spara
                     </button>
                 </div>
             </form>

@@ -92,7 +92,7 @@
                         <div class="note-item cf"
                              data-ng-repeat="entry in filteredCaseLogs = (caseLogs | orderBy:'-creationDate') track by $index">
                             <div class="note-posted-by">
-                                <span class="struct">Postad av: </span>{{ entry.creator }} <span> - {{ entry.caseLogType | translate }}</span>
+                                <span class="struct">Postad av: </span>{{ entry.creator }}
                                 <span class="note-timestamp">{{ entry.creationDate | dateTime }}</span>
                             </div>
                             <div class="note-body">

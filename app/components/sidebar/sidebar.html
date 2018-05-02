@@ -380,26 +380,10 @@
     <!-- /Module: Kontakter -->
 
     <!-- Module: Log -->
-    <div class="m m-convos">
-        <div class="m-h">
-            <h2>Logg</h2>
-        </div>
-
-        <div>
-            <ul>
-                <li data-ng-class-even="'even'" class="convo-li">
-                    <a href="#/project/{{projectId}}/cases/{{ caze[0].id }}/caselog" class="block-link">
-                        <h3>Visa den fullständiga loggen</h3>
-                        <div class="date">{{caze[0].lastLogEntryTime | date : "yyyy-MM-dd 'kl' HH:mm"}}</div>
-                    </a>
-                    <a href="#/project/{{projectId}}/cases/{{ caze[0].id }}/caselog">
-                        <span class="action-btn icon-history" title="Ärendelogg, historik">
-                            <span class="struct">Ärendelogg, historik</span>
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+    <div class="issue-description-right-part__item">
+        <a href="#/project/{{projectId}}/cases/{{ caze[0].id }}/caselog">
+            Visa logg
+        </a>
     </div>
 
     <!-- <pre><code>{{ form[0] | json }}</code></pre> -->

@@ -37,22 +37,19 @@
                         <li data-ng-show="canUnassign" class="left-sidebar">
                             <a href="" data-ng-click="unassign()" class="btn sidebar-top-button">Återlämna</a>
                         </li>
-                        <li>
-                            <a data-ng-show="canMarkRead" data-ng-click="markReadUnread(true)" href="" class="btn">Markera
-                                läst</a>
+                        <li data-ng-show="canMarkRead">
+                            <a data-ng-click="markReadUnread(true)" href="" class="btn">Markera läst</a>
                         </li>
-                        <li>
-                            <a data-ng-show="canMarkUnread" data-ng-click="markReadUnread(false)" href="" class="btn">Markera
-                                oläst</a></li>
-                        <li>
-                            <a data-ng-show="canRestrict" data-ng-click="restrict()" href="" class="btn">Begränsa</a>
+                        <li data-ng-show="canMarkUnread">
+                            <a data-ng-click="markReadUnread(false)" href="" class="btn">Markera oläst</a></li>
+                        <li data-ng-show="canRestrict">
+                            <a data-ng-click="restrict()" href="" class="btn">Begränsa</a>
                         </li>
-                        <li>
-                            <a data-ng-show="canUnrestrict" data-ng-click="unrestrict()" href="" class="btn">Begränsa
-                                inte</a>
+                        <li data-ng-show="canUnrestrict">
+                            <a data-ng-click="unrestrict()" href="" class="btn">Begränsa inte</a>
                         </li>
-                        <li>
-                            <a href="" data-ng-show="canDelete" data-ng-click="toggleDeletePopup(true)"
+                        <li data-ng-show="canDelete">
+                            <a href="" data-ng-click="toggleDeletePopup(true)"
                                class="btn">Radera</a>
                         </li>
                         <li data-ng-show="canReopen">

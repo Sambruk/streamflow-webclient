@@ -77,7 +77,7 @@
                     </div>
                 </div>
             </div>
-            <div class="issue-summary">
+            <div data-ng-class="{'issue-summary':status =='new'}">
                 <h2 data-ng-show="status =='new'">Sammanfattning</h2>
                 <caselogentry data-ng-show="status === undefined || status=='notes' || status=='new'"
                               caseid="caseId"></caselogentry>

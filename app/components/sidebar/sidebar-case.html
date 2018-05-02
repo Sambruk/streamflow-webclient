@@ -1,9 +1,8 @@
 <div class="m-c">
     <ul>
-        <li>
-            <a href="#/cases/{{ caze[0].id }}/{{ caze[0].ownerId }}/notes" target="_self" class="block-link">
-
-                <span class="contact-no-name grey" data-ng-if="caze[0].text.length === 0">Sammanfattning</span>
+        <a href="#/cases/{{ caze[0].id }}/{{ caze[0].ownerId }}/notes" target="_self" class="block-link">
+            <li>
+                <h3 class="contact-no-name grey" data-ng-if="caze[0].text.length === 0">Sammanfattning</h3>
                 <h3 data-ng-hide="caze[0].text.length === 0" class="left ">{{caze[0].text}}</h3>
                 <span data-ng-if="caze[0].restricted"><i class="issue-secret"></i></span>
 
@@ -11,8 +10,8 @@
                 <div>
                     {{(notes[0].note || emptyNoteMessage)| limitTo: 180}}
                 </div>
-            </a>
-        </li>
+            </li>
+        </a>
     </ul>
     <div class="clear"></div>
 </div>

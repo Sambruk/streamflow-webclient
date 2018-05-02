@@ -323,44 +323,6 @@
     </div>
     <!-- /Module: Formulär -->
 
-
-    <!-- Module: Annat (Priority)-->
-    <div class="m m-status">
-        <div class="m-h">
-            <h2>Prioritet</h2>
-            <a data-ng-click="collapsedOther = ! collapsedOther || status=='new'" href=""><span
-                    class="action-btn {{ collapsedOther || status=='new'? 'icon-arrow-up' : 'icon-pencil'}}"
-                    title="{{ collapsedOther || status=='new'? 'Collapse' : 'Edit'}}"></span></a>
-        </div>
-        <!--Expanded view-->
-        <div class="m-c animate-hide" data-ng-show="collapsedOther || status=='new'">
-            <form>
-                <!-- Prioritet -->
-                <div sidebar-priority class="row" can-change="canChangePriority"
-                     data-ng-show="possiblePriorities.length !== 0">
-                </div>
-                <!-- /Prioritet -->
-                <!-- Due date -->
-                <div sidebar-due-date class="row" can-change="canChangeDueOn">
-                </div>
-                <!-- /Due date -->
-            </form>
-        </div>
-
-        <!--Collapsed view-->
-        <div class="m-c animate-hide" data-ng-hide="collapsedOther || status=='new'">
-            <form>
-                <div sidebar-case-priority-collapsed class="row full" can-change="false">
-                </div>
-            </form>
-        </div>
-        <!--/Collapsed view-->
-        <div class="sidebar-group-divider"></div>
-
-    </div>
-    <!-- /Module: Annat(Priority) -->
-
-
     <!-- Module: Konversationer -->
     <div sidebar-conversations class="m m-convos" can-create="canCreateConversation">
     </div>
@@ -384,6 +346,38 @@
         <div class="sidebar-group-divider"></div>
     </div>
     <!-- /Module: Kontakter -->
+
+    <!-- Module: Annat (Priority)-->
+    <div class="m m-status">
+        <div class="m-h">
+            <a data-ng-click="collapsedOther = ! collapsedOther || status=='new'" href=""><span
+                    class="action-btn {{ collapsedOther || status=='new'? 'icon-arrow-up' : 'icon-pencil'}}"
+                    title="{{ collapsedOther || status=='new'? 'Collapse' : 'Edit'}}"></span></a>
+        </div>
+        <!--Expanded view-->
+        <div class="m-c animate-hide" data-ng-show="collapsedOther || status=='new'">
+            <form>
+                <!-- Prioritet -->
+                <div sidebar-priority class="row" can-change="canChangePriority"
+                     data-ng-show="possiblePriorities.length !== 0">
+                </div>
+                <div sidebar-due-date class="row" can-change="canChangeDueOn">
+                </div>
+            </form>
+        </div>
+
+        <!--Collapsed view-->
+        <div class="m-c animate-hide" data-ng-hide="collapsedOther || status=='new'">
+            <form>
+                <div sidebar-case-priority-collapsed class="row full" can-change="false">
+                </div>
+            </form>
+        </div>
+        <!--/Collapsed view-->
+        <div class="sidebar-group-divider"></div>
+
+    </div>
+    <!-- /Module: Annat(Priority) -->
 
     <!-- Module: Log -->
     <div class="issue-description-right-part__item">

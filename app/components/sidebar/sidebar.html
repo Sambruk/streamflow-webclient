@@ -34,9 +34,6 @@
                         <i class="icon-direction downwards"></i>
                     </a>
                     <ul>
-                        <li data-ng-show="canUnassign" class="left-sidebar">
-                            <a href="" data-ng-click="unassign()" class="btn sidebar-top-button">Återlämna</a>
-                        </li>
                         <li data-ng-show="canMarkRead">
                             <a data-ng-click="markReadUnread(true)" href="" class="btn">Markera läst</a>
                         </li>
@@ -70,6 +67,9 @@
                 <li data-ng-show="canAssign" class="left-sidebar">
                     <a href="" data-ng-click="assignTo()"
                        class="btn sidebar-top-button">Tilldela annan</a>
+                </li>
+                <li data-ng-show="canUnassign" class="left-sidebar">
+                    <a href="" data-ng-click="unassign()" class="btn sidebar-top-button">Återlämna</a>
                 </li>
                 <li data-ng-show="canResolve" class="left-sidebar ">
                     <a href="" data-ng-click="resolveCase()"

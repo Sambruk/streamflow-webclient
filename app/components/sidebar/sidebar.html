@@ -372,52 +372,51 @@
                 </a>
             </div>
         </div>
-        <div class="sidebar-group-divider"></div>
     </div>
     <!-- /Module: Kontakter -->
 
-    <!-- Module: Annat (Priority)-->
-    <div class="m m-priority">
-        <div class="m-h">
-            <a data-ng-click="collapsedOther = ! collapsedOther || status=='new'" href=""><span
-                    class="action-btn {{ collapsedOther || status=='new'? 'icon-arrow-up' : 'icon-pencil'}}"
-                    title="{{ collapsedOther || status=='new'? 'Collapse' : 'Edit'}}"></span></a>
-        </div>
-
-        <!--Expanded view-->
-        <div class="m-c animate-hide sidebar-content-narrowed" data-ng-show="collapsedOther || status=='new'">
-            <form>
-                <!-- Prioritet -->
-                <div sidebar-priority class="row" can-change="canChangePriority"
-                     data-ng-show="possiblePriorities.length !== 0">
-                </div>
-                <div sidebar-due-date class="row" can-change="canChangeDueOn">
-                </div>
-            </form>
-        </div>
-
-        <!--Collapsed view-->
-        <div class="m-c animate-hide sidebar-content-collapsed-narrowed" data-ng-hide="collapsedOther || status=='new'">
-            <form>
-                <div sidebar-case-priority-collapsed class="row full" can-change="false">
-                </div>
-            </form>
-        </div>
-        <!--/Collapsed view-->
-
-        <!-- Module: Log -->
-        <div class="m-log">
-            <a href="#/project/{{projectId}}/cases/{{ caze[0].id }}/caselog">
-                Visa logg
-            </a>
-        </div>
-    </div>
-    <!-- /Module: Annat(Priority) -->
 
 
     <div class="clear"></div>
 
 </div>
+<!-- Module: Annat (Priority)-->
+<div class="m m-priority">
+    <div class="m-h">
+        <a data-ng-click="collapsedOther = ! collapsedOther || status=='new'" href=""><span
+                class="action-btn {{ collapsedOther || status=='new'? 'icon-arrow-up' : 'icon-pencil'}}"
+                title="{{ collapsedOther || status=='new'? 'Collapse' : 'Edit'}}"></span></a>
+    </div>
+
+    <!--Expanded view-->
+    <div class="m-c animate-hide sidebar-content-narrowed" data-ng-show="collapsedOther || status=='new'">
+        <form>
+            <!-- Prioritet -->
+            <div sidebar-priority class="row" can-change="canChangePriority"
+                 data-ng-show="possiblePriorities.length !== 0">
+            </div>
+            <div sidebar-due-date class="row" can-change="canChangeDueOn">
+            </div>
+        </form>
+    </div>
+
+    <!--Collapsed view-->
+    <div class="m-c animate-hide sidebar-content-collapsed-narrowed" data-ng-hide="collapsedOther || status=='new'">
+        <form>
+            <div sidebar-case-priority-collapsed class="row full" can-change="false">
+            </div>
+        </form>
+    </div>
+    <!--/Collapsed view-->
+
+    <!-- Module: Log -->
+    <div class="m-log">
+        <a href="#/project/{{projectId}}/cases/{{ caze[0].id }}/caselog">
+            Visa logg
+        </a>
+    </div>
+</div>
+<!-- /Module: Annat(Priority) -->
 
 <modal dialog-title="Ärendeinformation" show="showCaseInfo">
     <table class="log-table">

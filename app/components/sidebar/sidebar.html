@@ -22,6 +22,10 @@
                        class="btn sidebar-top-button">Byt ägare</a>
                 </li>
 
+                <li data-ng-show="canReopen" class="left-sidebar">
+                    <a href="" data-ng-click="reopen()" class="btn sidebar-top-button">Återuppta</a>
+                </li>
+
                 <li data-ng-show="canExportCase" class="left-sidebar">
                     <a data-ng-click="toggleExportPopup(true)"
                        href=""
@@ -50,9 +54,6 @@
                         <li data-ng-show="canDelete">
                             <a href="" data-ng-click="toggleDeletePopup(true)"
                                class="btn">Radera</a>
-                        </li>
-                        <li data-ng-show="canReopen">
-                            <a href="" data-ng-click="reopen()" class="btn">Återuppta</a>
                         </li>
                     </ul>
                 </li>

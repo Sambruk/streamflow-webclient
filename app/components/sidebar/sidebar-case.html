@@ -10,43 +10,9 @@
                 <div>
                     {{(notes[0].note || emptyNoteMessage)| limitTo: 180}}
                 </div>
-
-                <div>
-                    <b class="left">Senast ändrad:</b>
-                    <div class="left right-sidebar">{{caze[0].lastLogEntryTime | date : "yyyy-MM-dd 'kl' HH:mm"}}</div>
-                </div>
             </li>
         </a>
     </ul>
     <div class="clear"></div>
 </div>
-
-<modal dialog-title="Ärendeinformation" show="showCaseInfo">
-    <table class="log-table">
-        <caption>Allmänt</caption>
-        <tr>
-            <th>Ansvarig</th>
-            <td>{{ caze[0].owner }}</td>
-        </tr>
-        <tr>
-            <th>Skapad av</th>
-            <td>{{ caze[0].createdBy }}</td>
-        </tr>
-        <tr>
-            <th>Handläggare</th>
-            <td>{{ caze[0].assignedTo }}</td>
-        </tr>
-    </table>
-    <table class="log-table">
-        <caption>Åtkomst</caption>
-        <tr>
-            <th>Läsa</th>
-            <td>{{ permissions[0].readAccess }}</td>
-        </tr>
-        <tr>
-            <th>Skriva</th>
-            <td>{{ permissions[0].writeAccess }}</td>
-        </tr>
-    </table>
-</modal>
 

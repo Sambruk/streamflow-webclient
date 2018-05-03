@@ -29,11 +29,6 @@ angular.module('sf').directive('sidebarCase', function ($routeParams) {
             scope.status = $routeParams.status;
             scope.emptyNoteMessage = '';
 
-            scope.showCaseInfo = false;
-
-            scope.showCaseInfoPopUp = function () {
-                scope.showCaseInfo = true;
-            };
         }
     };
 });

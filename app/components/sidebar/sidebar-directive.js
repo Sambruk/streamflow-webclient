@@ -56,6 +56,8 @@ angular.module('sf')
                 scope.exportCaseLog = false;
                 scope.exportCaseNotes = false;
                 scope.status = $routeParams.status;
+                scope.showCaseInfo = false;
+
 
                 scope.caze.promise.then(function () {
                     checkPermissionService.checkPermissions(
@@ -216,11 +218,15 @@ angular.module('sf')
                 var updateToolbar = function () {
                     sidebarService.updateToolbar(scope);
                 };
-                updateToolbar(); // End commands (toolbar)
 
+                updateToolbar(); // End commands (toolbar)
                 var updateObject = function (itemToUpdate) {
                     itemToUpdate.invalidate();
                     itemToUpdate.resolve();
+                };
+
+                scope.showCaseInfoPopUp = function () {
+                    scope.showCaseInfo = true;
                 };
 
                 // Send to

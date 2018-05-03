@@ -18,7 +18,7 @@
 -->
 <sidebar ng-show="!isFormWindow" class="sidebar-content" sidebardata="sidebarData"></sidebar>
 
-<div class="content-primary" role="main">
+<div class="content-primary" data-ng-class="{'content-primary-full': isFormWindow}" role="main">
     <div class="m-h m">
         <h2>{{submittedForms[0].form}}</h2>
     </div>

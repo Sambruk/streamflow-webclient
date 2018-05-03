@@ -20,7 +20,7 @@
 <sidebar ng-show="!closeWithForm && !isFormWindow && !loadChild" class="sidebar-content"
          sidebardata="sidebardata"></sidebar>
 
-<div ng-class="{'content-primary': (!closeWithForm && !loadChild)}" role="main">
+<div data-ng-class="{'content-primary': (!closeWithForm && !loadChild), 'content-primary-full': (!closeWithForm && !isFormWindow && !loadChild)}" role="main">
     <div class="form-content">
         <!--<iframe ng-src="http://test-sf.jayway.com/surface/?ap=" + {{caseId}}></iframe>-->
 

@@ -58,7 +58,6 @@ angular.module('sf')
                 scope.status = $routeParams.status;
                 scope.showCaseInfo = false;
 
-
                 Mousetrap.bind('mod+shift+s', function() { console.log('create message'); });
                 Mousetrap.bind('mod+option+s', function() { console.log('show search'); });
                 Mousetrap.bind('mod+option+o', function() { console.log('show overview'); });
@@ -70,25 +69,26 @@ angular.module('sf')
                 Mousetrap.bind('mod+v', function () {
                     if (scope.canDelete) {
                         console.log('delete case');
-                        sidebarService.toggleDeletePopup(true);
+                        scope.toggleDeletePopup(true);
+                        scope.$apply();
                     }
                 });
                 Mousetrap.bind('mod+m', function () {
                     if (scope.canAssign) {
                         console.log('assign case');
-                        sidebarService.assign();
+                        sidebarService.assign(scope);
                     }
                 });
                 Mousetrap.bind('mod+s', function () {
                     if (scope.canAssign) {
                         console.log('assign to case');
-                        sidebarService.assignTo();
+                        sidebarService.assignTo(scope);
                     }
                 });
-                Mousetrap.bind('mod+u', function (e) {
+                Mousetrap.bind('mod+u', function () {
                     if (scope.canUnassign) {
                         console.log('unasign case');
-                        sidebarService.unassign();
+                        sidebarService.unassign(scope);
                     }
                 });
                 Mousetrap.bind('mod+shift+h', function () {
@@ -97,19 +97,20 @@ angular.module('sf')
                 Mousetrap.bind('mod+e', function () {
                     if (scope.canExportCase) {
                         console.log('export pdf');
-                        sidebarService.toggleExportPopup(true);
+                        scope.toggleExportPopup(true);
+                        scope.$apply();
                     }
                 });
                 Mousetrap.bind('mod+c', function () {
                     if (scope.canClose || scope.caseRequireCaseType) {
                         console.log('close case');
-                        sidebarService.close();
+                        sidebarService.close(scope);
                     } else if (scope.canCloseWithForm) {
                         console.log('close case with form');
                         sidebarService.closeWithForm();
                     } else if (scope.canResolve) {
                         console.log('resolve');
-                        sidebarService.resolveCase();
+                        sidebarService.resolveCase(scope);
                     }
                 });
 
@@ -325,6 +326,7 @@ angular.module('sf')
                 scope.toggleExportPopup = function (visible) {
                     scope.showExport = visible;
                     scope.commandView = true;
+                    console.log("called", scope);
                 }; // End Show Export Pdf
 
                 scope.onExportButtonClicked = function (submittedForms, attachments, conversations, contacts, caseLog, notes) {

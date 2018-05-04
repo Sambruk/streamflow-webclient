@@ -59,6 +59,60 @@ angular.module('sf')
                 scope.showCaseInfo = false;
 
 
+                Mousetrap.bind('mod+shift+s', function() { console.log('create message'); });
+                Mousetrap.bind('mod+option+s', function() { console.log('show search'); });
+                Mousetrap.bind('mod+option+o', function() { console.log('show overview'); });
+                Mousetrap.bind('mod+option+w', function() { console.log('show workspace'); });
+
+
+
+                //Case Actions
+                Mousetrap.bind('mod+v', function () {
+                    if (scope.canDelete) {
+                        console.log('delete case');
+                        sidebarService.toggleDeletePopup(true);
+                    }
+                });
+                Mousetrap.bind('mod+m', function () {
+                    if (scope.canAssign) {
+                        console.log('assign case');
+                        sidebarService.assign();
+                    }
+                });
+                Mousetrap.bind('mod+s', function () {
+                    if (scope.canAssign) {
+                        console.log('assign to case');
+                        sidebarService.assignTo();
+                    }
+                });
+                Mousetrap.bind('mod+u', function (e) {
+                    if (scope.canUnassign) {
+                        console.log('unasign case');
+                        sidebarService.unassign();
+                    }
+                });
+                Mousetrap.bind('mod+shift+h', function () {
+                    console.log('on hold case');
+                });
+                Mousetrap.bind('mod+e', function () {
+                    if (scope.canExportCase) {
+                        console.log('export pdf');
+                        sidebarService.toggleExportPopup(true);
+                    }
+                });
+                Mousetrap.bind('mod+c', function () {
+                    if (scope.canClose || scope.caseRequireCaseType) {
+                        console.log('close case');
+                        sidebarService.close();
+                    } else if (scope.canCloseWithForm) {
+                        console.log('close case with form');
+                        sidebarService.closeWithForm();
+                    } else if (scope.canResolve) {
+                        console.log('resolve');
+                        sidebarService.resolveCase();
+                    }
+                });
+
                 scope.caze.promise.then(function () {
                     checkPermissionService.checkPermissions(
                         scope,

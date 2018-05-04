@@ -26,6 +26,13 @@ angular.module('sf').directive('sidebarConversations', function () {
         },
         templateUrl: 'components/sidebar/sidebar-conversations.html',
         link: function (scope) {
+            Mousetrap.bind('mod+shift+c', function () {
+                if (scope.canCreate) {
+                    console.log('create conversation');
+                    //TODO add url redirect
+                }
+            });
+
             scope.caze = scope.$parent.caze;
             scope.conversations = scope.$parent.conversations;
         }

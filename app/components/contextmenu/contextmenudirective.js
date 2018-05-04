@@ -26,6 +26,13 @@ angular.module('sf').directive('contextmenu', function (projectService, navigati
             params: '=?'
         },
         link: function (scope) {
+            Mousetrap.bind('mod+n', function () {
+                if (scope.canCreateCase()) {
+                    console.log('create case');
+                    scope.createCase();
+                }
+            });
+
             scope.showSidebar = false;
 
             scope.projects = projectService.getAll();

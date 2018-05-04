@@ -28,8 +28,8 @@ angular.module('sf').directive('contextmenu', function (projectService, navigati
         link: function (scope) {
             Mousetrap.bind('mod+n', function () {
                 if (scope.canCreateCase()) {
-                    console.log('create case');
                     scope.createCase();
+                    scope.$apply();
                 }
             });
 

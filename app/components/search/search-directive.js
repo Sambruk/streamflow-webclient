@@ -32,6 +32,12 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                 };
             },
             post: function (scope) {
+
+                Mousetrap.bind('mod+alt+s', function () {
+                    scope.toggleSearchFilter();
+                    scope.$apply();
+                });
+
                 searchService.getPossibleAssignees().promise.then(function (assignees) {
                     scope.possibleAssignees = assignees;
                 });

@@ -18,7 +18,7 @@
  */
 'use strict';
 
-angular.module('sf').directive('sidebarConversations', function () {
+angular.module('sf').directive('sidebarConversations', function ($window) {
     return {
         restrict: 'A',
         scope: {
@@ -29,7 +29,7 @@ angular.module('sf').directive('sidebarConversations', function () {
             Mousetrap.bind('mod+shift+c', function () {
                 if (scope.canCreate) {
                     console.log('create conversation');
-                    //TODO add url redirect
+                    $window.location.href = '#/cases/' + scope.caze[0].id + '/conversation/create';
                 }
             });
 

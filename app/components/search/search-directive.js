@@ -33,7 +33,7 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
             },
             post: function (scope) {
 
-                Mousetrap.bind('mod+alt+s', function () {
+                Mousetrap.bind('mod+option+s', function () {
                     scope.toggleSearchFilter();
                     scope.$apply();
                 });

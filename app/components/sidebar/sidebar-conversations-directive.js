@@ -26,7 +26,7 @@ angular.module('sf').directive('sidebarConversations', function ($window) {
         },
         templateUrl: 'components/sidebar/sidebar-conversations.html',
         link: function (scope) {
-            Mousetrap.bind('mod+shift+c', function () {
+            Mousetrap.bind('option+c', function () {
                 if (scope.canCreate) {
                     console.log('create conversation');
                     $window.location.href = '#/cases/' + scope.caze[0].id + '/conversation/create';

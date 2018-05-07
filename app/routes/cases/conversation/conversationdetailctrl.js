@@ -57,7 +57,7 @@ angular.module('sf')
             $scope.conversations = $scope.sidebardata.conversations;
         });
 
-        Mousetrap.bind('mod+shift+p', function () {
+        Mousetrap.bind('mod+option+p', function () {
             if ($scope.canAddParticipant || $scope.canAddExternalParticipant) {
                 console.log('create participant');
                 $window.location.href = '#/cases/' + $scope.caseId + '/conversation/' + $scope.conversationId + '/participants/create';

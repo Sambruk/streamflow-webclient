@@ -26,8 +26,9 @@ angular.module('sf').directive('contextmenu', function (projectService, navigati
             params: '=?'
         },
         link: function (scope) {
-            Mousetrap.bind('mod+n', function () {
+            Mousetrap.bind('option+n', function () {
                 if (scope.canCreateCase()) {
+                    console.log('create case');
                     scope.createCase();
                     scope.$apply();
                 }

@@ -58,33 +58,59 @@ angular.module('sf')
                 scope.status = $routeParams.status;
                 scope.showCaseInfo = false;
 
-                Mousetrap.bind('mod+shift+s', function() { console.log('create message'); });
-                Mousetrap.bind('mod+option+s', function() { console.log('show search'); });
-                Mousetrap.bind('mod+option+o', function() { console.log('show overview'); });
-                Mousetrap.bind('mod+option+w', function() { console.log('show workspace'); });
-
+                Mousetrap.bind('mod+shift+s', function () {
+                    console.log('create message');
+                });
+                Mousetrap.bind('mod+option+s', function () {
+                    console.log('show search');
+                });
+                Mousetrap.bind('mod+option+o', function () {
+                    console.log('show overview');
+                });
+                Mousetrap.bind('mod+option+w', function () {
+                    console.log('show workspace');
+                });
 
 
                 //Case Actions
-                Mousetrap.bind('mod+v', function () {
+                Mousetrap.bind('mod+b', function () {
                     if (scope.canDelete) {
                         console.log('delete case');
                         scope.toggleDeletePopup(true);
                         scope.$apply();
                     }
                 });
-                Mousetrap.bind('mod+m', function () {
+                Mousetrap.bind('mod+t', function () {
                     if (scope.canAssign) {
                         console.log('assign case');
                         sidebarService.assign(scope);
                     }
                 });
-                Mousetrap.bind('mod+s', function () {
+
+                Mousetrap.bind('mod+l', function () {
                     if (scope.canAssign) {
                         console.log('assign to case');
                         sidebarService.assignTo(scope);
                     }
                 });
+
+                Mousetrap.bind('mod+l', function () {
+                    if (scope.canSendTo) {
+                        console.log('send to case');
+                        scope.sendTo();
+                        scope.$apply();
+
+                    }
+                });
+
+                Mousetrap.bind('mod+shift+r', function () {
+                    if (scope.canReopen) {
+                        console.log('reopen case');
+                        scope.reopen();
+                        scope.$apply();
+                    }
+                });
+
                 Mousetrap.bind('mod+u', function () {
                     if (scope.canUnassign) {
                         console.log('unasign case');
@@ -94,14 +120,14 @@ angular.module('sf')
                 Mousetrap.bind('mod+shift+h', function () {
                     console.log('on hold case');
                 });
-                Mousetrap.bind('mod+e', function () {
+                Mousetrap.bind('mod+shift+e', function () {
                     if (scope.canExportCase) {
                         console.log('export pdf');
                         scope.toggleExportPopup(true);
                         scope.$apply();
                     }
                 });
-                Mousetrap.bind('mod+c', function () {
+                Mousetrap.bind('mod+s', function () {
                     if (scope.canClose || scope.caseRequireCaseType) {
                         console.log('close case');
                         sidebarService.close(scope);

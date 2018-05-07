@@ -61,16 +61,10 @@ angular.module('sf')
                 Mousetrap.bind('mod+shift+s', function () {
                     console.log('create message');
                 });
-                Mousetrap.bind('mod+option+s', function () {
-                    console.log('show search');
-                });
                 Mousetrap.bind('mod+option+o', function () {
                     console.log('show overview');
+                    $window.location.href = '#/cases/' + scope.caze[0].id + '/' + scope.caze[0].ownerId;
                 });
-                Mousetrap.bind('mod+option+w', function () {
-                    console.log('show workspace');
-                });
-
 
                 //Case Actions
                 Mousetrap.bind('mod+b', function () {

@@ -18,7 +18,7 @@
  */
 'use strict';
 angular.module('sf')
-    .controller('ConversationDetailCtrl', function ($scope, $q, $rootScope, caseService, $routeParams, navigationService, tokenService, httpService, fileService, checkPermissionService) {
+    .controller('ConversationDetailCtrl', function ($scope, $q, $rootScope, $window, caseService, $routeParams, navigationService, tokenService, httpService, fileService, checkPermissionService) {
 
         $scope.apiUrl = httpService.apiUrl + caseService.getWorkspace();
         $scope.sidebardata = {};
@@ -55,6 +55,13 @@ angular.module('sf')
                 return;
             }
             $scope.conversations = $scope.sidebardata.conversations;
+        });
+
+        Mousetrap.bind('mod+shift+p', function () {
+            if ($scope.canAddParticipant || $scope.canAddExternalParticipant) {
+                console.log('create participant');
+                $window.location.href = '#/cases/' + $scope.caseId + '/conversation/' + $scope.conversationId + '/participants/create';
+            }
         });
 
         var updateObject = function (itemToUpdate) {

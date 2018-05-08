@@ -1,13 +1,96 @@
 <div class="issue-banner">
-  <h2>
-    <span data-ng-repeat="bread in breadcrumbList track by $index">
-      <a href="{{bread.url}}" data-ng-show="bread.url">
-        {{ bread.title | translate }}
-      </a>
-      <span data-ng-hide="bread.url">
-        {{ bread.title | translate }}
-      </span>
-      <span ng-hide="$last === true">&rarr;&nbsp; </span>
-    </span>
-  </h2>
+    <h2>
+        <span data-ng-repeat="bread in breadcrumbList track by $index">
+          <a href="{{bread.url}}" data-ng-show="bread.url">
+            {{ bread.title | translate }}
+          </a>
+          <span data-ng-hide="bread.url">
+            {{ bread.title | translate }}
+          </span>
+          <span ng-hide="$last === true">&rarr;&nbsp; </span>
+        </span>
+    </h2>
+
+    <a href="" class="action-btn" data-ng-click="showShortcutInfoPopUp()"><i class="icon-info"></i></a>
+
 </div>
+
+<modal dialog-title="genvägar" show="showShortcutInfo">
+    <table class="log-table">
+        <caption>Allmänna åtgärder</caption>
+        <tr>
+            <th>Visa / dölj sök</th>
+            <td>Shift+S</td>
+        </tr>
+        <tr>
+            <th>Skapa ett fall</th>
+            <td>Alt+N</td>
+        </tr>
+    </table>
+
+
+    <table class="log-table">
+        <caption>Samtalsåtgärder</caption>
+        <tr>
+            <th>Lägg till konversation</th>
+            <td>Alt+C</td>
+        </tr>
+
+        <tr>
+            <th>Lägg till deltagare</th>
+            <td>Ctrl+Alt+P</td>
+        </tr>
+    </table>
+
+
+    <table class="log-table">
+        <caption>Fallhandlingar</caption>
+
+        <tr>
+            <th>Öppet huvudfönster</th>
+            <td>Alt+O</td>
+        </tr>
+        <tr>
+            <th>Ta bort fallet</th>
+            <td>Ctrl+Alt+D</td>
+        </tr>
+
+        <tr>
+            <th>Tilldela fall</th>
+            <td>Alt+A</td>
+        </tr>
+        <tr>
+            <th>Tilldela fall till</th>
+            <td>Alt+T</td>
+        </tr>
+        <tr>
+            <th>Skicka fall till</th>
+            <td>Alt+S</td>
+        </tr>
+        <tr>
+            <th>Återupptagna fallet</th>
+            <td>Alt+R</td>
+        </tr>
+        <tr>
+            <th>Un-tilldela fallet</th>
+            <td>Alt+U</td>
+        </tr>
+        <tr>
+            <th>On hold case</th>
+            <td>Ctrl+Shift+H</td>
+        </tr>
+
+        <tr>
+            <th>Exportfall</th>
+            <td>Ctrl+Alt+E</td>
+        </tr>
+        <tr>
+            <th>Stäng / lösa fall</th>
+            <td>Alt+X</td>
+        </tr>
+    </table>
+
+    <h4>
+        CTRL ersätts med kommando på macOs
+    </h4>
+</modal>

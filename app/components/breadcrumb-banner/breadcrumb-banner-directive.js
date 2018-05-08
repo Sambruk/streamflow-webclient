@@ -28,6 +28,11 @@ angular.module('sf')
             },
             link: function (scope) {
                 scope.breadcrumbList = null;
+
+                scope.showShortcutInfoPopUp = function () {
+                    scope.showShortcutInfo = true;
+                };
+
                 scope.$watch('breadcrumbList', function (newVal) {
                     if (!newVal) {
                         return;

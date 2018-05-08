@@ -43,12 +43,12 @@ angular.module('sf').directive('login', function ($rootScope, buildMode, $locati
 
             function getLoggedInStatus() {
                 return $http.get(httpService.apiUrl).then(
-                    function (){
+                    function () {
                         return true;
                     }, function () {
-                    return false;
+                        return false;
 
-                });
+                    });
             }
 
             /**
@@ -102,11 +102,13 @@ angular.module('sf').directive('login', function ($rootScope, buildMode, $locati
                 $http.defaults.headers.common.Authorization = 'Basic ' + basicAuthBase64;
 
                 $http({
-                    method: 'GET',
-                    url: logoutUrl,
-                    headers: {'Authorization': 'Basic ' + basicAuthBase64},
-                    cache: 'false'
-                }).then(function (response) {
+                        method: 'GET',
+                        url: logoutUrl,
+                        headers: {'Authorization': 'Basic ' + basicAuthBase64},
+                        cache: 'false'
+                    },
+                    $location.path('#')
+                ).then(function (response) {
                     console.log('Logout response', response);
                     tokenService.clear();
                     tokenService.isDefaultToken = true;

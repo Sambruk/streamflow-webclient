@@ -64,7 +64,7 @@ angular.module('sf')
                 });
 
                 //Case Actions
-                Mousetrap.bind('mod+option+d', function () {
+                Mousetrap.bind('shift+d', function () {
                     if (scope.canDelete) {
                         console.log('delete case');
                         scope.toggleDeletePopup(true);
@@ -109,7 +109,7 @@ angular.module('sf')
                     }
                 });
 
-                Mousetrap.bind('mod+shift+h', function () {
+                Mousetrap.bind('shift+h', function () {
                     console.log('on hold case');
                 });
 

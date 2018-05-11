@@ -32,7 +32,6 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                 };
             },
             post: function (scope) {
-
                 Mousetrap.bind('shift+s', function () {
                     console.log('open/close search');
                     scope.toggleSearchFilter();
@@ -335,7 +334,7 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                 scope.resetSearchFilter = function () {
                     scope.clearGrouping();
                     scope.clearSorting();
-                    scope.filter = undefined;
+                    scope.filter = {};
                 };
 
                 scope.clearGrouping = function () {

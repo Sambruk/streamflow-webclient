@@ -84,12 +84,15 @@ function karmaCallback(done) {
 }
 
 gulp.task('config', function () {
-  gulp.src(paths.config)
-    .pipe(ngConstant({
-      name: 'sf.config',
-      constants: { buildMode: buildMode }
-    }))
-    .pipe(gulp.dest('app/config'));
+    gulp.src(paths.config)
+        .pipe(ngConstant({
+            name: 'sf.config',
+            constants: {
+                buildMode: buildMode,
+                externalContentURL: "https://imcode.com/"
+            }
+        }))
+        .pipe(gulp.dest('app/config'));
 });
 
 gulp.task('unit-test', function (done) {

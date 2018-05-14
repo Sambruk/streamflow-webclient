@@ -23,10 +23,10 @@
             <h2 class="id">{{caze[0].text}}</h2>
         </div>
     </div>
+    <iframe class="external-content" name="external-content" data-ng-if="externalContentURL"
+            data-ng-src="{{externalContentURL}}"></iframe>
 
-    <iframe class="external-content" name="external-content" data-ng-src="{{externalContentURL}}"></iframe>
-
-    <div class="m single-issue single-issue__trimmed">
+    <div class="m single-issue" data-ng-class="{'single-issue__trimmed': externalContentURL}">
         <!--Empty or new case-->
         <div class="m-c">
             <div class="issue-body">

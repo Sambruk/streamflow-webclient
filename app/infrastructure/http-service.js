@@ -52,13 +52,31 @@ angular.module('sf').factory('httpService', function ($q, $cacheFactory, buildMo
         }
     }
 
+    function prepareExternalContentURL() {
+        var protocol = $location.$$protocol;
+        var host = $location.$$host;
+        var port = $location.$$port;
+        var prodUrl = protocol + '://' + host + ':' + port + '/webclient/external/content';
+
+        switch (buildMode) {
+            case 'prod':
+                return prodUrl;
+            case 'dev':
+                return 'http://localhost:9999';
+            default:
+                return '';
+        }
+    }
+
     var baseUrl = prepareBaseUrl();
-    var apiUrl = prepareApiUrl(baseUrl);
+    var apiUrl = prepareApiUrl();
+    var externalContentUrl = prepareExternalContentURL();
     var cache = $cacheFactory('sfHttpCache');
 
     return {
         baseUrl: baseUrl,
         apiUrl: apiUrl,
+        externalContentUrl: externalContentUrl,
 
         info: function () {
             return cache.info();
@@ -100,6 +118,15 @@ angular.module('sf').factory('httpService', function ($q, $cacheFactory, buildMo
 
             return result;
         },
+
+        getSimpleRequest: function (url) {
+            var promise = $http({
+                method: 'GET',
+                url: url
+            });
+            return promise;
+        },
+
 
         prepareUrl: function (href) {
             if (href[0] === '/') {

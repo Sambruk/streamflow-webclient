@@ -88,8 +88,7 @@ gulp.task('config', function () {
         .pipe(ngConstant({
             name: 'sf.config',
             constants: {
-                buildMode: buildMode,
-                externalContentURL: "https://imcode.com/"
+                buildMode: buildMode
             }
         }))
         .pipe(gulp.dest('app/config'));

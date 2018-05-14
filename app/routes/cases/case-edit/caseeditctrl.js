@@ -18,7 +18,7 @@
  */
 'use strict';
 
-angular.module('sf').controller('CaseEditCtrl', function ($scope, $rootScope, $routeParams, $sce, caseService, externalContentURL) {
+angular.module('sf').controller('CaseEditCtrl', function ($scope, $rootScope, $routeParams, $sce, httpService, caseService, externalContentURL) {
     $rootScope.$broadcast('case-opened');
 
     $scope.sidebardata = {};
@@ -27,7 +27,13 @@ angular.module('sf').controller('CaseEditCtrl', function ($scope, $rootScope, $r
     $scope.notesHistory = caseService.getAllNotes($routeParams.caseId);
     $scope.caze = caseService.getSelected($routeParams.caseId);
     $scope.status = $routeParams.status;
-    $scope.externalContentURL = $sce.trustAsResourceUrl(externalContentURL);
+
+    var URL = httpService.externalContentUrl;
+    httpService.getSimpleRequest(URL).then(function (result) {
+        if (result.status !== 404) {
+            $scope.externalContentURL = $sce.trustAsResourceUrl(URL);
+        }
+    });
 
     $scope.caseLogs = caseService.getSelectedFilteredCaseLog($routeParams.caseId, {
         system: false,

@@ -45,6 +45,8 @@ angular.module('sf')
                 scope.caze = caseService.getSelected($routeParams.caseId);
                 scope.possibleSendTo = caseService.getPossibleSendTo($routeParams.caseId);
                 scope.possibleAssignees = caseService.getPossibleAssignees($routeParams.caseId);
+                scope.subcases = caseService.getSubCases($routeParams.caseId);
+                scope.parent = caseService.getParent($routeParams.caseId);
                 scope.uploadProgress = 0;
                 scope.showExport = false;
                 scope.showAssignTo = false;

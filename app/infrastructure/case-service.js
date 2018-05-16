@@ -293,6 +293,47 @@ angular.module('sf')
                 });
             },
 
+            getSubCases: function (caseId) {
+                return backendService.get({
+                    specs: caseBase(caseId).concat([
+                        {resources: 'subcases'},
+                        {queries: 'index'}
+
+                    ]),
+                    onSuccess: function (resource, result) {
+                        resource.response.links.forEach(function (item) {
+                            result.push(
+                                new SfCase(item, navigationService.caseHrefSimple(item.id))
+                            );
+                        });
+                        caseBase.broadcastMessage(result.status);
+                    },
+                    onFailure: function (error) {
+                        caseBase.broadcastMessage(error);
+                    }
+                });
+            },
+
+            getParent: function (caseId) {
+                return backendService.get({
+                    specs: caseBase(caseId).concat([
+                        {resources: 'parent'},
+                        {queries: 'index'}
+
+                    ]),
+                    onSuccess: function (resource, result) {
+                        //There can be only 0 or 1 elements at list
+                        var parent = resource.response.links[0];
+                        result.push(new SfCase(parent, navigationService.caseHrefSimple(parent.id)));
+
+                        caseBase.broadcastMessage(result.status);
+                    },
+                    onFailure: function (error) {
+                        caseBase.broadcastMessage(error);
+                    }
+                });
+            },
+
             closeFormOnClose: function (caseId) {
                 return backendService.postNested(
                     caseBase(caseId).concat([

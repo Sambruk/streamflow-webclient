@@ -306,6 +306,14 @@ angular.module('sf')
                     scope.showCaseInfo = true;
                 };
 
+                scope.createSubCase = function () {
+                    caseService.createSubCase(scope.caze[0].id, function () {});
+                };
+
+                scope.removeSubCase = function (subCaseId) {
+                    caseService.removeSubCase(scope.caze[0].id, subCaseId, function () {});
+                };
+
                 // Send to
                 scope.sendTo = function () {
                     sidebarService.sendTo(scope);

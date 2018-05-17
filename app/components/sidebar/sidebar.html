@@ -333,12 +333,17 @@
                    class="block-link">
                     {{subcase.text?subcase.text:'Empty case'}}
                 </a>
+                <a href="" class="block-link" data-ng-click="removeSubCase(subcase.id)">
+                    <i class="icon-minus"></i>
+                </a>
             </li>
         </ul>
 
         <a href="{{parent[0].href}}/{{parent[0].ownerId ? parent[0].ownerId : caze[0].ownerId}}" class="block-link">
             {{parent.text?parent.text:'Empty parent'}}
         </a>
+
+        <a href="" data-ng-click="createSubCase()" class="action-btn">New child case <i class="icon-plus"></i></a>
 
     </div>
     <!-- /Module: Ärendedata -->

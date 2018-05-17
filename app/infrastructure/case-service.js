@@ -334,19 +334,20 @@ angular.module('sf')
                 });
             },
 
+            //TODO Check why {} is needed?
             createSubCase: function (caseId, callback) {
                 return backendService.postNested(
                     caseBase(caseId).concat([
                         {resources: 'subcases'},
                         {commands: 'createsubcase'}
-                    ]))
+                    ]), {})
                     .then(_.debounce(callback)())
                     .then(function (result) {
-                        caseBase.broadcastMessage(result.status);
-                    }),
-                    function (error) {
-                        caseBase.broadcastMessage(error);
-                    };
+                            caseBase.broadcastMessage(result.status);
+                        },
+                        function (error) {
+                            caseBase.broadcastMessage(error);
+                        });
             },
 
             removeSubCase: function (parentCaseId, subCaseId, callback) {

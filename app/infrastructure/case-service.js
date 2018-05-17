@@ -334,6 +334,37 @@ angular.module('sf')
                 });
             },
 
+            createSubCase: function (caseId, callback) {
+                return backendService.postNested(
+                    caseBase(caseId).concat([
+                        {resources: 'subcases'},
+                        {commands: 'createsubcase'}
+                    ]))
+                    .then(_.debounce(callback)())
+                    .then(function (result) {
+                        caseBase.broadcastMessage(result.status);
+                    }),
+                    function (error) {
+                        caseBase.broadcastMessage(error);
+                    };
+            },
+
+            removeSubCase: function (parentCaseId, subCaseId, callback) {
+                return backendService.postNested(
+                    caseBase(parentCaseId).concat([
+                        {resources: 'subcases'},
+                        {commands: 'removesubcase'}
+                    ]),
+                    {entity: subCaseId})
+                    .then(_.debounce(callback)())
+                    .then(function (result) {
+                            caseBase.broadcastMessage(result.status);
+                        },
+                        function (error) {
+                            caseBase.broadcastMessage(error);
+                        });
+            },
+
             closeFormOnClose: function (caseId) {
                 return backendService.postNested(
                     caseBase(caseId).concat([

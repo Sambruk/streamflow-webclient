@@ -7,18 +7,55 @@
 
     <div>
         <b class="left left-sidebar">Etiketter:</b>
-        <div class="left right-sidebar"><div ng-repeat="label in caseLabel | unique:'text'">{{label.text}}{{$last ? '' : '; '}}</div></div>
+        <div class="left right-sidebar">
+            <div ng-repeat="label in caseLabel | unique:'text'">{{label.text}}{{$last ? '' : '; '}}</div>
+        </div>
     </div>
     <div class="clear"></div>
 
     <div>
         <b class="left left-sidebar">Bifogade filer:</b>
         <div class="left right-sidebar">
-            <ul >
-                <div data-ng-show="attachment.rel === 'attachment'" data-ng-repeat="attachment in attachments" class="icon-attach">
-                    <a data-ng-show="attachment.queries[0].id === 'download'" data-ng-click="downloadAttachment(attachment)"
+            <ul>
+                <div data-ng-show="attachment.rel === 'attachment'" data-ng-repeat="attachment in attachments"
+                     class="icon-attach">
+                    <a data-ng-show="attachment.queries[0].id === 'download'"
+                       data-ng-click="downloadAttachment(attachment)"
                        href="" title="{{ attachment.text }}" download>{{ attachment.text }}</a>
-                    <a data-ng-show="attachment.queries[0].id !== 'download'" href="" title="{{ attachment.text }}" download>{{attachment.text}}</a>
+                    <a data-ng-show="attachment.queries[0].id !== 'download'" href="" title="{{ attachment.text }}"
+                       download>{{attachment.text}}</a>
+                </div>
+            </ul>
+
+        </div>
+    </div>
+    <div class="clear"></div>
+
+
+    <div>
+        <b class="left left-sidebar">Lankad fran:</b>
+        <div class="left right-sidebar">
+            <ul>
+                <a href="{{parent[0].href}}/{{parent[0].ownerId ? parent[0].ownerId : caze[0].ownerId}}"
+                   class="block-link">
+                    {{parent.text?parent.text:'Empty parent'}}
+                </a>
+            </ul>
+
+        </div>
+    </div>
+
+    <div>
+        <b class="left left-sidebar">Lankad till:</b>
+        <div class="left right-sidebar">
+            <ul>
+                <div data-ng-repeat="subcase in subCases">
+
+
+                    <a href="{{subcase.href}}/{{subcase.ownerId ? subcase.ownerId : caze[0].ownerId}}"
+                       class="block-link" title="{{subcase.text?subcase.text:'Empty case'}}">
+                        {{subcase.text?subcase.text:'Empty case'}}
+                    </a>
                 </div>
             </ul>
 

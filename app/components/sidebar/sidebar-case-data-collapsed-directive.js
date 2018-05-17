@@ -31,6 +31,8 @@ angular.module('sf').directive('sidebarCaseDataCollapsed', function (sidebarServ
             scope.possibleCaseTypes = scope.$parent.possibleCaseTypes;
             scope.caze = scope.$parent.caze;
             scope.attachments = scope.$parent.attachments;
+            scope.parent = scope.$parent.parent;
+            scope.subCases = scope.$parent.subCases;
 
             sidebarService.caseType(scope);
 

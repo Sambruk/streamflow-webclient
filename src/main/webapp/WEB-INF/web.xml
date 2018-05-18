@@ -78,7 +78,7 @@
 
     <servlet-mapping>
         <servlet-name>externalContent</servlet-name>
-        <url-pattern>/external/content</url-pattern>
+        <url-pattern>/external-content/*</url-pattern>
     </servlet-mapping>
 
   <welcome-file-list>

@@ -56,7 +56,7 @@ angular.module('sf').factory('httpService', function ($q, $cacheFactory, buildMo
         var protocol = $location.$$protocol;
         var host = $location.$$host;
         var port = $location.$$port;
-        var prodUrl = protocol + '://' + host + ':' + port + '/webclient/external/content';
+        var prodUrl = protocol + '://' + host + ':' + port + '/webclient/external-content/';
 
         switch (buildMode) {
             case 'prod':

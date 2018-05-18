@@ -350,6 +350,22 @@ angular.module('sf')
                         });
             },
 
+            changeParent: function (caseId, parentCaseId, callback) {
+                return backendService.postNested(
+                    caseBase(caseId).concat([
+                        {resources: 'parent'},
+                        {commands: 'changeparent'}
+                    ]), {entity: parentCaseId})
+
+                    .then(_.debounce(callback)())
+                    .then(function (result) {
+                            caseBase.broadcastMessage(result.status);
+                        },
+                        function (error) {
+                            caseBase.broadcastMessage(error);
+                        });
+            },
+
             removeSubCase: function (parentCaseId, subCaseId, callback) {
                 return backendService.postNested(
                     caseBase(parentCaseId).concat([

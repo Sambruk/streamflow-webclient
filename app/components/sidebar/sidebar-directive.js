@@ -306,6 +306,10 @@ angular.module('sf')
                     scope.showCaseInfo = true;
                 };
 
+                scope.changeParent = function (parentCaseId) {
+                    caseService.changeParent(scope.caze[0].id, parentCaseId, function () {});
+                };
+
                 scope.createSubCase = function () {
                     caseService.createSubCase(scope.caze[0].id, function () {});
                 };

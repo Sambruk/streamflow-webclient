@@ -311,6 +311,10 @@ angular.module('sf')
                     scope.showChangeParent = true;
                 };
 
+                scope.showAssignSubCasePopUp = function () {
+                    scope.showAssignSubCase = true;
+                };
+
                 scope.createSubCase = function () {
                     caseService.createSubCase(scope.caze[0].id, function () {
                     });
@@ -325,6 +329,10 @@ angular.module('sf')
                     sidebarService.onChangeParentButtonClicked(scope);
                 };
 
+                scope.onAssignSubCaseButtonClicked = function () {
+                    sidebarService.onAssignSubCaseButtonClicked(scope);
+                };
+
                 // Send to
                 scope.sendTo = function () {
                     sidebarService.sendTo(scope);
@@ -333,9 +341,14 @@ angular.module('sf')
                     scope.sendToId = id;
                 };
 
-                scope.parendCaseIdChanged = function (parentCaseId) {
+                scope.parentCaseIdChanged = function (parentCaseId) {
                     scope.parentCaseId = parentCaseId;
                 };
+
+                scope.subCaseSelected = function (subCaseId) {
+                    scope.subCaseId = subCaseId;
+                };
+
                 scope.onSendToButtonClicked = function () {
                     sidebarService.onSendToButtonClicked(scope);
                 };// End Send to

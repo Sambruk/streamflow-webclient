@@ -346,6 +346,7 @@
                     {{parent.text?parent.text:'Empty parent'}}
                 </a>
                 <a href="" class="action-btn" data-ng-click="showChangeParentPopUp()"><i class="icon-pencil"></i></a>
+                <a href="" class="action-btn" data-ng-click="showAssignSubCasePopUp()"><i class="icon-plus"></i></a>
 
                 <!-- /Cases-->
             </form>
@@ -491,27 +492,24 @@
     <modal dialog-title="Change parent" show="showChangeParent">
         <div class="row cf">
             <input type="text" placeholder="Parent case id" data-ng-model="parentCaseId"
-                   data-ng-change="parendCaseIdChanged(parentCaseId)">
-
-            <!--Id of current cases or all cases?-->
-            <div class="select">
-                <ui-select data-ng-model="$parent.parentCaseId" data-ng-change="sendToIdChanged(sendToId)"
-                           id="issue-owner" name="issue-owner"
-                           theme="select2" class="popup-select" style="width: 100%;">
-                    <ui-select-match placeholder="Skapad av">
-                        <span data-ng-bind="$select.selected.text"></span>
-                    </ui-select-match>
-                    <ui-select-choices
-                            repeat="option.id as option in sendToRecipients | filter: {'text':$select.search} | orderBy: ['title', 'text']"
-                            group-by="'title'">
-                        <span data-ng-bind="option.text"></span>
-                    </ui-select-choices>
-                </ui-select>
-
-            </div>
+                   data-ng-change="parentCaseIdChanged(parentCaseId)">
         </div>
         <div class="submit-area cf dialog-submit">
             <button type="submit" name="save-issue-owner" data-ng-click="onChangeParentButtonClicked($event)">
+                Spara
+            </button>
+        </div>
+    </modal>
+</div>
+
+<div class="toolbar-content-popup">
+    <modal dialog-title="Assign subcase" show="showAssignSubCase">
+        <div class="row cf">
+            <input type="text" placeholder="Parent case id" data-ng-model="subCaseId"
+                   data-ng-change="subCaseSelected(subCaseId)">
+        </div>
+        <div class="submit-area cf dialog-submit">
+            <button type="submit" name="save-issue-owner" data-ng-click="onAssignSubCaseButtonClicked($event)">
                 Spara
             </button>
         </div>

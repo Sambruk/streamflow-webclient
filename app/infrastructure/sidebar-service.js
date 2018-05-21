@@ -240,9 +240,20 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
         });
     };
 
+
+    //TODO Add callback handlers
     var _onChangeParentButtonClicked = function (scope) {
         var parentCaseId = scope.parentCaseId;
-        caseService.changeParent(scope.caze[0].id, parentCaseId, function () {});
+        if (scope.caze[0].id !== parentCaseId) {
+            caseService.changeParent(scope.caze[0].id, parentCaseId, function () {});
+        }
+    };
+
+    var _onAssignSubCaseButtonClicked = function (scope) {
+        var subCaseId = scope.subCaseId;
+        if (scope.caze[0].id !== subCaseId) {
+            caseService.changeParent(subCaseId, scope.caze[0].id, function () {});
+        }
     };
 
     var _onSendToButtonClicked = function (scope) {
@@ -534,6 +545,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
         sendTo: _sendTo,
         onSendToButtonClicked: _onSendToButtonClicked,
         onChangeParentButtonClicked: _onChangeParentButtonClicked,
+        onAssignSubCaseButtonClicked: _onAssignSubCaseButtonClicked,
         assignTo: _assignTo,
         onAssignToButtonClicked: _onAssignToButtonClicked,
         unrestrict: _unrestrict,

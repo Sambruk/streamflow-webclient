@@ -5,10 +5,10 @@
                search-enabled="true"
                id="type-select" name="type-select"
                theme="select2" style="width: 100%;">
-        <ui-select-match placeholder="Ärendetyp">{{$select.selected.text}}{{$select.selected.labels}}</ui-select-match>
+        <ui-select-match placeholder="Ärendetyp">{{$select.selected.text}}</ui-select-match>
         <ui-select-choices repeat="type.id as type in possibleCaseTypes | filter: ($select.search)" group-by="'title'"
                            value="{{type.id}}">
-            <div data-ng-bind-html="highlight((type.text + type.labels), $select.search)"></div>
+            <div data-ng-bind-html="highlight((type.text), $select.search)"></div>
         </ui-select-choices>
     </ui-select>
 </div>

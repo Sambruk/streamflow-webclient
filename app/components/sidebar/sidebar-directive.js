@@ -59,6 +59,7 @@ angular.module('sf')
                 scope.exportCaseNotes = false;
                 scope.status = $routeParams.status;
                 scope.showCaseInfo = false;
+                scope.showChangeParent = false;
 
                 Mousetrap.bind('option+o', function () {
                     console.log('show overview');
@@ -306,16 +307,22 @@ angular.module('sf')
                     scope.showCaseInfo = true;
                 };
 
-                scope.changeParent = function (parentCaseId) {
-                    caseService.changeParent(scope.caze[0].id, parentCaseId, function () {});
+                scope.showChangeParentPopUp = function () {
+                    scope.showChangeParent = true;
                 };
 
                 scope.createSubCase = function () {
-                    caseService.createSubCase(scope.caze[0].id, function () {});
+                    caseService.createSubCase(scope.caze[0].id, function () {
+                    });
                 };
 
                 scope.removeSubCase = function (subCaseId) {
-                    caseService.removeSubCase(scope.caze[0].id, subCaseId, function () {});
+                    caseService.removeSubCase(scope.caze[0].id, subCaseId, function () {
+                    });
+                };
+
+                scope.onChangeParentButtonClicked = function () {
+                    sidebarService.onChangeParentButtonClicked(scope);
                 };
 
                 // Send to
@@ -324,6 +331,10 @@ angular.module('sf')
                 };
                 scope.sendToIdChanged = function (id) {
                     scope.sendToId = id;
+                };
+
+                scope.parendCaseIdChanged = function (parentCaseId) {
+                    scope.parentCaseId = parentCaseId;
                 };
                 scope.onSendToButtonClicked = function () {
                     sidebarService.onSendToButtonClicked(scope);

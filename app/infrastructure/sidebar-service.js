@@ -240,6 +240,11 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
         });
     };
 
+    var _onChangeParentButtonClicked = function (scope) {
+        var parentCaseId = scope.parentCaseId;
+        caseService.changeParent(scope.caze[0].id, parentCaseId, function () {});
+    };
+
     var _onSendToButtonClicked = function (scope) {
         var sendToId = scope.sendToId;
 
@@ -528,6 +533,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
         updateToolbar: _updateToolbar,
         sendTo: _sendTo,
         onSendToButtonClicked: _onSendToButtonClicked,
+        onChangeParentButtonClicked: _onChangeParentButtonClicked,
         assignTo: _assignTo,
         onAssignToButtonClicked: _onAssignToButtonClicked,
         unrestrict: _unrestrict,

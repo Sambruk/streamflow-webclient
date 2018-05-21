@@ -7,8 +7,7 @@
                 <span data-ng-if="caze[0].restricted"><i class="issue-secret"></i></span>
 
                 <div class="clear"></div>
-                <div>
-                    {{(notes[0].note || emptyNoteMessage)| limitTo: 180}}
+                <div data-ng-bind-html="(notes[0].note || emptyNoteMessage)| limitTo: 180 | htmlToPlaintext">
                 </div>
             </li>
         </a>

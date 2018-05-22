@@ -77,7 +77,7 @@
                     <span class="struct">Edit case</span>
                 </span>
                 <div class="issue-body">
-                    <div class="text" data-ng-bind-html="sidebardata.notes[0].note" >
+                    <div class="text preformat-text" data-ng-bind-html="sidebardata.notes[0].note">
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@
                                 <span class="note-timestamp">{{ entry.creationDate | dateTime }}</span>
                             </div>
                             <div class="note-body">
-                                <p>{{ entry.text || entry.note}}</p>
+                                <p class="preformat-text" data-ng-bind-html=" entry.text || entry.note"></p>
                             </div>
                         </div>
                     </div>

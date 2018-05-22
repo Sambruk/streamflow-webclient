@@ -26,7 +26,7 @@ angular.module('sf')
         var searchInput;
 
         var noMatchingResult = function () {
-            return $('.ui-select-no-choice:first').not('.ng-hide').length > 0;
+            return $(' #convo-participant-select .ui-select-no-choice:first').not('.ng-hide').length > 0;
         };
 
         var onSearchFieldKeyDown = function (keyEvent) {
@@ -61,7 +61,7 @@ angular.module('sf')
          This is to enable addition of external conversation participants by email address.
          */
         $(function () {
-            searchInput = $('.search-container.select2-search input:first');
+            searchInput = $('#convo-participant-select input:first');
             searchInput.keydown(function (e) {
                 if (noMatchingResult()) {
                     onSearchFieldKeyDown(e);

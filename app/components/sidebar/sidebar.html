@@ -448,7 +448,7 @@
 
     <!-- Module: Log -->
     <div class="m-log">
-        <a href="#/project/{{projectId}}/cases/{{ caze[0].id }}/caselog">
+        <a href="#/project/{{projectId || caze[0].ownerId}}/cases/{{ caze[0].id }}/caselog">
             Visa logg
         </a>
     </div>

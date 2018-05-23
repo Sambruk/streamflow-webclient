@@ -88,7 +88,7 @@
                         <span class="note-timestamp">{{ message.createdOn | dateTime}}</span>
                     </div>
                     <div class="note-body">
-                        <div class="preformat-text" data-ng-bind-html="message.text[0]">
+                        <div class="preformat-text" data-ng-bind-html="message.text[0] | removeLineBreaksForHTML">
                         </div>
                     </div>
                     <div class="note-meta" ng-show="message.attachments.length > 0">

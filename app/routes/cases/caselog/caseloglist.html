@@ -48,7 +48,7 @@
                         <span class="note-timestamp">{{ entry.creationDate | dateTime }}</span>
                     </div>
                     <div class="note-body">
-                        <p class="preformat-text" data-ng-bind-html=" entry.text || entry.note"></p>
+                        <p class="preformat-text" data-ng-bind-html="(entry.text || entry.note) | removeLineBreaksForHTML"></p>
                     </div>
                 </div>
             </div>

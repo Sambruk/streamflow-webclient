@@ -208,5 +208,13 @@ angular.module('sf')
         return function (text) {
             return text ? String(text).replace(/<[^>]+>/gm, '') : '';
         };
+    })
+    .filter('removeLineBreaksForHTML', function () {
+        return function (text) {
+            if (text && /<[^>]+>/.test(text)) {
+                return String(text).replace(/\r?\n|\r/gm, '');
+            }
+            return text;
+        };
     });
 

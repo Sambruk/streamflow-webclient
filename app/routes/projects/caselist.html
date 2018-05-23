@@ -78,7 +78,7 @@
                       <span class="action-status updated" data-ng-class="{'issue-closed-color-dim': case.closed()}">Ändrad {{case.modificationDate() | googleDate}}</span>
                       <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
                       <span class="priority" data-ng-if="case.priority.text">Prioritet: {{ case.priority.text }}</span>
-                      <span data-ng-show="case.unread">Stängd</span>
+                      <span data-ng-show="case.unread">Oläst</span>
                     </div>
                   </div>
                 </div>
@@ -128,7 +128,7 @@
                     <span class="action-status updated" data-ng-class="{'issue-closed-color-dim': case.closed()}">Ändrad {{case.modificationDate() | googleDate}} </span>
                     <span class="created-on">Skapad {{case.creationDate | googleDate}}</span>
                     <span class="priority" data-ng-if="case.priority.text">Prioritet: {{ case.priority.text }}</span>
-                    <span data-ng-show="case.unread">Stängd</span>
+                    <span data-ng-show="case.unread">Oläst</span>
                   </div>
                 </div>
               </div>

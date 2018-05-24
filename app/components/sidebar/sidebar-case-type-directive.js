@@ -42,6 +42,10 @@ angular.module('sf').directive('sidebarCaseType', function (sidebarService) {
                 sidebarService.changeCaseType(scope, caseType);
             };
 
+            scope.removeCaseType = function () {
+                sidebarService.removeCaseType(scope);
+            };
+
             scope.escapeHTMLChars = function (value) {
                 var map = {
                     '&': '&amp;',
@@ -54,7 +58,6 @@ angular.module('sf').directive('sidebarCaseType', function (sidebarService) {
                     return map[m];
                 });
             };
-
 
             scope.highlight = function (text, search) {
                 if (!search) {

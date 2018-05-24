@@ -801,6 +801,20 @@ angular.module('sf')
                     });
             },
 
+            removeCaseType: function (caseId) {
+                return backendService.postNested(
+                    caseBase(caseId).concat([
+                        {resources: 'general'},
+                        {commands: 'casetype'}
+                    ]),
+                    {id:null}).then(function (result) {
+                        caseBase.broadcastMessage(result.status);
+                    },
+                    function (error) {
+                        caseBase.broadcastMessage(error);
+                    });
+            },
+
             changeCaseDescription: function (caseId, caseDescriptionId) {
                 return backendService.postNested(
                     caseBase(caseId).concat([

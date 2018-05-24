@@ -227,6 +227,11 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
         });
     };
 
+    var _removeCaseType = function (scope) {
+        caseService.removeCaseType($routeParams.caseId).then(function () {
+          $route.reload();
+        });
+    };
 
     var _sendTo = function (scope) {
         scope.possibleSendTo.promise.then(function (response) {
@@ -540,6 +545,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
     return {
         changePriorityLevel: _changePriorityLevel,
         changeCaseType: _changeCaseType,
+        removeCaseType: _removeCaseType,
         updateCaseLabels: _updateCaseLabels,
         updateToolbar: _updateToolbar,
         sendTo: _sendTo,

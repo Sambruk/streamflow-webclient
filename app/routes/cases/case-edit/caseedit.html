@@ -77,7 +77,7 @@
                     <span class="struct">Edit case</span>
                 </span>
                 <div class="issue-body">
-                    <div class="text preformat-text" data-ng-bind-html="sidebardata.notes[0].note">
+                    <div data-ng-bind-html="sidebardata.notes[0].note | removeLineBreaksForHTML">
                     </div>
                 </div>
             </div>

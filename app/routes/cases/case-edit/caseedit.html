@@ -59,7 +59,7 @@
                                     <span class="note-timestamp">{{ note.createdOn | dateTime }}</span>
                                 </div>
                                 <div class="note-body">
-                                    <p>{{ note.note }}</p>
+                                    <p data-ng-bind-html="note.note | removeLineBreaksForHTML"></p>
                                 </div>
                             </div>
                         </div>

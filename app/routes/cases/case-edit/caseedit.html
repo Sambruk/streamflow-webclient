@@ -40,6 +40,10 @@
                         </div>
                         <div class="text" data-ng-show="status=='empty'">
                             <h2>Ändra sammanfattning</h2>
+                            <span data-ng-click="status = 'notes'"
+                                  class="action-btn icon-cancel" title="Close case edit">
+                            </span>
+
                             <label for="issue-notes" class="struct">Notering</label>
                             <textarea placeholder="Skriv din ärendebeskriving här" id="issue-notes" cols="30" rows="5"
                                       data-sf-update-on-blur="caseNote ? addNote($event, $success, $error) : ''"

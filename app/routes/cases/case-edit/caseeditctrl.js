@@ -147,5 +147,9 @@ angular.module('sf').controller('CaseEditCtrl', function ($scope, $rootScope, $r
             $scope.showSpinner.caseLogs = false;
         });
     });
+
+    $rootScope.$on('case-edit-mode-changed', function (event, editMode) {
+        $scope.status = editMode;
+    });
 });
 

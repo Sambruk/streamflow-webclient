@@ -1,6 +1,6 @@
 <div class="m-c">
     <ul>
-        <a href="#/cases/{{ caze[0].id }}/{{ caze[0].ownerId }}/notes" target="_self" class="block-link">
+        <a href="#/cases/{{ caze[0].id }}/{{ caze[0].ownerId }}/notes"  class="block-link"  data-ng-click="changeCaseEditMode()">
             <li>
                 <h3 class="contact-no-name grey" data-ng-if="caze[0].text.length === 0">Sammanfattning</h3>
                 <h3 data-ng-hide="caze[0].text.length === 0" class="left ">{{caze[0].text}}</h3>

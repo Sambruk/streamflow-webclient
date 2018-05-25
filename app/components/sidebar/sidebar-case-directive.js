@@ -18,7 +18,7 @@
  */
 'use strict';
 
-angular.module('sf').directive('sidebarCase', function ($routeParams) {
+angular.module('sf').directive('sidebarCase', function ($routeParams, $rootScope) {
     return {
         restrict: 'A',
         scope: {},
@@ -29,6 +29,10 @@ angular.module('sf').directive('sidebarCase', function ($routeParams) {
             scope.status = $routeParams.status;
             scope.emptyNoteMessage = '';
 
+            scope.changeCaseEditMode = function () {
+                scope.status = 'notes';
+                $rootScope.$broadcast('case-edit-mode-changed', 'notes');
+            };
         }
     };
 });

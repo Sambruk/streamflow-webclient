@@ -18,7 +18,7 @@
  */
 'use strict';
 
-angular.module('sf').directive('login', function ($rootScope, buildMode, $location, $timeout, $http, $window, tokenService, httpService) {
+angular.module('sf').directive('login', function ($rootScope, buildMode, $location, $http, $window, tokenService, httpService) {
     return {
         restrict: 'E',
         templateUrl: 'components/login/login.html',
@@ -97,24 +97,31 @@ angular.module('sf').directive('login', function ($rootScope, buildMode, $locati
 
             function logOut() {
                 var logoutUrl = getLogoutUrl(detectIE());
-
                 var basicAuthBase64 = btoa('username:password');
+
                 $http.defaults.headers.common.Authorization = 'Basic ' + basicAuthBase64;
 
-                $http({
-                        method: 'GET',
-                        url: logoutUrl,
-                        headers: {'Authorization': 'Basic ' + basicAuthBase64},
-                        cache: 'false'
-                    },
-                    $location.path('#')
-                ).then(function (response) {
-                    console.log('Logout response', response);
-                    tokenService.clear();
-                    tokenService.isDefaultToken = true;
-                }, function () {
-                    scope.errorMessage = 'Användarnamn / lösenord ej giltigt!';
-                });
+                tokenService.clear();
+                tokenService.isDefaultToken = true;
+                tokenService.storeToken(basicAuthBase64);
+
+                $.ajax({
+                    type: 'GET',
+                    url: logoutUrl,
+                    async: false,
+                    username: 'username',
+                    password: 'password',
+                    headers: {'Authorization': 'Basic ' + basicAuthBase64}
+                })
+                    .done(function () {
+                    })
+                    .fail(function () {
+                        $window.location = '/webclient/#';
+                        // $window.document.location = '/webclient/#';
+                        $window.location.reload(true);
+                    });
+
+                return false;
             }
 
             getLoggedInStatus()
@@ -126,8 +133,8 @@ angular.module('sf').directive('login', function ($rootScope, buildMode, $locati
                 logOut();
             });
 
-            $rootScope.$on('logout', function (event, logout) {
-                if (logout) {
+            $rootScope.$on('logout', function (event, logoutVar) {
+                if (logoutVar) {
                     logOut();
                 }
             });
@@ -142,7 +149,6 @@ angular.module('sf').directive('login', function ($rootScope, buildMode, $locati
                     cache: 'false'
                 }).then(function () {
                     tokenService.storeToken(basicAuthBase64);
-                    window.location.reload();
                 }, function () {
                     scope.errorMessage = 'Användarnamn / lösenord ej giltigt!';
                 });

@@ -318,6 +318,16 @@
 
                 <div class="m m-attachments">
                     <div class="m-h">
+                        <h2>
+                            <a href="{{parent[0].href}}/{{parent[0].ownerId ? parent[0].ownerId : caze[0].ownerId}}" class="block-link">
+                                {{parent.text?parent.text:'Empty parent'}}
+                            </a>
+                        </h2>
+                        <a href="" class="action-btn" data-ng-click="showChangeParentPopUp()" title="Change parent"><i class="icon-pencil"></i></a>
+                        <a href="" class="action-btn" data-ng-click="showAssignSubCasePopUp()" title="Assign subcase"><i class="icon-plus"></i></a>
+                    </div>
+
+                    <div class="m-h">
                         <h2>Sub cases</h2>
                         <!--TODO Add canCreate check-->
                         <a href="" data-ng-click="createSubCase()" class="action-btn">
@@ -341,12 +351,6 @@
                         </ul>
                     </div>
                 </div>
-                <a href="{{parent[0].href}}/{{parent[0].ownerId ? parent[0].ownerId : caze[0].ownerId}}"
-                   class="block-link">
-                    {{parent.text?parent.text:'Empty parent'}}
-                </a>
-                <a href="" class="action-btn" data-ng-click="showChangeParentPopUp()"><i class="icon-pencil"></i></a>
-                <a href="" class="action-btn" data-ng-click="showAssignSubCasePopUp()"><i class="icon-plus"></i></a>
 
                 <!-- /Cases-->
             </form>

@@ -267,8 +267,8 @@
     <div class="m m-status">
         <div class="m-h">
             <a data-ng-click="collapsedStatus = ! collapsedStatus || status=='new'" href=""><span
-                    class="action-btn {{ collapsedStatus || status=='new'? 'icon-arrow-up' : 'icon-pencil'}}"
-                    title="{{ collapsedStatus  || status=='new'? 'Collapse' : 'Edit'}}"></span></a>
+                    class="action-btn {{ collapsedStatus || status=='new' ? 'icon-arrow-up' : 'icon-pencil'}}"
+                    title="{{ collapsedStatus  || status=='new' ? 'Collapse' : 'Edit'}}"></span></a>
         </div>
         <!--Expanded view-->
         <div class="m-c animate-hide sidebar-content-narrowed" data-ng-show="collapsedStatus || status=='new'">
@@ -319,12 +319,15 @@
                 <div class="m m-attachments">
                     <div class="m-h">
                         <h2>
-                            <a href="{{parent[0].href}}/{{parent[0].ownerId ? parent[0].ownerId : caze[0].ownerId}}" class="block-link">
-                                {{parent.text?parent.text:'Empty parent'}}
+                            <a href="{{parent[0].href}}/{{parent[0].ownerId ? parent[0].ownerId : caze[0].ownerId}}"
+                               class="block-link">
+                                {{parent[0].text ? parent[0].text : 'Empty parent'}}
                             </a>
                         </h2>
-                        <a href="" class="action-btn" data-ng-click="showChangeParentPopUp()" title="Change parent"><i class="icon-pencil"></i></a>
-                        <a href="" class="action-btn" data-ng-click="showAssignSubCasePopUp()" title="Assign subcase"><i class="icon-plus"></i></a>
+                        <a href="" class="action-btn" data-ng-click="showChangeParentPopUp()" title="Change parent"><i
+                                class="icon-pencil"></i></a>
+                        <a href="" class="action-btn" data-ng-click="showAssignSubCasePopUp()" title="Assign subcase"><i
+                                class="icon-plus"></i></a>
                     </div>
 
                     <div class="m-h">
@@ -341,7 +344,7 @@
                             <li data-ng-repeat="subcase in subCases">
                                 <a href="{{subcase.href}}/{{subcase.ownerId ? subcase.ownerId : caze[0].ownerId}}"
                                    class="block-link">
-                                    {{subcase.text?subcase.text:'Empty case'}}
+                                    {{subcase.text ? subcase.text : 'Empty case'}}
                                 </a>
                                 <a href="" class="block-link" data-ng-click="removeSubCase(subcase.id)" class="delete">
                                     <i class="icon-cancel"></i>
@@ -375,8 +378,8 @@
         <div class="m-h">
             <h2>Checklistor & Formulär</h2>
             <a data-ng-click="collapsedForms = ! collapsedForms || status=='new'" href=""><span
-                    class="action-btn {{ collapsedForms || status=='new'? 'icon-arrow-up' : 'icon-arrow-down'}}"
-                    title="{{ collapsedForms || status=='new'? 'Hide empty' : 'Show all'}}"></span></a>
+                    class="action-btn {{ collapsedForms || status=='new' ? 'icon-arrow-up' : 'icon-arrow-down'}}"
+                    title="{{ collapsedForms || status=='new' ? 'Hide empty' : 'Show all'}}"></span></a>
         </div>
         <!--Expanded view-->
         <div sidebar-forms data-ng-show="collapsedForms || status=='new'">
@@ -425,8 +428,8 @@
 <div class="m m-priority">
     <div class="m-h">
         <a data-ng-click="collapsedOther = ! collapsedOther || status=='new'" href=""><span
-                class="action-btn {{ collapsedOther || status=='new'? 'icon-arrow-up' : 'icon-pencil'}}"
-                title="{{ collapsedOther || status=='new'? 'Collapse' : 'Edit'}}"></span></a>
+                class="action-btn {{ collapsedOther || status=='new' ? 'icon-arrow-up' : 'icon-pencil'}}"
+                title="{{ collapsedOther || status=='new' ? 'Collapse' : 'Edit'}}"></span></a>
     </div>
 
     <!--Expanded view-->

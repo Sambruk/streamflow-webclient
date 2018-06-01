@@ -316,12 +316,12 @@ angular.module('sf')
                 };
 
                 scope.createSubCase = function () {
-                    caseService.createSubCase(scope.caze[0].id, function () {
+                    caseService.createSubCase(scope.caze[0].id, function () { scope.subCases = caseService.getSubCases($routeParams.caseId);
                     });
                 };
 
                 scope.removeSubCase = function (subCaseId) {
-                    caseService.removeSubCase(scope.caze[0].id, subCaseId, function () {
+                    caseService.removeSubCase(scope.caze[0].id, subCaseId, function () { scope.subCases = caseService.getSubCases($routeParams.caseId);
                     });
                 };
 

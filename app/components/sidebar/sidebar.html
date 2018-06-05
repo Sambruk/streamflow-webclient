@@ -498,8 +498,18 @@
 <div class="toolbar-content-popup">
     <modal dialog-title="Change parent" show="showChangeParent">
         <div class="row cf">
-            <input type="text" placeholder="Parent case id" data-ng-model="parentCaseId"
-                   data-ng-change="parentCaseIdChanged(parentCaseId)">
+            <ui-select data-ng-model="parentCase.parentCaseId" theme="select2" search-enabled="true"
+                       style="width:100%;">
+                <ui-select-match placeholder="Välj värde">
+                    {{$select.selected.caseId}}
+                </ui-select-match>
+                <ui-select-choices repeat="caze.id as caze in searchCases"
+                                   refresh="search($select.search)"
+                                   refresh-delay="0">
+                    <div data-ng-bind-html="caze.caseId | highlight: $select.search"></div>
+
+                </ui-select-choices>
+            </ui-select>
         </div>
         <div class="submit-area cf dialog-submit">
             <button type="submit" name="save-issue-owner" data-ng-click="onChangeParentButtonClicked($event)">

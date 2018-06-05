@@ -18,7 +18,7 @@
  */
 'use strict';
 
-angular.module('sf').factory('sidebarService', function ($routeParams, $route, caseService, $q, $rootScope, $location, navigationService, tokenService, checkPermissionService) {
+angular.module('sf').factory('sidebarService', function ($routeParams, $route, caseService, searchService, $q, $rootScope, $location, navigationService, tokenService, checkPermissionService) {
 
     var sortByText = function (x, y) {
         var xS = x.text && x.text.toUpperCase() || '',
@@ -247,10 +247,9 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
 
 
     var _onChangeParentButtonClicked = function (scope) {
-        var parentCaseId = scope.parentCaseId;
+        var parentCaseId = scope.parentCase.parentCaseId;
         if (scope.caze[0].caseId !== parentCaseId) {
-            var parentCase = caseService.getSelected(parentCaseId);
-            caseService.changeParent(scope.caze[0].id, parentCase[0].id, function () {
+            caseService.changeParent(scope.caze[0].id, parentCaseId, function () {
                 scope.parent = caseService.getParent($routeParams.caseId);
                 _updateObject(scope.parent);
                 scope.showChangeParent = false;
@@ -534,6 +533,31 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
         });
     };
 
+    var _search = function (query) {
+        query = query || '';
+        // Translation map. Should use i18n for this.
+        var searchTerms = {
+            'skapad': 'createdOn', // +1
+            'ärendetyp': 'caseType',
+            'projekt': 'project',
+            'etikett': 'label',
+            'tilldelad': 'assignedTo',
+            'namn': 'name',
+            'kontaktid': 'contactId',
+            'telefon': 'phoneNumber',
+            'email': 'emailAddress',
+            'skapadav': 'createdBy'
+        };
+
+        query = query.replace(/([a-z\xE5\xE4\xF6]+)(?=:)/gi, function (match) {
+            return searchTerms[match] ? searchTerms[match] : match;
+        });
+
+        return searchService.getCases(query + '+limit+' + 10 + '+offset+' + 0).promise;
+    };
+
+
+
     var _openForm = function (scope, formId, isNewWindow, isEmpty) {
         if (isNewWindow) {
             var height = $(window).height();
@@ -580,7 +604,8 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
         caseType: _caseType,
         priority: _priority,
         checkPossibleForms: _checkPossibleForms,
-        openForm: _openForm
+        openForm: _openForm,
+        search: _search
     };
 });
 

@@ -61,6 +61,12 @@ angular.module('sf')
                 scope.showCaseInfo = false;
                 scope.showChangeParent = false;
 
+                //TODO FIX THAT UGLY INIT STUFF
+                sidebarService.search('20180601-8').then(function (result) {
+                    scope.searchCases = result;
+                });
+                scope.parentCase = {};
+
                 Mousetrap.bind('option+o', function () {
                     console.log('show overview');
                     $window.location.href = '#/cases/' + scope.caze[0].id + '/' + scope.caze[0].ownerId;
@@ -450,6 +456,15 @@ angular.module('sf')
                 // Show / Close pop up
                 scope.showExportCaseInfoPopUp = function () {
                     scope.showExportInfo = true;
+                };
+
+                scope.search = function (query) {
+                    console.log(scope);
+                    if (query) {
+                        sidebarService.search(query).then(function (result) {
+                            scope.searchCases = result;
+                        });
+                    }
                 };
 
                 // Filter for caselog

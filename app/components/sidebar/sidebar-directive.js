@@ -318,13 +318,17 @@ angular.module('sf')
                 };
 
                 scope.createSubCase = function () {
-                    caseService.createSubCase(scope.caze[0].id, function () { scope.subCases = caseService.getSubCases($routeParams.caseId);
-                    });
+                    caseService.createSubCase(scope.caze[0].id,
+                        function () {
+                            updateObject(scope.subCases);
+                        });
                 };
 
                 scope.removeSubCase = function (subCaseId) {
-                    caseService.removeSubCase(scope.caze[0].id, subCaseId, function () { scope.subCases = caseService.getSubCases($routeParams.caseId);
-                    });
+                    caseService.removeSubCase(scope.caze[0].id, subCaseId,
+                        function () {
+                            updateObject(scope.subCases);
+                        });
                 };
 
                 scope.onChangeParentButtonClicked = function () {

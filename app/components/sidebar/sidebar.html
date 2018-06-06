@@ -323,9 +323,11 @@
                                 {{parent[0].text ? parent[0].text : 'Empty parent'}}
                             </a>
                         </h2>
-                        <a href="" class="action-btn" data-ng-click="showChangeParentPopUp()" data-ng-show="!subCases[0]" title="Change parent"><i
+                        <a href="" class="action-btn" data-ng-click="showChangeParentPopUp()"
+                           data-ng-show="!subCases[0]" title="Change parent"><i
                                 class="icon-pencil"></i></a>
-                        <a href="" class="action-btn" data-ng-click="showAssignSubCasePopUp()" data-ng-show="subCases[0]" title="Assign subcase"><i
+                        <a href="" class="action-btn" data-ng-click="showAssignSubCasePopUp()"
+                           data-ng-show="subCases[0]" title="Assign subcase"><i
                                 class="icon-plus"></i></a>
                     </div>
 
@@ -509,6 +511,10 @@
 
                 </ui-select-choices>
             </ui-select>
+
+            <div class="error-ng-invalid-input">
+                {{searchError}}
+            </div>
         </div>
         <div class="submit-area cf dialog-submit">
             <button type="submit" name="save-issue-owner" data-ng-click="onChangeParentButtonClicked($event)">
@@ -533,6 +539,10 @@
 
                 </ui-select-choices>
             </ui-select>
+
+            <div class="error-ng-invalid-input">
+                {{searchError}}
+            </div>
         </div>
         <div class="submit-area cf dialog-submit">
             <button type="submit" name="save-issue-owner" data-ng-click="onAssignSubCaseButtonClicked($event)">

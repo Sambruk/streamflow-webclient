@@ -454,7 +454,11 @@ angular.module('sf')
                     if (query) {
                         sidebarService.search(query).then(function (result) {
                             scope.searchCases = result;
-                        });
+                            scope.searchError = result.length > 0 ? '' : 'Not found';
+                        })
+                            .catch(function (error){
+                                scope.searchError = 'Not found';
+                            });
                     }
                 };
 

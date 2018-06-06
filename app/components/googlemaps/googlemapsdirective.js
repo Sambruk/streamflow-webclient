@@ -218,7 +218,6 @@ angular.module('sf').directive('googleMap', function () {
                     }
                 }
 
-                console.log('FIeld settings', $scope.fieldSettings);
                 $scope.drawingManagerOptions = {
                     drawingMode: initialDrawingMode,
                     drawingControl: true,
@@ -270,8 +269,6 @@ angular.module('sf').directive('googleMap', function () {
                         }
                     }
                 };
-                console.log('drawingManagerOptions', $scope.drawingManagerOptions);
-
             };
 
             var init = function (map) {

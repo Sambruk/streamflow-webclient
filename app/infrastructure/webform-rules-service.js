@@ -79,11 +79,9 @@ angular.module('sf').factory('webformRulesService', function () {
 
     //Hide field (remove ng-show class if present)
     var _hideField = function (fieldId) {
-        //console.log(fld);
         //fld.css('display', 'hidden');
         //  debugger;
 
-        //console.log('hiding field: ' + fieldId);
         var element = $('#' + fieldId);
         if (element.hasClass('ng-show')) {
             element.removeClass('ng-show');

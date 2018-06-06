@@ -112,7 +112,6 @@ angular.module('sf').factory('httpService', function ($q, $cacheFactory, buildMo
                     url: url
                 });
                 cache.put(href, promise);
-                //console.log(cache);
                 return promise;
             }
 

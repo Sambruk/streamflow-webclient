@@ -85,7 +85,6 @@ angular.module('sf').factory('backendService', function ($window, $http, $q, htt
             });
         },
         getNested: function (specs, urls) {
-            //console.log(urls);
             if (specs.length === 0) {
                 var deferred = $q.defer();
                 deferred.resolve(this);
@@ -121,7 +120,6 @@ angular.module('sf').factory('backendService', function ($window, $http, $q, htt
 
             var resource = this.createById(data, id, urls, skipCache);
             return resource.then(function (nextResource) {
-                //console.log(nextResource);
                 return nextResource.getNested(specs, urls);
             });
         },

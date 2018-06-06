@@ -383,7 +383,6 @@ angular.module('sf')
                 scope.toggleExportPopup = function (visible) {
                     scope.showExport = visible;
                     scope.commandView = true;
-                    console.log("called", scope);
                 }; // End Show Export Pdf
 
                 scope.onExportButtonClicked = function (submittedForms, attachments, conversations, contacts, caseLog, notes) {
@@ -452,7 +451,6 @@ angular.module('sf')
                 };
 
                 scope.search = function (query) {
-                    console.log(scope);
                     if (query) {
                         sidebarService.search(query).then(function (result) {
                             scope.searchCases = result;

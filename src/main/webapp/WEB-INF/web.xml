@@ -68,7 +68,7 @@
         <servlet-class>org.mitre.dsmiley.httpproxy.ProxyServlet</servlet-class>
         <init-param>
             <param-name>targetUri</param-name>
-            <param-value>https://imcode.com/</param-value>
+            <param-value></param-value>
         </init-param>
         <init-param>
             <param-name>log</param-name>

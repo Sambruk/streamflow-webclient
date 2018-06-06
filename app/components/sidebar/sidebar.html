@@ -505,7 +505,7 @@
                 <ui-select-choices repeat="caze.id as caze in searchCases"
                                    refresh="search($select.search)"
                                    refresh-delay="0">
-                    <div data-ng-bind-html="caze.caseId + caze.text | highlight: $select.search"></div>
+                    <div data-ng-bind-html="caze.caseId + ':' + caze.text | highlight: $select.search"></div>
 
                 </ui-select-choices>
             </ui-select>
@@ -529,7 +529,7 @@
                 <ui-select-choices repeat="caze.id as caze in searchCases"
                                    refresh="search($select.search)"
                                    refresh-delay="0">
-                    <div data-ng-bind-html="caze.caseId + caze.text | highlight: $select.search"></div>
+                    <div data-ng-bind-html="caze.caseId + ':' + caze.text | highlight: $select.search"></div>
 
                 </ui-select-choices>
             </ui-select>

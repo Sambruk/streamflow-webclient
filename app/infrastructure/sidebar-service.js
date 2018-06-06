@@ -250,7 +250,6 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
         var parentCaseId = scope.parentCase.parentCaseId;
         if (scope.caze[0].caseId !== parentCaseId) {
             caseService.changeParent(scope.caze[0].id, parentCaseId, function () {
-                scope.parent = caseService.getParent($routeParams.caseId);
                 _updateObject(scope.parent);
                 scope.showChangeParent = false;
             });
@@ -261,7 +260,6 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
         var subCaseId = scope.subCase.subCaseId;
         if (scope.caze[0].id !== subCaseId) {
             caseService.changeParent(subCaseId, scope.caze[0].id, function () {
-                scope.subCases = caseService.getSubCases($routeParams.caseId);
                 _updateObject(scope.subCases);
                 scope.showAssignSubCase = false;
             });

@@ -272,6 +272,7 @@ angular.module('sf')
                 scope.errorHandler = function () {
                     var bcMessage = caseService.getMessage();
                     if (bcMessage !== 200) {
+                        console.log(bcMessage);
                         // growl.warning('errorMessage');
                     }
                 };

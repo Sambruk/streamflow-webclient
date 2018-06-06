@@ -324,8 +324,9 @@ angular.module('sf')
                     onSuccess: function (resource, result) {
                         //There can be only 0 or 1 elements at list
                         var parent = resource.response.links[0];
-                        result.push(new SfCase(parent, navigationService.caseHrefSimple(parent.id)));
-
+                        if (parent) {
+                            result.push(new SfCase(parent, navigationService.caseHrefSimple(parent.id)));
+                        }
                         caseBase.broadcastMessage(result.status);
                     },
                     onFailure: function (error) {
@@ -807,7 +808,7 @@ angular.module('sf')
                         {resources: 'general'},
                         {commands: 'casetype'}
                     ]),
-                    {id:null}).then(function (result) {
+                    {id: null}).then(function (result) {
                         caseBase.broadcastMessage(result.status);
                     },
                     function (error) {

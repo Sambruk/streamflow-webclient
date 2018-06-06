@@ -497,7 +497,7 @@
 <div class="toolbar-content-popup">
     <modal dialog-title="Change parent" show="showChangeParent">
         <div class="row cf">
-            <ui-select data-ng-model="parentCase.parentCaseId" theme="select2" search-enabled="true"
+            <ui-select data-ng-model="parentCase.parentCaseId" theme="selectize" search-enabled="true"
                        style="width:100%;">
                 <ui-select-match placeholder="Välj värde">
                     {{$select.selected.caseId}} {{$select.selected.text}}
@@ -521,7 +521,7 @@
 <div class="toolbar-content-popup">
     <modal dialog-title="Assign subcase" show="showAssignSubCase">
         <div class="row cf">
-            <ui-select data-ng-model="subCase.subCaseId" theme="select2" search-enabled="true"
+            <ui-select data-ng-model="subCase.subCaseId" theme="selectize" search-enabled="true"
                        style="width:100%;">
                 <ui-select-match placeholder="Assign subcase">
                     {{$select.selected.caseId}} {{$select.selected.text}}

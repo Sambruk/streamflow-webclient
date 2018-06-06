@@ -60,11 +60,6 @@ angular.module('sf')
                 scope.status = $routeParams.status;
                 scope.showCaseInfo = false;
                 scope.showChangeParent = false;
-
-                //TODO FIX THAT UGLY INIT STUFF
-                sidebarService.search('20180601-8').then(function (result) {
-                    scope.searchCases = result;
-                });
                 scope.parentCase = {};
                 scope.subCase = {};
 

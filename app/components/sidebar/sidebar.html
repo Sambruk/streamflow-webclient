@@ -501,12 +501,12 @@
             <ui-select data-ng-model="parentCase.parentCaseId" theme="select2" search-enabled="true"
                        style="width:100%;">
                 <ui-select-match placeholder="Välj värde">
-                    {{$select.selected.caseId}}
+                    {{$select.selected.caseId}} {{$select.selected.text}}
                 </ui-select-match>
                 <ui-select-choices repeat="caze.id as caze in searchCases"
                                    refresh="search($select.search)"
                                    refresh-delay="0">
-                    <div data-ng-bind-html="caze.caseId | highlight: $select.search"></div>
+                    <div data-ng-bind-html="caze.caseId + caze.text | highlight: $select.search"></div>
 
                 </ui-select-choices>
             </ui-select>
@@ -525,12 +525,12 @@
             <ui-select data-ng-model="subCase.subCaseId" theme="select2" search-enabled="true"
                        style="width:100%;">
                 <ui-select-match placeholder="Assign subcase">
-                    {{$select.selected.caseId}}
+                    {{$select.selected.caseId}} {{$select.selected.text}}
                 </ui-select-match>
                 <ui-select-choices repeat="caze.id as caze in searchCases"
                                    refresh="search($select.search)"
                                    refresh-delay="0">
-                    <div data-ng-bind-html="caze.caseId | highlight: $select.search"></div>
+                    <div data-ng-bind-html="caze.caseId + caze.text | highlight: $select.search"></div>
 
                 </ui-select-choices>
             </ui-select>

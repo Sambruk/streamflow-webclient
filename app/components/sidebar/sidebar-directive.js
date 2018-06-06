@@ -66,6 +66,7 @@ angular.module('sf')
                     scope.searchCases = result;
                 });
                 scope.parentCase = {};
+                scope.subCase = {};
 
                 Mousetrap.bind('option+o', function () {
                     console.log('show overview');
@@ -345,14 +346,6 @@ angular.module('sf')
                 };
                 scope.sendToIdChanged = function (id) {
                     scope.sendToId = id;
-                };
-
-                scope.parentCaseIdChanged = function (parentCaseId) {
-                    scope.parentCaseId = parentCaseId;
-                };
-
-                scope.subCaseSelected = function (subCaseId) {
-                    scope.subCaseId = subCaseId;
                 };
 
                 scope.onSendToButtonClicked = function () {

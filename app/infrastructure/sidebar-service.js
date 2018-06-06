@@ -229,7 +229,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
 
     var _removeCaseType = function (scope) {
         caseService.removeCaseType($routeParams.caseId).then(function () {
-          $route.reload();
+            $route.reload();
         });
     };
 
@@ -258,10 +258,9 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
     };
 
     var _onAssignSubCaseButtonClicked = function (scope) {
-        var subCaseId = scope.subCaseId;
+        var subCaseId = scope.subCase.subCaseId;
         if (scope.caze[0].id !== subCaseId) {
-            var subCase = caseService.getSelected(subCaseId);
-            caseService.changeParent(subCase[0].id, scope.caze[0].id, function () {
+            caseService.changeParent(subCaseId, scope.caze[0].id, function () {
                 scope.subCases = caseService.getSubCases($routeParams.caseId);
                 _updateObject(scope.subCases);
                 scope.showAssignSubCase = false;

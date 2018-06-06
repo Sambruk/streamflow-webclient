@@ -522,8 +522,18 @@
 <div class="toolbar-content-popup">
     <modal dialog-title="Assign subcase" show="showAssignSubCase">
         <div class="row cf">
-            <input type="text" placeholder="Parent case id" data-ng-model="subCaseId"
-                   data-ng-change="subCaseSelected(subCaseId)">
+            <ui-select data-ng-model="subCase.subCaseId" theme="select2" search-enabled="true"
+                       style="width:100%;">
+                <ui-select-match placeholder="Assign subcase">
+                    {{$select.selected.caseId}}
+                </ui-select-match>
+                <ui-select-choices repeat="caze.id as caze in searchCases"
+                                   refresh="search($select.search)"
+                                   refresh-delay="0">
+                    <div data-ng-bind-html="caze.caseId | highlight: $select.search"></div>
+
+                </ui-select-choices>
+            </ui-select>
         </div>
         <div class="submit-area cf dialog-submit">
             <button type="submit" name="save-issue-owner" data-ng-click="onAssignSubCaseButtonClicked($event)">

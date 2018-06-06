@@ -517,7 +517,7 @@
             </div>
         </div>
         <div class="submit-area cf dialog-submit">
-            <button type="submit" name="save-issue-owner" data-ng-click="onChangeParentButtonClicked($event)">
+            <button type="submit" name="change-parent-button" data-ng-click="onChangeParentButtonClicked($event)">
                 Spara
             </button>
         </div>
@@ -545,7 +545,8 @@
             </div>
         </div>
         <div class="submit-area cf dialog-submit">
-            <button type="submit" name="save-issue-owner" data-ng-click="onAssignSubCaseButtonClicked($event)">
+            <button type="submit" name="assign-subcase" class="btn" data-ng-class="{inactive: !subCase.subCaseId}"
+                    data-ng-disabled="!subCase.subCaseId" data-ng-click="onAssignSubCaseButtonClicked($event)">
                 Spara
             </button>
         </div>

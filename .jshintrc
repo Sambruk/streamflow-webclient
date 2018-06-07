@@ -51,6 +51,7 @@
     "_",
     "jQuery",
     "angular",
-    "moment"
+    "moment",
+    "Mousetrap"
   ]
 }

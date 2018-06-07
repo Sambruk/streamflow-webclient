@@ -227,7 +227,7 @@ angular.module('sf').factory('sidebarService', function ($routeParams, $route, c
         });
     };
 
-    var _removeCaseType = function (scope) {
+    var _removeCaseType = function () {
         caseService.removeCaseType($routeParams.caseId).then(function () {
             $route.reload();
         });

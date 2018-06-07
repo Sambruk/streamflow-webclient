@@ -76,7 +76,7 @@ angular.module('sf').directive('search', function ($location, $timeout, searchSe
                     {id:'priority', text:'Prioritet'},
                 ];
 
-                scope.queryFilter;
+                scope.queryFilter='';
                 scope.showSearchFilter = false;
                 scope.possibleLabels = [];
                 scope.group = {};

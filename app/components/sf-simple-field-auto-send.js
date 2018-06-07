@@ -23,8 +23,6 @@ angular.module('sf')
         return {
             require: 'ngModel',
             link: function (scope, element, attr) {
-
-                var hasRunAtLeastOnce = false;
                 scope.$watch(attr.ngModel, function (newValue, oldValue) {
 
                     if (!newValue || newValue === oldValue) {

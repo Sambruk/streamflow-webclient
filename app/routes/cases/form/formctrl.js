@@ -41,38 +41,70 @@ angular.module('sf')
             form: true
         };
 
+        var updateFieldsOnPages = function (form) {
+            return $q.when()
+                .then(function () {
+                    var fields = form.enhancedPages
+                        .reduce(function (fields, page) {
+                            return fields.concat(page.fields);
+                        }, [])
+                        .filter(function (field) {
+                            //Ignoring fields which shouldn't be sent
+                            return !(field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue'
+                                || field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.CommentFieldValue'
+                                || field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.FieldGroupFieldValue');
+                        })
+                        .map(function (field) {
+                            var value = '';
+                            switch (field.field.fieldValue._type) {
+                                case 'se.streamsource.streamflow.api.administration.form.CheckboxesFieldValue':
+                                    var checked = field.field.fieldValue.checkings
+                                        .filter(function (input) {
+                                            return input.checked;
+                                        }).map(function (input) {
+                                            return input.name;
+                                        });
+                                    value = checked.join(', ');
+                                    break;
+                                case 'se.streamsource.streamflow.api.administration.form.ListBoxFieldValue':
+                                    value = formMapperService.getValue(field.value, field.field).join(', ');
+                                    break;
+                                case 'se.streamsource.streamflow.api.administration.form.DateFieldValue':
+                                    //Formatting date top understandable for server format
+                                    value = new Date(formMapperService.getValue(field.value, field.field)).toISOString();
+                                    break;
+                                default:
+                                    value = formMapperService.getValue(field.value, field.field);
+                            }
+
+                            //TODO: find better approach to send empty location on submit
+                            if (field.field.fieldValue._type !== 'se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue') {
+                                value = value === null ? '' : value;
+                            } else {
+                                value = (value === '' || value === null || value === 'null') ? JSON.stringify({location: '59.3500, 18.0667'}) : value;
+                            }
+                            return {field: field.field.field, value: value};
+                        });
+                    return caseService.updateFields($scope.caseId, $scope.formDraftId, fields);
+                });
+        };
+
+        var formSubmitted = function () {
+            if (!$scope.closeWithForm) {
+                $rootScope.$broadcast('form-submitted');
+                if ($rootScope.isFormWindow) {
+                    $rootScope.$broadcast('form-saved', $scope.currentFormId);
+                }
+            }
+            window.location.href = '#/cases/' + $scope.caseId + '/formhistory/' + $scope.currentFormId;
+            $scope.form = [];
+            $scope.currentFormPage = null;
+            $scope.formPageIndex = 0;
+        };
+
         $scope.trustAsHtml = function (text) {
             return $sce.trustAsHtml(text);
         };
-
-        $scope.$watch('currentFormPage', function (newVal) {
-            if (!newVal) {
-                return;
-            }
-            $scope.reapplyRules();
-        });
-
-        $scope.$watch('closeWithForm', function (newVal) {
-            if (!newVal) {
-                return;
-            }
-            caseService.createFormOnCloseDraft($scope.caseId).then(function () {
-                caseService.getFormOnCloseDraft($scope.caseId).promise.then(function (response) {
-                    caseService.getFormDraft($scope.caseId, response[0].id).promise.then(function (response) {
-                        $scope.closeWithFormId = response[0].draftId;
-                    })
-                        .then(function () {
-                            $scope.formMessage = '';
-
-                            var form = caseService.getFormDraft($scope.caseId, $scope.closeWithFormId);
-                            form.promise.then(function (response) {
-                                $scope.getFormData(response);
-                                $scope.closeWithForm = true;
-                            });
-                        });
-                });
-            });
-        });
 
         $scope.selectForm = function (formId) {
             // TODO Is there a better way than this?
@@ -216,67 +248,6 @@ angular.module('sf')
             }
         };
 
-        var updateFieldsOnPages = function (form) {
-            return $q.when()
-                .then(function () {
-                    var fields = form.enhancedPages
-                        .reduce(function (fields, page) {
-                            return fields.concat(page.fields);
-                        }, [])
-                        .filter(function (field) {
-                            //Ignoring fields which shouldn't be sent
-                            return !(field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.AttachmentFieldValue'
-                                || field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.CommentFieldValue'
-                                || field.field.fieldValue._type === 'se.streamsource.streamflow.api.administration.form.FieldGroupFieldValue');
-                        })
-                        .map(function (field) {
-                            var value = '';
-                            switch (field.field.fieldValue._type) {
-                                case 'se.streamsource.streamflow.api.administration.form.CheckboxesFieldValue':
-                                    var checked = field.field.fieldValue.checkings
-                                        .filter(function (input) {
-                                            return input.checked;
-                                        }).map(function (input) {
-                                            return input.name;
-                                        });
-                                    value = checked.join(', ');
-                                    break;
-                                case 'se.streamsource.streamflow.api.administration.form.ListBoxFieldValue':
-                                    value = formMapperService.getValue(field.value, field.field).join(', ');
-                                    break;
-                                case 'se.streamsource.streamflow.api.administration.form.DateFieldValue':
-                                    //Formatting date top understandable for server format
-                                    value = new Date(formMapperService.getValue(field.value, field.field)).toISOString();
-                                    break;
-                                default:
-                                    value = formMapperService.getValue(field.value, field.field);
-                            }
-
-                            //TODO: find better approach to send empty location on submit
-                            if (field.field.fieldValue._type !== 'se.streamsource.streamflow.api.administration.form.GeoLocationFieldValue') {
-                                value = value === null ? '' : value;
-                            } else {
-                                value = (value === '' || value === null || value === 'null') ? JSON.stringify({location: '59.3500, 18.0667'}) : value;
-                            }
-                            return {field: field.field.field, value: value};
-                        });
-                    return caseService.updateFields($scope.caseId, $scope.formDraftId, fields);
-                });
-        };
-
-        var formSubmitted = function () {
-            if (!$scope.closeWithForm) {
-                $rootScope.$broadcast('form-submitted');
-                if ($rootScope.isFormWindow) {
-                    $rootScope.$broadcast('form-saved', $scope.currentFormId);
-                }
-            }
-            window.location.href = '#/cases/' + $scope.caseId + '/formhistory/' + $scope.currentFormId;
-            $scope.form = [];
-            $scope.currentFormPage = null;
-            $scope.formPageIndex = 0;
-        };
-
         $scope.deleteFormDraftAttachment = function (fieldId) {
             var attachment = _.find($scope.formAttachments, function (attachment) {
                 return attachment.fieldId === fieldId;
@@ -322,7 +293,6 @@ angular.module('sf')
             return false;
         };
 
-
         $scope.isFirstPage = function () {
             if ($scope.form && $scope.form[0]) {
                 return $scope.currentFormPage && $scope.form[0].enhancedPages.indexOf($scope.currentFormPage) === 0;
@@ -341,6 +311,35 @@ angular.module('sf')
             $scope.formPageIndex -= 1;
             $scope.currentFormPage = $scope.form[0].enhancedPages[$scope.formPageIndex];
         };
+
+        $scope.$watch('currentFormPage', function (newVal) {
+            if (!newVal) {
+                return;
+            }
+            $scope.reapplyRules();
+        });
+
+        $scope.$watch('closeWithForm', function (newVal) {
+            if (!newVal) {
+                return;
+            }
+            caseService.createFormOnCloseDraft($scope.caseId).then(function () {
+                caseService.getFormOnCloseDraft($scope.caseId).promise.then(function (response) {
+                    caseService.getFormDraft($scope.caseId, response[0].id).promise.then(function (response) {
+                        $scope.closeWithFormId = response[0].draftId;
+                    })
+                        .then(function () {
+                            $scope.formMessage = '';
+
+                            var form = caseService.getFormDraft($scope.caseId, $scope.closeWithFormId);
+                            form.promise.then(function (response) {
+                                $scope.getFormData(response);
+                                $scope.closeWithForm = true;
+                            });
+                        });
+                });
+            });
+        });
 
         $scope.$watchCollection('formPagesValid', function () {
             var isAllPagesValid = true;

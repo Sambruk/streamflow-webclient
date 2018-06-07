@@ -27,10 +27,10 @@ angular.module('sf')
         $scope.contact = caseService.getSelectedContact($routeParams.caseId, $routeParams.contactIndex);
 
         $scope.contactTypes = [
-            {id:'letter', text:'Brev'},
-            {id:'email', text:'E-post'},
-            {id:'sms', text:'SMS'},
-            {id:'phone', text:'Telefon'}
+            {id: 'letter', text: 'Brev'},
+            {id: 'email', text: 'E-post'},
+            {id: 'sms', text: 'SMS'},
+            {id: 'phone', text: 'Telefon'}
         ];
 
         $scope.showSpinner = {
@@ -45,40 +45,15 @@ angular.module('sf')
             }
         });
 
-        $scope.updateField = function ($event, $success, $error) {
-            $event.preventDefault();
-            var contact = {};
-
-            contact[$event.currentTarget.name] = $event.currentTarget.value;
-
-            if ($event.currentTarget.id === 'contact-phone' && !$event.currentTarget.value.match(/^$|^([0-9()\/+ \-]*)$/) || $event.currentTarget.id === 'contact-email' && !$event.currentTarget.value.match(/^$|^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)) {
-                $error($($event.target));
-            } else if ($event.currentTarget.id === 'contact-id' && !$event.currentTarget.value.match(/^$|^19\d{10}$/)) {
-                $error($($event.target));
+        var setPristine = function (form, element) {
+            if (form.$setPristine) {//only supported from v1.1.x
+                form.$setPristine();
             } else {
-                $scope.contactId = caseService.updateContact($routeParams.caseId, $routeParams.contactIndex, contact)
-                    .then(function () {
-                        if ($event.currentTarget.id === 'contact-name') {
-                            $rootScope.$broadcast('contact-name-updated');
-                        }
-                        $success($($event.target));
-                    }, function () {
-                        $error($($event.target));
-                    });
+                form.$dirty = false;
+                form.$pristine = true;
+                element.$dirty = false;
+                element.$pristine = true;
             }
-        };
-
-
-        //TODO fix update animation and clean up this
-        $scope.updateFieldManually = function (scope) {
-            var contact = {};
-            contact[scope.$select.$element.attr('name')] = scope.$select.selected.id;
-            $scope.contactId = caseService.updateContact($routeParams.caseId, $routeParams.contactIndex, contact)
-                .then(function () {
-                    successCallback(scope.$select.$element);
-                }, function () {
-                    errorCallback(scope.$select.$element);
-                });
         };
 
         var successCallback = function (element) {
@@ -117,14 +92,38 @@ angular.module('sf')
             $('#contact-submit-button').attr('disabled', true).addClass('inactive');
         };
 
-        var setPristine = function (form, element) {
-            if (form.$setPristine) {//only supported from v1.1.x
-                form.$setPristine();
+        $scope.updateField = function ($event, $success, $error) {
+            $event.preventDefault();
+            var contact = {};
+
+            contact[$event.currentTarget.name] = $event.currentTarget.value;
+
+            if ($event.currentTarget.id === 'contact-phone' && !$event.currentTarget.value.match(/^$|^([0-9()\/+ \-]*)$/) || $event.currentTarget.id === 'contact-email' && !$event.currentTarget.value.match(/^$|^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)) {
+                $error($($event.target));
+            } else if ($event.currentTarget.id === 'contact-id' && !$event.currentTarget.value.match(/^$|^19\d{10}$/)) {
+                $error($($event.target));
             } else {
-                form.$dirty = false;
-                form.$pristine = true;
-                element.$dirty = false;
-                element.$pristine = true;
+                $scope.contactId = caseService.updateContact($routeParams.caseId, $routeParams.contactIndex, contact)
+                    .then(function () {
+                        if ($event.currentTarget.id === 'contact-name') {
+                            $rootScope.$broadcast('contact-name-updated');
+                        }
+                        $success($($event.target));
+                    }, function () {
+                        $error($($event.target));
+                    });
             }
+        };
+
+        //TODO fix update animation and clean up this
+        $scope.updateFieldManually = function (scope) {
+            var contact = {};
+            contact[scope.$select.$element.attr('name')] = scope.$select.selected.id;
+            $scope.contactId = caseService.updateContact($routeParams.caseId, $routeParams.contactIndex, contact)
+                .then(function () {
+                    successCallback(scope.$select.$element);
+                }, function () {
+                    errorCallback(scope.$select.$element);
+                });
         };
     });

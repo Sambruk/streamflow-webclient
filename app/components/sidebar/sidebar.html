@@ -321,10 +321,10 @@
                             Överordnat ärende
                         </h2>
                         <a href="" class="action-btn" data-ng-click="showChangeParentPopUp()"
-                           data-ng-show="!subCases[0]" title="Change parent"><i
+                           data-ng-show="!subCases[0]" title="Skapa länk"><i
                                 class="icon-pencil"></i></a>
                         <a href="" class="action-btn" data-ng-click="showAssignSubCasePopUp()"
-                           data-ng-show="!parent[0]" title="Assign subcase"><i
+                           data-ng-show="!parent[0]" title="Skapa länk till underordnat ärende"><i
                                 class="icon-plus"></i></a>
 
                         <a href="{{parent[0].href}}/{{parent[0].ownerId ? parent[0].ownerId : caze[0].ownerId}}"
@@ -498,11 +498,11 @@
 </modal>
 
 <div class="toolbar-content-popup">
-    <modal dialog-title="Change parent" show="showChangeParent">
+    <modal dialog-title="Skapa länk" show="showChangeParent">
         <div class="row cf">
             <ui-select data-ng-model="parentCase.parentCaseId" theme="selectize" search-enabled="true"
                        style="width:100%;">
-                <ui-select-match placeholder="Välj värde">
+                <ui-select-match placeholder="Skriv ärende-id">
                     {{$select.selected.caseId}} {{$select.selected.text}}
                 </ui-select-match>
                 <ui-select-choices repeat="caze.id as caze in searchCases"
@@ -526,11 +526,11 @@
 </div>
 
 <div class="toolbar-content-popup">
-    <modal dialog-title="Assign subcase" show="showAssignSubCase">
+    <modal dialog-title="Skapa länk till underordnat ärende" show="showAssignSubCase">
         <div class="row cf">
             <ui-select data-ng-model="subCase.subCaseId" theme="selectize" search-enabled="true"
                        style="width:100%;">
-                <ui-select-match placeholder="Assign subcase">
+                <ui-select-match placeholder="Skriv ärende-id">
                     {{$select.selected.caseId}} {{$select.selected.text}}
                 </ui-select-match>
                 <ui-select-choices repeat="caze.id as caze in searchCases"

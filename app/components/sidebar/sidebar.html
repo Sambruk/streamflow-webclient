@@ -321,11 +321,13 @@
                             Överordnat ärende
                         </h2>
                         <a href="" class="action-btn" data-ng-click="showChangeParentPopUp()"
-                           data-ng-show="!subCases[0]" title="Skapa länk"><i
-                                class="icon-pencil"></i></a>
-                        <a href="" class="action-btn" data-ng-click="showAssignSubCasePopUp()"
-                           data-ng-show="!parent[0]" title="Skapa länk till underordnat ärende"><i
+                           data-ng-show="!parent[0]" title="Skapa länk"><i
                                 class="icon-plus"></i></a>
+
+                        <a href="" class="action-btn" data-ng-click="unassignParent()"
+                           data-ng-show="parent[0]" title="Remove  länk">
+                            <i class="icon-cancel" style="position: unset"></i>
+                        </a>
 
                         <a href="{{parent[0].href}}/{{parent[0].ownerId ? parent[0].ownerId : caze[0].ownerId}}"
                            class="sidebar-link" title="{{parent[0].text}}">
@@ -336,7 +338,8 @@
                     <div class="m-h">
                         <h2>Underordnade ärenden</h2>
                         <!--TODO Add canCreate check-->
-                        <a href="" data-ng-click="createSubCase()" data-ng-show="!parent[0]" class="action-btn">
+                        <a href="" class="action-btn" data-ng-click="showAssignSubCasePopUp()"
+                           data-ng-show="!parent[0]" title="Skapa länk till underordnat ärende">
                             <i class="icon-plus"></i>
                         </a>
 
@@ -540,6 +543,13 @@
 
                 </ui-select-choices>
             </ui-select>
+
+            <div class="submit-area cf dialog-submit">
+                <button type="submit" name="create-assigned-subcase" class="btn" data-ng-click="createSubCase()">
+                    <i class="icon-plus"></i>
+                    Nytt ärende
+                </button>
+            </div>
 
             <div class="error-ng-invalid-input">
                 {{searchError}}

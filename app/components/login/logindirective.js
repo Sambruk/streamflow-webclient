@@ -95,6 +95,8 @@ angular.module('sf').directive('login', function ($rootScope, buildMode, $locati
                 return false;
             }
 
+            //Ugly way to perform logout.... But only way to work in all browsers...
+            //Yeah needed to two separate calls. Haven't found way better.
             function logOut() {
                 var logoutUrl = getLogoutUrl(detectIE());
                 var basicAuthBase64 = btoa('username:password');
@@ -117,9 +119,23 @@ angular.module('sf').directive('login', function ($rootScope, buildMode, $locati
                     })
                     .fail(function () {
                         $window.location = '/webclient/#';
-                        // $window.document.location = '/webclient/#';
                         $window.location.reload(true);
                     });
+
+                $http({
+                        method: 'GET',
+                        url: logoutUrl,
+                        headers: {'Authorization': 'Basic ' + basicAuthBase64},
+                        cache: 'false'
+                    },
+                    $location.path('#')
+                ).then(function (response) {
+                    console.log('Logout response2', response);
+                    $window.location = '/webclient/#';
+                    $window.location.reload(true);
+                }, function () {
+                    scope.errorMessage = 'Användarnamn / lösenord ej giltigt!';
+                });
 
                 return false;
             }

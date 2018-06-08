@@ -33,7 +33,7 @@
 
 
     <div data-ng-show="parent[0]">
-        <b class="left left-sidebar">Lankad fran:</b>
+        <b class="left left-sidebar">Överordnat ärende:</b>
         <div class="left right-sidebar">
             <ul>
                 <a href="{{parent[0].href}}/{{parent[0].ownerId ? parent[0].ownerId : caze[0].ownerId}}"
@@ -46,7 +46,7 @@
     </div>
 
     <div>
-        <b class="left left-sidebar">Lankad till:</b>
+        <b class="left left-sidebar">Underordnade ärende:</b>
         <div class="left right-sidebar">
             <ul>
                 <div data-ng-repeat="subcase in subCases">

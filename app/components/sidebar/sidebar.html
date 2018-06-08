@@ -318,10 +318,7 @@
                 <div class="m m-attachments">
                     <div class="m-h">
                         <h2 data-ng-show="parent[0]">
-                            <a href="{{parent[0].href}}/{{parent[0].ownerId ? parent[0].ownerId : caze[0].ownerId}}"
-                               class="block-link">
-                                {{parent[0].text ? parent[0].text : 'Empty parent'}}
-                            </a>
+                            Parent case
                         </h2>
                         <a href="" class="action-btn" data-ng-click="showChangeParentPopUp()"
                            data-ng-show="!subCases[0]" title="Change parent"><i
@@ -331,8 +328,15 @@
                                 class="icon-plus"></i></a>
                     </div>
 
+                    <div class="m-c">
+                        <a href="{{parent[0].href}}/{{parent[0].ownerId ? parent[0].ownerId : caze[0].ownerId}}"
+                           class="block-link">
+                            {{parent[0].text ? parent[0].text : 'Empty parent'}}
+                        </a>
+                    </div>
+
                     <div class="m-h">
-                        <h2>Sub cases</h2>
+                        <h2>Child cases</h2>
                         <!--TODO Add canCreate check-->
                         <a href="" data-ng-click="createSubCase()" data-ng-show="!parent[0]" class="action-btn">
                             New child case

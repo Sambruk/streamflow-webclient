@@ -521,7 +521,9 @@
             </div>
         </div>
         <div class="submit-area cf dialog-submit">
-            <button type="submit" name="change-parent-button" data-ng-click="onChangeParentButtonClicked($event)">
+            <button type="submit" name="change-parent-button" data-ng-click="onChangeParentButtonClicked($event)"
+                    class="btn" data-ng-class="{inactive: !parentCase.parentCaseId}"
+                    data-ng-disabled="!parentCase.parentCaseId">
                 Spara
             </button>
         </div>

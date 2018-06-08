@@ -31,7 +31,7 @@
     </div>
     <div class="clear"></div>
 
-    <div data-ng-show="{{parent[0]}}">
+    <div data-ng-show="parent[0]">
         <b class="left left-sidebar">Överordnat ärende:</b>
         <div class="left right-sidebar">
             <ul>
@@ -45,7 +45,7 @@
     </div>
     <div class="clear"></div>
 
-    <div data-ng-show="{{subCases}}">
+    <div data-ng-show="subCases.length > 0">
         <b class="left left-sidebar">Underordnade ärende:</b>
         <div class="left right-sidebar">
             <ul>

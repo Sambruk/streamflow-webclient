@@ -322,6 +322,7 @@ angular.module('sf')
                     caseService.createSubCase(scope.caze[0].id,
                         function () {
                             updateObject(scope.subCases);
+                            scope.showAssignSubCase = false;
                         });
                 };
 
@@ -338,6 +339,10 @@ angular.module('sf')
 
                 scope.onAssignSubCaseButtonClicked = function () {
                     sidebarService.onAssignSubCaseButtonClicked(scope);
+                };
+
+                scope.unassignParent = function () {
+                    sidebarService.onChangeParentButtonClicked(scope);
                 };
 
                 // Send to

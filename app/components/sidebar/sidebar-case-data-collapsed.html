@@ -37,8 +37,8 @@
         <div class="left right-sidebar">
             <ul>
                 <a href="{{parent[0].href}}/{{parent[0].ownerId ? parent[0].ownerId : caze[0].ownerId}}"
-                   class="block-link">
-                    {{parent[0].text ? parent[0].text : 'Empty parent'}}
+                   class="block-link" title="{{parent[0].text}}">
+                    {{parent[0].caseId}}
                 </a>
             </ul>
 
@@ -51,8 +51,8 @@
             <ul>
                 <div data-ng-repeat="subcase in subCases">
                     <a href="{{subcase.href}}/{{subcase.ownerId ? subcase.ownerId : caze[0].ownerId}}"
-                       class="block-link" title="{{subcase.text?subcase.text:'Empty case'}}">
-                        {{subcase.text ? subcase.text : 'Empty case'}}
+                       class="block-link" title="{{subcase.text}}">
+                        {{subcase.caseId}}
                     </a>
                 </div>
             </ul>

@@ -330,8 +330,8 @@
 
                     <div class="m-c">
                         <a href="{{parent[0].href}}/{{parent[0].ownerId ? parent[0].ownerId : caze[0].ownerId}}"
-                           class="block-link">
-                            {{parent[0].text ? parent[0].text : 'Empty parent'}}
+                           class="block-link" title="{{parent[0].text}}">
+                            {{parent[0].caseId}}
                         </a>
                     </div>
 
@@ -347,8 +347,8 @@
                         <ul class="zebra-list">
                             <li data-ng-repeat="subcase in subCases">
                                 <a href="{{subcase.href}}/{{subcase.ownerId ? subcase.ownerId : caze[0].ownerId}}"
-                                   class="block-link">
-                                    {{subcase.text ? subcase.text : 'Empty case'}}
+                                   class="block-link" title="{{subcase.text}}">
+                                    {{subcase.caseId}}
                                 </a>
                                 <a href="" class="block-link" data-ng-click="removeSubCase(subcase.id)" class="delete">
                                     <i class="icon-cancel"></i>

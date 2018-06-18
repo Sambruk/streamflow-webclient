@@ -311,19 +311,31 @@ angular.module('sf')
                 };
 
                 scope.showChangeParentPopUp = function () {
-                    scope.showChangeParent = true;
+                    if(scope.parent[0] || scope.subCases[0]){
+                        alert('Du har redan valt en annan ärendetyp');
+                    } else {
+                        scope.showChangeParent = true;
+                    }
                 };
 
                 scope.showAssignSubCasePopUp = function () {
-                    scope.showAssignSubCase = true;
+                    if(scope.parent[0]){
+                        alert('Du har redan valt en annan ärendetyp');
+                    } else {
+                        scope.showAssignSubCase = true;
+                    }
                 };
 
                 scope.createSubCase = function () {
-                    caseService.createSubCase(scope.caze[0].id,
-                        function () {
-                            updateObject(scope.subCases);
-                            scope.showAssignSubCase = false;
-                        });
+                    if (scope.parent[0]) {
+                        alert('Du har redan valt en annan ärendetyp');
+                    } else {
+                        caseService.createSubCase(scope.caze[0].id,
+                            function () {
+                                updateObject(scope.subCases);
+                                scope.showAssignSubCase = false;
+                            });
+                    }
                 };
 
                 scope.removeSubCase = function (subCaseId) {

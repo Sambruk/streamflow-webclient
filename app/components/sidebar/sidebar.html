@@ -320,9 +320,13 @@
                         <h2>
                             Överordnat ärende
                         </h2>
-                        <a href="" class="action-btn" data-ng-click="showChangeParentPopUp()"
-                           data-ng-show="!parent[0]" title="Skapa länk"><i
-                                class="icon-plus"></i></a>
+                        <a href="" class="action-btn"
+                           data-ng-class="{'action-btn__disabled':  parent[0] || subCases[0]}"
+                           data-ng-click="showChangeParentPopUp()"
+                           title="Skapa länk">
+
+                            <i class="icon-plus"></i>
+                        </a>
 
                         <div class="m-c" data-ng-show="parent[0]">
                             <ul class="zebra-list">
@@ -345,8 +349,10 @@
                     <div class="m-h">
                         <h2>Underordnade ärenden</h2>
                         <!--TODO Add canCreate check-->
-                        <a href="" class="action-btn" data-ng-click="showAssignSubCasePopUp()"
-                           data-ng-show="!parent[0]" title="Skapa länk till underordnat ärende">
+                        <a href="" class="action-btn" data-ng-class="{'action-btn__disabled': parent[0]}"
+                           data-ng-click="showAssignSubCasePopUp()"
+                           title="Skapa länk till underordnat ärende">
+
                             <i class="icon-plus"></i>
                         </a>
 
@@ -529,7 +535,7 @@
         </div>
         <div class="submit-area cf dialog-submit">
             <button type="submit" name="change-parent-button" data-ng-click="onChangeParentButtonClicked($event)"
-                    class="btn" data-ng-class="{inactive: !parentCase.parentCaseId}"
+                    class="btn" data-ng-class="{'inactive': !parentCase.parentCaseId}"
                     data-ng-disabled="!parentCase.parentCaseId">
                 Spara
             </button>
@@ -565,7 +571,7 @@
             </div>
         </div>
         <div class="submit-area cf dialog-submit">
-            <button type="submit" name="assign-subcase" class="btn" data-ng-class="{inactive: !subCase.subCaseId}"
+            <button type="submit" name="assign-subcase" class="btn" data-ng-class="{'inactive': !subCase.subCaseId}"
                     data-ng-disabled="!subCase.subCaseId" data-ng-click="onAssignSubCaseButtonClicked($event)">
                 Spara
             </button>

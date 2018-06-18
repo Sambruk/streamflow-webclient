@@ -324,15 +324,22 @@
                            data-ng-show="!parent[0]" title="Skapa länk"><i
                                 class="icon-plus"></i></a>
 
-                        <a href="" class="action-btn" data-ng-click="unassignParent()"
-                           data-ng-show="parent[0]" title="Ta bort länk">
-                            <i class="icon-cancel" style="position: unset"></i>
-                        </a>
+                        <div class="m-c" data-ng-show="parent[0]">
+                            <ul class="zebra-list">
+                                <li>
+                                    <a href="{{parent[0].href}}/{{parent[0].ownerId ? parent[0].ownerId : caze[0].ownerId}}"
+                                       class="block-link" title="{{parent[0].text}}">
+                                        {{parent[0].caseId}}
+                                    </a>
 
-                        <a href="{{parent[0].href}}/{{parent[0].ownerId ? parent[0].ownerId : caze[0].ownerId}}"
-                           class="sidebar-link" title="{{parent[0].text}}">
-                            {{parent[0].caseId}}
-                        </a>
+                                    <a href="" class="block-link" data-ng-click="unassignParent()" title="Ta bort länk">
+                                        <i class="icon-cancel"></i>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+
                     </div>
 
                     <div class="m-h">

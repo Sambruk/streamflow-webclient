@@ -517,6 +517,7 @@
     <modal dialog-title="Skapa länk" show="showChangeParent">
         <div class="row cf">
             <ui-select data-ng-model="parentCase.parentCaseId" theme="selectize" search-enabled="true"
+                       reset-search-input="false"
                        style="width:100%;">
                 <ui-select-match placeholder="Skriv ärende-id">
                     {{$select.selected.caseId}} {{$select.selected.text}}
@@ -547,6 +548,7 @@
     <modal dialog-title="Skapa länk till underordnat ärende" show="showAssignSubCase">
         <div class="row cf">
             <ui-select data-ng-model="subCase.subCaseId" theme="selectize" search-enabled="true"
+                       reset-search-input="false"
                        style="width:100%;">
                 <ui-select-match placeholder="Skriv ärende-id">
                     {{$select.selected.caseId}} {{$select.selected.text}}

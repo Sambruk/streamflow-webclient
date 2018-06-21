@@ -354,6 +354,7 @@ angular.module('sf')
                 };
 
                 scope.unassignParent = function () {
+                    scope.parentCase = {};
                     sidebarService.onChangeParentButtonClicked(scope);
                 };
 

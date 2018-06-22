@@ -52,11 +52,11 @@ angular.module('sf').factory('httpService', function ($q, $cacheFactory, buildMo
         }
     }
 
-    function prepareExternalContentURL() {
+    function prepareParamsURL() {
         var protocol = $location.$$protocol;
         var host = $location.$$host;
         var port = $location.$$port;
-        var prodUrl = protocol + '://' + host + ':' + port + '/webclient/external-content/';
+        var prodUrl = protocol + '://' + host + ':' + port + '/webclient/params';
 
         switch (buildMode) {
             case 'prod':
@@ -70,13 +70,13 @@ angular.module('sf').factory('httpService', function ($q, $cacheFactory, buildMo
 
     var baseUrl = prepareBaseUrl();
     var apiUrl = prepareApiUrl();
-    var externalContentUrl = prepareExternalContentURL();
+    var paramsUrl = prepareParamsURL();
     var cache = $cacheFactory('sfHttpCache');
 
     return {
         baseUrl: baseUrl,
         apiUrl: apiUrl,
-        externalContentUrl: externalContentUrl,
+        paramsUrl: paramsUrl,
 
         info: function () {
             return cache.info();

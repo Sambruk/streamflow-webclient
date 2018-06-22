@@ -28,12 +28,10 @@ angular.module('sf').controller('CaseEditCtrl', function ($scope, $rootScope, $r
     $scope.caze = caseService.getSelected($routeParams.caseId);
     $scope.status = $routeParams.status;
 
-    var URL = httpService.externalContentUrl;
-    httpService.getSimpleRequest(URL).then(function (result) {
-        if (result.status !== 404) {
-            $scope.externalContentURL = $sce.trustAsResourceUrl(URL);
-        }
-    });
+    httpService.getSimpleRequest(httpService.paramsUrl)
+        .then(function (result) {
+            $scope.externalContentURL = $sce.trustAsResourceUrl(result.data.externalURL);
+        });
 
     $scope.caseLogs = caseService.getSelectedFilteredCaseLog($routeParams.caseId, {
         system: false,

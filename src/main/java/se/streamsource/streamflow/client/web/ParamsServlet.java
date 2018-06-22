@@ -35,7 +35,6 @@ public class ParamsServlet extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         externalURL = getServletConfig().getInitParameter(externalURLParam);
-
     }
 
     @Override

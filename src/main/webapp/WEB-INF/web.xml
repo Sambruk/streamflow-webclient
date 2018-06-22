@@ -64,10 +64,10 @@
   </servlet-mapping>
 
     <servlet>
-        <servlet-name>externalContent</servlet-name>
-        <servlet-class>org.mitre.dsmiley.httpproxy.ProxyServlet</servlet-class>
+        <servlet-name>paramsServlet</servlet-name>
+        <servlet-class>se.streamsource.streamflow.client.web.ParamsServlet</servlet-class>
         <init-param>
-            <param-name>targetUri</param-name>
+            <param-name>externalURL</param-name>
             <param-value></param-value>
         </init-param>
         <init-param>
@@ -77,8 +77,8 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>externalContent</servlet-name>
-        <url-pattern>/external-content/*</url-pattern>
+        <servlet-name>paramsServlet</servlet-name>
+        <url-pattern>/params</url-pattern>
     </servlet-mapping>
 
   <welcome-file-list>

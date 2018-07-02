@@ -26,7 +26,7 @@
   <display-name>Streamflow WebClient</display-name>
   <description>WebClient for casehandling</description>
 
-   <!-- 
+   <!--
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:/config/securityContext.xml</param-value>
@@ -69,10 +69,6 @@
         <init-param>
             <param-name>externalURL</param-name>
             <param-value></param-value>
-        </init-param>
-        <init-param>
-            <param-name>log</param-name>
-            <param-value>true</param-value>
         </init-param>
     </servlet>
 
